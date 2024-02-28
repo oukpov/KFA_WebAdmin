@@ -1,0 +1,141 @@
+import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:animations/animations.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:provider/provider.dart';
+import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
+import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_web/webview_flutter_web.dart';
+import 'package:http/http.dart' as http;
+
+List list = [];
+void main() async {
+  WebViewPlatform.instance = WebWebViewPlatform();
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyBYr3tPsGjHtaDSSrAV5zH0HN0tMHqxRho',
+        appId: '1:840429343818:web:63757f2574274bf9c3c2b3',
+        messagingSenderId: '840429343818',
+        projectId: 'chatappflutter-41d6b',
+      ),
+    );
+  }
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  get i => null;
+  String idUser = '';
+  String iD = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => FirebaseProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        // home: Login(),
+        // home: ResponsiveLayout(
+        //     myIdController: '191K877F994A',
+        //     email: 'mp@gmail.com',
+        //     idController: '192K381F363A'),
+        home: ResponsiveLayout(myIdController: '', email: '', idController: ''),
+        // home: Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
+        // home: const AddProperty(idUserController: '95K267F95A'),
+        // home: MyFavories(
+        //     email: 'mp@gmail.com',
+        //     idUsercontroller: '192K381F363A',
+        //     myIdController: '191K877F994A'),
+
+        onGenerateRoute: (RouteSettings settings) {
+          final args = settings.name;
+
+          if (args != null) {
+            var data = settings.name!.split('/');
+            var value = data[1].toString();
+            return MaterialPageRoute(
+              builder: (context) {
+                return koko(
+                  name: value.toString(),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+class Routes {
+  static const String home = "home";
+  static const String faverite = "style";
+  static const String post = "post";
+
+  static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,
+      {int duration = 300}) {
+    return PageRouteBuilder<T>(
+      settings: settings,
+      transitionDuration: Duration(milliseconds: duration),
+      pageBuilder: (context, animation, secondaryAnimation) => page(context),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeScaleTransition(animation: animation, child: child);
+      },
+    );
+  }
+}
+
+class koko extends StatefulWidget {
+  const koko({super.key, required this.name});
+  final String name;
+
+  @override
+  State<koko> createState() => _kokoState();
+}
+
+class _kokoState extends State<koko> {
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+        // body: detail_verbal(set_data_verbal: widget.name.toString()),
+        // body: Home_Screen_property(),
+        );
+  }
+
+  void getallautoverbalbyid() async {
+    var rs = await http.get(Uri.parse(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/autoverbal/list_new?verbal_id=${widget.name.toString()}'));
+
+    if (rs.statusCode == 200) {
+      setState(() {
+        list = jsonDecode(rs.body);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getallautoverbalbyid();
+    list;
+    super.initState();
+    // fillInEmail();
+    // fillInPassword();
+  }
+}
