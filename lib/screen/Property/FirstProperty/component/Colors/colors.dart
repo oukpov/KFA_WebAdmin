@@ -11,3 +11,4 @@ var yellowColor = const Color.fromARGB(255, 221, 197, 47);
 var backgroundScreen = const Color.fromARGB(255, 225, 232, 232);
 var redColors = const Color.fromARGB(255, 108, 14, 14);
 var greenColors = const Color.fromARGB(255, 20, 124, 6);
+var greyColorNolots = const Color.fromARGB(255, 177, 174, 174);

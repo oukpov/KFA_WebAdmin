@@ -5,17 +5,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/services.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:web_admin/Auth/register.dart';
 import 'package:web_admin/api/api_service.dart';
 import 'package:web_admin/interface/homepage.dart';
-
 import '../screen/Property/FirstProperty/MenuPage/My Account/ChatUsers/UsersChat/chat_screen.dart';
 import '../../components/contants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../Customs/ProgressHUD.dart';
 import '../Customs/responsive.dart';
 import '../models/login_model.dart';

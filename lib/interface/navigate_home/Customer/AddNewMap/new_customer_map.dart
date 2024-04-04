@@ -14,11 +14,11 @@ import 'package:intl/intl.dart';
 import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
-import '../../../components/contants.dart';
-import '../../../components/first_pay.dart';
-import '../../../components/property_type.dart';
-import '../../../screen/Profile/components/Drop.dart';
-import '../../../screen/Property/Map/map_in_add_verbal.dart';
+import '../../../../components/contants.dart';
+import '../../../../components/first_pay.dart';
+import '../../../../components/property_type.dart';
+import '../../../../screen/Profile/components/Drop.dart';
+import '../../../../screen/Property/Map/map_in_add_verbal.dart';
 
 class new_customer_map extends StatefulWidget {
   const new_customer_map({super.key});

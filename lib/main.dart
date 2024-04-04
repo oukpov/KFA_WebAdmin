@@ -11,6 +11,9 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
 
+import 'interface/homescreen/newhomepage.dart';
+import 'interface/homescreen/responsive_layout.dart';
+
 List list = [];
 void main() async {
   WebViewPlatform.instance = WebWebViewPlatform();
@@ -50,20 +53,21 @@ class _MyAppState extends State<MyApp> {
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
       child: MaterialApp(
+        initialRoute: '/',
         debugShowCheckedModeBanner: false,
-        // home: Login(),
-        // home: ResponsiveLayout(
-        //     myIdController: '191K877F994A',
-        //     email: 'mp@gmail.com',
-        //     idController: '192K381F363A'),
-        home: ResponsiveLayout(myIdController: '', email: '', idController: ''),
-        // home: Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
-        // home: const AddProperty(idUserController: '95K267F95A'),
-        // home: MyFavories(
-        //     email: 'mp@gmail.com',
-        //     idUsercontroller: '192K381F363A',
-        //     myIdController: '191K877F994A'),
-
+        routes: {
+          // '/': (context) => const ResponsiveHomePage(
+          //     id: '12',
+          //     name: 'ouk pov',
+          //     controllerUser: '12831923',
+          //     nativigation: true,
+          //     email: 'oukpov@gmail.com')
+          // '/': (BuildContext obj) => ResponsiveLayout(
+          //       myIdController: '',
+          //       email: '',
+          //       idController: '',
+          //     ),
+        },
         onGenerateRoute: (RouteSettings settings) {
           final args = settings.name;
 

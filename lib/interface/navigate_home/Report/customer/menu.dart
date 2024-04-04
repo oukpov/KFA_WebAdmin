@@ -3,37 +3,27 @@
 import 'package:flutter/material.dart';
 import 'package:web_admin/interface/navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 
-import 'AddNew/new_customer.dart';
-import 'List/customer_list.dart';
-import 'List/customer_list_map.dart';
+import 'customerCaseIn&Out.dart';
+import 'customercasebar.dart';
 
-import 'AddNewMap/new_customer_map.dart';
-
-class MenuCostome extends StatefulWidget {
-  MenuCostome({Key? key, required this.id}) : super(key: key);
+class MenuCostomerResport extends StatefulWidget {
+  MenuCostomerResport({Key? key, required this.id}) : super(key: key);
   final String id;
 
   @override
-  State<MenuCostome> createState() => _MenuCostomeState();
+  State<MenuCostomerResport> createState() => _MenuCostomerResportState();
 }
 
-class _MenuCostomeState extends State<MenuCostome> {
+class _MenuCostomerResportState extends State<MenuCostomerResport> {
   List<Text> option = const [
-    Text("New Customer",
+    Text("Customer Case In & Out",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    // Text("New Customer Map",
-    //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    Text("Costomer List",
+    Text("Customer Case Bar Chart",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-
-    // Text("Costomer List Map",
-    //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
   ];
   List<Icon> optionIconList = const [
     Icon(Icons.data_saver_on),
-    // Icon(Icons.data_usage),
     Icon(Icons.list_alt_outlined),
-    // Icon(Icons.map_outlined),
   ];
   @override
   Widget build(BuildContext context) {
@@ -65,11 +55,14 @@ class _MenuCostomeState extends State<MenuCostome> {
                   if (i == 0) {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return ResponsiveCustomer(
-                          email: '',
-                          idController: '96',
-                          myIdController: '',
-                        );
+                        return const customerCaseinOut();
+                      },
+                    ));
+                  }
+                  if (i == 1) {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const customercasebar();
                       },
                     ));
                   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'Total_amount.dart';
 import 'Transetoin/history.dart';
+import 'customer/menu.dart';
 
 class MenuReport extends StatefulWidget {
   MenuReport({Key? key, required this.id}) : super(key: key);
@@ -66,6 +67,13 @@ class _MenuReportState extends State<MenuReport> {
               InkWell(
                 onTap: () {
                   setState(() {
+                    if (i == 0) {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return MenuCostomerResport(id: widget.id);
+                        },
+                      ));
+                    }
                     if (i == 5) {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
