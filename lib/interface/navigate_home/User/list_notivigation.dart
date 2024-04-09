@@ -1,11 +1,9 @@
 // ignore_for_file: override_on_non_overriding_member, unused_local_variable, body_might_complete_normally_nullable, unused_field
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:getwidget/components/accordion/gf_accordion.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'detail_Screen.dart';
 import 'detail_notivigtion.dart';
 
 class Notivigation_day extends StatefulWidget {
@@ -132,7 +130,7 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -165,8 +163,8 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                         ),
                       )
                     : (list_data == 'no data' && list1.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -174,11 +172,13 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
-            expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
+            expandedTitleBackgroundColor:
+                const Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_1}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list2 = await fetchData_by_date(formattedDate_1, formattedDate_0);
 
@@ -195,11 +195,11 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                 (list2.length != 0 && list_data == 'have data')
                     ? Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -228,12 +228,12 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                               on_row = value!;
                             });
                           },
-                          source: new _DataSource(list2, list2.length, context),
+                          source: _DataSource(list2, list2.length, context),
                         ),
                       )
                     : (list_data == 'no data' && list2.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -241,11 +241,13 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
-            expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
+            expandedTitleBackgroundColor:
+                const Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_2}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list3 = await fetchData_by_date(formattedDate_2, formattedDate_1);
 
@@ -266,7 +268,7 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -295,12 +297,12 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                               on_row = value!;
                             });
                           },
-                          source: new _DataSource(list3, list3.length, context),
+                          source: _DataSource(list3, list3.length, context),
                         ),
                       )
                     : (list_data == 'no data' && list3.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -308,11 +310,13 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
-            expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
+            expandedTitleBackgroundColor:
+                const Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_3}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list4 = await fetchData_by_date(formattedDate_3, formattedDate_2);
 
@@ -329,11 +333,11 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                 (list4.length != 0 && list_data == 'have data')
                     ? Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -362,12 +366,12 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                               on_row = value!;
                             });
                           },
-                          source: new _DataSource(list4, list4.length, context),
+                          source: _DataSource(list4, list4.length, context),
                         ),
                       )
                     : (list_data == 'no data' && list4.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -375,11 +379,13 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
-            expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
+            expandedTitleBackgroundColor:
+                const Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_4}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list5 = await fetchData_by_date(formattedDate_4, formattedDate_3);
               list5 = list;
@@ -395,11 +401,11 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                 (list5.length != 0 && list_data == 'have data')
                     ? Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -428,12 +434,12 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                               on_row = value!;
                             });
                           },
-                          source: new _DataSource(list5, list5.length, context),
+                          source: _DataSource(list5, list5.length, context),
                         ),
                       )
                     : (list_data == 'no data' && list5.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -441,11 +447,12 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
             expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_6}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list6 = await fetchData_by_date(formattedDate_6, formattedDate_5);
               list6 = list;
@@ -461,11 +468,11 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                 (list6.length != 0 && list_data == 'have data')
                     ? Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',
@@ -498,8 +505,8 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                         ),
                       )
                     : (list_data == 'no data' && list6.length == 0)
-                        ? Text('No data')
-                        : Center(
+                        ? const Text('No data')
+                        : const Center(
                             child: CircularProgressIndicator(),
                           )
               ],
@@ -708,11 +715,13 @@ class _Notivigation_dayState extends State<Notivigation_day> {
           ),
           GFAccordion(
             titleBorder: Border.all(width: 1),
-            collapsedTitleBackgroundColor: Color.fromRGBO(238, 238, 238, 1),
+            collapsedTitleBackgroundColor:
+                const Color.fromRGBO(238, 238, 238, 1),
             contentBackgroundColor: Colors.blue[100],
-            expandedTitleBackgroundColor: Color.fromRGBO(187, 222, 251, 1),
+            expandedTitleBackgroundColor:
+                const Color.fromRGBO(187, 222, 251, 1),
             title: "Notivigation : ${formattedDate_10}",
-            collapsedIcon: Icon(Icons.notifications_active_outlined),
+            collapsedIcon: const Icon(Icons.notifications_active_outlined),
             onToggleCollapsed: (p0) async {
               list10 =
                   await fetchData_by_date(formattedDate_10, formattedDate_9);
@@ -729,11 +738,11 @@ class _Notivigation_dayState extends State<Notivigation_day> {
                 (list10.length != 0 && list_data == 'have data')
                     ? Container(
                         width: MediaQuery.of(context).size.width * 1,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         child: PaginatedDataTable(
                           horizontalMargin: 5.0,
                           arrowHeadColor: Colors.blueAccent[300],
-                          columns: [
+                          columns: const [
                             DataColumn(
                                 label: Text(
                               'UseID',

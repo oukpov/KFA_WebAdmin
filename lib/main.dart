@@ -6,12 +6,10 @@ import 'package:animations/animations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
-import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
-
-import 'interface/homescreen/newhomepage.dart';
+import 'Auth/login.dart';
 import 'interface/homescreen/responsive_layout.dart';
 
 List list = [];
@@ -56,17 +54,22 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/',
         debugShowCheckedModeBanner: false,
         routes: {
-          // '/': (context) => const ResponsiveHomePage(
-          //     id: '12',
-          //     name: 'ouk pov',
-          //     controllerUser: '12831923',
-          //     nativigation: true,
-          //     email: 'oukpov@gmail.com')
-          // '/': (BuildContext obj) => ResponsiveLayout(
-          //       myIdController: '',
-          //       email: '',
-          //       idController: '',
-          //     ),
+          '/': (context) => const ResponsiveHomePage(
+                listUser: [],
+                url: '',
+                password: '',
+                controllerUser: '',
+                setEmail: '',
+                setPassword: '',
+                user: '',
+                email: '',
+                firstName: '',
+                lastName: '',
+                gender: '',
+                from: '',
+                tel: '',
+                id: '',
+              ),
         },
         onGenerateRoute: (RouteSettings settings) {
           final args = settings.name;

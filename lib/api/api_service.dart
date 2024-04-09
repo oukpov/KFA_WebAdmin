@@ -13,7 +13,7 @@ class APIservice {
   Future<LoginReponseModel> login(LoginRequestModel requestModel) async {
     final response = await http.post(
         Uri.parse(
-            'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/login'),
+            'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins'),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/x-www-form-urlencoded"

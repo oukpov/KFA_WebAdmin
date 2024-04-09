@@ -1,15 +1,15 @@
-// ignore_for_file: unused_import, non_constant_identifier_names, prefer_const_constructors, avoid_print, prefer_is_empty, use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:html' as html;
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:web_admin/Auth/register.dart';
 import 'package:web_admin/api/api_service.dart';
-import 'package:web_admin/interface/homepage.dart';
-import '../screen/Property/FirstProperty/MenuPage/My Account/ChatUsers/UsersChat/chat_screen.dart';
+import '../interface/homescreen/responsive_layout.dart';
 import '../../components/contants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -24,9 +24,9 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: (MediaQuery.of(context).size.longestSide <= 1124.0)
-          ? EdgeInsets.only(left: 50, right: 50)
-          : EdgeInsets.only(left: 0, right: 0),
-      child: Login(),
+          ? const EdgeInsets.only(left: 50, right: 50)
+          : const EdgeInsets.only(left: 0, right: 0),
+      child: const Login(),
     );
   }
 }
@@ -110,12 +110,11 @@ class _LoginState extends State<Login> {
   Widget _uiSteup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: SizedBox(),
+        leading: const SizedBox(),
         backgroundColor: kwhite_new,
         elevation: 0,
         centerTitle: true,
         title: Image.asset(
-          // 'assets/images/KFA-Logo.png',
           'assets/images/KFA-Logo.png',
           height: 80,
           width: 100,
@@ -125,14 +124,14 @@ class _LoginState extends State<Login> {
       backgroundColor: kwhite_new,
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: kwhite,
           //color: Colors.amber.withOpacity(0.5),
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(35.0),
             topLeft: Radius.circular(35.0),
           ),
-          boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.grey)],
+          boxShadow: [BoxShadow(blurRadius: 5, color: Colors.grey)],
         ),
         child: SingleChildScrollView(
           child: Responsive(
@@ -194,7 +193,6 @@ class _LoginState extends State<Login> {
             ),
             const Text.rich(
               TextSpan(
-                // ignore: prefer_const_literals_to_create_immutables
                 children: [
                   TextSpan(
                     text: "ONE CLICK ",
@@ -215,85 +213,15 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-
-            SizedBox(
-              height: 30.0,
-            ),
-            ((status == false) ? input(context) : Output(context)),
-
-            SizedBox(
-              height: 10.0,
-            ),
-            // ignore: deprecated_member_use
+            const SizedBox(height: 30.0),
+            ((status == false) ? input(context) : output(context)),
+            const SizedBox(height: 10.0),
             SizedBox(
               width: 150,
               child: GFButton(
                 onPressed: () {
                   if (validateAndSave()) {
-                    APIservice apIservice = APIservice();
-                    apIservice.login(requestModel).then((value) {
-                      Load(value.token);
-                      setState(() {
-                        isApiCallProcess = false;
-                      });
-                      if (value.message == "Login Successfully!") {
-                        saveEmail(_emailController.text);
-                        savePassword(_passwordController.text);
-                        FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: requestModel.email,
-                          password: requestModel.password,
-                        );
-
-                        AwesomeDialog(
-                          btnOkOnPress: () {},
-                          context: context,
-                          animType: AnimType.leftSlide,
-                          headerAnimationLoop: false,
-                          dialogType: DialogType.success,
-                          showCloseIcon: false,
-                          title: 'Login Successfuly',
-                          autoHide: Duration(seconds: 3),
-                          onDismissCallback: (type) {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) =>
-                            //       Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(
-                                    password: requestModel.password,
-                                    controller_user: value.user['control_user'],
-                                    set_email: requestModel.email,
-                                    set_password: requestModel.password,
-                                    user: value.user['username'],
-                                    email: value.user['email'],
-                                    first_name: value.user['first_name'],
-                                    last_name: value.user['last_name'],
-                                    gender: value.user['gender'],
-                                    from: value.user['known_from'],
-                                    tel: value.user['tel_num'],
-                                    id: value.user['id'].toString(),
-                                  ),
-                                ));
-                          },
-                        ).show();
-                      } else {
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.error,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: 'Error',
-                          desc: value.message,
-                          btnOkOnPress: () {},
-                          btnOkIcon: Icons.cancel,
-                          btnOkColor: Colors.red,
-                        ).show();
-                        print(value.message);
-                      }
-                    });
-                    // ignore: avoid_print
-                    print(requestModel.toJson());
+                    loginFun();
                   }
                 },
                 color: kwhite_new,
@@ -301,7 +229,7 @@ class _LoginState extends State<Login> {
                 // elevation: 5,
                 hoverElevation: 10,
                 hoverColor: kImageColor,
-                boxShadow: BoxShadow(
+                boxShadow: const BoxShadow(
                     blurRadius: 5,
                     color: Colors.black45,
                     offset: Offset(-2, 5)),
@@ -309,12 +237,9 @@ class _LoginState extends State<Login> {
                 fullWidthButton: true,
               ),
             ),
-
-            const SizedBox(
-              height: 20.0,
-            ),
+            const SizedBox(height: 20.0),
             Text.rich(TextSpan(children: [
-              TextSpan(
+              const TextSpan(
                 text: "Don't have any account? ",
                 style: TextStyle(fontSize: 16.0, color: kTextLightColor),
               ),
@@ -322,10 +247,12 @@ class _LoginState extends State<Login> {
                 text: 'Register',
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Register()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Register()));
                   },
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16.0,
                   color: kImageColor,
                   fontWeight: FontWeight.bold,
@@ -354,7 +281,7 @@ class _LoginState extends State<Login> {
         dialogType: DialogType.success,
         showCloseIcon: false,
         title: 'value.message',
-        autoHide: Duration(seconds: 3),
+        autoHide: const Duration(seconds: 3),
         onDismissCallback: (type) {
           // Navigator.of(context).push(MaterialPageRoute(
           //   builder: (context) =>
@@ -379,36 +306,80 @@ class _LoginState extends State<Login> {
       final snackBar = SnackBar(content: Text(e.message!));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-
-    // navigatorKey.currentState!.popUntil(((route) => route.isFirst));
   }
 
   List listUser = [];
-  void Load(String token) async {
-    setState(() {});
-    var rs = await http.get(
-      Uri.parse(
-          'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/user'),
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        'Authorization': 'Bearer $token',
-      },
+  void loginFun() async {
+    var headers = {'Content-Type': 'application/json'};
+    var data =
+        json.encode({"email": "oukpov@gmail.com", "password": "Pov88889"});
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
     );
-    if (rs.statusCode == 200) {
-      var jsonData = jsonDecode(rs.body);
+
+    if (response.statusCode == 200) {
       setState(() {
-        listUser = jsonData;
-        id = jsonData["id"];
-        username = jsonData['username'];
-        first_name = jsonData['first_name'];
-        last_name = jsonData['last_name'];
-        emails = jsonData['email'];
-        gender = jsonData['gender'];
-        from = jsonData['known_from'];
-        tel = jsonData['tel_num'];
+        // print(json.encode(response.data));
+        listUser = jsonDecode(json.encode(response.data));
+
+        saveEmail(_emailController.text);
+        savePassword(_passwordController.text);
+        FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: requestModel.email,
+          password: requestModel.password,
+        );
+
+        AwesomeDialog(
+          btnOkOnPress: () {},
+          context: context,
+          animType: AnimType.leftSlide,
+          headerAnimationLoop: false,
+          dialogType: DialogType.success,
+          showCloseIcon: false,
+          title: 'Login Successfuly',
+          autoHide: const Duration(seconds: 3),
+          onDismissCallback: (type) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResponsiveHomePage(
+                    listUser: listUser,
+                    url: listUser[0]['url'].toString(),
+                    password: requestModel.password,
+                    controllerUser: listUser[0]['control_user'].toString(),
+                    setEmail: requestModel.email,
+                    setPassword: requestModel.password,
+                    user: listUser[0]['username'].toString(),
+                    email: listUser[0]['email'].toString(),
+                    firstName: listUser[0]['first_name'].toString(),
+                    lastName: listUser[0]['last_name'].toString(),
+                    gender: listUser[0]['gender'].toString(),
+                    from: listUser[0]['known_from'].toString(),
+                    tel: listUser[0]['tel_num'].toString(),
+                    id: listUser[0]['id'].toString(),
+                  ),
+                ));
+          },
+        ).show();
       });
-      print(id.toString());
+    } else {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        headerAnimationLoop: false,
+        title: 'Error',
+        desc: 'Please Try again',
+        btnOkOnPress: () {},
+        btnOkIcon: Icons.cancel,
+        btnOkColor: Colors.red,
+      ).show();
     }
   }
 
@@ -426,7 +397,7 @@ class _LoginState extends State<Login> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
               controller: _emailController,
               //obscureText: true,
@@ -436,37 +407,28 @@ class _LoginState extends State<Login> {
               // controller: Email,
               onSaved: (input) => requestModel.email = input!,
               decoration: InputDecoration(
-                fillColor: Color.fromARGB(255, 255, 255, 255),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
                 labelText: 'Email',
-                prefixIcon: Icon(
-                  Icons.email,
-                  color: kImageColor,
-                ),
+                prefixIcon: const Icon(Icons.email, color: kImageColor),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                       color: Color.fromRGBO(0, 126, 250, 1), width: 2.0),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color.fromRGBO(0, 126, 250, 1),
-                  ),
+                  borderSide: const BorderSide(
+                      width: 1, color: Color.fromRGBO(0, 126, 250, 1)),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color.fromARGB(255, 249, 0, 0),
-                  ),
+                  borderSide: const BorderSide(
+                      width: 1, color: Color.fromARGB(255, 249, 0, 0)),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                focusedErrorBorder: OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
-                    color: Color.fromARGB(255, 249, 0, 0),
-                  ),
+                      width: 1, color: Color.fromARGB(255, 249, 0, 0)),
                   //  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
@@ -478,12 +440,10 @@ class _LoginState extends State<Login> {
               },
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Padding(
             //   height: 55,
-            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
               controller: _passwordController,
               // initialValue: "list[0].password",
@@ -496,10 +456,7 @@ class _LoginState extends State<Login> {
                 fillColor: kwhite,
                 filled: true,
                 labelText: 'Enter password',
-                prefixIcon: Icon(
-                  Icons.key,
-                  color: kImageColor,
-                ),
+                prefixIcon: const Icon(Icons.key, color: kImageColor),
                 suffixIcon: IconButton(
                   icon: Icon(
                     color: kImageColor,
@@ -518,24 +475,15 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: kerror,
-                  ),
+                  borderSide: const BorderSide(width: 1, color: kerror),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: kerror,
-                  ),
+                  borderSide: const BorderSide(width: 2, color: kerror),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: kPrimaryColor,
-                  ),
+                  borderSide: const BorderSide(width: 1, color: kPrimaryColor),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
@@ -552,12 +500,12 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget Output(BuildContext context) {
+  Widget output(BuildContext context) {
     return AutofillGroup(
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
               // textInputAction: TextInputAction.next,
               // autofillHints:  [AutofillHints.email],
@@ -565,10 +513,10 @@ class _LoginState extends State<Login> {
               controller: _emailController,
               onSaved: (input) => requestModel.email = input!,
               decoration: InputDecoration(
-                fillColor: Color.fromARGB(255, 255, 255, 255),
+                fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
                 labelText: 'Email',
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.email,
                   color: kImageColor,
                 ),
@@ -578,24 +526,20 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     width: 1,
                     color: Color.fromRGBO(0, 126, 250, 1),
                   ),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: Color.fromARGB(255, 249, 0, 0),
-                  ),
+                  borderSide: const BorderSide(
+                      width: 1, color: Color.fromARGB(255, 249, 0, 0)),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                focusedErrorBorder: OutlineInputBorder(
+                focusedErrorBorder: const OutlineInputBorder(
                   borderSide: BorderSide(
-                    width: 1,
-                    color: Color.fromARGB(255, 249, 0, 0),
-                  ),
+                      width: 1, color: Color.fromARGB(255, 249, 0, 0)),
                   //  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
@@ -607,12 +551,10 @@ class _LoginState extends State<Login> {
               },
             ),
           ),
-          SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Padding(
             //   height: 55,
-            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
               // textInputAction: TextInputAction.next,
               // onEditingComplete: () => TextInput.finishAutofillContext(),
@@ -625,7 +567,7 @@ class _LoginState extends State<Login> {
                 fillColor: kwhite,
                 filled: true,
                 labelText: 'Enter password',
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.key,
                   color: kImageColor,
                 ),
@@ -646,24 +588,15 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: kerror,
-                  ),
+                  borderSide: const BorderSide(width: 1, color: kerror),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 2,
-                    color: kerror,
-                  ),
+                  borderSide: const BorderSide(width: 2, color: kerror),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                    color: kPrimaryColor,
-                  ),
+                  borderSide: const BorderSide(width: 1, color: kPrimaryColor),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
               ),

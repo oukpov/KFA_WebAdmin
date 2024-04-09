@@ -7,7 +7,7 @@ Widget options(txt, txts, icon) {
     padding: const EdgeInsets.only(right: 10),
     child: Container(
       height: 40,
-      width: 140,
+      width: 130,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: const Color.fromARGB(255, 58, 207, 230)),
@@ -27,7 +27,7 @@ Widget options(txt, txts, icon) {
                   ' $txts',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 11,
+                      fontSize: 14,
                       color: Colors.red),
                 )
               ],

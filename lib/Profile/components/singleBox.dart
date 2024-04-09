@@ -14,10 +14,7 @@ class SingleBox extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          height: 60,
-          width: 280,
-          color: Color.fromARGB(255, 255, 255, 255),
+        Expanded(
           child: TextFormField(
             initialValue: phone,
             decoration: InputDecoration(
