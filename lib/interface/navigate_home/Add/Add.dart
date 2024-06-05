@@ -21,13 +21,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
 import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/LandBuilding.dart';
-import '../../../../components/bank.dart';
 import '../../../../components/property.dart';
 import '../../../../components/slideUp.dart';
 import '../../../../customs/form.dart';
 import '../../../Customs/formTwinN.dart';
 import '../../../api/api_service.dart';
 import '../../../api/contants.dart';
+import '../../../components/bank.dart';
 import '../../../components/comment.dart';
 import '../../../components/forceSale.dart';
 import '../../../models/autoVerbal.dart';
@@ -434,520 +434,525 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
   }
 
   Widget addVerbal(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 10),
-        Row(
-          children: [
-            SizedBox(width: 40),
-            Icon(
-              Icons.qr_code,
-              color: kImageColor,
-              size: 30,
-            ),
-            SizedBox(width: 10),
-            Text(
-              verbal_id,
-              style: TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  color: kPrimaryColor),
-            )
-          ],
-        ),
-        SizedBox(height: 10),
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          Row(
+            children: [
+              SizedBox(width: 40),
+              Icon(
+                Icons.qr_code,
+                color: kImageColor,
+                size: 30,
+              ),
+              SizedBox(width: 10),
+              Text(
+                verbal_id,
+                style: TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                    color: kPrimaryColor),
+              )
+            ],
+          ),
+          SizedBox(height: 10),
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (lat != null && lat1 == null)
-              InkWell(
-                onTap: () async {
-                  await SlideUp(context);
-                },
-                child: Container(
-                  height: 180,
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  // margin: EdgeInsets.only(top: 15, right: 13, left: 15),
-                  child: FadeInImage.assetNetwork(
-                    placeholderCacheHeight: 120,
-                    placeholderCacheWidth: 120,
-                    fit: BoxFit.cover,
-                    placeholderFit: BoxFit.fill,
-                    placeholder: 'assets/earth.gif',
-                    image:
-                        'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (lat != null && lat1 == null)
+                InkWell(
+                  onTap: () async {
+                    await SlideUp(context);
+                  },
+                  child: Container(
+                    height: 180,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    // margin: EdgeInsets.only(top: 15, right: 13, left: 15),
+                    child: FadeInImage.assetNetwork(
+                      placeholderCacheHeight: 120,
+                      placeholderCacheWidth: 120,
+                      fit: BoxFit.cover,
+                      placeholderFit: BoxFit.fill,
+                      placeholder: 'assets/earth.gif',
+                      image:
+                          'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                    ),
                   ),
-                ),
-              )
-            else if (lat1 != null)
-              InkWell(
-                onTap: () async {
-                  await SlideUp(context);
-                },
-                child: Container(
-                  height: 180,
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  child: FadeInImage.assetNetwork(
-                    placeholderCacheHeight: 50,
-                    placeholderCacheWidth: 50,
-                    placeholderFit: BoxFit.cover,
-                    placeholder: 'assets/earth.gif',
-                    image:
-                        'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                )
+              else if (lat1 != null)
+                InkWell(
+                  onTap: () async {
+                    await SlideUp(context);
+                  },
+                  child: Container(
+                    height: 180,
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    child: FadeInImage.assetNetwork(
+                      placeholderCacheHeight: 50,
+                      placeholderCacheWidth: 50,
+                      placeholderFit: BoxFit.cover,
+                      placeholder: 'assets/earth.gif',
+                      image:
+                          'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                    ),
                   ),
-                ),
-              )
-            else
-              SizedBox(),
-            SizedBox(width: 20),
-            if (_byesData != null)
-              InkWell(
-                onTap: () {
-                  OpenImgae();
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.45,
-                  height: 180,
-                  child: (get_bytes == null)
-                      ? Image.memory(
-                          _byesData!,
-                        )
-                      : Image.memory(get_bytes!),
-                ),
-              )
-            else
-              InkWell(
+                )
+              else
+                SizedBox(),
+              SizedBox(width: 20),
+              if (_byesData != null)
+                InkWell(
                   onTap: () {
                     OpenImgae();
                   },
                   child: Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                      ),
-                      child: Stack(children: [
-                        CachedNetworkImage(
-                          imageUrl:
-                              'https://www.oneclickonedollar.com/laravel_kfa_2023/public/data_imgs_kfa/Form_Image/image_select.jpg',
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width * 0.45,
-                          height: 180,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(
-                                value: downloadProgress.progress),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    height: 180,
+                    child: (get_bytes == null)
+                        ? Image.memory(
+                            _byesData!,
+                          )
+                        : Image.memory(get_bytes!),
+                  ),
+                )
+              else
+                InkWell(
+                    onTap: () {
+                      OpenImgae();
+                    },
+                    child: Container(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
                         ),
-                      ]),
-                    ),
-                  ))
-          ],
-        ),
-
-        Padding(
-          padding: const EdgeInsets.only(right: 120),
-          child: Row(
-            children: [
-              Spacer(),
-              IconButton(
-                  onPressed: () {
-                    _cropImage();
-                  },
-                  icon: const Icon(
-                    Icons.crop,
-                    size: 35,
-                    color: Colors.grey,
-                  )),
+                        child: Stack(children: [
+                          CachedNetworkImage(
+                            imageUrl:
+                                'https://www.oneclickonedollar.com/laravel_kfa_2023/public/data_imgs_kfa/Form_Image/image_select.jpg',
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width * 0.45,
+                            height: 180,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                              child: CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
+                        ]),
+                      ),
+                    ))
             ],
           ),
-        ),
-        InkWell(
-            onTap: () async {
-              testComporessList();
-            },
-            child: Text('Compress Image')),
-        SizedBox(height: 10),
-        CommentAndOption(
-          value: (value) {
-            setState(() {
-              opt = int.parse(value);
-            });
-          },
-          comment1: (opt != null) ? opt.toString() : null,
-          id: (value) {
-            setState(() {
-              requestModelAuto.option = value;
-            });
-          },
-          comment: (newValue) {
-            setState(() {
-              requestModelAuto.comment = newValue!.toString();
-            });
-          },
-          opt_type_id: (value) {
-            setState(() {
-              opt_type_id = value.toString();
-            });
-          },
-        ),
 
-        if (id_khan != 0)
-          InkWell(
-            onTap: () {
-              _asyncInputDialog(context);
-              ++i;
-            },
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: 40,
-              margin: EdgeInsets.only(top: 5),
-              decoration: BoxDecoration(
-                  color: Colors.lightBlueAccent[700],
-                  borderRadius: BorderRadius.circular(30)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                    child: DefaultTextStyle(
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        fontFamily: 'Horizon',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      child: AnimatedTextKit(
-                        animatedTexts: [
-                          RotateAnimatedText('land'),
-                          RotateAnimatedText('Building'),
-                        ],
-                        pause: const Duration(milliseconds: 100),
-                        repeatForever: true,
-                      ),
-                    ),
-                  ),
-                  GFAnimation(
-                    controller: controller,
-                    slidePosition: offsetAnimation,
-                    type: GFAnimationType.slideTransition,
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.white,
-                      size: 30,
-                      shadows: [Shadow(blurRadius: 5, color: Colors.black)],
-                    ),
-                  ),
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.only(right: 120),
+            child: Row(
+              children: [
+                Spacer(),
+                IconButton(
+                    onPressed: () {
+                      _cropImage();
+                    },
+                    icon: const Icon(
+                      Icons.crop,
+                      size: 35,
+                      color: Colors.grey,
+                    )),
+              ],
             ),
           ),
-        if (i >= 0)
-          Container(
-            width: 500,
-            height: (lb.length > 1) ? 280 : 0,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  for (int i = 1; i < lb.length; i++)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: Container(
-                        width: 290,
-                        //height: 210,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: kPrimaryColor),
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+          InkWell(
+              onTap: () async {
+                testComporessList();
+              },
+              child: Text('Compress Image')),
+          SizedBox(height: 10),
+          CommentAndOption(
+            value: (value) {
+              setState(() {
+                opt = int.parse(value);
+              });
+            },
+            comment1: (opt != null) ? opt.toString() : null,
+            id: (value) {
+              setState(() {
+                requestModelAuto.option = value;
+              });
+            },
+            comment: (newValue) {
+              setState(() {
+                requestModelAuto.comment = newValue!.toString();
+              });
+            },
+            opt_type_id: (value) {
+              setState(() {
+                opt_type_id = value.toString();
+              });
+            },
+          ),
+
+          if (id_khan != 0)
+            InkWell(
+              onTap: () {
+                _asyncInputDialog(context);
+                ++i;
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: 40,
+                margin: EdgeInsets.only(top: 5),
+                decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent[700],
+                    borderRadius: BorderRadius.circular(30)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: DefaultTextStyle(
+                        style: const TextStyle(
+                          fontSize: 18.0,
+                          fontFamily: 'Horizon',
+                          fontWeight: FontWeight.bold,
                         ),
-                        child: Column(
-                          children: [
-                            Stack(
-                              children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Text(
-                                        '${lb[i].verbal_land_type} ',
-                                        style: NameProperty(),
+                        child: AnimatedTextKit(
+                          animatedTexts: [
+                            RotateAnimatedText('land'),
+                            RotateAnimatedText('Building'),
+                          ],
+                          pause: const Duration(milliseconds: 100),
+                          repeatForever: true,
+                        ),
+                      ),
+                    ),
+                    GFAnimation(
+                      controller: controller,
+                      slidePosition: offsetAnimation,
+                      type: GFAnimationType.slideTransition,
+                      child: Icon(
+                        Icons.add_circle_outline,
+                        color: Colors.white,
+                        size: 30,
+                        shadows: [Shadow(blurRadius: 5, color: Colors.black)],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (i >= 0)
+            Container(
+              width: 500,
+              height: (lb.length > 1) ? 280 : 0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (int i = 1; i < lb.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        child: Container(
+                          width: 290,
+                          //height: 210,
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1, color: kPrimaryColor),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
                                       ),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Align(
-                                        alignment: Alignment.centerRight,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                            size: 30,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              deleteItemToList(i);
-                                            });
-                                          },
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          '${lb[i].verbal_land_type} ',
+                                          style: NameProperty(),
                                         ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 3.0,
-                            ),
-                            Divider(
-                              height: 1,
-                              thickness: 1,
-                              color: kPrimaryColor,
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              '${lb[i].address} ',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Depreciation",
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      "Floor",
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      "Area",
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      'Min Value/Sqm',
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      'Max Value/Sqm',
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      'Min Value',
-                                      style: Label(),
-                                    ),
-                                    SizedBox(height: 3),
-                                    Text(
-                                      'Min Value',
-                                      style: Label(),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 15),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: 4),
-                                    Text(
-                                      ':   ' + lb[i].verbal_land_dp,
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' + lb[i].verbal_land_des,
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' +
-                                          (formatter.format(lb[i]
-                                                  .verbal_land_area
-                                                  .toInt()))
-                                              .toString() +
-                                          'm' +
-                                          '\u00B2',
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' +
-                                          (lb[i].verbal_land_minsqm)
-                                              .toString() +
-                                          '\$',
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' +
-                                          (lb[i].verbal_land_maxsqm)
-                                              .toString() +
-                                          '\$',
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' +
-                                          (formatter.format(
-                                                  lb[i].verbal_land_minvalue))
-                                              .toString() +
-                                          '\$',
-                                      style: Name(),
-                                    ),
-                                    SizedBox(height: 2),
-                                    Text(
-                                      ':   ' +
-                                          (formatter
-                                                  .format(lb[i]
-                                                      .verbal_land_maxvalue)
-                                                  .toString() +
-                                              '\$'),
-                                      style: Name(),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                      Expanded(
+                                        flex: 1,
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: IconButton(
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                              size: 30,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                deleteItemToList(i);
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 3.0,
+                              ),
+                              Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: kPrimaryColor,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                '${lb[i].address} ',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Depreciation",
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        "Floor",
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        "Area",
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        'Min Value/Sqm',
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        'Max Value/Sqm',
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        'Min Value',
+                                        style: Label(),
+                                      ),
+                                      SizedBox(height: 3),
+                                      Text(
+                                        'Min Value',
+                                        style: Label(),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(width: 15),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 4),
+                                      Text(
+                                        ':   ' + lb[i].verbal_land_dp,
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' + lb[i].verbal_land_des,
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' +
+                                            (formatter.format(lb[i]
+                                                    .verbal_land_area
+                                                    .toInt()))
+                                                .toString() +
+                                            'm' +
+                                            '\u00B2',
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' +
+                                            (lb[i].verbal_land_minsqm)
+                                                .toString() +
+                                            '\$',
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' +
+                                            (lb[i].verbal_land_maxsqm)
+                                                .toString() +
+                                            '\$',
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' +
+                                            (formatter.format(
+                                                    lb[i].verbal_land_minvalue))
+                                                .toString() +
+                                            '\$',
+                                        style: Name(),
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        ':   ' +
+                                            (formatter
+                                                    .format(lb[i]
+                                                        .verbal_land_maxvalue)
+                                                    .toString() +
+                                                '\$'),
+                                        style: Name(),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
+          SizedBox(
+            height: 10.0,
           ),
-        SizedBox(
-          height: 10.0,
-        ),
-        PropertyDropdown(
-          name: (value) {
-            propertyType = value;
-          },
-          id: (value) {
-            requestModelAuto.property_type_id = value;
-          },
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-        BankDropdown(
-          bank: (value) {
-            requestModelAuto.bank_id = value;
-          },
-          bankbranch: (value) {
-            requestModelAuto.bank_branch_id = value;
-          },
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-        FormTwinN(
-          Label1: 'Owner',
-          Label2: 'Contact',
-          onSaved1: (input) {
-            requestModelAuto.owner = input!;
-          },
-          onSaved2: (input) {
-            requestModelAuto.contact = input!;
-          },
-          icon1: Icon(
-            Icons.person,
-            color: kImageColor,
-          ),
-          icon2: Icon(
-            Icons.phone,
-            color: kImageColor,
-          ),
-        ),
-        SizedBox(
-          height: 5.0,
-        ),
-        // DateComponents(
-        //   date: (value) {
-        //     requestModelAuto.date = value;
-        //   },
-        // ),
-        SizedBox(
-          height: 5.0,
-        ),
-        FormTwinN(
-          Label1: 'Bank Officer',
-          Label2: 'Contact',
-          onSaved1: (input) {
-            requestModelAuto.bank_officer = input!;
-          },
-          onSaved2: (input) {
-            requestModelAuto.bank_contact = input!;
-          },
-          icon1: Icon(
-            Icons.work,
-            color: kImageColor,
-          ),
-          icon2: Icon(
-            Icons.phone,
-            color: kImageColor,
-          ),
-        ),
-
-        SizedBox(
-          height: 5,
-        ),
-        ForceSaleAndValuation(
-          value: (value) {
-            requestModelAuto.verbal_con = value;
-          },
-        ),
-
-        SizedBox(
-          height: 10,
-        ),
-        ApprovebyAndVerifyby(
-          approve: (value) {
-            requestModelAuto.approve_id = value;
-          },
-          verify: (value) {
-            requestModelAuto.agent = value;
-          },
-        ),
-
-        Padding(
-          padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
-          child: FormS(
-            label: 'Phum optional',
-            onSaved: (input) {
-              requestModelAuto.address = input!;
+          PropertyDropdown(
+            name: (value) {
+              propertyType = value;
             },
-            iconname: Icon(
-              Icons.location_on_rounded,
+            id: (value) {
+              requestModelAuto.property_type_id = value;
+            },
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          BankDropdown(
+            bank: (value) {
+              requestModelAuto.bank_id = value;
+            },
+            bankbranch: (value) {
+              requestModelAuto.bank_branch_id = value;
+            },
+          ),
+          SizedBox(
+            height: 5.0,
+          ),
+          FormTwinN(
+            Label1: 'Owner',
+            Label2: 'Contact',
+            onSaved1: (input) {
+              requestModelAuto.owner = input!;
+            },
+            onSaved2: (input) {
+              requestModelAuto.contact = input!;
+            },
+            icon1: Icon(
+              Icons.person,
+              color: kImageColor,
+            ),
+            icon2: Icon(
+              Icons.phone,
               color: kImageColor,
             ),
           ),
-        ),
-        SizedBox(
-          height: 30.0,
-        ),
-      ],
+          SizedBox(
+            height: 5.0,
+          ),
+          // DateComponents(
+          //   date: (value) {
+          //     requestModelAuto.date = value;
+          //   },
+          // ),
+          SizedBox(
+            height: 5.0,
+          ),
+          FormTwinN(
+            Label1: 'Bank Officer',
+            Label2: 'Contact',
+            onSaved1: (input) {
+              requestModelAuto.bank_officer = input!;
+            },
+            onSaved2: (input) {
+              requestModelAuto.bank_contact = input!;
+            },
+            icon1: Icon(
+              Icons.work,
+              color: kImageColor,
+            ),
+            icon2: Icon(
+              Icons.phone,
+              color: kImageColor,
+            ),
+          ),
+
+          SizedBox(
+            height: 5,
+          ),
+          ForceSaleAndValuation(
+            value: (value) {
+              requestModelAuto.verbal_con = value;
+            },
+          ),
+
+          SizedBox(
+            height: 10,
+          ),
+          ApprovebyAndVerifyby(
+            approve: (value) {
+              requestModelAuto.approve_id = value;
+            },
+            verify: (value) {
+              requestModelAuto.agent = value;
+            },
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
+            child: FormS(
+              label: 'Phum optional',
+              onSaved: (input) {
+                requestModelAuto.address = input!;
+              },
+              iconname: Icon(
+                Icons.location_on_rounded,
+                color: kImageColor,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 30.0,
+          ),
+        ],
+      ),
     );
   }
 

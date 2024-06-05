@@ -17,7 +17,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/LandBuilding.dart';
-import '../../../../components/bank.dart';
+import '../../../components/bank.dart';
 import '../../../../components/property.dart';
 import '../../../../components/slideUp.dart';
 import '../../../../customs/form.dart';

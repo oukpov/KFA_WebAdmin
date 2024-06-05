@@ -31,7 +31,7 @@ import '../component/Web/simple/dropdownRow.dart';
 import '../component/Web/simple/inputdate.dart';
 import '../component/Web/simple/inputdateRowNow.dart';
 import '../component/Web/simple/inputfiled.dart';
-import '../component/Web/simple/inputfiledRow.dart';
+import '../component/Web/simple/inputfiledRowVld.dart';
 import '../component/title/title.dart';
 
 class new_customer extends StatefulWidget {
@@ -539,7 +539,7 @@ class _new_customerState extends State<new_customer> {
                                     valuetxt: 'gendername',
                                     filedName: 'Gender*'),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -550,7 +550,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'CustomerName *',
                                     flex: 4),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -561,7 +561,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Name in Khmer',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: true,
                                     value: (value) {},
@@ -570,7 +570,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Contact By', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -581,7 +581,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Contact By',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -594,7 +594,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Property Guide Name', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -605,7 +605,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Property Guide Name',
                                     flex: 6),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -631,7 +631,7 @@ class _new_customerState extends State<new_customer> {
                                     valuetxt: 'property_type_name',
                                     filedName: 'Property Type *'),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -642,7 +642,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Size *',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -655,7 +655,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Property Location', ' *', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -789,7 +789,7 @@ class _new_customerState extends State<new_customer> {
                                         valuetxt: 'bank_branch_name',
                                         filedName: 'Select Branch'),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: true,
                                     value: (value) {
@@ -800,7 +800,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Bank Officer Name',
                                     flex: 6),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: true,
                                     value: (value) {
@@ -811,7 +811,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Bank Officer Tell',
                                     flex: 6),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: true,
                                     value: (value) {
@@ -824,7 +824,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Total Fee Charge', ' *', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: true,
                                     readOnly: false,
                                     value: (value) {
@@ -889,7 +889,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('First Pay', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -903,7 +903,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'First Pay',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -925,7 +925,7 @@ class _new_customerState extends State<new_customer> {
                                   },
                                 ),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -936,7 +936,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Invoice',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -949,7 +949,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Final Pay', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -962,7 +962,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Final Pay',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -984,7 +984,7 @@ class _new_customerState extends State<new_customer> {
                                   },
                                 ),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -995,7 +995,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Invoice',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -1008,7 +1008,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Inspector Name', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -1019,7 +1019,7 @@ class _new_customerState extends State<new_customer> {
                                     filedName: 'Inspector Name',
                                     flex: 3),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -1147,7 +1147,7 @@ class _new_customerState extends State<new_customer> {
                                 sizebox10h,
                                 filedtexts('Remark', '', context),
                                 sizebox10h,
-                                InputfiedRow(
+                                InputfiedRowVld(
                                     validator: false,
                                     readOnly: false,
                                     value: (value) {
@@ -1428,7 +1428,7 @@ class _new_customerState extends State<new_customer> {
                                     filedtext('Contact By', '', context),
                                     SizedBox(
                                       width: w,
-                                      child: InputfiedRow(
+                                      child: InputfiedRowVld(
                                           validator: false,
                                           readOnly: false,
                                           value: (value) {
@@ -1442,7 +1442,7 @@ class _new_customerState extends State<new_customer> {
                                     sizeboxw40,
                                     SizedBox(
                                       width: w,
-                                      child: InputfiedRow(
+                                      child: InputfiedRowVld(
                                           validator: false,
                                           readOnly: false,
                                           value: (value) {
@@ -1463,7 +1463,7 @@ class _new_customerState extends State<new_customer> {
                                         'Property Guide Name', '', context),
                                     SizedBox(
                                       width: w,
-                                      child: InputfiedRow(
+                                      child: InputfiedRowVld(
                                           validator: false,
                                           readOnly: false,
                                           value: (value) {
@@ -1477,7 +1477,7 @@ class _new_customerState extends State<new_customer> {
                                     sizeboxw40,
                                     SizedBox(
                                       width: w,
-                                      child: InputfiedRow(
+                                      child: InputfiedRowVld(
                                           validator: false,
                                           readOnly: false,
                                           value: (value) {
@@ -1775,7 +1775,7 @@ class _new_customerState extends State<new_customer> {
                                         'Total Fee Charge', ' *', context),
                                     SizedBox(
                                         width: w,
-                                        child: InputfiedRow(
+                                        child: InputfiedRowVld(
                                             validator: true,
                                             readOnly: false,
                                             value: (value) {
@@ -2208,7 +2208,7 @@ class _new_customerState extends State<new_customer> {
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width *
                                           0.6,
-                                      child: InputfiedRow(
+                                      child: InputfiedRowVld(
                                           validator: false,
                                           readOnly: false,
                                           value: (value) {

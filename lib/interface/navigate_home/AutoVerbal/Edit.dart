@@ -434,7 +434,7 @@ class _EditState extends State<Edit> with SingleTickerProviderStateMixin {
                 check_property: 1,
               ),
               PropertyDropdown(
-                pro: widget.n_pro,
+                // pro: widget.n_pro,
                 name: (value) {
                   propertyType = value;
                 },

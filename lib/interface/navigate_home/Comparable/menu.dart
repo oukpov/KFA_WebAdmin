@@ -8,6 +8,8 @@ import 'comparable_1/New_Comparable.dart';
 import 'comparable_2/Comparable_list_view.dart';
 import 'comparable4/list_comparable_filter.dart';
 import 'comparable3/search_screen.dart/comparable_search.dart';
+import 'newComparable/paginatednewcomparable.dart';
+import 'newComparable/responsivenewcomparable.dart';
 
 class MenuComparable extends StatefulWidget {
   MenuComparable({super.key, required this.name});
@@ -64,13 +66,15 @@ class _MenuComparableState extends State<MenuComparable> {
                   if (i == 0) {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return New_Comparable();
+                        return Responsivenewcomparable(
+                          name: widget.name,
+                        );
                       },
                     ));
                   }
                   if (i == 1) {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ComparableList(
+                        builder: (context) => List_newcomparable(
                               name: widget.name,
                             )));
                   }

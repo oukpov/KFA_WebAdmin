@@ -87,6 +87,11 @@ class _New_ComparableState extends State<New_Comparable> {
     double textstye = MediaQuery.of(context).size.height * 0.07;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back)),
         centerTitle: true,
         backgroundColor: Colors.deepPurple[900],
         title: Text('New Commparable'),
@@ -209,6 +214,7 @@ class _New_ComparableState extends State<New_Comparable> {
                 ),
               ),
             property_hoemtype(
+              // flex: 3,
               hometype: (value) {
                 setState(() {
                   property_type = value;

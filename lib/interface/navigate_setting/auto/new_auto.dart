@@ -392,7 +392,7 @@ class _NewAutoState extends State<NewAuto> {
                         groupValue: groupValue,
                         onChanged: (value) {
                           setState(() {
-                            groupValue = int.parse(value!.toString());
+                            groupValue = int.parse(value.toString());
                           });
                         },
                         inactiveIcon: null,

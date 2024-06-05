@@ -17,7 +17,7 @@ Widget titletext(title, context) {
 
 Widget filedtext(title, star, context) {
   return SizedBox(
-      width: 150,
+      width: 100,
       child: Padding(
         padding: const EdgeInsets.only(left: 20),
         child: Row(

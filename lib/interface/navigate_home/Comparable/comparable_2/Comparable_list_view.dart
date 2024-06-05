@@ -144,7 +144,7 @@ class _ComparableListState extends State<ComparableList> {
                       onChanged: (value) {
                         setState(() {
                           _search = value;
-                          // _comparable_search_();
+                          _comparable_search_();
                         });
                       },
                       decoration: InputDecoration(

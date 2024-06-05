@@ -7,18 +7,15 @@ import 'package:getwidget/getwidget.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-
 import 'package:location_geocoder/location_geocoder.dart';
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:web_admin/components/property%20copy.dart';
 import '../Customs/ProgressHUD.dart';
-
 import '../models/search_model.dart';
-
 import 'contants.dart';
 import 'numDisplay.dart';
-import 'property.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 
