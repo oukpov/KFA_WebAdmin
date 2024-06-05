@@ -31,10 +31,8 @@ class _TwinBoxState extends State<TwinBox> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          height: 60,
-          width: 140,
-          color: Color.fromARGB(255, 255, 255, 255),
+        Expanded(
+          flex: 3,
           child: TextFormField(
             initialValue: widget.fname,
             onChanged: (value) {
@@ -49,13 +47,9 @@ class _TwinBoxState extends State<TwinBox> {
             ),
           ),
         ),
-        SizedBox(
-          width: 6,
-        ),
-        Container(
-          height: 60,
-          width: 140,
-          color: Color.fromARGB(255, 255, 255, 255),
+        SizedBox(width: 6),
+        Expanded(
+          flex: 3,
           child: TextFormField(
             initialValue: widget.lname,
             onChanged: (value) {

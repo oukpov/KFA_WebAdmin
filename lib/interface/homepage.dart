@@ -1,11 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors_in_immutables, unnecessary_this, prefer_interpolation_to_compose_strings, avoid_print, unnecessary_const, avoid_unnecessary_containers, sized_box_for_whitespace, prefer_const_constructors, deprecated_member_use, unused_import, unnecessary_import, unused_local_variable, unused_element, sort_child_properties_last
 import 'dart:convert';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
-
 import 'package:get/get.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:getwidget/components/badge/gf_badge.dart';
@@ -15,10 +13,7 @@ import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-
-import '../Account/account.dart';
 import '../Customs/responsive.dart';
-
 import 'navigate_home/User/list_notivigation.dart';
 import 'navigate_setting/memu_propety.dart';
 import 'navigate_home/on_home_page.dart';
@@ -101,17 +96,6 @@ class _HomePageState extends State<HomePage>
         from: widget.from,
         tel: widget.tel,
         id: widget.id,
-      ),
-      Account(
-        username: widget.user,
-        email: widget.email,
-        first_name: widget.first_name,
-        last_name: widget.last_name,
-        gender: widget.gender,
-        from: widget.from,
-        tel: widget.tel,
-        id: widget.id,
-        set_password: widget.password,
       ),
     ];
 

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Customs/Contants.dart';
+import '../../components/contants.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 
@@ -25,22 +26,14 @@ class _DropdownState extends State<Dropdown> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 59,
-      width: 140,
+    return Expanded(
       child: DropdownButtonFormField<String>(
         onChanged: (String? newValue) {
           setState(() {
-            bankvalue = newValue!;
             widget.get_gender(newValue);
           });
         },
-        // validator: (String? value) {
-        //   if (value?.isEmpty ?? true) {
-        //     return 'Please select bank';
-        //   }
-        //   return null;
-        // },
+
         value: widget.gender,
         items: gender
             .map<DropdownMenuItem<String>>(
@@ -51,78 +44,18 @@ class _DropdownState extends State<Dropdown> {
             )
             .toList(),
         // add extra sugar..
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_drop_down,
-          color: kImageColor,
+          color: kwhite_new,
         ),
 
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          labelText: 'Gender',
-          hintText: 'select one',
+          labelText: 'gender',
+          hintText: 'Select',
         ),
       ),
     );
   }
 }
-
-// class Dropdown extends StatefulWidget {
-//   final String gender;
-//   const Dropdown({Key? key, required this.gender}) : super(key: key);
-
-//   @override
-//   State<Dropdown> createState() => _DropdownState();
-// }
-
-// class _DropdownState extends State<Dropdown> {
-//   String bankvalue = 'Male';
-//   var gender = [
-//     'Male',
-//     'Female',
-//     'Other',
-//   ];
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       height: 59,
-//       width: 140,
-//       child: DropdownButtonFormField<String>(
-//         onChanged: (String? newValue) {
-//           setState(() {
-//             bankvalue = newValue!;
-//             // ignore: avoid_print
-//             print(newValue);
-//           });
-//         },
-//         // validator: (String? value) {
-//         //   if (value?.isEmpty ?? true) {
-//         //     return 'Please select bank';
-//         //   }
-//         //   return null;
-//         // },
-//         value: widget.gender,
-//         items: gender
-//             .map<DropdownMenuItem<String>>(
-//               (String value) => DropdownMenuItem<String>(
-//                 value: value,
-//                 child: Text(value),
-//               ),
-//             )
-//             .toList(),
-//         // add extra sugar..
-//         icon: Icon(
-//           Icons.arrow_drop_down,
-//           color: kImageColor,
-//         ),
-
-//         decoration: InputDecoration(
-//           fillColor: Colors.white,
-//           filled: true,
-//           labelText: 'Gender',
-//           hintText: 'select one',
-//         ),
-//       ),
-//     );
-//   }
-// }

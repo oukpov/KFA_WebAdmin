@@ -10,16 +10,9 @@ import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
-import 'Auth/login.dart';
-import 'cliboard.dart';
-import 'components/bankcolumn.dart';
-import 'components/bankrow.dart';
-import 'interface/navigate_home/Comparable/comparable_1/New_Comparable.dart';
-import 'interface/navigate_home/Comparable/newComparable/Comparable_list_new.dart';
-import 'interface/navigate_home/Comparable/newComparable/paginatednewcomparable.dart';
-import 'interface/navigate_home/Comparable/newComparable/responsivenewcomparable.dart';
-import 'interface/navigate_home/Comparable/newComparable/responsiveupdate.dart';
-import 'interface/navigate_home/Comparable/newComparable/update_new_comparable copy.dart';
+
+import 'interface/homescreen/newhomepage.dart';
+import 'interface/homescreen/responsive_layout.dart';
 
 List list = [];
 String? district_id;
@@ -63,65 +56,19 @@ class _MyAppState extends State<MyApp> {
       create: (_) => FirebaseProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        // routes: {
-        //    //'/': (context) => Login(),
-        //   '/': (BuildContext obj) => Homecomparable(),
-        //   '/old': (BuildContext obj) =>  New_Comparable(),
-        //   '/new': (BuildContext obj) => ResponsiveHomeP()
-        // },
-        // home: Map_verbal_address_sale_two(
-        //   get_commune: (value) {},
-        //   get_district: (value) {},
-        //   get_lat: (value) {},
-        //   get_log: (value) {},
-        //   get_province: (value) {},
-        // ),
-        home: Login(),
-        // home: PaginatedTest(
-        //   name: '',
-        // ),
-        //home: HomePageClipboard(),
-        // home: Update_NewComarable(
-        //   device: ''.toString(),
-        //   email: ''.toString(),
-        //   idUsercontroller: ''.toString(),
-        //   myIdcontroller: ''.toString(),
-        //   list: [],
-        // ),
-        //home: ResponsiveHomePupdate(),
-        // home: ComparableListnews(
-        //   name: '',
-        // ),
-        // home: ComparableList(
-        //   name: '',
-        // ),
-        // home: ResponsiveHomeP(),
-        // home: ResponsiveCustomer(
-        //   email: '',
-        //   idController: '',
-        //   myIdController: '',
-        // ),
-        //home: const New_Comparable(),
-        //home: Hometest(),
-        //home: Login(),
-        // home: const detail_verbal(
-        //   set_data_verbal: '54K182F54Aky5wp5e9d',
-        // ),
-
-        //  home: ResponsiveLayout(myIdController: '', email: '', idController: ''),
-        // home: Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
-        // home: const AddProperty(idUserController: '95K267F95A'),
-        // home: MyFavories(
-        //     email: 'mp@gmail.com',
-        //     idUsercontroller: '192K381F363A',
-        //     myIdController: '191K877F994A'),
-        //  home: Map_verbal_address_Sale(get_commune: (value) {  },
-        // get_district: (value) {  },
-        // get_lat: (value) {  },
-        // get_log: (value) {  },
-        // get_province: (value) {  },),
-        //home: new_customer_map(),
+        routes: {
+          // '/': (context) => const ResponsiveHomePage(
+          //     id: '12',
+          //     name: 'ouk pov',
+          //     controllerUser: '12831923',
+          //     nativigation: true,
+          //     email: 'oukpov@gmail.com')
+          // '/': (BuildContext obj) => ResponsiveLayout(
+          //       myIdController: '',
+          //       email: '',
+          //       idController: '',
+          //     ),
+        },
         onGenerateRoute: (RouteSettings settings) {
           final args = settings.name;
 

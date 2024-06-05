@@ -22,50 +22,25 @@ class Field_box extends StatefulWidget {
 class _Field_boxState extends State<Field_box> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 60,
-        width: 280,
-        color: Colors.white,
-        child: TextFormField(
-          initialValue: widget.email,
-          onChanged: (value) {
-            setState(() {
-              widget.get_email(value);
-            });
-          },
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            fillColor: const Color.fromARGB(255, 255, 255, 255),
-            filled: true,
-            labelText: widget.name,
+    return Row(
+      children: [
+        Expanded(
+          child: TextFormField(
+            initialValue: widget.email,
+            onChanged: (value) {
+              setState(() {
+                widget.get_email(value);
+              });
+            },
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              fillColor: const Color.fromARGB(255, 255, 255, 255),
+              filled: true,
+              labelText: widget.name,
+            ),
           ),
-        ));
+        ),
+      ],
+    );
   }
 }
-
-// class Field_box extends StatelessWidget {
-//   final String name;
-//   final String email;
-//   //final icon;
-//   const Field_box({
-//     Key? key,
-//     required this.name,
-//     required this.email,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         height: 60,
-//         width: 280,
-//         color: Colors.white,
-//         child: TextFormField(
-//           initialValue: email,
-//           decoration: InputDecoration(
-//             fillColor: const Color.fromARGB(255, 255, 255, 255),
-//             filled: true,
-//             labelText: name,
-//           ),
-//         ));
-//   }
-// }
