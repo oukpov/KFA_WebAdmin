@@ -54,7 +54,7 @@ class _InputfiedState extends State<Inputfied> {
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(vertical: 8),
             prefixIcon: const SizedBox(width: 7),
-            hintText: widget.filedName,
+            //hintText: widget.filedName,
             fillColor: kwhite,
             labelText: widget.filedName,
             filled: true,

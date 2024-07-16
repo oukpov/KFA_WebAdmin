@@ -1,49 +1,42 @@
-// ignore_for_file: unnecessary_import, implementation_imports, prefer_const_constructors
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'comparable_1/New_Comparable.dart';
-import 'comparable_2/Comparable_list_view.dart';
-import 'comparable4/list_comparable_filter.dart';
-import 'comparable3/search_screen.dart/comparable_search.dart';
-import 'newComparable/paginatednewcomparable.dart';
-import 'newComparable/responsivenewcomparable.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-class MenuComparable extends StatefulWidget {
-  MenuComparable({super.key, required this.name});
-  String? name;
+class MenuComparableReport extends StatefulWidget {
+  const MenuComparableReport({super.key});
 
   @override
-  State<MenuComparable> createState() => _MenuComparableState();
+  State<MenuComparableReport> createState() => _MenuComparableReportState();
 }
 
-class _MenuComparableState extends State<MenuComparable> {
+class _MenuComparableReportState extends State<MenuComparableReport> {
   List<Text> option = const [
-    Text("New Comparable",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    Text("Comparable List",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    Text("Comparable Search",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    Text("Comparable Map List",
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+    Text(
+      "Comparable Report Year",
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ),
+    Text(
+      "Comparable Case",
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    ),
+    Text(
+      'Comparable Case Bar Chart',
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+    )
   ];
   List<Icon> optionIconList = const [
     Icon(Icons.data_saver_on),
     Icon(Icons.list_alt_outlined),
-    Icon(Icons.search),
-    Icon(Icons.map),
+    Icon(Icons.list_alt_outlined),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: Colors.deepPurple[900],
+        centerTitle: true,
         title: const Text(
-          "Comparable",
+          "Comparable Report",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
         ),
@@ -51,7 +44,7 @@ class _MenuComparableState extends State<MenuComparable> {
       body: Container(
         height: MediaQuery.of(context).size.height * 1,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: ExactAssetImage('assets/images/New_KFA_Logo.png'),
               fit: BoxFit.contain,
@@ -64,27 +57,18 @@ class _MenuComparableState extends State<MenuComparable> {
               InkWell(
                 onTap: () {
                   if (i == 0) {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return Responsivenewcomparable(
-                          name: widget.name,
-                        );
-                      },
-                    ));
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //     //return const customerCaseinOut();
+                    //   },
+                    // ));
                   }
                   if (i == 1) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => List_newcomparable(
-                              name: widget.name,
-                            )));
-                  }
-                  if (i == 2) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => comparable_search()));
-                  }
-                  if (i == 3) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => List_comparable_filter()));
+                    // Navigator.push(context, MaterialPageRoute(
+                    //   builder: (context) {
+                    //    // return const customercasebar();
+                    //   },
+                    // ));
                   }
                 },
                 child: Container(
@@ -93,7 +77,7 @@ class _MenuComparableState extends State<MenuComparable> {
                   height: MediaQuery.of(context).size.height * 0.07,
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Colors.cyan,
                           Colors.indigo,

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import 'Add/menu_list.dart';
 import 'AutoVerbal/menu.dart';
-import 'Comparable/menu.dart';
+import 'Comparable/menucomparable.dart';
 import 'Customer/menu.dart';
 import 'Report/menu.dart';
 import 'User/menu.dart';
@@ -88,10 +88,10 @@ class _NoBodyHomeState extends State<NoBodyHome> {
                           )));
                 }
                 if (i == 2) {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MenuComparable(
-                            name: widget.name,
-                          )));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => MenuComparable(
+                  //           name: widget.name,
+                  //         )));
                 }
                 if (i == 3) {
                   Navigator.of(context).push(MaterialPageRoute(

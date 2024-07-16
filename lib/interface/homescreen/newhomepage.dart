@@ -20,6 +20,9 @@ import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dar
 import '../navigate_home/Add/Add.dart';
 import '../navigate_home/Add/listPropertyCheck.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
+import '../navigate_home/Comparable/newComparable/listnewcomparable.dart';
+import '../navigate_home/Comparable/newComparable/responsivenewcomparableadd.dart';
+import '../navigate_home/Comparable/newComparable/responsivenewcomparableget.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
@@ -27,6 +30,7 @@ import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
+import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/detail_notivigtion.dart';
 import '../navigate_home/User/list_notivigation.dart';
@@ -330,13 +334,16 @@ class _homescreenState extends State<homescreen> {
                               if (i == 0) {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return const New_Comparable();
+                                    return ResponsivenewcomparableAdd(
+                                      id: widget.id.toString(),
+                                      name: widget.user,
+                                    );
                                   },
                                 ));
                               }
                               if (i == 1) {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ComparableList(
+                                    builder: (context) => List_newcomparable(
                                           name: widget.user,
                                         )));
                               }
@@ -468,6 +475,13 @@ class _homescreenState extends State<homescreen> {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return MenuCostomerResport(id: widget.id);
+                                  },
+                                ));
+                              }
+                              if (i == 2) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const ResponsiveReportYear();
                                   },
                                 ));
                               }

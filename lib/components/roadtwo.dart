@@ -40,93 +40,88 @@ class _RoadDropdowntwoState extends State<RoadDropdowntwo> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: (widget.flex == null) ? 0 : int.parse(widget.flex.toString()),
-          child: DropdownButtonFormField<String>(
-              //value: genderValue,
-              isExpanded: true,
-              onChanged: (newValue) {
-                setState(() {
-                  widget.id_road(newValue);
-                  roadValue = newValue as String;
-                  // ignore: avoid_print
-                });
-              },
-              items: _list
-                  .map<DropdownMenuItem<String>>(
-                    (value) => DropdownMenuItem<String>(
-                      value: value["road_id"].toString(),
-                      child: Text(value["road_name"]),
-                      onTap: () {
-                        setState(() {
-                          widget.Name_road(value["road_name"]);
-                        });
-                      },
-                    ),
-                  )
-                  .toList(),
-              // add extra sugar..
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: kImageColor,
-              ),
-              decoration: InputDecoration(
-                // labelStyle: ,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-                fillColor: kwhite,
-                filled: true,
-                labelText: widget.filedName,
-                hintText: widget.filedName,
-                labelStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.textScaleFactorOf(context) * 12),
-                helperStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.textScaleFactorOf(context) * 12),
-                prefixIcon: const SizedBox(width: 7),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(color: kPrimaryColor, width: 1.0),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  // borderSide: BorderSide(
-                  //   width: 1,
-                  //   color: (!hasError && widget.validator == true)
-                  //       ? Colors.red
-                  //       : bordertxt,
-                  // ),
-                  borderRadius: BorderRadius.circular(5.0),
+    return Expanded(
+      flex: (widget.flex == null) ? 0 : int.parse(widget.flex.toString()),
+      child: DropdownButtonFormField<String>(
+          //value: genderValue,
+          isExpanded: true,
+          onChanged: (newValue) {
+            setState(() {
+              widget.id_road(newValue);
+              roadValue = newValue as String;
+              // ignore: avoid_print
+            });
+          },
+          items: _list
+              .map<DropdownMenuItem<String>>(
+                (value) => DropdownMenuItem<String>(
+                  value: value["road_id"].toString(),
+                  child: Text(value["road_name"]),
+                  onTap: () {
+                    setState(() {
+                      widget.Name_road(value["road_name"]);
+                    });
+                  },
                 ),
               )
-              // InputDecoration(
-              //   contentPadding: EdgeInsets.symmetric(vertical: 8),
-              //   fillColor: kwhite,
-              //   filled: true,
-              //   labelText: 'Road',
-              //   hintText: 'Select one',
-              //   prefixIcon: Icon(
-              //     Icons.edit_road_outlined,
-              //     color: kImageColor,
-              //   ),
-              //   focusedBorder: OutlineInputBorder(
-              //     borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
-              //     borderRadius: BorderRadius.circular(10.0),
-              //   ),
-              //   enabledBorder: OutlineInputBorder(
-              //     borderSide: BorderSide(
-              //       width: 1,
-              //       color: kPrimaryColor,
-              //     ),
-              //     borderRadius: BorderRadius.circular(10.0),
-              //   ),
+              .toList(),
+          // add extra sugar..
+          icon: Icon(
+            Icons.arrow_drop_down,
+            color: kImageColor,
+          ),
+          decoration: InputDecoration(
+            // labelStyle: ,
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+            fillColor: kwhite,
+            filled: true,
+            labelText: widget.filedName,
+            hintText: widget.filedName,
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.textScaleFactorOf(context) * 12),
+            helperStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: MediaQuery.textScaleFactorOf(context) * 12),
+            prefixIcon: const SizedBox(width: 7),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              // borderSide: BorderSide(
+              //   width: 1,
+              //   color: (!hasError && widget.validator == true)
+              //       ? Colors.red
+              //       : bordertxt,
               // ),
-              ),
-        ),
-      ],
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          )
+          // InputDecoration(
+          //   contentPadding: EdgeInsets.symmetric(vertical: 8),
+          //   fillColor: kwhite,
+          //   filled: true,
+          //   labelText: 'Road',
+          //   hintText: 'Select one',
+          //   prefixIcon: Icon(
+          //     Icons.edit_road_outlined,
+          //     color: kImageColor,
+          //   ),
+          //   focusedBorder: OutlineInputBorder(
+          //     borderSide: const BorderSide(color: kPrimaryColor, width: 2.0),
+          //     borderRadius: BorderRadius.circular(10.0),
+          //   ),
+          //   enabledBorder: OutlineInputBorder(
+          //     borderSide: BorderSide(
+          //       width: 1,
+          //       color: kPrimaryColor,
+          //     ),
+          //     borderRadius: BorderRadius.circular(10.0),
+          //   ),
+          // ),
+          ),
     );
   }
 

@@ -1,43 +1,43 @@
 import 'package:flutter/widgets.dart';
+import 'package:web_admin/interface/navigate_home/Comparable/newComparable/add_new_comparable.dart';
 
-import 'get_new_comparable.dart';
-import 'new_comparable.dart';
-
-class Responsivenewcomparable extends StatefulWidget {
-  Responsivenewcomparable({super.key, this.name});
+class ResponsivenewcomparableAdd extends StatefulWidget {
+  ResponsivenewcomparableAdd({super.key, this.name, this.id});
   String? name;
+  String? id;
   @override
-  State<Responsivenewcomparable> createState() =>
-      _ResponsivenewcomparableState();
+  State<ResponsivenewcomparableAdd> createState() =>
+      _ResponsivenewcomparableAddState();
 }
 
-class _ResponsivenewcomparableState extends State<Responsivenewcomparable> {
+class _ResponsivenewcomparableAddState
+    extends State<ResponsivenewcomparableAdd> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth < 770) {
-          return NewComarable(
+          return AddNewComarable(
             username: widget.name.toString(),
             device: 'm',
             email: '',
-            idUsercontroller: '',
+            idUsercontroller: widget.id.toString(),
             myIdcontroller: '',
           );
         } else if (constraints.maxWidth < 1199) {
-          return NewComarable(
+          return AddNewComarable(
             username: widget.name.toString(),
             device: 'd',
             email: widget.name.toString(),
-            idUsercontroller: '',
+            idUsercontroller: widget.id.toString(),
             myIdcontroller: '',
           );
         } else {
-          return NewComarable(
+          return AddNewComarable(
             username: widget.name.toString(),
             device: 'd',
             email: widget.name.toString(),
-            idUsercontroller: '',
+            idUsercontroller: widget.id.toString(),
             myIdcontroller: '',
           );
         }

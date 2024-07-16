@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:web_admin/interface/navigate_home/Comparable/newComparable/update_new_comparable%20copy.dart';
+import 'package:web_admin/interface/navigate_home/Comparable/newComparable/update_new_comparable.dart';
 
 class ResponsiveHomePupdate extends StatefulWidget {
   ResponsiveHomePupdate({

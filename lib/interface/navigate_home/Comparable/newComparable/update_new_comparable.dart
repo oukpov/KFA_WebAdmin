@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:web_admin/components/L_w_totaltworow.dart';
+import 'package:web_admin/components/banktwo.dart';
 import 'package:web_admin/models/savecomparablemodel.dart';
 import '../../../../Profile/contants.dart';
 import '../../../../components/L_w_totaltwo.dart';
@@ -206,7 +207,9 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
       comparable_condition_id =
           widget.list['comparable_condition_id'].toString();
       comparable_year_controller.text =
-          widget.list['comparable_year'].toString();
+          (widget.list['comparable_year'].toString() == 'null')
+              ? ""
+              : widget.list['comparable_year'].toString();
       comparable_address_controller.text =
           widget.list['comparable_address'].toString();
       comparable_province_controller.text = widget.list['province'].toString();
@@ -222,11 +225,6 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
           widget.list['comparable_phone'].toString();
       log = double.parse(widget.list['latlong_log'].toString());
       lat = double.parse(widget.list['latlong_la'].toString());
-      // latlong_log = double.parse(widget.list['latlong_log'].toString());
-      // latlong_la = double.parse(widget.list['latlong_la'].toString());
-      // comparable_sold_total = (comparable_sold_lengthcontroller.text *
-      //         comparable_sold_widthcontroller.text)
-      //     .toString();
     });
   }
 
@@ -315,7 +313,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
         Uri.parse(
             'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/update_Comparable'));
     request.body = json.encode({
-      "comparable_id": "359665",
+      "comparable_id": widget.list['comparable_id'],
       "compare_bank_id": compare_bank_id.toString(),
       "compare_bank_branch_id": compare_bank_branch_id,
       "com_bankofficer": (com_bankofficer_controller.text == null)
@@ -341,7 +339,9 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
       "comparable_sold_total_price": comparable_sold_total_price,
       "comparableAmount": comparable_asking_price_controller.text,
       "comparable_condition_id": comparable_condition_id,
-      "comparable_year": comparable_year_controller.text,
+      "comparable_year": (comparable_year_controller.text == 'null')
+          ? ''
+          : comparable_year_controller.text,
       "comparable_address": comparable_address_controller.text,
       "province": comparable_province_controller.text,
       "district": comparable_district_controller.text,
@@ -386,7 +386,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Update',
+          'Update ',
           style: TextStyle(color: Colors.amber, fontSize: 22),
         ),
         actions: [
@@ -428,81 +428,98 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                 sizebox10h,
                                 titletexts('Bank Info *', context),
                                 sizebox10h,
-                                BankDropdowncolumn(
-                                  bank: (value) {
-                                    setState(() {
-                                      compare_bank_id = value.toString();
-                                    });
-                                  },
-                                  bankbranch: (value) {
-                                    setState(() {
-                                      compare_bank_branch_id = value;
-                                      // print(
-                                      //     "\nkokoobject${listbranch}");
-                                    });
-                                  },
-                                  validator: (val) {},
-                                  filedName:
-                                      widget.list['bank_name'].toString(),
-                                  brandfiledName: widget
-                                      .list['bank_branch_name']
-                                      .toString(),
+                                SizedBox(
+                                  child: BankDropdowncolumn(
+                                      bank: (value) {
+                                        setState(() {
+                                          compare_bank_id = value.toString();
+                                        });
+                                      },
+                                      bankbranch: (value) {
+                                        setState(() {
+                                          compare_bank_branch_id = value;
+                                          // print(
+                                          //     "\nkokoobject${listbranch}");
+                                        });
+                                      },
+                                      validator: (val) {},
+                                      filedName:
+                                          widget.list['bank_name'].toString(),
+                                      brandfiledName: ((widget
+                                                  .list['bank_branch_name']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (widget.list['bank_branch_name']
+                                              .toString())),
                                 ),
                                 sizebox10h,
                                 titletexts('Bank Officer', context),
                                 sizebox10h,
                                 SizedBox(
-                                  child: inputController(
-                                      2,
-                                      false,
-                                      'Bank Officer',
-                                      com_bankofficer_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(2, false, 'Bank Officer',
+                                          com_bankofficer_controller),
+                                    ],
+                                  ),
                                 ),
                                 titletexts('Bank Contact', context),
                                 sizebox10h,
                                 SizedBox(
-                                  child: inputController(
-                                      2,
-                                      false,
-                                      'Bank Contact',
-                                      com_bankcontact_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(2, false, 'Bank Contact',
+                                          com_bankcontact_controller),
+                                    ],
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Zoning', context),
                                 sizebox10h,
-                                Container(
+                                SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height * 0.08,
-                                  child: DropDown(
-                                      validator: true,
-                                      flex: 2,
-                                      value: (value) {
-                                        setState(() {
-                                          widget.list['zoning_id'].toString();
-                                        });
-                                      },
-                                      list: zoningList,
-                                      valuedropdown: 'zoning_id',
-                                      valuetxt: '',
-                                      filedName: 'All'),
+                                  child: Row(
+                                    children: [
+                                      DropDown(
+                                          validator: true,
+                                          flex: 2,
+                                          value: (value) {
+                                            setState(() {
+                                              widget.list['zoning_id']
+                                                  .toString();
+                                            });
+                                          },
+                                          list: zoningList,
+                                          valuedropdown: 'zoning_id',
+                                          valuetxt: '',
+                                          filedName: 'All'),
+                                    ],
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Property Type *', context),
                                 sizebox10h,
                                 SizedBox(
-                                  child: property_hoemtypetwo(
-                                    flex: 3,
-                                    hometype: (value) {
-                                      setState(() {
-                                        // com_property_type = value;
-                                        comparable_property_id =
-                                            value.toString();
-                                        // print(value);
-                                      });
-                                    },
-                                    // hometype_lable: com_property_type,
-                                    filedName: widget.list['property_type_name']
-                                        .toString(),
+                                  child: Row(
+                                    children: [
+                                      property_hoemtypetwo(
+                                        flex: 3,
+                                        hometype: (value) {
+                                          setState(() {
+                                            // com_property_type = value;
+                                            comparable_property_id =
+                                                value.toString();
+                                            // print(value);
+                                          });
+                                        },
+                                        // hometype_lable: com_property_type,
+                                        filedName: widget
+                                            .list['property_type_name']
+                                            .toString(),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 sizebox10h,
@@ -510,94 +527,108 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                 sizebox10h,
                                 SizedBox(
                                   //width: w,
-                                  child: RoadDropdowntwo(
-                                    Name_road: (value) {
-                                      setState(() {
-                                        widget.list['road_name'].toString();
-                                      });
-                                    },
-                                    filedName:
-                                        widget.list['road_name'].toString(),
-                                    id_road: (value) {
-                                      setState(() {
-                                        comparable_road = value.toString();
-                                      });
-                                    },
-                                    flex: 3,
+                                  child: Row(
+                                    children: [
+                                      RoadDropdowntwo(
+                                        Name_road: (value) {
+                                          setState(() {
+                                            widget.list['road_name'].toString();
+                                          });
+                                        },
+                                        filedName:
+                                            widget.list['road_name'].toString(),
+                                        id_road: (value) {
+                                          setState(() {
+                                            comparable_road = value.toString();
+                                          });
+                                        },
+                                        flex: 3,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 sizebox10h,
                                 titletexts('Land', context),
                                 sizebox10h,
-                                Land_buildingtwo(
-                                  filedName: '',
-                                  //flex: 3,
-                                  l: (value) {
-                                    setState(() {
-                                      comparable_land_lengthcontroller.text =
-                                          value;
-                                    });
-                                  },
-                                  total: (value) {
-                                    setState(() {
-                                      comparable_land_total = value;
-                                    });
-                                  },
-                                  w: (value) {
-                                    setState(() {
-                                      comparable_land_widthcontroller.text =
-                                          value;
-                                    });
-                                  },
-                                  ltext: widget.list['comparable_land_length']
-                                      .toString(),
-                                  wtext: widget.list['comparable_land_width']
-                                      .toString(),
-                                  l_total: widget.list['comparable_land_total']
-                                      .toString(),
+                                SizedBox(
+                                  child: Land_buildingtwo(
+                                    filedName: '',
+                                    //flex: 3,
+                                    l: (value) {
+                                      setState(() {
+                                        comparable_land_lengthcontroller.text =
+                                            value;
+                                      });
+                                    },
+                                    total: (value) {
+                                      setState(() {
+                                        comparable_land_total = value;
+                                      });
+                                    },
+                                    w: (value) {
+                                      setState(() {
+                                        comparable_land_widthcontroller.text =
+                                            value;
+                                      });
+                                    },
+                                    ltext: widget.list['comparable_land_length']
+                                        .toString(),
+                                    wtext: widget.list['comparable_land_width']
+                                        .toString(),
+                                    l_total: widget
+                                        .list['comparable_land_total']
+                                        .toString(),
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Building', context),
                                 sizebox10h,
-                                Land_buildingtwo(
-                                  filedName: '',
-                                  //flex: 3,
-                                  l: (value) {
-                                    setState(() {
-                                      comparable_sold_lengthcontroller.text =
-                                          value;
-                                    });
-                                  },
-                                  total: (value) {
-                                    setState(() {
-                                      comparable_sold_total = value;
-                                    });
-                                  },
-                                  w: (value) {
-                                    setState(() {
-                                      comparable_sold_widthcontroller.text =
-                                          value;
-                                    });
-                                  },
-                                  ltext: widget.list['comparable_sold_length']
-                                      .toString(),
-                                  wtext: widget.list['comparable_sold_width']
-                                      .toString(),
-                                  l_total: widget.list['comparable_sold_total']
-                                      .toString(),
+                                SizedBox(
+                                  child: Land_buildingtwo(
+                                    filedName: '',
+                                    //flex: 3,
+                                    l: (value) {
+                                      setState(() {
+                                        comparable_sold_lengthcontroller.text =
+                                            value;
+                                      });
+                                    },
+                                    total: (value) {
+                                      setState(() {
+                                        comparable_sold_total = value;
+                                      });
+                                    },
+                                    w: (value) {
+                                      setState(() {
+                                        comparable_sold_widthcontroller.text =
+                                            value;
+                                      });
+                                    },
+                                    ltext: widget.list['comparable_sold_length']
+                                        .toString(),
+                                    wtext: widget.list['comparable_sold_width']
+                                        .toString(),
+                                    l_total: widget
+                                        .list['comparable_sold_total']
+                                        .toString(),
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Price Per Sqm', context),
                                 sizebox10h,
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      child: inputController(3, false, '',
-                                          comparable_price_per_sqm_controller),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
+                                SizedBox(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_price_per_sqm_controller),
+                                          ],
+                                        ),
+                                      ),
+                                      sizebox10h,
+                                      SizedBox(
                                         child: DropdownButtonFormField<String>(
                                           //value: genderValue,
                                           isExpanded: true,
@@ -686,34 +717,27 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                // Total_dropdowncolumn(
-                                //   input: (value) {
-                                //     setState(() {
-                                //       askingprice = value;
-                                //     });
-                                //   },
-                                //   total_type: (value) {
-                                //     setState(() {
-                                //       sqm_total = value;
-                                //     });
-                                //   },
-                                // ),
+
                                 sizebox10h,
                                 titletexts('Offered Price', context),
                                 sizebox10h,
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      child: inputController(3, false, '',
-                                          comparable_offerred_price_controller),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
+                                SizedBox(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_offerred_price_controller),
+                                          ],
+                                        ),
+                                      ),
+                                      sizebox10h,
+                                      SizedBox(
                                         child: DropdownButtonFormField<String>(
                                           //value: genderValue,
                                           isExpanded: true,
@@ -797,34 +821,27 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                // Total_dropdowncolumn(
-                                //   input: (value) {
-                                //     setState(() {
-                                //       comparable_add_price = value;
-                                //     });
-                                //   },
-                                //   total_type: (value) {
-                                //     setState(() {
-                                //       comparable_addprice_total = value;
-                                //     });
-                                //   },
-                                // ),
+
                                 sizebox10h,
                                 titletexts('Offered Price', context),
                                 sizebox10h,
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      child: inputController(3, false, '',
-                                          comparable_offerred_price_controller2),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
+                                SizedBox(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_offerred_price_controller2),
+                                          ],
+                                        ),
+                                      ),
+                                      sizebox10h,
+                                      SizedBox(
                                         child: DropdownButtonFormField<String>(
                                           //value: genderValue,
                                           isExpanded: true,
@@ -905,37 +922,28 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                // Total_dropdowncolumn(
-                                //   input: (value) {
-                                //     setState(() {
-                                //       comparable_bought_price =
-                                //           value.toString();
-                                //     });
-                                //   },
-                                //   total_type: (value) {
-                                //     setState(() {
-                                //       comparable_bought_price_total = value;
-                                //     });
-                                //   },
-                                // ),
+
                                 sizebox10h,
 
                                 titletexts('Sold Out Price', context),
                                 sizebox10h,
-                                Column(
-                                  children: [
-                                    SizedBox(
-                                      child: inputController(3, false, '',
-                                          comparable_sold_out_price_controller),
-                                    ),
-                                    // sizebox10h,
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: SizedBox(
+                                SizedBox(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_sold_out_price_controller),
+                                          ],
+                                        ),
+                                      ),
+                                      sizebox10h,
+                                      SizedBox(
                                         child: DropdownButtonFormField<String>(
                                           //value: genderValue,
                                           isExpanded: true,
@@ -983,7 +991,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                                                   'comparable_sold_total_price']
                                                               .toString(),
                                                         ) ==
-                                                        1)
+                                                        2)
                                                     ? Text('Sqm')
                                                     : Text("Select"),
                                             //labelText:
@@ -1021,29 +1029,22 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                // Total_dropdowncolumn(
-                                //   input: (value) {
-                                //     setState(() {
-                                //       comparable_sold_price = value.toString();
-                                //     });
-                                //   },
-                                //   total_type: (value) {
-                                //     setState(() {
-                                //       comparable_sold_total_price =
-                                //           value.toString();
-                                //     });
-                                //   },
-                                // ),
+
                                 sizebox10h,
                                 titletexts('Asking Price(TTAmount)', context),
+                                sizebox10h,
                                 SizedBox(
                                   // width: w,
-                                  child: inputController(3, false, '',
-                                      comparable_asking_price_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_asking_price_controller),
+                                    ],
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Condition*', context),
@@ -1051,56 +1052,50 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                 SizedBox(
                                   // width: w,
                                   child: Total_dropdowntwocondition(
-                                    conditiontext: (int.parse(widget
-                                                .list['comparable_condition_id']
-                                                .toString()) ==
-                                            1)
-                                        ? const Text("Condition 1")
-                                        : (int.parse(widget.list[
-                                                        'comparable_condition_id']
-                                                    .toString()) ==
-                                                2)
-                                            ? const Text("Condition 2")
-                                            : const Text("Select"),
-                                    conditionyear: widget
-                                        .list['comparable_year']
-                                        .toString(),
-                                    flex: 3,
-                                    total_type: (value) {
-                                      setState(() {
-                                        comparable_condition_id =
-                                            value.toString();
-                                      });
-                                    },
-                                    input: (value) {
-                                      setState(() {
-                                        // comparable_year =
-                                        //     value.toString();
-                                      });
-                                    },
-                                    filedName: '',
-                                    readOnly: true,
-                                    controllers: comparable_year_controller,
-                                  ),
+                                      conditiontext: (int.parse(widget.list[
+                                                      'comparable_condition_id']
+                                                  .toString()) ==
+                                              1)
+                                          ? const Text("Condition 1")
+                                          : (int.parse(widget.list[
+                                                          'comparable_condition_id']
+                                                      .toString()) ==
+                                                  2)
+                                              ? const Text("Condition 2")
+                                              : const Text("Select"),
+                                      conditionyear: ((widget
+                                                  .list['comparable_year']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (widget.list['comparable_year']
+                                              .toString()),
+                                      flex: 3,
+                                      total_type: (value) {
+                                        setState(() {
+                                          comparable_condition_id =
+                                              value.toString();
+                                        });
+                                      },
+                                      input: (value) {
+                                        setState(() {});
+                                      },
+                                      filedName: '',
+                                      readOnly: true,
+                                      controllers: comparable_year_controller),
                                 ),
-                                // sizebox10h,
-                                // InputfiedRow(
-                                //     readOnly: false,
-                                //     value: (value) {
-                                //       setState(() {
-                                //         year = value.toString();
-                                //         year;
-                                //       });
-                                //     },
-                                //     filedName: 'Year',
-                                //     flex: 4),
+
                                 sizebox10h,
                                 titletexts('Address', context),
                                 sizebox10h,
                                 SizedBox(
                                   // width: w * 2 + 100,
-                                  child: inputController(3, false, '',
-                                      comparable_address_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_address_controller),
+                                    ],
+                                  ),
                                 ),
                                 // InputfiedRow(
                                 //     readOnly: false,
@@ -1113,67 +1108,93 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                 //     flex: 4),
                                 sizebox10h,
                                 titletexts('SKC *', context),
+                                sizebox10h,
                                 SizedBox(
-                                  child: inputController(3, false, '',
-                                      comparable_province_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_province_controller),
+                                    ],
+                                  ),
                                 ),
-                                // InputfiedRowVld(
-                                //     validator: true,
-                                //     readOnly: false,
-                                //     value: (value) {
-                                //       setState(() {
-                                //         province = value;
-                                //       });
-                                //     },
-                                //     filedName: '',
-                                //     flex: 4),
-                                // sizebox10h,
+                                sizebox10h,
                                 SizedBox(
-                                  child: inputController(3, false, '',
-                                      comparable_district_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_district_controller),
+                                    ],
+                                  ),
                                 ),
+                                sizebox10h,
                                 SizedBox(
-                                  child: inputController(3, false, '',
-                                      comparable_commune_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_commune_controller),
+                                    ],
+                                  ),
                                 ),
-
+                                sizebox10h,
                                 titletexts('Date*', context),
+                                sizebox10h,
                                 SizedBox(
-                                  child: InputfiedRowDate(
-                                      // validator: false,
-                                      controller: comparable_date_controller,
-                                      readOnly: false,
-                                      value: (value) {
-                                        setState(() {});
-                                      },
-                                      filedName: '',
-                                      flex: 6),
+                                  child: Row(
+                                    children: [
+                                      InputfiedRowDate(
+                                          // validator: false,
+                                          controller:
+                                              comparable_date_controller,
+                                          readOnly: false,
+                                          value: (value) {
+                                            setState(() {});
+                                          },
+                                          filedName: '',
+                                          flex: 6),
+                                    ],
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Remark', context),
+                                sizebox10h,
                                 SizedBox(
-                                  child: inputController(3, false, '',
-                                      comparable_remark_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_remark_controller),
+                                    ],
+                                  ),
                                 ),
+                                sizebox10h,
                                 titletexts('Survey Date*', context),
+                                sizebox10h,
                                 SizedBox(
-                                  child: InputfiedRowDate(
-                                      controller:
-                                          comparable_surveydate_controller,
-                                      readOnly: false,
-                                      value: (value) {},
-                                      filedName: '',
-                                      flex: 6),
+                                  child: Row(
+                                    children: [
+                                      InputfiedRowDate(
+                                          controller:
+                                              comparable_surveydate_controller,
+                                          readOnly: false,
+                                          value: (value) {},
+                                          filedName: '',
+                                          flex: 6),
+                                    ],
+                                  ),
                                 ),
                                 sizebox10h,
                                 titletexts('Owner Phone*', context),
-
+                                sizebox10h,
                                 SizedBox(
-                                  child: inputController(3, false, '',
-                                      comparable_ownerphone_controller),
+                                  child: Row(
+                                    children: [
+                                      inputController(3, false, '',
+                                          comparable_ownerphone_controller),
+                                    ],
+                                  ),
                                 ),
-
+                                sizebox10h,
                                 titletexts('Latittute*', context),
+                                sizebox10h,
                                 SizedBox(
                                   // height: 45,
                                   child: TextFormField(
@@ -1240,6 +1261,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                 ),
                                 sizebox10h,
                                 titletexts('Longtittute*', context),
+                                sizebox10h,
                                 SizedBox(
                                   // height: 45,
 
@@ -1358,47 +1380,6 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                   )
                                 else
                                   const SizedBox(),
-                                // Padding(
-                                //   padding: const EdgeInsets.all(8.0),
-                                //   child: SizedBox(
-                                //     height: 500,
-                                //     width: double.infinity,
-                                //     child: Map_verbal_address_Sale(
-                                //       get_province: (value) {
-                                //         setState(() {
-                                //           songkat = value.toString();
-                                //           print(songkat);
-                                //         });
-                                //       },
-                                //       get_district: (value) {
-                                //         setState(() {
-                                //           provice_map = value.toString();
-                                //         });
-                                //       },
-                                //       get_commune: (value) {
-                                //         setState(() {
-                                //           khan = value.toString();
-                                //         });
-                                //       },
-                                //       get_log: (value) {
-                                //         setState(() {
-                                //           // log = value.toString();
-                                //           _log = TextEditingController(
-                                //               text: '${log}');
-                                //           // log = _log!.text;
-                                //         });
-                                //       },
-                                //       get_lat: (value) {
-                                //         setState(() {
-                                //           //lat = value.toString();
-                                //           _lat = TextEditingController(
-                                //               text: '${lat}');
-                                //           // lat = _lat!.text;
-                                //         });
-                                //       },
-                                //     ),
-                                //   ),
-                                // )
                               ],
                             ),
                           ))
@@ -1406,36 +1387,42 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                           key: _formKey,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 20),
-                            child: SizedBox(
-                              child: Column(
-                                children: [
-                                  sizebox10h,
-                                  Row(
+                            child: Column(
+                              children: [
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Bank Info', '*', context),
                                       SizedBox(
                                         width: w,
                                         child: BankDropdownrow(
-                                          bank: (value) {
-                                            setState(() {
-                                              compare_bank_id =
-                                                  value.toString();
-                                            });
-                                          },
-                                          bankbranch: (value) {
-                                            setState(() {
-                                              compare_bank_branch_id = value;
-                                              // print(
-                                              //     "\nkokoobject${listbranch}");
-                                            });
-                                          },
-                                          validator: (val) {},
-                                          filedName: widget.list['bank_name']
-                                              .toString(),
-                                          brandfiledName: widget
-                                              .list['bank_branch_name']
-                                              .toString(),
-                                        ),
+                                            bank: (value) {
+                                              setState(() {
+                                                compare_bank_id =
+                                                    value.toString();
+                                              });
+                                            },
+                                            bankbranch: (value) {
+                                              setState(() {
+                                                compare_bank_branch_id = value;
+                                                // print(
+                                                //     "\nkokoobject${listbranch}");
+                                              });
+                                            },
+                                            validator: (val) {},
+                                            filedName: widget.list['bank_name']
+                                                .toString(),
+                                            brandfiledName: ((widget.list[
+                                                            'bank_branch_name']
+                                                        .toString()) ==
+                                                    'null')
+                                                ? ''
+                                                : (widget
+                                                    .list['bank_branch_name']
+                                                    .toString())),
                                       ),
                                       sizeboxw40,
                                       SizedBox(
@@ -1443,9 +1430,13 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       )
                                     ],
                                   ),
-                                  sizebox10h,
-                                  //Contact by
-                                  Row(
+                                ),
+                                sizebox10h,
+                                //Contact by
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Bank Officer', '', context),
                                       SizedBox(
@@ -1470,71 +1461,92 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       filedtext('Zoning', '', context),
                                       SizedBox(
                                         width: w,
-                                        child: DropDown(
-                                            validator: true,
-                                            flex: 2,
-                                            value: (value) {
-                                              setState(() {
-                                                widget.list['zoning_id']
-                                                    .toString();
-                                              });
-                                            },
-                                            list: zoningList,
-                                            valuedropdown: 'zoning_id',
-                                            valuetxt: '',
-                                            filedName: 'All'),
+                                        child: Row(
+                                          children: [
+                                            DropDown(
+                                                validator: true,
+                                                flex: 2,
+                                                value: (value) {
+                                                  setState(() {
+                                                    widget.list['zoning_id']
+                                                        .toString();
+                                                  });
+                                                },
+                                                list: zoningList,
+                                                valuedropdown: 'zoning_id',
+                                                valuetxt: '',
+                                                filedName: 'All'),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  //Property Guider Name
-                                  Row(
+                                ),
+                                sizebox10h,
+                                //Property Guider Name
+                                SizedBox(
+                                  height: 35,
+                                  width: double.infinity,
+                                  child: Row(
                                     children: [
                                       filedtext('Property Type*', '', context),
                                       SizedBox(
                                         width: w,
-                                        child: property_hoemtypetwo(
-                                          flex: 3,
-                                          hometype: (value) {
-                                            setState(() {
-                                              // com_property_type = value;
-                                              comparable_property_id =
-                                                  value.toString();
-                                              // print(value);
-                                            });
-                                          },
-                                          // hometype_lable: com_property_type,
-                                          filedName: widget
-                                              .list['property_type_name']
-                                              .toString(),
+                                        child: Row(
+                                          children: [
+                                            property_hoemtypetwo(
+                                              flex: 3,
+                                              hometype: (value) {
+                                                setState(() {
+                                                  // com_property_type = value;
+                                                  comparable_property_id =
+                                                      value.toString();
+                                                  // print(value);
+                                                });
+                                              },
+                                              // hometype_lable: com_property_type,
+                                              filedName: widget
+                                                  .list['property_type_name']
+                                                  .toString(),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       // sizeboxw40,
                                       filedtext('Road', '', context),
                                       SizedBox(
                                         width: w,
-                                        child: RoadDropdowntwo(
-                                          Name_road: (value) {
-                                            setState(() {
-                                              widget.list['road_name']
-                                                  .toString();
-                                            });
-                                          },
-                                          filedName: widget.list['road_name']
-                                              .toString(),
-                                          id_road: (value) {
-                                            setState(() {
-                                              comparable_road =
-                                                  value.toString();
-                                            });
-                                          },
-                                          flex: 3,
+                                        child: Row(
+                                          children: [
+                                            RoadDropdowntwo(
+                                              Name_road: (value) {
+                                                setState(() {
+                                                  widget.list['road_name']
+                                                      .toString();
+                                                });
+                                              },
+                                              filedName: widget
+                                                  .list['road_name']
+                                                  .toString(),
+                                              id_road: (value) {
+                                                setState(() {
+                                                  comparable_road =
+                                                      value.toString();
+                                                });
+                                              },
+                                              flex: 3,
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Land', '', context),
                                       SizedBox(
@@ -1709,9 +1721,13 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       // ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  //Property Location
-                                  Row(
+                                ),
+                                sizebox10h,
+                                //Property Location
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Price Per Sqm', '', context),
                                       SizedBox(
@@ -1782,16 +1798,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                                                 2)
                                                             ? Text('Sqm')
                                                             : Text('Select'),
-                                                    // labelText: (int.parse(widget
-                                                    //             .list[
-                                                    //                 'comparable_adding_total']
-                                                    //             .toString()) ==
-                                                    //         1)
-                                                    //     .toString(),
-                                                    // ? Text("Totally")
-                                                    // : Text("Sqm"),
-                                                    //.toString(),
-                                                    //hintText: widget.filedName,
+
                                                     labelStyle: TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
@@ -1957,8 +1964,12 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                           )),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Offered Price', '', context),
                                       SizedBox(
@@ -2117,7 +2128,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                                     )
                                                     .toList(),
                                                 // add extra sugar..
-                                                icon: Icon(
+                                                icon: const Icon(
                                                   Icons.arrow_drop_down,
                                                   color: kImageColor,
                                                 ),
@@ -2136,15 +2147,16 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                                                 .toString(),
                                                           ) ==
                                                           1)
-                                                      ? Text('Totally')
+                                                      ? const Text('Totally')
                                                       : (int.parse(
                                                                 widget.list[
                                                                         'comparable_sold_total_price']
                                                                     .toString(),
                                                               ) ==
-                                                              1)
-                                                          ? Text('Sqm')
-                                                          : Text("Select"),
+                                                              2)
+                                                          ? const Text('Sqm')
+                                                          : const Text(
+                                                              "Select"),
                                                   //labelText:
                                                   //hintText: widget.filedName,
                                                   labelStyle: TextStyle(
@@ -2194,20 +2206,31 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       )
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
-                                      Column(
-                                        children: [
-                                          filedtext(
-                                              'Asking Price', '', context),
-                                          filedtext('(TTAmount)', '', context),
-                                        ],
+                                      SizedBox(
+                                        child: Column(
+                                          children: [
+                                            filedtext(
+                                                'Asking Price', '', context),
+                                            filedtext(
+                                                '(TTAmount)', '', context),
+                                          ],
+                                        ),
                                       ),
                                       SizedBox(
                                         width: w,
-                                        child: inputController(3, false, '',
-                                            comparable_asking_price_controller),
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_asking_price_controller),
+                                          ],
+                                        ),
                                       ),
                                       //sizeboxw40,
                                       filedtext('Condition', '*', context),
@@ -2249,108 +2272,135 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       )
                                     ],
                                   ),
-                                  sizebox10h,
-                                  //Total Fee Charge
-                                  Row(
+                                ),
+                                sizebox10h,
+                                //Total Fee Charge
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
-                                      Column(
-                                        children: [
-                                          filedtext('Address', '', context),
-                                        ],
-                                      ),
+                                      filedtext('Address', '', context),
                                       SizedBox(
                                         width: w * 2 + 100,
-                                        child: inputController(3, false, '',
-                                            comparable_address_controller),
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_address_controller),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: Row(
                                     children: [
                                       filedtext('SKC', '*', context),
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.77,
-                                            child: Row(
-                                              children: [
-                                                sizebox,
-                                                inputController(3, false, '',
-                                                    comparable_province_controller),
-                                                sizebox,
-                                                inputController(3, false, '',
-                                                    comparable_district_controller),
-                                                sizebox,
-                                                inputController(3, false, '',
-                                                    comparable_commune_controller),
-                                              ],
-                                            ),
-                                          ),
-                                          //sizeboxw40,
-                                        ],
-                                      )
+                                      SizedBox(
+                                        height: 35,
+                                        width: w * 2 + 100,
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_province_controller),
+                                            sizebox,
+                                            inputController(3, false, '',
+                                                comparable_district_controller),
+                                            sizebox,
+                                            inputController(3, false, '',
+                                                comparable_commune_controller)
+                                          ],
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Date', '*', context),
                                       SizedBox(
                                         width: w,
                                         // child: inputController(3, false, '',
                                         //     comparable_date_controller),
-                                        child: InputfiedRowDate(
-                                            // validator: false,
-                                            controller:
-                                                comparable_date_controller,
-                                            readOnly: false,
-                                            value: (value) {
-                                              setState(() {
-                                                // comparable_date_controller
-                                                //     .text = value;
-                                                // // print(remak);
-                                              });
-                                            },
-                                            filedName: '',
-                                            flex: 6),
+                                        child: Row(
+                                          children: [
+                                            InputfiedRowDate(
+                                                // validator: false,
+                                                controller:
+                                                    comparable_date_controller,
+                                                readOnly: false,
+                                                value: (value) {
+                                                  setState(() {
+                                                    // comparable_date_controller
+                                                    //     .text = value;
+                                                    // // print(remak);
+                                                  });
+                                                },
+                                                filedName: '',
+                                                flex: 6),
+                                          ],
+                                        ),
                                       ),
                                       //sizeboxw40,
                                       filedtext('Remark', '', context),
                                       SizedBox(
                                         width: w,
-                                        child: inputController(3, false, '',
-                                            comparable_remark_controller),
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_remark_controller),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Survey Date', '*', context),
                                       SizedBox(
                                         width: w,
-                                        child: InputfiedRowDate(
-                                            controller:
-                                                comparable_surveydate_controller,
-                                            readOnly: false,
-                                            value: (value) {},
-                                            filedName: '',
-                                            flex: 6),
+                                        child: Row(
+                                          children: [
+                                            InputfiedRowDate(
+                                                controller:
+                                                    comparable_surveydate_controller,
+                                                readOnly: false,
+                                                value: (value) {},
+                                                filedName: '',
+                                                flex: 6),
+                                          ],
+                                        ),
                                       ),
                                       filedtext('Owner Phone', '*', context),
                                       SizedBox(
                                         width: w,
-                                        child: inputController(3, false, '',
-                                            comparable_ownerphone_controller),
+                                        child: Row(
+                                          children: [
+                                            inputController(3, false, '',
+                                                comparable_ownerphone_controller),
+                                          ],
+                                        ),
                                       )
                                     ],
                                   ),
-                                  sizebox10h,
-                                  Row(
+                                ),
+                                sizebox10h,
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 35,
+                                  child: Row(
                                     children: [
                                       filedtext('Latittute', '*', context),
                                       SizedBox(
@@ -2497,62 +2547,60 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                       ),
                                     ],
                                   ),
-                                  sizebox10h,
-                                  if (lat != null && lat1 == null)
-                                    InkWell(
-                                      onTap: () async {
-                                        await SlideUp(context);
-                                      },
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10),
-                                        child: Container(
-                                          height: 400,
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              1,
-                                          margin: const EdgeInsets.only(
-                                              top: 15, right: 13, left: 15),
-                                          child: FadeInImage.assetNetwork(
-                                            placeholderCacheHeight: 120,
-                                            placeholderCacheWidth: 120,
-                                            fit: BoxFit.cover,
-                                            placeholderFit: BoxFit.contain,
-                                            placeholder: 'assets/earth.gif',
-                                            image:
-                                                'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  else if (lat1 != null)
-                                    InkWell(
-                                      onTap: () async {
-                                        await SlideUp(context);
-                                      },
+                                ),
+                                sizebox10h,
+                                if (lat != null && lat1 == null)
+                                  InkWell(
+                                    onTap: () async {
+                                      await SlideUp(context);
+                                    },
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 10),
                                       child: Container(
-                                        height: 180,
+                                        height: 400,
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 1,
                                         margin: const EdgeInsets.only(
                                             top: 15, right: 13, left: 15),
                                         child: FadeInImage.assetNetwork(
-                                          placeholderCacheHeight: 50,
-                                          placeholderCacheWidth: 50,
+                                          placeholderCacheHeight: 120,
+                                          placeholderCacheWidth: 120,
                                           fit: BoxFit.cover,
-                                          placeholderFit: BoxFit.fill,
+                                          placeholderFit: BoxFit.contain,
                                           placeholder: 'assets/earth.gif',
                                           image:
-                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
                                         ),
                                       ),
-                                    )
-                                  else
-                                    const SizedBox(),
-                                ],
-                              ),
+                                    ),
+                                  )
+                                else if (lat1 != null)
+                                  InkWell(
+                                    onTap: () async {
+                                      await SlideUp(context);
+                                    },
+                                    child: Container(
+                                      height: 180,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      margin: const EdgeInsets.only(
+                                          top: 15, right: 13, left: 15),
+                                      child: FadeInImage.assetNetwork(
+                                        placeholderCacheHeight: 50,
+                                        placeholderCacheWidth: 50,
+                                        fit: BoxFit.cover,
+                                        placeholderFit: BoxFit.fill,
+                                        placeholder: 'assets/earth.gif',
+                                        image:
+                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  const SizedBox(),
+                              ],
                             ),
                           ),
                         )),
@@ -2977,60 +3025,57 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
   ) {
     return Expanded(
       flex: flex,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextFormField(
-          // onChanged:
-          controller: controllers,
-          validator: (input) {
-            if (input == null || input.isEmpty) {
-              return 'require *';
-            }
-            return null;
-          },
-          readOnly: readOnly,
-          style: TextStyle(
-              fontSize: MediaQuery.textScaleFactorOf(context) * 12,
-              fontWeight: FontWeight.bold),
-          onChanged: (value) {
-            setState(() {});
-          },
-          decoration: InputDecoration(
-            // labelStyle: ,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-            fillColor: kwhite,
-            filled: true,
-            labelText: filedName,
-            //hintText: widget.filedName,
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.textScaleFactorOf(context) * 12),
-            helperStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.textScaleFactorOf(context) * 12),
-            prefixIcon: const SizedBox(width: 7),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
-              borderRadius: BorderRadius.circular(5.0),
+      child: TextFormField(
+        // onChanged:
+        controller: controllers,
+        validator: (input) {
+          if (input == null || input.isEmpty) {
+            return 'require *';
+          }
+          return null;
+        },
+        readOnly: readOnly,
+        style: TextStyle(
+            fontSize: MediaQuery.textScaleFactorOf(context) * 12,
+            fontWeight: FontWeight.bold),
+        onChanged: (value) {
+          setState(() {});
+        },
+        decoration: InputDecoration(
+          // labelStyle: ,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+          fillColor: kwhite,
+          filled: true,
+          labelText: filedName,
+          //hintText: widget.filedName,
+          labelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: MediaQuery.textScaleFactorOf(context) * 12),
+          helperStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: MediaQuery.textScaleFactorOf(context) * 12),
+          prefixIcon: const SizedBox(width: 7),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 1,
+              color: Color.fromARGB(255, 249, 0, 0),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              width: 1,
+              color: Color.fromARGB(255, 249, 0, 0),
             ),
-            errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 1,
-                color: Color.fromARGB(255, 249, 0, 0),
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 1,
-                color: Color.fromARGB(255, 249, 0, 0),
-              ),
-              //  borderRadius: BorderRadius.circular(10.0),
-            ),
+            //  borderRadius: BorderRadius.circular(10.0),
           ),
         ),
       ),

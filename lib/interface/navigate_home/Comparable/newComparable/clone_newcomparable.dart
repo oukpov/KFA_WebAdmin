@@ -17,7 +17,6 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:web_admin/components/L_w_totaltworow.dart';
-import 'package:web_admin/interface/navigate_home/Comparable/newComparable/responsivenewcomparable.dart';
 import 'package:web_admin/models/savecomparablemodel.dart';
 import '../../../../Profile/contants.dart';
 import '../../../../components/Dateform.dart';
@@ -35,7 +34,6 @@ import '../../Customer/component/Web/simple/dropdownRowtwo.dart';
 import '../../Customer/component/Web/simple/inputdateRowNow .dart';
 import '../../Customer/component/Web/simple/inputfiledRow.dart';
 import '../../Customer/component/Web/simple/inputfiledRowVld.dart';
-import '../../Customer/component/Web/simple/inputfiledRowtwo.dart';
 import '../../Customer/component/title/title.dart';
 
 class CloneNewComparable extends StatefulWidget {
@@ -134,19 +132,6 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
     }
     return false;
   }
-  // bool validateAndSave(BuildContext context) {
-  //   if (_formKey.currentState!.validate()) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Processing Data1')),
-  //     );
-  //     return true;
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Processing Data2')),
-  //     );
-  //     return false;
-  //   }
-  // }
 
   @override
   void initState() {
@@ -189,7 +174,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
     return Scaffold(
       appBar: AppBar(
         // title: Text("New Comparable $comparable_survey_date"),
-        title: Text("New Comparable"),
+        title: const Text("New Comparable"),
       ),
       body: (waitPosts)
           ? LiquidLinearProgressIndicator(
@@ -247,7 +232,8 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                               dialogType: DialogType.success,
                                               showCloseIcon: false,
                                               title: 'Save Successfully',
-                                              autoHide: Duration(seconds: 3),
+                                              autoHide:
+                                                  const Duration(seconds: 3),
                                               onDismissCallback: (type) async {
                                                 await Comparable_new();
                                                 setState(() {
@@ -289,9 +275,9 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(10),
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 255, 32, 167, 8)),
-                                        child: Text(
+                                        child: const Text(
                                           'Save',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold),
@@ -518,7 +504,8 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                     },
                                     decoration: InputDecoration(
                                       contentPadding:
-                                          EdgeInsets.symmetric(vertical: 8),
+                                          const EdgeInsets.symmetric(
+                                              vertical: 8),
                                       // prefixIcon: Icon(
                                       //   Icons.width_full_outlined,
                                       //   color: kImageColor,
@@ -699,7 +686,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               vertical: 8),
-                                      prefixIcon: Icon(
+                                      prefixIcon: const Icon(
                                         Icons.numbers_outlined,
                                         color: kImageColor,
                                       ),
@@ -750,7 +737,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                       contentPadding:
                                           const EdgeInsets.symmetric(
                                               vertical: 8),
-                                      prefixIcon: Icon(
+                                      prefixIcon: const Icon(
                                         Icons.numbers_outlined,
                                         color: kImageColor,
                                       ),
@@ -906,9 +893,9 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                             decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(10),
-                                                color: Color.fromARGB(
+                                                color: const Color.fromARGB(
                                                     255, 32, 167, 8)),
-                                            child: Text(
+                                            child: const Text(
                                               'Save',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
@@ -928,26 +915,27 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                         child: Row(
                                           children: [
                                             BankDropdowntwo(
-                                                bank: (value) {
-                                                  savenewcomparableModel
-                                                      .bankinfo = value;
-                                                  setState(() {
-                                                    compare_bank_id =
-                                                        value.toString();
-                                                  });
-                                                },
-                                                bankbranch: (value) {
-                                                  setState(() {
-                                                    listbranch = value;
-                                                    // print(
-                                                    //     "\nkokoobject${listbranch}");
-                                                  });
-                                                },
-                                                filedName: 'bank',
-                                                flex: 2,
-                                                validator: (val) {
-                                                  // print("\nobject $val\n");
-                                                }),
+                                              bank: (value) {
+                                                savenewcomparableModel
+                                                    .bankinfo = value;
+                                                setState(() {
+                                                  compare_bank_id =
+                                                      value.toString();
+                                                });
+                                              },
+                                              bankbranch: (value) {
+                                                setState(() {
+                                                  listbranch = value;
+                                                  // print(
+                                                  //     "\nkokoobject${listbranch}");
+                                                });
+                                              },
+                                              filedName: 'bank',
+                                              flex: 2,
+                                              // validator: (val) {
+                                              //   // print("\nobject $val\n");
+                                              // }
+                                            ),
                                             sizebox,
                                             if (listbranch.length > 1)
                                               DropDown(
@@ -1053,7 +1041,8 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   ),
                                                   errorBorder:
                                                       OutlineInputBorder(
-                                                    borderSide: BorderSide(
+                                                    borderSide:
+                                                        const BorderSide(
                                                       width: 1,
                                                       color: Color.fromARGB(
                                                           255, 249, 0, 0),
@@ -1063,7 +1052,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                             10.0),
                                                   ),
                                                   focusedErrorBorder:
-                                                      OutlineInputBorder(
+                                                      const OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       width: 1,
                                                       color: Color.fromARGB(
@@ -1136,7 +1125,8 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   ),
                                                   errorBorder:
                                                       OutlineInputBorder(
-                                                    borderSide: BorderSide(
+                                                    borderSide:
+                                                        const BorderSide(
                                                       width: 1,
                                                       color: Color.fromARGB(
                                                           255, 249, 0, 0),
@@ -1146,7 +1136,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                             10.0),
                                                   ),
                                                   focusedErrorBorder:
-                                                      OutlineInputBorder(
+                                                      const OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       width: 1,
                                                       color: Color.fromARGB(
@@ -1588,7 +1578,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
                                                     vertical: 8),
-                                            prefixIcon: Icon(
+                                            prefixIcon: const Icon(
                                               Icons.numbers_outlined,
                                               color: kImageColor,
                                             ),
@@ -1608,7 +1598,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   BorderRadius.circular(5.0),
                                             ),
                                             errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                 width: 1,
                                                 color: Color.fromARGB(
                                                     255, 249, 0, 0),
@@ -1617,7 +1607,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             focusedErrorBorder:
-                                                OutlineInputBorder(
+                                                const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                 width: 1,
                                                 color: Color.fromARGB(
@@ -1679,7 +1669,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   BorderRadius.circular(5.0),
                                             ),
                                             errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
+                                              borderSide: const BorderSide(
                                                 width: 1,
                                                 color: Color.fromARGB(
                                                     255, 249, 0, 0),
@@ -1688,7 +1678,7 @@ class _CloneNewComparableState extends State<CloneNewComparable> {
                                                   BorderRadius.circular(10.0),
                                             ),
                                             focusedErrorBorder:
-                                                OutlineInputBorder(
+                                                const OutlineInputBorder(
                                               borderSide: BorderSide(
                                                 width: 1,
                                                 color: Color.fromARGB(

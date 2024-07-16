@@ -263,7 +263,7 @@ class _TypeDeviceState extends State<HomeScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            headerOptionDekTop(),
+            // headerOptionDekTop(),
             const SizedBox(height: 10),
             ViewAllProvince(
                 myIdController: widget.myIdcontroller,

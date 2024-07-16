@@ -13,14 +13,14 @@ class DropDown extends StatefulWidget {
       required this.filedName,
       required this.value,
       required this.flex,
-      required this.validator});
+      this.validator});
   List list = [];
   final String valuedropdown;
   final String valuetxt;
   final String filedName;
   final int flex;
   final OnChangeCallback value;
-  final bool validator;
+  final bool? validator;
   @override
   State<DropDown> createState() => _DropDownState();
 }
@@ -32,15 +32,15 @@ class _DropDownState extends State<DropDown> {
     return Expanded(
       flex: widget.flex,
       child: DropdownButtonFormField<String>(
-        validator: (value) {
-          setState(() {
-            if ((value == null || value.isEmpty) && widget.validator == true) {
-              hasError = false;
-            } else {
-              hasError = true;
-            }
-          });
-        },
+        // validator: (value) {
+        //   setState(() {
+        //     if ((value == null || value.isEmpty) && widget.validator == true) {
+        //       hasError = false;
+        //     } else {
+        //       hasError = true;
+        //     }
+        //   });
+        // },
         isExpanded: true,
         onChanged: (newValue) {
           setState(() {
@@ -83,12 +83,12 @@ class _DropDownState extends State<DropDown> {
             borderRadius: BorderRadius.circular(5.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1,
-              color: (!hasError && widget.validator == true)
-                  ? Colors.red
-                  : bordertxt,
-            ),
+            // borderSide: BorderSide(
+            //   width: 1,
+            //   color: (!hasError && widget.validator == true)
+            //       ? Colors.red
+            //       : bordertxt,
+            // ),
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),

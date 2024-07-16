@@ -2,49 +2,36 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
-import 'package:web_admin/components/L_w_totaltworow.dart';
 import 'package:web_admin/models/savecomparablemodel.dart';
-import '../../../../Profile/contants.dart';
-import '../../../../components/Dateform.dart';
-import '../../../../components/L_w_totaltwo.dart';
-import '../../../../components/bankcolumn.dart';
-import '../../../../components/property_typetwo.dart';
-import '../../../../components/roadtwo.dart';
-import '../../../../components/total_dropdowntwo.dart';
-import '../../../../components/total_dropdowntwocolumn.dart';
-import '../../../../components/total_dropdowntwocondition.dart';
-import '../../../../screen/Property/Map/map_in_add_verbal.dart';
-import '../../Customer/component/Web/simple/dropdown.dart';
-import '../../Customer/component/Web/simple/dropdownRowtwo.dart';
-import '../../Customer/component/Web/simple/inputdateRowNow .dart';
+import '../../Customer/component/Web/simple/inputfiled.dart';
 import '../../Customer/component/Web/simple/inputfiledRow.dart';
-import '../../Customer/component/Web/simple/inputfiledRowVld.dart';
 import '../../Customer/component/title/title.dart';
 
+// ignore: camel_case_types
 class Get_NewComarable extends StatefulWidget {
   const Get_NewComarable(
       {super.key,
       required this.device,
       required this.email,
       required this.idUsercontroller,
-      required this.myIdcontroller});
+      required this.myIdcontroller,
+      required this.username,
+      required this.index});
+  final int index;
   final String device;
   final String email;
   final String idUsercontroller;
   final String myIdcontroller;
+  final String username;
   @override
   State<Get_NewComarable> createState() => _Get_NewComarableState();
 }
 
 class _Get_NewComarableState extends State<Get_NewComarable> {
-  var check;
   bool waitPosts = false;
   List _list = [];
   late SavenewcomparableModel savenewcomparableModel;
@@ -76,7 +63,9 @@ class _Get_NewComarableState extends State<Get_NewComarable> {
         propertytype: '',
         skc: '',
         surveydate: '');
-    getNow();
+    setState(() {
+      getnewcomparable();
+    });
   }
 
   String getCurrentDate() {
@@ -90,11 +79,10 @@ class _Get_NewComarableState extends State<Get_NewComarable> {
       String today = getCurrentDate();
       // comparabledate = today;
       // comparable_survey_date = today;
-      get_new_comparable();
     });
   }
 
-  Future get_new_comparable() async {
+  Future getnewcomparable() async {
     var headers = {
       'Accept': 'application/json',
       'Connection': 'application/json',
@@ -110,8 +98,9 @@ class _Get_NewComarableState extends State<Get_NewComarable> {
     );
 
     if (response.statusCode == 200) {
-      _list = jsonDecode(json.encode(response.data));
-      print(json.encode(response.data));
+      setState(() {
+        _list = jsonDecode(json.encode(response.data));
+      });
     } else {
       print(response.statusMessage);
     }
@@ -119,1729 +108,1378 @@ class _Get_NewComarableState extends State<Get_NewComarable> {
 
   @override
   Widget build(BuildContext context) {
-    double textstye = 35;
-    check = MediaQuery.of(context).size.width;
-    var w = MediaQuery.of(context).size.width * 0.35;
-    var wt = MediaQuery.of(context).size.width * 0.27;
-    var wt2 = MediaQuery.of(context).size.width * 0.69;
-    var wsize = MediaQuery.of(context).size.width;
+    var w = MediaQuery.of(context).size.width * 0.35 * 1.35;
     return Scaffold(
-      appBar: AppBar(
-        // title: Text("New Comparable $comparable_survey_date"),
-        title: Text("New Comparable"),
-      ),
-      body: (waitPosts)
-          ? LiquidLinearProgressIndicator(
-              value: 0.25,
-              valueColor: const AlwaysStoppedAnimation(
-                  Color.fromARGB(255, 53, 33, 207)),
-              backgroundColor: Colors.white,
-              borderColor: Colors.white,
-              borderWidth: 5.0,
-              borderRadius: 12.0,
-              direction: Axis.vertical,
-              center: Text(
-                "Please waiting...!",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: MediaQuery.textScaleFactorOf(context) * 15),
-              ),
-            )
-          : SingleChildScrollView(
-              child: Padding(
-                  padding: const EdgeInsets.only(right: 0, left: 10),
-                  child: (widget.device == 'm')
-                      ? Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 30, left: 30),
-                            child: Column(
-                              children: [
-                                //Text("${device}"),
-                                // Row(
-                                //   children: [
-                                //     const Spacer(),
-                                //     InkWell(
-                                //       onTap: () {
-                                //         // setState(() {
-                                //         //   Comparable_new();
-                                //         //   print('object');
-                                //         // });
-                                //         validateAndSave();
-                                //         if (com_property_type != null &&
-                                //             compare_bank_id != null &&
-                                //             lat != null &&
-                                //             log != null &&
-                                //             comparabledate != null &&
-                                //             condition != null &&
-                                //             commune != null &&
-                                //             province != null &&
-                                //             district != null &&
-                                //             comparable_phone != null &&
-                                //             total_b != null) {
-                                //           AwesomeDialog(
-                                //               context: context,
-                                //               animType: AnimType.leftSlide,
-                                //               headerAnimationLoop: false,
-                                //               dialogType: DialogType.success,
-                                //               showCloseIcon: false,
-                                //               title: 'Save Successfully',
-                                //               autoHide: Duration(seconds: 3),
-                                //               onDismissCallback: (type) async {
-                                //                 await Comparable_new();
-                                //                 setState(() {
-                                //                   print("Save");
-                                //                 });
-                                //                 // Navigator.pop(context);
-                                //                 // onPressed: () {
-                                //                 // Navigator.push(
-                                //                 //   context,
-                                //                 //   MaterialPageRoute(
-                                //                 //       builder: (context) =>
-                                //                 //           const ResponsiveHomeP()),
-                                //                 // );
-                                //               }).show();
-                                //         } else {
-                                //           AwesomeDialog(
-                                //             context: context,
-                                //             dialogType: DialogType.error,
-                                //             animType: AnimType.rightSlide,
-                                //             headerAnimationLoop: false,
-                                //             title: 'Error',
-                                //             desc: "Please check ",
-                                //             btnOkOnPress: () {
-                                //               print("Error");
-                                //             },
-                                //             btnOkIcon: Icons.cancel,
-                                //             btnOkColor: Colors.red,
-                                //           ).show();
-                                //         }
-                                //       },
-                                //       child: Container(
-                                //         alignment: Alignment.center,
-                                //         height:
-                                //             MediaQuery.of(context).size.height *
-                                //                 0.05,
-                                //         width:
-                                //             MediaQuery.of(context).size.width *
-                                //                 0.2,
-                                //         decoration: BoxDecoration(
-                                //             borderRadius:
-                                //                 BorderRadius.circular(10),
-                                //             color: Color.fromARGB(
-                                //                 255, 32, 167, 8)),
-                                //         child: Text(
-                                //           'Save',
-                                //           style: TextStyle(
-                                //               fontWeight: FontWeight.bold),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                sizebox10h,
-                                titletexts('Bank Info *', context),
-                                sizebox10h,
-                                BankDropdowncolumn(
-                                  bank: (value) {
-                                    setState(() {
-                                      // compare_bank_id = value.toString();
-                                    });
-                                  },
-                                  bankbranch: (value) {
-                                    setState(() {
-                                      listbranch = value;
-                                      // print(
-                                      //     "\nkokoobject${listbranch}");
-                                    });
-                                  },
-                                  validator: (val) {},
-                                  filedName: 'Bank',
-                                ),
-                                sizebox10h,
-                                titletexts('Bank Officer', context),
-                                sizebox10h,
-                                InputfiedRow(
-                                    //validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        // com_bank_officer = value;
-                                      });
-                                    },
-                                    filedName: 'Bank Officer',
-                                    flex: 4),
-                                sizebox10h,
-                                InputfiedRow(
-                                    //validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        // com_bank_contact = value;
-                                      });
-                                    },
-                                    filedName: 'Bank Contact',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('Zoning', context),
-                                sizebox10h,
-                                Container(
-                                  height: 45,
-                                  child: DropDown(
-                                      validator: true,
-                                      flex: 6,
-                                      value: (value) {
-                                        setState(() {
-                                          // zoning_id = value;
-                                        });
-                                      },
-                                      list: zoningList,
-                                      valuedropdown: 'zoning_id',
-                                      valuetxt: '',
-                                      filedName: ''),
-                                ),
-                                sizebox10h,
-                                titletexts('Property Type *', context),
-                                sizebox10h,
-                                property_hoemtypetwo(
-                                  flex: 3,
-                                  hometype: (value) {
-                                    setState(() {
-                                      // com_property_type = value;
-                                    });
-                                  },
-                                  // hometype_lable: com_property_type,
-                                  filedName: 'Property Type',
-                                ),
-                                sizebox10h,
-                                titletexts('Road', context),
-                                sizebox10h,
-                                RoadDropdowntwo(
-                                  Name_road: (value) {},
-                                  filedName: 'All',
-                                  id_road: (value) {
-                                    // comparable_road = value;
-                                    //print(comparable_road);
-                                  },
-                                  flex: 3,
-                                ),
-                                sizebox10h,
-                                titletexts('Land', context),
-                                sizebox10h,
-                                Land_buildingtwo(
-                                  filedName: '',
-                                  //flex: 3,
-                                  l: (value) {
-                                    setState(() {
-                                      //  lproperty = value;
-                                    });
-                                  },
-                                  total: (value) {
-                                    setState(() {
-                                      //ltotal = value;
-                                    });
-                                  },
-                                  w: (value) {
-                                    setState(() {
-                                      // lwproperty = value;
-                                    });
-                                  },
-                                ),
-                                // Land_buildingtwo(
-
-                                //    filedName: 'W', flex: 3,
-                                //    ),
-
-                                sizebox10h,
-                                titletexts('Building', context),
-                                sizebox10h,
-                                Land_buildingtwo(
-                                  filedName: '',
-                                  //flex: 3,
-                                  l: (value) {
-                                    setState(() {
-                                      // lb = value;
-                                    });
-                                  },
-                                  total: (value) {
-                                    setState(() {
-                                      // total_b = value;
-                                    });
-                                  },
-                                  w: (value) {
-                                    setState(() {
-                                      // wb = value;
-                                    });
-                                  },
-                                ),
-                                sizebox10h,
-                                titletexts('Price Per Sqm', context),
-                                sizebox10h,
-                                Total_dropdowncolumn(
-                                  input: (value) {
-                                    setState(() {
-                                      // askingprice = value;
-                                    });
-                                  },
-                                  total_type: (value) {
-                                    setState(() {
-                                      // sqm_total = value;
-                                    });
-                                  },
-                                ),
-                                sizebox10h,
-                                titletexts('Offered Price', context),
-                                sizebox10h,
-                                Total_dropdowncolumn(
-                                  input: (value) {
-                                    setState(() {
-                                      //comparable_add_price = value;
-                                    });
-                                  },
-                                  total_type: (value) {
-                                    setState(() {
-                                      //comparable_addprice_total = value;
-                                    });
-                                  },
-                                ),
-                                sizebox10h,
-                                titletexts('Offered Price', context),
-                                sizebox10h,
-                                Total_dropdowncolumn(
-                                  input: (value) {
-                                    setState(() {
-                                      // comparable_bought_price =
-                                      //     value.toString();
-                                    });
-                                  },
-                                  total_type: (value) {
-                                    setState(() {
-                                      //comparable_bought_price_total = value;
-                                    });
-                                  },
-                                ),
-                                sizebox10h,
-
-                                titletexts('Sold Out Price', context),
-                                sizebox10h,
-                                Total_dropdowncolumn(
-                                  input: (value) {
-                                    setState(() {
-                                      // comparable_sold_price = value.toString();
-                                    });
-                                  },
-                                  total_type: (value) {
-                                    setState(() {
-                                      // comparable_sold_total_price =
-                                      //     value.toString();
-                                    });
-                                  },
-                                ),
-                                sizebox10h,
-                                titletexts('Asking Price(TTAmount)', context),
-                                SizedBox(
-                                  height: 45,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.9,
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    style: TextStyle(
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
-                                                0.015,
-                                        fontWeight: FontWeight.bold),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        // Amount = value.toString();
-                                      });
-                                    },
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 8),
-                                      // prefixIcon: Icon(
-                                      //   Icons.width_full_outlined,
-                                      //   color: kImageColor,
-                                      // ),
-                                      fillColor: kwhite,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: kPrimaryColor, width: 1.0),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        // borderSide: BorderSide(
-                                        //   width: 1,
-                                        //   color: (!hasError && widget.validator == true)
-                                        //       ? Colors.red
-                                        //       : bordertxt,
-                                        // ),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      labelText: '',
-                                    ),
-                                  ),
-                                ),
-                                sizebox10h,
-                                titletexts('Condition*', context),
-                                sizebox10h,
-                                DropDownRowTwo(
-                                    validator: true,
-                                    flex: 4,
-                                    value: (value) {
-                                      setState(() {
-                                        //condition = value.toString();
-                                        //print('====>${condition}');
-                                      });
-                                    },
-                                    list: [],
-                                    valuedropdown: '',
-                                    valuetxt: '',
-                                    filedName: ''),
-                                sizebox10h,
-                                InputfiedRow(
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        // year = value.toString();
-                                        // year;
-                                      });
-                                    },
-                                    filedName: 'Year',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('Address', context),
-                                sizebox10h,
-                                InputfiedRow(
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        // address = value.toString();
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('SKC *', context),
-                                sizebox10h,
-                                InputfiedRowVld(
-                                    validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        //  province = value;
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                InputfiedRowVld(
-                                    validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        // district = value;
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                InputfiedRowVld(
-                                    validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        //  commune = value;
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('Date*', context),
-                                sizebox10h,
-                                //Text(comparabledate.toString()),
-                                SizedBox(
-                                    height: 45,
-                                    child: InputDateNow(
-                                      filedName: '',
-                                      flex: 6,
-                                      value: (value) {
-                                        setState(() {
-                                          // comparabledate = value;
-                                          //print('==>New ${comparabledate}');
-                                        });
-                                      },
-                                    )),
-                                sizebox10h,
-                                titletexts('Remark', context),
-                                sizebox10h,
-                                InputfiedRow(
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        //  remak = value;
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('Survey Date*', context),
-                                sizebox10h,
-                                SizedBox(
-                                    height: 45,
-                                    child: InputDateNow(
-                                      filedName: '',
-                                      flex: 6,
-                                      value: (value) {
-                                        // comparable_survey_date = value;
-                                      },
-                                    )),
-                                sizebox10h,
-                                titletexts('Owner Phone*', context),
-                                sizebox10h,
-                                InputfiedRowVld(
-                                    validator: true,
-                                    readOnly: false,
-                                    value: (value) {
-                                      setState(() {
-                                        //  comparable_phone = value;
-                                      });
-                                    },
-                                    filedName: '',
-                                    flex: 4),
-                                sizebox10h,
-                                titletexts('Latittute*', context),
-                                sizebox10h,
-                                TextFormField(
-                                  validator: (input) {
-                                    if (input == null || input.isEmpty) {
-                                      return 'require *';
-                                    }
-                                    return null;
-                                  },
-                                  //controller: ,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.015,
-                                      fontWeight: FontWeight.bold),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      // bankcontact = value;
-                                      //lat = _lat!.text;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8),
-                                      prefixIcon: Icon(
-                                        Icons.numbers_outlined,
-                                        color: kImageColor,
-                                      ),
-                                      hintText: 'Lat',
-                                      fillColor: kwhite,
-                                      //labelText: widget.filedName,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: kPrimaryColor, width: 1.0),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      errorBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                        width: 1,
-                                        color: Colors.red,
-                                      ))),
-                                ),
-                                sizebox10h,
-                                titletexts('Longtittute*', context),
-                                sizebox10h,
-                                TextFormField(
-                                  validator: (input) {
-                                    if (input == null || input.isEmpty) {
-                                      return 'require *';
-                                    }
-                                    return null;
-                                  },
-                                  //controller: _log,
-                                  keyboardType: TextInputType.number,
-                                  style: TextStyle(
-                                      fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.015,
-                                      fontWeight: FontWeight.bold),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      // bankcontact = value;
-                                      // log = _log!.text;
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              vertical: 8),
-                                      prefixIcon: Icon(
-                                        Icons.numbers_outlined,
-                                        color: kImageColor,
-                                      ),
-                                      hintText: 'Lag',
-                                      fillColor: kwhite,
-                                      //labelText: widget.filedName,
-                                      filled: true,
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                            color: kPrimaryColor, width: 1.0),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                      errorBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                        width: 1,
-                                        color: Colors.red,
-                                      ))),
-                                ),
-                                sizebox10h,
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    height: 500,
-                                    width: double.infinity,
-                                    child: Map_verbal_address_Sale(
-                                      get_province: (value) {
-                                        setState(() {
-                                          // songkat = value.toString();
-                                          // print(songkat);
-                                        });
-                                      },
-                                      get_district: (value) {
-                                        setState(() {
-                                          // provice_map = value.toString();
-                                        });
-                                      },
-                                      get_commune: (value) {
-                                        setState(() {
-                                          // khan = value.toString();
-                                        });
-                                      },
-                                      get_log: (value) {
-                                        setState(() {
-                                          // log = value.toString();
-                                          // _log = TextEditingController(
-                                          //     text: '${log}');
-                                          // log = _log!.text;
-                                        });
-                                      },
-                                      get_lat: (value) {
-                                        setState(() {
-                                          // lat = value.toString();
-                                          // _lat = TextEditingController(
-                                          //     text: '${lat}');
-                                          // lat = _lat!.text;
-                                        });
-                                      },
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ))
-                      : Form(
-                          key: _formKey,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: SizedBox(
-                              // width: MediaQuery.of(context).size.width,
+        appBar: AppBar(
+          elevation: 10,
+          // title: Text("New Comparable $comparable_survey_date"),
+          title: const Text("Detail New Comparable"),
+        ),
+        body: (_list.isNotEmpty)
+            ? SingleChildScrollView(
+                child: Padding(
+                    padding: const EdgeInsets.only(right: 0, left: 10),
+                    child: (widget.device == 'm')
+                        ? Form(
+                            key: _formKey,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 30, left: 30),
                               child: Column(
                                 children: [
-                                  //Text(),
+                                  sizebox10h,
+                                  titletexts('Bank Info *', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_officer = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['bank_name'] ??
+                                          ''.toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['bank_branch_name'] ??
+                                          ''.toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Bank Officer', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_officer = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['com_bankofficer']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (_list[widget.index]
+                                                  ['com_bankofficer']
+                                              .toString()),
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index][
+                                                      'com_bankofficer_contact']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (_list[widget.index]
+                                                  ['com_bankofficer_contact']
+                                              .toString()),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Zoning', context),
+                                  sizebox10h,
+                                  Container(
+                                    height: 45,
+                                    child: InputfiedRow(
+                                        //validator: true,
+                                        readOnly: true,
+                                        value: (value) {
+                                          setState(() {
+                                            // com_bank_contact = value;
+                                          });
+                                        },
+                                        //doesn't have zone yet
+                                        filedName: _list[widget.index][''] ??
+                                            ''.toString(),
+                                        flex: 4),
+                                  ),
+                                  sizebox10h,
+                                  titletexts('Property Type *', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['property_type_name'] ??
+                                          ''.toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Road', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['road_name'] ??
+                                          ''.toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Land', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Length: ${((_list[widget.index]['comparable_land_length'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_length'].toString())}",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Width: ${((_list[widget.index]['comparable_land_width'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_width'].toString())}",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Total: ${((_list[widget.index]['comparable_land_total'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_total'].toString())}",
+                                      flex: 4),
+
+                                  sizebox10h,
+                                  titletexts('Building', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Length: ${((_list[widget.index]['comparable_sold_length'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_length'].toString())}",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Width: ${((_list[widget.index]['comparable_sold_width'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_width'].toString())}",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "Total: ${((_list[widget.index]['comparable_sold_total'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_total'].toString())}",
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Price Per Sqm', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName:
+                                          "${_list[widget.index]['comparable_adding_price'].toString()} \$",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index][
+                                                      'comparableaddpricetotal']
+                                                  .toString()) ==
+                                              '1')
+                                          ? 'Totally'
+                                          // ignore: unrelated_type_equality_checks
+                                          : ((_list[widget.index][
+                                                          'comparableaddpricetotal']
+                                                      .toString()) ==
+                                                  '2')
+                                              ? 'Sqm'
+                                              : '',
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Offered Price', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparableaddprice']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (_list[widget.index]
+                                                  ['comparableaddprice']
+                                              .toString()),
+                                      //"${_list[0]['comparableaddprice'].toString()} \$",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: // ignore: unrelated_type_equality_checks
+                                          ((_list[widget.index][
+                                                          'comparableaddpricetotal']
+                                                      .toString()) ==
+                                                  '1')
+                                              ? 'Totally'
+                                              // ignore: unrelated_type_equality_checks
+                                              : ((_list[widget.index][
+                                                              'comparableaddpricetotal']
+                                                          .toString()) ==
+                                                      '2')
+                                                  ? 'Sqm'
+                                                  : '',
+                                      //"${_list[0]['comparableaddprice'].toString()} \$",
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Offered Price', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparableboughtprice']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (_list[widget.index]
+                                                  ['comparableboughtprice']
+                                              .toString()),
+                                      // "${_list[0]['comparableboughtprice'].toString()} \$",
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index][
+                                                      'comparableboughtpricetotal']
+                                                  .toString()) ==
+                                              '1')
+                                          ? 'Totally'
+                                          // ignore: unrelated_type_equality_checks
+                                          : ((_list[widget.index][
+                                                          'comparableboughtpricetotal']
+                                                      .toString()) ==
+                                                  '2')
+                                              ? 'Sqm'
+                                              : '',
+                                      // "${_list[0]['comparableboughtprice'].toString()} \$",
+                                      flex: 4),
+                                  sizebox10h,
+
+                                  titletexts('Sold Out Price', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparable_sold_price']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : (_list[widget.index]
+                                                  ['comparable_sold_price']
+                                              .toString()),
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index][
+                                                      'comparable_sold_total_price']
+                                                  .toString()) ==
+                                              '1')
+                                          ? 'Totally'
+                                          // ignore: unrelated_type_equality_checks
+                                          : ((_list[widget.index][
+                                                          'comparable_sold_total_price']
+                                                      .toString()) ==
+                                                  '2')
+                                              ? 'Sqm'
+                                              : '',
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Asking Price(TTAmount)', context),
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparableAmount']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : _list[widget.index]
+                                                  ['comparableAmount']
+                                              .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Condition*', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index][
+                                                      'comparable_condition_id']
+                                                  .toString()) ==
+                                              '1')
+                                          ? 'Condition 1'
+                                          : ((_list[widget.index][
+                                                          'comparable_condition_id']
+                                                      .toString()) ==
+                                                  '2')
+                                              ? 'Condtion 2'
+                                              : '',
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparable_year']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : _list[widget.index]
+                                                  ['comparable_year']
+                                              .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Address', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparable_address']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : _list[widget.index]
+                                                  ['comparable_address']
+                                              .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('SKC', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]['province']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]['district']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]['commune']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Date*', context),
+                                  sizebox10h,
+                                  //Text(comparabledate.toString()),
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['comparableDate']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Remark', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: ((_list[widget.index]
+                                                      ['comparable_remark']
+                                                  .toString()) ==
+                                              'null')
+                                          ? ''
+                                          : _list[widget.index]
+                                                  ['comparable_remark']
+                                              .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Survey Date*', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['comparable_survey_date']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Owner Phone*', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['comparable_phone']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Latittute*', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['latlong_log']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
+                                  titletexts('Longitude*', context),
+                                  sizebox10h,
+                                  InputfiedRow(
+                                      //validator: true,
+                                      readOnly: true,
+                                      value: (value) {
+                                        setState(() {
+                                          // com_bank_contact = value;
+                                        });
+                                      },
+                                      filedName: _list[widget.index]
+                                              ['latlong_la']
+                                          .toString(),
+                                      flex: 4),
+                                  sizebox10h,
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                      height: 400,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      margin: const EdgeInsets.only(
+                                          top: 15, right: 13, left: 15),
+                                      child: FadeInImage.assetNetwork(
+                                        placeholderCacheHeight: 120,
+                                        placeholderCacheWidth: 120,
+                                        fit: BoxFit.cover,
+                                        placeholderFit: BoxFit.contain,
+                                        placeholder: 'assets/earth.gif',
+                                        image:
+                                            // 'https://maps.googleapis.com/maps/api/staticmap?center=${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(_list[widget.index]['latlong_la'].toString()) < double.parse(_list[widget.index]['latlong_log'].toString())) ? "${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}" : "${_list[widget.index]['latlong_log'].toString()},${_list[widget.index]['latlong_la'].toString()}"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(_list[widget.index]['latlong_la'].toString()) < double.parse(_list[widget.index]['latlong_log'].toString())) ? "${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}" : "${_list[widget.index]['latlong_log'].toString()},${_list[widget.index]['latlong_la'].toString()}"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ))
+                        : Form(
+                            key: _formKey,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: Column(
+                                children: [
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        //const Spacer(),
-                                        // InkWell(
-                                        //   onTap: () {
-                                        //     // setState(() {
-                                        //     //   Comparable_new();
-                                        //     //   print('object');
-                                        //     // });
-                                        //     validateAndSave();
-                                        //     if (com_property_type != null &&
-                                        //         compare_bank_id != null &&
-                                        //         lat != null &&
-                                        //         log != null &&
-                                        //         comparabledate != null &&
-                                        //         condition != null &&
-                                        //         commune != null &&
-                                        //         province != null &&
-                                        //         district != null &&
-                                        //         comparable_phone != null &&
-                                        //         total_b != null) {
-                                        //       AwesomeDialog(
-                                        //           context: context,
-                                        //           animType: AnimType.leftSlide,
-                                        //           headerAnimationLoop: false,
-                                        //           dialogType:
-                                        //               DialogType.success,
-                                        //           showCloseIcon: false,
-                                        //           title: 'Save Successfully',
-                                        //           autoHide:
-                                        //               Duration(seconds: 3),
-                                        //           onDismissCallback:
-                                        //               (type) async {
-                                        //             await Comparable_new();
-                                        //             setState(() {
-                                        //               print("Save");
-                                        //             });
-                                        //             // Navigator.pop(context);
-                                        //             // onPressed: () {
-                                        //             // Navigator.push(
-                                        //             //   context,
-                                        //             //   MaterialPageRoute(
-                                        //             //       builder: (context) =>
-                                        //             //           const ResponsiveHomeP()),
-                                        //             // );
-                                        //           }).show();
-                                        //     } else {
-                                        //       AwesomeDialog(
-                                        //         context: context,
-                                        //         dialogType: DialogType.error,
-                                        //         animType: AnimType.rightSlide,
-                                        //         headerAnimationLoop: false,
-                                        //         title: 'Error',
-                                        //         desc: "Please check ",
-                                        //         btnOkOnPress: () {
-                                        //           print("Error");
-                                        //         },
-                                        //         btnOkIcon: Icons.cancel,
-                                        //         btnOkColor: Colors.red,
-                                        //       ).show();
-                                        //     }
-                                        //   },
-                                        //   child: Container(
-                                        //     alignment: Alignment.center,
-                                        //     height: MediaQuery.of(context)
-                                        //             .size
-                                        //             .height *
-                                        //         0.05,
-                                        //     width: MediaQuery.of(context)
-                                        //             .size
-                                        //             .width *
-                                        //         0.2,
-                                        //     decoration: BoxDecoration(
-                                        //         borderRadius:
-                                        //             BorderRadius.circular(10),
-                                        //         color: Color.fromARGB(
-                                        //             255, 32, 167, 8)),
-                                        //     child: Text(
-                                        //       'Save',
-                                        //       style: TextStyle(
-                                        //           fontWeight: FontWeight.bold),
-                                        //     ),
-                                        //   ),
-                                        // ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Bank Info', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['bank_name'] ??
+                                                    ''.toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['bank_branch_name'] ??
+                                                    ''.toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              // SizedBox(
+                                              //   width: w,
+                                              // ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                        ),
                                       ],
                                     ),
                                   ),
                                   sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('Bank Info', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Row(
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: TextFormField(
-                                                style: TextStyle(
-                                                    fontSize: MediaQuery
-                                                            .textScaleFactorOf(
-                                                                context) *
-                                                        12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    // com_bank_officer = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                  // labelStyle: ,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 0),
-                                                  fillColor: kwhite,
-                                                  filled: true,
-                                                  //labelText: widget.filedName,
-                                                  // hintText: widget.filedName,
-                                                  labelStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  helperStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  prefixIcon:
-                                                      const SizedBox(width: 7),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 1.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    //  borderRadius: BorderRadius.circular(10.0),
-                                                  ),
-                                                ),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Bank Officer', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'com_bankofficer']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : (_list[widget.index]
+                                                            ['com_bankofficer']
+                                                        .toString()),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
                                               ),
-                                            ),
-                                            sizebox,
-                                            Expanded(
-                                              flex: 2,
-                                              child: TextFormField(
-                                                style: TextStyle(
-                                                    fontSize: MediaQuery
-                                                            .textScaleFactorOf(
-                                                                context) *
-                                                        12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    //  com_bank_contact = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                  // labelStyle: ,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 0),
-                                                  fillColor: kwhite,
-                                                  filled: true,
-                                                  labelText: 'Bank Contact',
-                                                  // hintText: widget.filedName,
-                                                  labelStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  helperStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  prefixIcon:
-                                                      const SizedBox(width: 7),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 1.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      const OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    //  borderRadius: BorderRadius.circular(10.0),
-                                                  ),
-                                                ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'com_bankofficer_contact']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : (_list[widget.index][
+                                                            'com_bankofficer_contact']
+                                                        .toString()),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
                                               ),
-                                            )
-                                            // InputfiedRowtwo(
-                                            //     validator: false,
-                                            //     readOnly: false,
-                                            //     value: (value) {
-                                            //       setState(() {
-                                            //         com_bank_contact = value;
-                                            //       });
-                                            //     },
-                                            //     filedName: 'Bank Contact',
-                                            //     flex: 2),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      // sizeboxw40,
-                                      //filedtext('Zoning', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        // child: DropDown(
-                                        //     validator: true,
-                                        //     flex: 2,
-                                        //     value: (value) {
-                                        //       setState(() {
-                                        //         // zoning_id = value;
-                                        //       });
-                                        //     },
-                                        //     list: zoningList,
-                                        //     valuedropdown: 'zoning_id',
-                                        //     valuetxt: '',
-                                        //     filedName: 'All'),
-                                      ),
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  //Contact by
-                                  Row(
-                                    children: [
-                                      filedtext('Bank Officer', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Row(
-                                          children: [
-                                            // InputfiedRowtwo(
-                                            //     validator: false,
-                                            //     readOnly: false,
-                                            //     value: (value) {
-                                            //       setState(() {
-                                            //         com_bank_officer = value;
-                                            //       });
-                                            //     },
-                                            //     filedName: '',
-                                            //     flex: 2),
-                                            Expanded(
-                                              flex: 2,
-                                              child: TextFormField(
-                                                style: TextStyle(
-                                                    fontSize: MediaQuery
-                                                            .textScaleFactorOf(
-                                                                context) *
-                                                        12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    // com_bank_officer = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                  // labelStyle: ,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 0),
-                                                  fillColor: kwhite,
-                                                  filled: true,
-                                                  //labelText: widget.filedName,
-                                                  // hintText: widget.filedName,
-                                                  labelStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  helperStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  prefixIcon:
-                                                      const SizedBox(width: 7),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 1.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    //  borderRadius: BorderRadius.circular(10.0),
-                                                  ),
-                                                ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Zoning', '', context),
+                                              Inputfied(
+                                                filedName: '',
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
                                               ),
-                                            ),
-                                            sizebox,
-                                            Expanded(
-                                              flex: 2,
-                                              child: TextFormField(
-                                                style: TextStyle(
-                                                    fontSize: MediaQuery
-                                                            .textScaleFactorOf(
-                                                                context) *
-                                                        12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    //  com_bank_contact = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                  // labelStyle: ,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 0),
-                                                  fillColor: kwhite,
-                                                  filled: true,
-                                                  labelText: 'Bank Contact',
-                                                  // hintText: widget.filedName,
-                                                  labelStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  helperStyle: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: MediaQuery
-                                                              .textScaleFactorOf(
-                                                                  context) *
-                                                          12),
-                                                  prefixIcon:
-                                                      const SizedBox(width: 7),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 1.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  errorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      width: 1,
-                                                      color: Color.fromARGB(
-                                                          255, 249, 0, 0),
-                                                    ),
-                                                    //  borderRadius: BorderRadius.circular(10.0),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            // InputfiedRowtwo(
-                                            //     validator: false,
-                                            //     readOnly: false,
-                                            //     value: (value) {
-                                            //       setState(() {
-                                            //         com_bank_contact = value;
-                                            //       });
-                                            //     },
-                                            //     filedName: 'Bank Contact',
-                                            //     flex: 2),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      // sizeboxw40,
-                                      filedtext('Zoning', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: DropDown(
-                                            validator: true,
-                                            flex: 2,
-                                            value: (value) {
-                                              setState(() {
-                                                // zoning_id = value;
-                                              });
-                                            },
-                                            list: zoningList,
-                                            valuedropdown: 'zoning_id',
-                                            valuetxt: '',
-                                            filedName: 'All'),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                   sizebox10h,
                                   //Property Guider Name
-                                  Row(
-                                    children: [
-                                      filedtext('Property Type*', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: property_hoemtypetwo(
-                                          flex: 3,
-                                          hometype: (value) {
-                                            setState(() {
-                                              // com_property_type = value;
-                                            });
-                                          },
-                                          // hometype_lable: com_property_type,
-                                          filedName: 'Property Type',
-                                        ),
-                                      ),
-                                      // sizeboxw40,
-                                      filedtext('Road', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: RoadDropdowntwo(
-                                          Name_road: (value) {},
-                                          filedName: 'All',
-                                          id_road: (value) {
-                                            // comparable_road = value;
-                                            //print(comparable_road);
-                                          },
-                                          flex: 3,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  //Property Type
-                                  Row(
-                                    children: [
-                                      filedtext('Land', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Land_buildingtwoRow(
-                                          filedName: '',
-                                          flex: 3,
-                                          l: (value) {
-                                            setState(() {
-                                              // lproperty = value;
-                                            });
-                                          },
-                                          total: (value) {
-                                            setState(() {
-                                              //  ltotal = value;
-                                            });
-                                          },
-                                          w: (value) {
-                                            setState(() {
-                                              // lwproperty = value;
-                                            });
-                                          },
-                                          ltext: '',
-                                          wtext: '',
-                                        ),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Building', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Land_buildingtwoRow(
-                                          filedName: '',
-                                          flex: 3,
-                                          l: (value) {
-                                            setState(() {
-                                              //  lb = value;
-                                            });
-                                          },
-                                          total: (value) {
-                                            setState(() {
-                                              //  total_b = value;
-                                            });
-                                          },
-                                          w: (value) {
-                                            setState(() {
-                                              // wb = value;
-                                            });
-                                          },
-                                          ltext: '',
-                                          wtext: '',
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  //Property Location
-                                  Row(
-                                    children: [
-                                      filedtext('Price Per Sqm', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Total_dropdowntwo(
-                                          flex: 3,
-                                          input: (value) {
-                                            setState(() {
-                                              //  askingprice = value;
-                                            });
-                                          },
-                                          total_type: (value) {
-                                            setState(() {
-                                              // sqm_total = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Offered Price', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Total_dropdowntwo(
-                                          flex: 3,
-                                          input: (value) {
-                                            setState(() {
-                                              // comparable_add_price = value;
-                                            });
-                                          },
-                                          total_type: (value) {
-                                            setState(() {
-                                              //  comparable_addprice_total = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('Offered Price', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Total_dropdowntwo(
-                                          flex: 3,
-                                          input: (value) {
-                                            setState(() {
-                                              // comparable_bought_price =
-                                              //     value.toString();
-                                            });
-                                          },
-                                          total_type: (value) {
-                                            setState(() {
-                                              // comparable_bought_price_total =
-                                              //     value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Sold Out Price', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Total_dropdowntwo(
-                                          flex: 3,
-                                          input: (value) {
-                                            setState(() {
-                                              // comparable_sold_price =
-                                              //     value.toString();
-                                            });
-                                          },
-                                          total_type: (value) {
-                                            setState(() {
-                                              // comparable_sold_total_price =
-                                              //     value.toString();
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          filedtext(
-                                              'Asking Price', '', context),
-                                          filedtext('(TTAmount)', '', context),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: w,
-                                        child: InputfiedRow(
-                                            readOnly: false,
-                                            value: (value) {
-                                              setState(() {
-                                                //  Amount = value.toString();
-                                              });
-                                            },
-                                            filedName: '',
-                                            flex: 6),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Condition', '*', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Total_dropdowntwocondition(
-                                          flex: 3,
-                                          total_type: (value) {
-                                            setState(() {
-                                              // condition = value.toString();
-                                            });
-                                          },
-                                          input: (value) {
-                                            setState(() {
-                                              //  year = value.toString();
-                                            });
-                                          },
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  //Total Fee Charge
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          filedtext('Address', '', context),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.77,
-                                        child: InputfiedRow(
-                                            // validator: false,
-                                            readOnly: false,
-                                            value: (value) {
-                                              setState(() {
-                                                //  address = value.toString();
-                                                // print(address);
-                                              });
-                                            },
-                                            filedName: '',
-                                            flex: 5),
-                                      ),
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('SKC', '*', context),
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.77,
-                                            child: Row(
-                                              children: [
-                                                sizebox,
-                                                // InputfiedRowtwo(
-                                                //     validator: false,
-                                                //     readOnly: false,
-                                                //     value: (value) {
-                                                //       setState(() {
-                                                //         //  province = value;
-                                                //       });
-                                                //     },
-                                                //     filedName: '',
-                                                //     flex: 2),
-                                                // sizebox,
-                                                // InputfiedRowtwo(
-                                                //     validator: false,
-                                                //     readOnly: false,
-                                                //     value: (value) {
-                                                //       setState(() {
-                                                //         //  district = value;
-                                                //       });
-                                                //     },
-                                                //     filedName: '',
-                                                //     flex: 2),
-                                                // sizebox,
-                                                // InputfiedRowtwo(
-                                                //     validator: false,
-                                                //     readOnly: false,
-                                                //     value: (value) {
-                                                //       setState(() {
-                                                //         //  commune = value;
-                                                //       });
-                                                //     },
-                                                //     filedName: '',
-                                                //     flex: 2),
-                                              ],
-                                            ),
-                                          ),
-                                          //sizeboxw40,
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('Date', '*', context),
-                                      SizedBox(
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
                                           width: w,
-                                          child: Dateform(
-                                            flex: 2,
-                                            //fromDate: (value) {},
-                                            Date: (value) {
-                                              setState(() {
-                                                // comparabledate = value;
-                                                // print(comparabledate);
-                                              });
-                                            },
-                                          )),
-                                      //sizeboxw40,
-                                      filedtext('Remark', '', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: InputfiedRow(
-                                            // validator: false,
-                                            readOnly: false,
-                                            value: (value) {
-                                              setState(() {
-                                                // remak = value;
-                                                // print(remak);
-                                              });
-                                            },
-                                            filedName: '',
-                                            flex: 6),
-                                      )
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('Survey Date', '*', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: Dateform(
-                                          flex: 2,
-                                          //fromDate: (value) {},
-                                          Date: (value) {
-                                            // comparable_survey_date = value;
-                                            // print(comparable_survey_date);
-                                          },
-                                        ),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Owner Phone', '*', context),
-                                      SizedBox(
-                                        width: w,
-                                        child: InputfiedRowVld(
-                                            validator: false,
-                                            readOnly: false,
-                                            value: (value) {
-                                              setState(() {
-                                                // comparable_phone = value;
-                                                // print(comparable_phone);
-                                              });
-                                            },
-                                            filedName: '',
-                                            flex: 6),
-                                      )
-                                    ],
-                                  ),
-                                  sizebox10h,
-                                  Row(
-                                    children: [
-                                      filedtext('Latittute', '*', context),
-                                      SizedBox(
-                                        // height: 45,
-                                        width: w,
-                                        child: TextFormField(
-                                          validator: (input) {
-                                            if (input == null ||
-                                                input.isEmpty) {
-                                              return 'require *';
-                                            }
-                                            return null;
-                                          },
-                                          // controller: _lat,
-                                          keyboardType: TextInputType.number,
-                                          style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.015,
-                                              fontWeight: FontWeight.bold),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              // bankcontact = value;
-                                              // lat = _lat!.text;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 8),
-                                            prefixIcon: Icon(
-                                              Icons.numbers_outlined,
-                                              color: kImageColor,
-                                            ),
-                                            hintText: 'Lat',
-                                            fillColor: kwhite,
-                                            //labelText: widget.filedName,
-                                            filled: true,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: kPrimaryColor,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 1,
-                                                color: Color.fromARGB(
-                                                    255, 249, 0, 0),
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Property Type', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index][
+                                                        'property_type_name'] ??
+                                                    ''.toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 1,
-                                                color: Color.fromARGB(
-                                                    255, 249, 0, 0),
-                                              ),
-                                              //  borderRadius: BorderRadius.circular(10.0),
-                                            ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                      //sizeboxw40,
-                                      filedtext('Longtittute', '*', context),
-                                      SizedBox(
-                                        // height: 45,
-                                        width: w,
-                                        child: TextFormField(
-                                          validator: (input) {
-                                            if (input == null ||
-                                                input.isEmpty) {
-                                              return 'require *';
-                                            }
-                                            return null;
-                                          },
-                                          // controller: _log,
-                                          keyboardType: TextInputType.number,
-                                          style: TextStyle(
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.015,
-                                              fontWeight: FontWeight.bold),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              // bankcontact = value;
-                                              // log = _log!.text;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 8),
-                                            prefixIcon: Icon(
-                                              Icons.numbers_outlined,
-                                              color: kImageColor,
-                                            ),
-                                            hintText: 'Lag',
-                                            fillColor: kwhite,
-                                            //labelText: widget.filedName,
-                                            filled: true,
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                  color: kPrimaryColor,
-                                                  width: 1.0),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(5.0),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 1,
-                                                color: Color.fromARGB(
-                                                    255, 249, 0, 0),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Road', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['road_name'] ??
+                                                    ''.toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                width: 1,
-                                                color: Color.fromARGB(
-                                                    255, 249, 0, 0),
-                                              ),
-                                              //  borderRadius: BorderRadius.circular(10.0),
-                                            ),
+                                            ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Land', '', context),
+                                              Inputfied(
+                                                filedName:
+                                                    "Length: ${((_list[widget.index]['comparable_land_length'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_length'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName:
+                                                    "Width: ${((_list[widget.index]['comparable_land_width'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_width'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName:
+                                                    "Total: ${((_list[widget.index]['comparable_land_total'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_land_total'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Building', '', context),
+                                              Inputfied(
+                                                filedName:
+                                                    "Length: ${((_list[widget.index]['comparable_sold_length'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_length'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName:
+                                                    "Width: ${((_list[widget.index]['comparable_sold_width'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_width'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName:
+                                                    "Total: ${((_list[widget.index]['comparable_sold_total'].toString()) == 'null') ? '' : (_list[widget.index]['comparable_sold_total'].toString())}",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Price Per Sqm', '', context),
+                                              Inputfied(
+                                                filedName:
+                                                    "${_list[widget.index]['comparable_adding_price'].toString()} \$",
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableaddpricetotal']
+                                                            .toString()) ==
+                                                        '1')
+                                                    ? 'Totally'
+                                                    // ignore: unrelated_type_equality_checks
+                                                    : ((_list[widget.index][
+                                                                    'comparableaddpricetotal']
+                                                                .toString()) ==
+                                                            '2')
+                                                        ? 'Sqm'
+                                                        : '',
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Offered Price', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableaddprice']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : (_list[widget.index][
+                                                            'comparableaddprice']
+                                                        .toString()),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableaddpricetotal']
+                                                            .toString()) ==
+                                                        '1')
+                                                    ? 'Totally'
+                                                    // ignore: unrelated_type_equality_checks
+                                                    : ((_list[widget.index][
+                                                                    'comparableaddpricetotal']
+                                                                .toString()) ==
+                                                            '2')
+                                                        ? 'Sqm'
+                                                        : '',
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Offered Price', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableboughtprice']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : (_list[widget.index][
+                                                            'comparableboughtprice']
+                                                        .toString()),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableboughtpricetotal']
+                                                            .toString()) ==
+                                                        '1')
+                                                    ? 'Totally'
+                                                    // ignore: unrelated_type_equality_checks
+                                                    : ((_list[widget.index][
+                                                                    'comparableboughtpricetotal']
+                                                                .toString()) ==
+                                                            '2')
+                                                        ? 'Sqm'
+                                                        : '',
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Sold Out Price', '',
+                                                  context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_sold_price']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : (_list[widget.index][
+                                                            'comparable_sold_price']
+                                                        .toString()),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_sold_total_price']
+                                                            .toString()) ==
+                                                        '1')
+                                                    ? 'Totally'
+                                                    // ignore: unrelated_type_equality_checks
+                                                    : ((_list[widget.index][
+                                                                    'comparable_sold_total_price']
+                                                                .toString()) ==
+                                                            '2')
+                                                        ? 'Sqm'
+                                                        : '',
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  filedtext('Asking Price', '',
+                                                      context),
+                                                  filedtext('(TTAmount)', '',
+                                                      context),
+                                                ],
+                                              ),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparableAmount']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : _list[widget.index]
+                                                            ['comparableAmount']
+                                                        .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['bank_branch_name'] ??
+                                                    ''.toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Condition', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_condition_id']
+                                                            .toString()) ==
+                                                        '1')
+                                                    ? 'Condition 1'
+                                                    : ((_list[widget.index][
+                                                                    'comparable_condition_id']
+                                                                .toString()) ==
+                                                            '2')
+                                                        ? 'Condtion 2'
+                                                        : '',
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_year']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : _list[widget.index]
+                                                            ['comparable_year']
+                                                        .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w * 2,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Address', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_address']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : _list[widget.index][
+                                                            'comparable_address']
+                                                        .toString(),
+                                                flex: 8,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w * 2,
+                                          child: Row(
+                                            children: [
+                                              filedtext('SKC', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['province']
+                                                    .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['district']
+                                                    .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              sizebox,
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['commune']
+                                                    .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Date', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['comparableDate']
+                                                    .toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                              //sizebox,
+                                              // Inputfied(
+                                              //   filedName: _list[widget.index]
+                                              //           ['bank_branch_name'] ??
+                                              //       ''.toString(),
+                                              //   flex: 2,
+                                              //   readOnly: true,
+                                              //   validator: false,
+                                              //   value: (value) {},
+                                              // ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext('Remark', '', context),
+                                              Inputfied(
+                                                filedName: ((_list[widget.index]
+                                                                [
+                                                                'comparable_remark']
+                                                            .toString()) ==
+                                                        'null')
+                                                    ? ''
+                                                    : _list[widget.index][
+                                                            'comparable_remark']
+                                                        .toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Survey Date', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index][
+                                                        'comparable_survey_date']
+                                                    .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Owner Phone', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['comparable_phone']
+                                                    .toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  sizebox10h,
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Longitude', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['latlong_la']
+                                                    .toString(),
+                                                flex: 2,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: w,
+                                          child: Row(
+                                            children: [
+                                              filedtext(
+                                                  'Latittute', '', context),
+                                              Inputfied(
+                                                filedName: _list[widget.index]
+                                                        ['latlong_log']
+                                                    .toString(),
+                                                flex: 4,
+                                                readOnly: true,
+                                                validator: false,
+                                                value: (value) {},
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   sizebox10h,
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 40, bottom: 10),
-                                    child: SizedBox(
-                                      height: 500,
-                                      width: double.infinity,
-                                      child: Map_verbal_address_Sale(
-                                        get_province: (value) {
-                                          setState(() {
-                                            // songkat = value.toString();
-                                            // print(songkat);
-                                          });
-                                        },
-                                        get_district: (value) {
-                                          setState(() {
-                                            // provice_map = value.toString();
-                                          });
-                                        },
-                                        get_commune: (value) {
-                                          setState(() {
-                                            //  khan = value.toString();
-                                          });
-                                        },
-                                        get_log: (value) {
-                                          setState(() {
-                                            // log = value.toString();
-                                            // _log = TextEditingController(
-                                            //     text: '${log}');
-                                            // log = _log!.text;
-                                          });
-                                        },
-                                        get_lat: (value) {
-                                          setState(() {
-                                            // lat = value.toString();
-                                            // _lat = TextEditingController(
-                                            //     text: '${lat}');
-                                            // lat = _lat!.text;
-                                          });
-                                        },
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Container(
+                                      height: 400,
+                                      width:
+                                          MediaQuery.of(context).size.width * 1,
+                                      margin: const EdgeInsets.only(
+                                          top: 15, right: 13, left: 15),
+                                      child: FadeInImage.assetNetwork(
+                                        placeholderCacheHeight: 120,
+                                        placeholderCacheWidth: 120,
+                                        fit: BoxFit.cover,
+                                        placeholderFit: BoxFit.contain,
+                                        placeholder: 'assets/earth.gif',
+                                        image:
+                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(_list[widget.index]['latlong_la'].toString()) < double.parse(_list[widget.index]['latlong_log'].toString())) ? "${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}" : "${_list[widget.index]['latlong_log'].toString()},${_list[widget.index]['latlong_la'].toString()}"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(_list[widget.index]['latlong_la'].toString()) < double.parse(_list[widget.index]['latlong_log'].toString())) ? "${_list[widget.index]['latlong_la'].toString()},${_list[widget.index]['latlong_log'].toString()}" : "${_list[widget.index]['latlong_log'].toString()},${_list[widget.index]['latlong_la'].toString()}"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
                                       ),
                                     ),
                                   )
                                 ],
                               ),
                             ),
-                          ),
-                        )),
-            ),
-    );
+                          )),
+              )
+            : const Center(child: CircularProgressIndicator()));
   }
 
   List zoningList = [];

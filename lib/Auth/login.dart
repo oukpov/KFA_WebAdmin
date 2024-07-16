@@ -311,8 +311,10 @@ class _LoginState extends State<Login> {
   List listUser = [];
   void loginFun() async {
     var headers = {'Content-Type': 'application/json'};
-    var data =
-        json.encode({"email": "oukpov@gmail.com", "password": "Pov88889"});
+    var data = json.encode({
+      "email": requestModel.email,
+      "password": requestModel.password,
+    });
     var dio = Dio();
     var response = await dio.request(
       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins',

@@ -1,18 +1,19 @@
 import 'dart:convert';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:graphic/graphic.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
+import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
-
-import 'interface/homescreen/newhomepage.dart';
-import 'interface/homescreen/responsive_layout.dart';
+import 'interface/navigate_home/Report/responsvie/responsivereportyear.dart';
 
 List list = [];
 String? district_id;
@@ -56,34 +57,59 @@ class _MyAppState extends State<MyApp> {
       create: (_) => FirebaseProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        //home: ListenableBuilderExample(),
+        //home: MenuComparableReport(),
+        //home: const ResponsiveReportYear(),
+        // home: ComparableReportYeartest(
+        //   device: '',
+        // ),
+        //home: CheckboxListTileAppTest(),
+        // home: ComparableReportYear(
+        //   device: '',
+        // ),
+        //home: LineChartSample(),
+        //home: LineChartSample(),
+        //home: ResponsiveHomePage();
         routes: {
-          // '/': (context) => const ResponsiveHomePage(
-          //     id: '12',
-          //     name: 'ouk pov',
-          //     controllerUser: '12831923',
-          //     nativigation: true,
-          //     email: 'oukpov@gmail.com')
-          // '/': (BuildContext obj) => ResponsiveLayout(
-          //       myIdController: '',
-          //       email: '',
-          //       idController: '',
+          //'/': (context) => const ResponsiveHomePage(
+          // id: '12',
+          // name: 'ouk pov',
+          // controllerUser: '12831923',
+          // nativigation: true,
+          // email: 'oukpov@gmail.com')
+          '/': (BuildContext obj) => ResponsiveLayout(
+                myIdController: '',
+                email: '',
+                idController: '',
+              ),
+          // '/': (BuildContext obj) => ResponsivenewcomparableGet(
+          //       name: '',
+          //       index: 10,
           //     ),
-        },
-        onGenerateRoute: (RouteSettings settings) {
-          final args = settings.name;
+          // '/': (BuildContext obj) => ResponsivenewcomparableAdd(
+          //       name: '',
+          //     ),
+          // '/': (context) => List_newcomparable(
+          //       name: '',
+          // //     )
+          //},
+          //   onGenerateRoute: (RouteSettings settings) {
+          //     final args = settings.name;
 
-          if (args != null) {
-            var data = settings.name!.split('/');
-            var value = data[1].toString();
-            return MaterialPageRoute(
-              builder: (context) {
-                return koko(
-                  name: value.toString(),
-                );
-              },
-            );
-          }
+          //     if (args != null) {
+          //       var data = settings.name!.split('/');
+          //       var value = data[1].toString();
+          //       return MaterialPageRoute(
+          //         builder: (context) {
+          //           return koko(
+          //             name: value.toString(),
+          //           );
+          //         },
+          //       );
+          //     }
         },
+        builder: BotToastInit(),
       ),
     );
   }
@@ -121,7 +147,7 @@ class _kokoState extends State<koko> {
     return const Scaffold(
         // body: detail_verbal(set_data_verbal: widget.name.toString()),
         // body: Home_Screen_property(),
-        );
+        body: Hometest());
   }
 
   void getallautoverbalbyid() async {
@@ -195,26 +221,26 @@ class _HometestState extends State<Hometest> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Container(
-          //color: Colors.amber,
-          height: 200,
-          width: MediaQuery.of(context).size.width * 0.35,
-          child: BankDropdowncolumn(
-            bank: (value) {
-              setState(() {
-                compare_bank_id = value.toString();
-              });
-            },
-            bankbranch: (value) {
-              setState(() {
-                //listbranch = value;
-                // print(
-                //     "\nkokoobject${listbranch}");
-              });
-            },
-            validator: (val) {},
-            filedName: 'Bank',
-          ),
+        child: Chart(
+          transforms: const [],
+          changeData: false,
+          data: const [
+            {'genre': 'Sports', 'value': 275},
+            {'genre': 'Strategy', 'value': 115},
+          ],
+          variables: {
+            'genre': Variable(
+              accessor: (Map map) => map['genre'] as String,
+            ),
+            'sold': Variable(
+              accessor: (Map map) => map['value'] as num,
+            ),
+          },
+          marks: [IntervalMark()],
+          axes: [
+            Defaults.horizontalAxis,
+            Defaults.verticalAxis,
+          ],
         ),
         // child: Padding(
         //   padding: const EdgeInsets.all(8.0),

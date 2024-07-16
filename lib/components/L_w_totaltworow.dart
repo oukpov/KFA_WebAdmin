@@ -129,7 +129,6 @@ class _MultiplyFormState extends State<Land_buildingtwoRow> {
               fillColor: kwhite,
               filled: true,
               labelText: widget.wtext,
-              hintText: widget.wtext,
               labelStyle: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.textScaleFactorOf(context) * 12),

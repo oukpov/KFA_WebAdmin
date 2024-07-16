@@ -1,36 +1,47 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
+// ignore_for_file: unnecessary_import, implementation_imports, prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'customerCaseIn&Out.dart';
-import 'customercasebar.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'comparable4/list_comparable_filter.dart';
+import 'comparable3/search_screen.dart/comparable_search.dart';
+import 'newComparable/listnewcomparable.dart';
+import 'newComparable/responsivenewcomparableadd.dart';
 
-class MenuCostomerResport extends StatefulWidget {
-  MenuCostomerResport({Key? key, required this.id}) : super(key: key);
-  final String id;
+class MenuComparable extends StatefulWidget {
+  MenuComparable({super.key, required this.name});
+  String? name;
 
   @override
-  State<MenuCostomerResport> createState() => _MenuCostomerResportState();
+  State<MenuComparable> createState() => _MenuComparableState();
 }
 
-class _MenuCostomerResportState extends State<MenuCostomerResport> {
+class _MenuComparableState extends State<MenuComparable> {
   List<Text> option = const [
-    Text("Customer Case In & Out",
+    Text("New Comparable",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-    Text("Customer Case Bar Chart",
+    Text("Comparable List",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+    Text("Comparable Search",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+    Text("Comparable Map List",
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
   ];
   List<Icon> optionIconList = const [
     Icon(Icons.data_saver_on),
     Icon(Icons.list_alt_outlined),
+    Icon(Icons.search),
+    Icon(Icons.map),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple[900],
         centerTitle: true,
+        backgroundColor: Colors.deepPurple[900],
         title: const Text(
-          "Customer",
+          "Comparable",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 25, color: Colors.white),
         ),
@@ -38,7 +49,7 @@ class _MenuCostomerResportState extends State<MenuCostomerResport> {
       body: Container(
         height: MediaQuery.of(context).size.height * 1,
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
               image: ExactAssetImage('assets/images/New_KFA_Logo.png'),
               fit: BoxFit.contain,
@@ -51,18 +62,31 @@ class _MenuCostomerResportState extends State<MenuCostomerResport> {
               InkWell(
                 onTap: () {
                   if (i == 0) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => List_newcomparable(
+                              name: widget.name.toString(),
+                            )));
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return const customerCaseinOut();
+                        return ResponsivenewcomparableAdd(
+                          name: widget.name,
+                        );
                       },
                     ));
                   }
                   if (i == 1) {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return const customercasebar();
-                      },
-                    ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => List_newcomparable(
+                              name: widget.name.toString(),
+                            )));
+                  }
+                  if (i == 2) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => comparable_search()));
+                  }
+                  if (i == 3) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => List_comparable_filter()));
                   }
                 },
                 child: Container(
@@ -71,7 +95,7 @@ class _MenuCostomerResportState extends State<MenuCostomerResport> {
                   height: MediaQuery.of(context).size.height * 0.07,
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      gradient: const LinearGradient(
+                      gradient: LinearGradient(
                         colors: [
                           Colors.cyan,
                           Colors.indigo,

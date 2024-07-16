@@ -19,13 +19,13 @@ class BankDropdowntwo extends StatefulWidget {
     this.brn,
     required this.flex,
     required this.filedName,
-    this.validator,
+    // this.validator,
   }) : super(key: key);
   final OnChangeCallback bank;
   final String filedName;
   final OnChangeCallback bankbranch;
   final String? bn;
-  final OnChangeCallback? validator;
+  //final OnChangeCallback? validator;
   final String? brn;
   final int flex;
   @override
@@ -80,15 +80,15 @@ class _BankDropdowntwoState extends State<BankDropdowntwo> {
             // print(newValue);
           });
         },
-        validator: (newValue) {
-          if (newValue == null || newValue.isEmpty) {
-            setState(() {
-              widget.validator!('require *');
-            });
-            return 'require *';
-          }
-          return null;
-        },
+        // validator: (newValue) {
+        //   if (newValue == null || newValue.isEmpty) {
+        //     setState(() {
+        //       widget.validator!('require *');
+        //     });
+        //     return 'require *';
+        //   }
+        //   return null;
+        // },
         items: _list
             .map<DropdownMenuItem<String>>(
               (value) => DropdownMenuItem<String>(
@@ -129,12 +129,12 @@ class _BankDropdowntwoState extends State<BankDropdowntwo> {
             borderRadius: BorderRadius.circular(5.0),
           ),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              width: 1,
-              color: (!hasError && widget.validator == true)
-                  ? Colors.red
-                  : bordertxt,
-            ),
+            // borderSide: BorderSide(
+            //   width: 1,
+            //   color: (!hasError && widget.validator == true)
+            //       ? Colors.red
+            //       : bordertxt,
+            // ),
             borderRadius: BorderRadius.circular(5.0),
           ),
           errorBorder: OutlineInputBorder(

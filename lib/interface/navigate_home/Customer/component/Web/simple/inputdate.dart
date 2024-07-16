@@ -6,23 +6,34 @@ import '../../../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../../../components/colors/colors.dart';
 
 class InputDate extends StatefulWidget {
-  const InputDate(
-      {super.key,
-      required this.filedName,
-      required this.flex,
-      required this.value});
+  const InputDate({
+    Key? key,
+    required this.filedName,
+    required this.flex,
+    required this.value,
+    this.initialValue,
+  }) : super(key: key);
+
   final String filedName;
   final int flex;
-  final OnChangeCallback value;
+  final Function(String) value;
+  final String? initialValue;
+
   @override
   State<InputDate> createState() => _InputDateState();
 }
 
 class _InputDateState extends State<InputDate> {
-  TextEditingController todate = TextEditingController();
+  late TextEditingController todate;
+
+  @override
+  void initState() {
+    super.initState();
+    todate = TextEditingController(text: widget.initialValue);
+  }
+
   @override
   void dispose() {
-    // Don't forget to dispose the controller when it's no longer needed to avoid memory leaks
     todate.dispose();
     super.dispose();
   }
@@ -37,13 +48,13 @@ class _InputDateState extends State<InputDate> {
           style: TextStyle(
             fontSize: MediaQuery.textScaleFactorOf(context) * 12,
           ),
-          controller: todate, //editing controller of this TextField
+          controller: todate,
           decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.calendar_today,
               color: bordertxt,
               size: 20,
-            ), //icon of text field
+            ),
             labelText: widget.filedName,
             hintText: widget.filedName,
             fillColor: kwhite,
@@ -58,9 +69,9 @@ class _InputDateState extends State<InputDate> {
                 color: bordertxt,
               ),
               borderRadius: BorderRadius.circular(5.0),
-            ), //label text of field
+            ),
           ),
-          readOnly: true, //set it true, so that user will not able to edit text
+          readOnly: true,
           onTap: () async {
             DateTime? pickedDate = await showDatePicker(
                 context: context,
@@ -71,13 +82,10 @@ class _InputDateState extends State<InputDate> {
             if (pickedDate != null) {
               String formattedDate =
                   DateFormat('yyyy-MM-dd').format(pickedDate);
-
               setState(() {
                 todate.text = formattedDate;
-                widget.value(todate.text);
+                widget.value(formattedDate);
               });
-            } else {
-              print("Date is not selected");
             }
           },
         ),

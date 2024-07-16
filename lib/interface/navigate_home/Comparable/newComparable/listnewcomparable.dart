@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:web_admin/interface/navigate_home/Comparable/newComparable/responsivenewcomparable.dart';
+import 'package:web_admin/interface/navigate_home/Comparable/newComparable/responsivenewcomparableget.dart';
 import 'package:web_admin/interface/navigate_home/Comparable/newComparable/responsiveupdate.dart';
-import 'package:web_admin/interface/navigate_home/Comparable/newComparable/update_new_comparable%20copy.dart';
 import '../../../../screen/Property/Map/ToFromDate_ForSale.dart';
 
 class List_newcomparable extends StatefulWidget {
-  List_newcomparable({super.key, this.name});
-  String? name;
+  List_newcomparable({super.key, required this.name});
+  final String name;
   @override
   State<List_newcomparable> createState() => _List_newcomparableState();
 }
@@ -97,7 +94,7 @@ class _List_newcomparableState extends State<List_newcomparable> {
   String? _search;
   String? end;
   String? start;
-
+  String? name;
   Future getdataval() async {
     wait = true;
     await Future.wait([getdata()]);
@@ -187,67 +184,69 @@ class _List_newcomparableState extends State<List_newcomparable> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Row(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.07,
-                width: MediaQuery.of(context).size.width * 0.65,
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: TextFormField(
-                      onChanged: (value) {
-                        setState(() {
-                          _search = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(),
-                        hintText: 'Id Search here...',
-                      )),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              GFButton(
-                color: Color.fromARGB(255, 9, 19, 125),
-                size: MediaQuery.of(context).size.height * 0.07,
-                elevation: 12,
-                onPressed: () {
-                  setState(() {
-                    if (start != null && end != null) {
-                      searchbetween();
-                    } else {
-                      getdataval();
-                    }
-                  });
-                },
-                text: "Search",
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
+          //បិទSearch សិន
+          // Row(
+          //   children: [
+          //     SizedBox(
+          //       height: MediaQuery.of(context).size.height * 0.07,
+          //       width: MediaQuery.of(context).size.width * 0.65,
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(1.0),
+          //         child: TextFormField(
+          //             onChanged: (value) {
+          //               setState(() {
+          //                 _search = value;
+          //               });
+          //             },
+          //             decoration: const InputDecoration(
+          //               prefixIcon: Icon(Icons.search),
+          //               border: OutlineInputBorder(),
+          //               hintText: 'Id Search here...',
+          //             )),
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       width: 10,
+          //     ),
+          //     GFButton(
+          //       color: Color.fromARGB(255, 9, 19, 125),
+          //       size: MediaQuery.of(context).size.height * 0.07,
+          //       elevation: 12,
+          //       onPressed: () {
+          //         setState(() {
+          //           if (start != null && end != null) {
+          //             searchbetween();
+          //           } else {
+          //             getdataval();
+          //           }
+          //         });
+          //       },
+          //       text: "Search",
+          //       icon: const Icon(
+          //         Icons.search,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           const SizedBox(
             height: 20,
           ),
-          ToFromDate_p(
-            fromDate: (value) {
-              setState(() {
-                start = value.toString();
-                start;
-              });
-            },
-            toDate: (value) {
-              setState(() {
-                end = value.toString();
-                end;
-              });
-            },
-          ),
+          //បិទdate សិន
+          // ToFromDate_p(
+          //   fromDate: (value) {
+          //     setState(() {
+          //       start = value.toString();
+          //       start;
+          //     });
+          //   },
+          //   toDate: (value) {
+          //     setState(() {
+          //       end = value.toString();
+          //       end;
+          //     });
+          //   },
+          // ),
           wait
               ? const Center(
                   child: CircularProgressIndicator(),
@@ -256,7 +255,7 @@ class _List_newcomparableState extends State<List_newcomparable> {
                   width: MediaQuery.of(context).size.width * 1,
                   padding: const EdgeInsets.all(5),
                   child: PaginatedDataTable(
-                    columnSpacing: 50.0,
+                    columnSpacing: 40.0,
                     horizontalMargin: 5.0,
                     // arrowHeadColor: Colors.blueAccent[300],
                     columns: const [
@@ -339,7 +338,7 @@ class _List_newcomparableState extends State<List_newcomparable> {
                             color: Colors.black, fontWeight: FontWeight.bold),
                       )),
                     ],
-                    dataRowHeight: 60,
+                    dataRowHeight: 35,
                     rowsPerPage: on_row,
                     onRowsPerPageChanged: (value) {
                       setState(() {
@@ -347,17 +346,16 @@ class _List_newcomparableState extends State<List_newcomparable> {
                       });
                     },
                     source: _DataSource(
-                      list,
-                      list.length,
-                      context,
-                      // widget.name,
-                      _setSate,
-                      (value) {
-                        setState(() {
-                          _wait = value;
-                        });
-                      },
-                    ),
+                        data: list,
+                        context: context,
+                        count_row: list.length,
+                        name: widget.name,
+                        setstate: _setSate,
+                        waiting: (value) {
+                          setState(() {
+                            _wait = value;
+                          });
+                        }),
                   ),
                 ),
         ],
@@ -366,10 +364,12 @@ class _List_newcomparableState extends State<List_newcomparable> {
   }
 }
 
-void DeTail_screen(BuildContext context, list, int index) async {
+void DeTail_screen(BuildContext context, list, int index, String name) async {
   Navigator.push(context, MaterialPageRoute(
     builder: (context) {
-      return Responsivenewcomparable();
+      return ResponsivenewcomparableGet(
+        index: index,
+      );
     },
   ));
 }
@@ -377,15 +377,25 @@ void DeTail_screen(BuildContext context, list, int index) async {
 class _DataSource extends DataTableSource {
   final BuildContext context;
   final int count_row;
-  //final String? name;
+  final String name;
   final List data;
   final Function setstate;
   final OnChangeCallback waiting;
   _DataSource(
-      this.data, this.count_row, this.context, this.setstate, this.waiting);
+      {required this.data,
+      required this.count_row,
+      required this.context,
+      required this.setstate,
+      required this.waiting,
+      required this.name});
   Future<void> _clones() async {
     waiting(true);
     await Future.wait([clonecomparable()]);
+  }
+
+  Future<void> deleteverify(String id) async {
+    waiting(true);
+    await Future.wait([deletecomparable(id)]);
   }
 
   @override
@@ -443,7 +453,7 @@ class _DataSource extends DataTableSource {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text(
-              index.toString(),
+              "${index + 1}",
               style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
           ],
@@ -457,46 +467,39 @@ class _DataSource extends DataTableSource {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(
-              height: 20,
-              width: 50,
-              child: GFButton(
-                color: Colors.green,
-                onPressed: () {
-                  // DeTail_screen(context, data, index);
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return ResponsiveHomePupdate(
-                        list: item,
-                      );
-                      // return Update_NewComarable(
-                      //     device: '',
-                      //     email: '',
-                      //     idUsercontroller: '',
-                      //     myIdcontroller: '',
-                      //     list: item);
-                    },
-                  ));
-                },
-                text: "Edit",
-                shape: GFButtonShape.pills,
-                fullWidthButton: true,
+            InkWell(
+              onTap: () {
+                // DeTail_screen(context, data, index);
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return ResponsiveHomePupdate(
+                      list: item,
+                    );
+                  },
+                ));
+              },
+              child: const Icon(
+                Icons.edit,
+                color: Colors.black,
+                size: 24,
               ),
             ),
             SizedBox(
               width: 5,
             ),
-            SizedBox(
-              height: 20,
-              width: 60,
-              child: GFButton(
+            InkWell(
+              onTap: () {
+                // DeTail_screen(context, data, index);
+                setstate(() {
+                  //deletecomparable(item['comparable_id'].toString());
+                  list.removeAt(index);
+                  deleteverify(item['comparable_id'].toString());
+                });
+              },
+              child: const Icon(
+                Icons.delete,
                 color: Colors.red,
-                onPressed: () {
-                  DeTail_screen(context, data, index);
-                },
-                text: "Delete",
-                shape: GFButtonShape.pills,
-                fullWidthButton: true,
+                size: 24,
               ),
             ),
             SizedBox(
@@ -505,115 +508,148 @@ class _DataSource extends DataTableSource {
             SizedBox(
               width: 5,
             ),
-            SizedBox(
-              height: 20,
-              width: 60,
-              child: GFButton(
-                onPressed: () {
-                  setstate(() async {
-                    saveclone();
-                    // await clonecomparable();
-                    _clones();
-                    //print(latlong_la);
-                  });
-                  //DeTail_screen(context, data, index);
-                  // Navigator.push<void>(
-                  //   context,
-                  //   MaterialPageRoute<void>(
-                  //     builder: (BuildContext context) => PaginatedTest(
-                  //       name: '',
-                  //     ),
-                  //   ),
-                  // );
-                },
-                text: "Clone",
-                shape: GFButtonShape.pills,
-                fullWidthButton: true,
+            InkWell(
+              onTap: () {
+                // DeTail_screen(context, data, index);
+                setstate(() async {
+                  saveclone();
+                  // await clonecomparable();
+                  _clones();
+                  //print(latlong_la);
+                });
+              },
+              child: const Icon(
+                Icons.file_copy_sharp,
+                color: Colors.blueAccent,
+                size: 24,
               ),
-            ),
+            )
+            // SizedBox(
+            //   height: 20,
+            //   width: 60,
+            //   child: GFButton(
+            //     onPressed: () {
+            //       setstate(() async {
+            //         saveclone();
+            //         // await clonecomparable();
+            //         _clones();
+            //         //print(latlong_la);
+            //       });
+            //       //DeTail_screen(context, data, index);
+            //       // Navigator.push<void>(
+            //       //   context,
+            //       //   MaterialPageRoute<void>(
+            //       //     builder: (BuildContext context) => PaginatedTest(
+            //       //       name: '',
+            //       //     ),
+            //       //   ),
+            //       // );
+            //     },
+            //     text: "Clone",
+            //     shape: GFButtonShape.pills,
+            //     fullWidthButton: true,
+            //   ),
+            // ),
             //)
           ],
         ),
         onTap: () {
           setstate(() {});
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_property_id'].toString(),
+          ((item['comparable_property_id'].toString()) == 'null')
+              ? ''
+              : item['comparable_property_id'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_land_total'].toString(),
+          ((item['comparable_land_total'].toString()) == 'null')
+              ? ''
+              : item['comparable_land_total'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          // DeTail_screen(context, item);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_sold_total'].toString(),
+          ((item['comparable_sold_total'].toString()) == 'null')
+              ? ''
+              : item['comparable_sold_total'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparableAmount'].toString(),
+          ((item['comparableAmount'].toString()) == 'null')
+              ? ''
+              : item['comparableAmount'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
           Text(
-            item['comparable_sold_total_price'].toString(),
+            ((item['comparable_sold_total_price'].toString()) == 'null')
+                ? ''
+                : item['comparable_sold_total_price'].toString(),
             style: TextStyle(fontSize: 10),
             overflow: TextOverflow.ellipsis,
           ), onTap: () {
-        DeTail_screen(context, data, index);
+        DeTail_screen(context, item, index, name);
       }),
       DataCell(
         Text(
-          item['comparableboughtprice'].toString(),
+          ((item['comparableboughtprice'].toString()) == 'null')
+              ? ''
+              : item['comparableboughtprice'].toString(),
           style: TextStyle(fontSize: 10),
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_sold_price'].toString(),
+          ((item['comparable_sold_price'].toString()) == 'null')
+              ? ''
+              : item['comparable_sold_price'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_address'].toString(),
+          ((item['comparable_address'].toString()) == 'null')
+              ? ''
+              : item['comparable_address'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
@@ -625,26 +661,30 @@ class _DataSource extends DataTableSource {
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
         Text(
-          item['comparable_id'].toString(),
+          ((item['comparable_id'].toString()) == 'null')
+              ? ''
+              : item['comparable_id'].toString(),
           style: TextStyle(fontSize: 10),
           overflow: TextOverflow.ellipsis,
         ),
         onTap: () {
-          DeTail_screen(context, data, index);
+          DeTail_screen(context, item, index, name);
         },
       ),
       DataCell(
           Text(
-            item['comparable_survey_date'].toString(),
+            ((item['comparable_survey_date'].toString()) == 'null')
+                ? ''
+                : item['comparable_survey_date'].toString(),
             style: TextStyle(fontSize: 10),
             overflow: TextOverflow.ellipsis,
           ), onTap: () {
-        DeTail_screen(context, data, index);
+        DeTail_screen(context, item, index, name);
       }),
     ]);
   }
@@ -726,40 +766,6 @@ class _DataSource extends DataTableSource {
           (comparable_phone == null) ? null : comparable_phone.toString(),
       "latlong_log": double.parse(latlong_log.toString()),
       "latlong_la": double.parse(latlong_la.toString()),
-      //"compare_bank_id": "7",
-      //"compare_bank_branch_id": "0",
-      // "com_bankofficer": "btb",
-      //"com_bankofficer_contact": "simeng9999",
-      //"zoning_id": "7",
-      //"comparable_property_id": "1",
-      //"comparable_road": "7",
-      //"comparable_land_length": "7777",
-      //"comparable_land_width": "7777",
-      //"comparable_land_total": "7777",
-      //"comparable_sold_length": "7777",
-      //"comparable_sold_width": "7777",
-      //"comparable_sold_total": "7777",
-      //"comparable_adding_price": "7777",
-      // "comparable_adding_total": "7777",
-      //"comparableaddprice": "7777",
-      //"comparableaddpricetotal": "7777",
-      //"comparableboughtprice": "7777",
-      //"comparableboughtpricetotal": "7777",
-      //"comparable_sold_price": "7777",
-      //"comparable_sold_total_price": "7777",
-      //"comparableAmount": "7777",
-      //"comparable_condition_id": "7777",
-      //"comparable_year": "2024",
-      //"comparable_address": "pp",
-      //"province": "pp",
-      //"district": "pp",
-      //"commune": "pp",
-      // "comparableDate": "2024",
-      //"comparable_remark": "simeng",
-      //"comparable_survey_date": "",
-      //"comparable_phone": "0966705117",
-      //"latlong_log": "13.3551",
-      //"latlong_la": "103.8226"
     });
     var dio = Dio();
     var response = await dio.request(
@@ -767,6 +773,27 @@ class _DataSource extends DataTableSource {
       options: Options(
         method: 'POST',
         headers: headers,
+      ),
+      data: data,
+    );
+
+    if (response.statusCode == 200) {
+      print(json.encode(response.data));
+      setstate(() {
+        waiting(false);
+      });
+    } else {
+      print(response.statusMessage);
+    }
+  }
+
+  Future<void> deletecomparable(String id) async {
+    var data = '''''';
+    var dio = Dio();
+    var response = await dio.request(
+      "https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/delete_comparable/${id.toString()}}",
+      options: Options(
+        method: 'DELETE',
       ),
       data: data,
     );

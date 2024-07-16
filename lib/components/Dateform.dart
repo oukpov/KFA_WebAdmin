@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:web_admin/interface/navigate_home/Comparable/newComparable/new_comparable.dart';
+import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
 import 'contants.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
@@ -40,20 +40,19 @@ class _DateformState extends State<Dateform> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: widget.flex,
       child: TextField(
-        style: TextStyle(
-          fontSize: MediaQuery.of(context).size.height * 0.015,
-        ),
-        controller: selecteddate, //editing controller of this TextField
+        style: TextStyle(fontSize: 12, color: blackColor),
+        controller: selecteddate,
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.calendar_today,
             color: kImageColor,
-            size: MediaQuery.of(context).size.height * 0.025,
+            size: 25,
           ),
           // labelStyle: ,
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+              const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
           fillColor: kwhite,
           filled: true,
           label:
@@ -89,11 +88,13 @@ class _DateformState extends State<Dateform> {
               lastDate: DateTime(2101));
 
           if (pickedDate != null) {
-            curentDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-            // formattedDate = widget.Date;
+            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+            //curentDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+            formattedDate = formattedDate;
             setState(() {
-              selecteddate.text = widget.formattedDate!;
-              widget.Date(selecteddate.text.toString());
+              print(formattedDate.toString());
+              // selecteddate.text = widget.formattedDate!;
+              widget.Date(formattedDate);
             });
           } else {
             print("Date is not selected");
