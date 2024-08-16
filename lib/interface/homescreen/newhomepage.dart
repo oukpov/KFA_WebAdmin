@@ -30,6 +30,8 @@ import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
+import '../navigate_home/Report/page/comparable_case_bar_chart.dart';
+import '../navigate_home/Report/page/comparable_case_page.dart';
 import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/detail_notivigtion.dart';
@@ -479,11 +481,63 @@ class _homescreenState extends State<homescreen> {
                                 ));
                               }
                               if (i == 2) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const ResponsiveReportYear();
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      contentPadding: EdgeInsets.zero,
+                                      content: IntrinsicWidth(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              title: const Text(
+                                                  'Comparable Year Report'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ResponsiveReportYear(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            ListTile(
+                                              title:
+                                                  const Text('Comparable Case'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ComparableCasePage(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: const Text(
+                                                  'Comparable Case Bar Chart'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const ComparableCaseBarChartPage(),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
                                   },
-                                ));
+                                );
                               }
                               if (i == 5) {
                                 Navigator.push(context, MaterialPageRoute(

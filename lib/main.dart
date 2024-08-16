@@ -13,6 +13,9 @@ import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsiv
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
+import 'interface/navigate_home/Report/page/comparable_case_bar_chart.dart';
+import 'interface/navigate_home/Report/page/comparable_case_page.dart';
+import 'interface/navigate_home/Report/page/test.dart';
 import 'interface/navigate_home/Report/responsvie/responsivereportyear.dart';
 
 List list = [];
@@ -58,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        //home: ListenableBuilderExample(),
+        // home: ComparableCaseBarChartPage(),
         //home: MenuComparableReport(),
         //home: const ResponsiveReportYear(),
         // home: ComparableReportYeartest(
@@ -96,7 +99,6 @@ class _MyAppState extends State<MyApp> {
           //},
           //   onGenerateRoute: (RouteSettings settings) {
           //     final args = settings.name;
-
           //     if (args != null) {
           //       var data = settings.name!.split('/');
           //       var value = data[1].toString();
