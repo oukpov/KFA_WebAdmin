@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:web_admin/interface/navigate_setting/bank/brand/new_brand.dart';
+import 'package:web_admin/page/navigate_setting/bank/brand/new_brand.dart';
 
 import 'colors/colors.dart';
 import 'contants.dart';

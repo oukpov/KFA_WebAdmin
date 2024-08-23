@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../interface/navigate_home/Customer/component/Web/simple/inputfiledRowVld.dart';
-import '../interface/navigate_home/Customer/component/Web/simple/inputfiledRowtwo.dart';
+import '../page/navigate_home/Customer/component/Web/simple/inputfiledRowVld.dart';
+import '../page/navigate_home/Customer/component/Web/simple/inputfiledRowtwo.dart';
 import 'contants.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

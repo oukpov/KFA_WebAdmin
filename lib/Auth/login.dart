@@ -9,7 +9,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:web_admin/Auth/register.dart';
 import 'package:web_admin/api/api_service.dart';
-import '../interface/homescreen/responsive_layout.dart';
+import '../page/homescreen/responsive_layout.dart';
 import '../../components/contants.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

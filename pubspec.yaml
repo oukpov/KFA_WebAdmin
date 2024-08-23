@@ -147,6 +147,7 @@ dependencies:
   excel: ^3.0.0
   permission_handler: ^11.0.1
   syncfusion_flutter_pdf: ^21.2.4
+  dropdown_search: ^5.0.6
   # flutter_inappwebview_web: ^1.0.8
 
 dev_dependencies:

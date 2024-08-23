@@ -13,10 +13,9 @@ import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsiv
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
-import 'interface/navigate_home/Report/page/comparable_case_bar_chart.dart';
-import 'interface/navigate_home/Report/page/comparable_case_page.dart';
-import 'interface/navigate_home/Report/page/test.dart';
-import 'interface/navigate_home/Report/responsvie/responsivereportyear.dart';
+import 'page/navigate_home/Report/page/comparable_case_bar_chart.dart';
+import 'page/navigate_home/Report/page/comparable_case_page.dart';
+import 'page/navigate_home/Report/responsvie/responsivereportyear.dart';
 
 List list = [];
 String? district_id;
