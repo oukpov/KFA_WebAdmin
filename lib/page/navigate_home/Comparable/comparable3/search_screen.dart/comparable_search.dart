@@ -10,11 +10,8 @@ import '../../../../../../components/L_w_total.dart';
 import '../../../../../../components/property_type.dart';
 import '../../../../../../components/province.dart';
 import '../../../../../../components/total_dropdown.dart';
-<<<<<<< HEAD:lib/interface/navigate_home/Comparable/comparable3/search_screen.dart/comparable_search.dart
 import '../../../../../components/colors.dart';
-=======
 import '../../../../../screen/Profile/components/Drop.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Comparable/comparable3/search_screen.dart/comparable_search.dart
 
 class comparable_search extends StatefulWidget {
   const comparable_search({super.key});

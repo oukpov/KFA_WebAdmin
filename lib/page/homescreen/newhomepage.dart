@@ -16,12 +16,6 @@ import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
-<<<<<<< HEAD:lib/interface/homescreen/newhomepage.dart
-import '../navigate_home/Add/googlemap_verbal.dart';
-=======
-import '../add_comparable_new_page.dart';
-import '../navigate_home/Add/Add.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/homescreen/newhomepage.dart
 import '../navigate_home/Add/listPropertyCheck.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Comparable/newComparable/listnewcomparable.dart';
@@ -327,14 +321,11 @@ class _homescreenState extends State<homescreen> {
                               }
                               if (i == 2) {
                                 Navigator.of(context).push(MaterialPageRoute(
-<<<<<<< HEAD:lib/interface/homescreen/newhomepage.dart
                                     builder: (context) => ComparableList(
                                           name: widget.listUser[0]['username']
                                               .toString(),
-=======
-                                    builder: (context) => List_newcomparable(
+                                    builder: (context) => List_newcomparable( 
                                           name: widget.user,
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/homescreen/newhomepage.dart
                                         )));
                               }
                               if (i == 3) {

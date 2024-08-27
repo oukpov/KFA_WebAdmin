@@ -9,14 +9,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
-<<<<<<< HEAD:lib/interface/navigate_home/User/use_vpoint.dart
-import 'package:web_admin/interface/navigate_home/User/search.dart';
-
-import '../../../components/colors.dart';
-=======
-import 'package:web_admin/page/navigate_home/User/search.dart';
-import '../../../../components/contants.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/User/use_vpoint.dart
 
 class User_Vpoint extends StatefulWidget {
   User_Vpoint({super.key, required this.controller_user});

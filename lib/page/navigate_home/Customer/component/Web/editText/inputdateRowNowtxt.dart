@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD:lib/interface/navigate_home/Customer/component/Web/editText/inputdateRowNowtxt.dart
-import '../../../../../../components/bank.dart';
-import '../../../../../../components/colors.dart';
-=======
-
-import '../../../../../../Profile/components/Drop_down.dart';
-import '../../../../../../api/contants.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Customer/component/Web/editText/inputdateRowNowtxt.dart
 import '../../../../../../components/colors/colors.dart';
 
 class InputDateRowNowtxt extends StatefulWidget {

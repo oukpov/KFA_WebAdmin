@@ -18,16 +18,8 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
-<<<<<<< HEAD:lib/interface/navigate_home/Customer/AddNew/new_customer.dart
-import 'package:web_admin/interface/navigate_home/Customer/component/Web/simple/inputdateRow.dart';
-import 'package:web_admin/interface/navigate_home/Customer/component/Web/simple/inputdateRowNow%20.dart';
-import '../../../../components/colors.dart';
-=======
 import 'package:web_admin/page/navigate_home/Customer/component/Web/simple/inputdateRow.dart';
 import 'package:web_admin/page/navigate_home/Customer/component/Web/simple/inputdateRowNow%20.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
-import '../../../../Profile/contants.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Customer/AddNew/new_customer.dart
 import '../../../../components/colors/colors.dart';
 import '../Api/dropdownAPI.dart';
 import '../Api/province.dart';

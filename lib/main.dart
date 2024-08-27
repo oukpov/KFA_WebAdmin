@@ -4,15 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
-<<<<<<< HEAD
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-=======
-import 'package:graphic/graphic.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 import 'package:provider/provider.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
@@ -20,15 +13,6 @@ import 'package:web_admin/screen/Property/Map/streetview_map.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
-<<<<<<< HEAD
-import 'Auth/login.dart';
-import 'interface/homescreen/responsive_layout.dart';
-import 'interface/navigate_home/Add/googlemap_verbal.dart';
-=======
-import 'page/navigate_home/Report/page/comparable_case_bar_chart.dart';
-import 'page/navigate_home/Report/page/comparable_case_page.dart';
-import 'page/navigate_home/Report/responsvie/responsivereportyear.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 
 List list = [];
 String? district_id;
@@ -76,7 +60,6 @@ class _MyAppState extends State<MyApp> {
     String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-<<<<<<< HEAD
       child: GetMaterialApp(
         initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
@@ -127,62 +110,6 @@ class _MyAppState extends State<MyApp> {
             );
           }
         },
-=======
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        // home: ComparableCaseBarChartPage(),
-        //home: MenuComparableReport(),
-        //home: const ResponsiveReportYear(),
-        // home: ComparableReportYeartest(
-        //   device: '',
-        // ),
-        //home: CheckboxListTileAppTest(),
-        // home: ComparableReportYear(
-        //   device: '',
-        // ),
-        home: StreetViewWidget(),
-        //home: LineChartSample(),
-        //home: ResponsiveHomePage();
-        // routes: {
-        //   //'/': (context) => const ResponsiveHomePage(
-        //   // id: '12',
-        //   // name: 'ouk pov',
-        //   // controllerUser: '12831923',
-        //   // nativigation: true,
-        //   // email: 'oukpov@gmail.com')
-        //   '/': (BuildContext obj) => ResponsiveLayout(
-        //         myIdController: '',
-        //         email: '',
-        //         idController: '',
-        //       ),
-        //   // '/': (BuildContext obj) => ResponsivenewcomparableGet(
-        //   //       name: '',
-        //   //       index: 10,
-        //   //     ),
-        //   // '/': (BuildContext obj) => ResponsivenewcomparableAdd(
-        //   //       name: '',
-        //   //     ),
-        //   // '/': (context) => List_newcomparable(
-        //   //       name: '',
-        //   // //     )
-        //   //},
-        //   //   onGenerateRoute: (RouteSettings settings) {
-        //   //     final args = settings.name;
-        //   //     if (args != null) {
-        //   //       var data = settings.name!.split('/');
-        //   //       var value = data[1].toString();
-        //   //       return MaterialPageRoute(
-        //   //         builder: (context) {
-        //   //           return koko(
-        //   //             name: value.toString(),
-        //   //           );
-        //   //         },
-        //   //       );
-        //   //     }
-        // },
-        builder: BotToastInit(),
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
       ),
     );
   }

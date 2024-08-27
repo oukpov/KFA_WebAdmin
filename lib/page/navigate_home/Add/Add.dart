@@ -9,7 +9,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-<<<<<<< HEAD:lib/interface/navigate_home/Add/Add.dart
 import 'package:http/http.dart' as http;
 import '../../../../../models/verbalModel/verbal_model.dart';
 import '../../../Customs/formTwinN.dart';
@@ -24,7 +23,6 @@ import '../../../components/searchProperty.dart';
 import '../../../getx/agent_credit/credit_agent.dart';
 import '../../../getx/dropdown_local/dropdown.dart';
 import '../../../getx/verbal/verbal.dart';
-=======
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
@@ -35,13 +33,12 @@ import '../../../../components/slideUp.dart';
 import '../../../../customs/form.dart';
 import '../../../Customs/formTwinN.dart';
 import '../../../api/api_service.dart';
-import '../../../api/contants.dart';
 import '../../../components/bank.dart';
 import '../../../components/comment.dart';
 import '../../../components/forceSale.dart';
 import '../../../models/autoVerbal.dart';
 import '../../../models/land_building.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Add/Add.dart
+
 
 class Add extends StatefulWidget {
   const Add({
@@ -121,7 +118,6 @@ class _Add_with_propertyState extends State<Add> {
     return result;
   }
 
-<<<<<<< HEAD:lib/interface/navigate_home/Add/Add.dart
   VerbalModels verbalModels = VerbalModels(data: []);
   Data datamodel = Data();
   String lable = '';

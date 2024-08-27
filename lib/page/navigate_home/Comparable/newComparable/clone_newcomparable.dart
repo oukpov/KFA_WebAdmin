@@ -18,7 +18,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:web_admin/components/L_w_totaltworow.dart';
 import 'package:web_admin/models/savecomparablemodel.dart';
-import '../../../../Profile/contants.dart';
 import '../../../../components/Dateform.dart';
 import '../../../../components/L_w_totaltwo.dart';
 import '../../../../components/bankcolumn.dart';

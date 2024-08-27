@@ -1,19 +1,10 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:web_admin/components/colors/colors.dart';
-<<<<<<< HEAD:lib/interface/homescreen/Widgets/drawer.dart
-import '../../../components/colors.dart';
-import '../../navigate_home/Report/Transetoin/history.dart';
-import '../../navigate_home/User/list_notivigation.dart';
-import '../component/list.dart';
-import '../responsive_layout.dart';
-=======
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
 import '../page/navigate_home/Report/Transetoin/history.dart';
 import '../page/navigate_home/User/list_notivigation.dart';
 import '../page/homescreen/component/list.dart';
 import '../page/homescreen/responsive_layout.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/Widgets/drawer.dart
 
 class DrawerOption extends StatefulWidget {
   const DrawerOption({

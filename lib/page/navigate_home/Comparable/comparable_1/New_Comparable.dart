@@ -8,11 +8,8 @@ import '../../../../../components/property_type.dart';
 import '../../../../../components/province.dart';
 import '../../../../components/L_w_total.dart';
 import '../../../../components/bank.dart';
-<<<<<<< HEAD:lib/interface/navigate_home/Comparable/comparable_1/New_Comparable.dart
 import '../../../../components/colors.dart';
-=======
 import '../../../../components/road.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Comparable/comparable_1/New_Comparable.dart
 import '../../../../components/total_dropdown.dart';
 import '../../../../screen/Property/Map/map_in_add_verbal.dart';
 

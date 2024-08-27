@@ -2,12 +2,6 @@
 
 // import 'package:flutter/material.dart';
 
-<<<<<<< HEAD
-import '../../components/colors.dart';
-=======
-// import '../../Customs/Contants.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
-
 // class BankDropdown extends StatefulWidget {
 //   final String from;
 //   const BankDropdown({Key? key, required this.from}) : super(key: key);

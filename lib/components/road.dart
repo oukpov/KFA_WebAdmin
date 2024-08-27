@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -7,11 +6,6 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
-=======
-import 'package:flutter/material.dart';
-import '../../../../../components/ApprovebyAndVerifyby.dart';
-import '../Profile/contants.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 
 class RoadDropdown extends StatefulWidget {
   final OnChangeCallback id_road;

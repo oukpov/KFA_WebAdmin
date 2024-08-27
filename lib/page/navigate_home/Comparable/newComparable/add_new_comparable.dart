@@ -14,7 +14,6 @@ import 'package:web_admin/components/L_w_totaltworow.dart';
 import 'package:web_admin/components/banktwo.dart';
 import 'package:web_admin/components/total_dropdowntwo.dart';
 import 'package:web_admin/models/savecomparablemodel.dart';
-import '../../../../Profile/contants.dart';
 import '../../../../components/L_w_totaltwo.dart';
 import '../../../../components/property_typetwo.dart';
 import '../../../../components/roadtwo.dart';

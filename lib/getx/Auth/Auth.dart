@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../interface/homescreen/responsive_layout.dart';
 import '../../models/Auth/auth.dart';
 
 class Authentication extends GetxController {

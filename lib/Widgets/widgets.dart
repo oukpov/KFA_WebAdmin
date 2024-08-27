@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD:lib/interface/homescreen/Widgets/widgets.dart
-import '../../../components/colors.dart';
-import '../../../components/colors/colors.dart';
-=======
 import '../components/colors/colors.dart';
-import '../screen/Property/FirstProperty/component/Colors/colors.dart';
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/Widgets/widgets.dart
 
 Widget options(txt, txts, icon) {
   return Padding(
