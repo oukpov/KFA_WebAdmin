@@ -1,13 +1,13 @@
 // ignore_for_file: unused_field, must_be_immutable
 
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../../components/contants.dart';
+
+import '../../../components/colors.dart';
 
 class Edit_Accompany_by extends StatefulWidget {
   Edit_Accompany_by({super.key, required this.list, required this.index});

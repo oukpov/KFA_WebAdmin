@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../Profile/contants.dart';
+import '../../../components/colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 

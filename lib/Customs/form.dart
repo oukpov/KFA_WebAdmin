@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../components/contants.dart';
+import '../components/colors.dart';
+
 
 class FormS extends StatelessWidget {
   final String label;

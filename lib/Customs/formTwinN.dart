@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../components/contants.dart';
+
+import '../components/colors.dart';
 
 class FormTwinN extends StatefulWidget {
   final String Label1;

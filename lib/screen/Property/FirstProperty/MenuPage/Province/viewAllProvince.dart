@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../../../components/colors.dart';
 import 'ProvinceAll.dart';
-import '../../component/Colors/colors.dart';
 
 class ViewAllProvince extends StatefulWidget {
   const ViewAllProvince(

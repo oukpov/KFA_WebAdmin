@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web_admin/components/ApprovebyAndVerifyby.dart';
-
-import '../../../../Profile/contants.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/colors/colors.dart';
 
 class InputfiedRowtxt extends StatefulWidget {

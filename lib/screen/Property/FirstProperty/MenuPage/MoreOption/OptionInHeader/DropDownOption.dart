@@ -4,11 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../../../../Auth/login.dart';
-import '../../../../../../Profile/contants.dart';
+import '../../../../../../components/colors.dart';
 import '../../../../Getx_api/hometype.dart';
 import '../../../../Getx_api/vetbal_controller.dart';
 import '../../../component/Colors/appbar.dart';
-import '../../../component/Colors/colors.dart';
 import '../../ListProperty/ListProPerty.dart';
 import '../../../component/OPtion/Option.dart';
 

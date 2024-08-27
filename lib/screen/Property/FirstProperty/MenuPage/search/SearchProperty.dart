@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import '../../component/Colors/colors.dart';
+import '../../../../../components/colors.dart';
 import '../../component/Header.dart';
 import '../DetailScreen/DetailAll.dart';
 import '../MoreOption/MenuMoreOption/searchOption/MoreOption.dart';

@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../../../components/colors.dart';
 import '../../MenuPage/DetailScreen/DetailAll.dart';
 import '../../component/Header.dart';
 import '../../component/fonttext/fontText.dart';

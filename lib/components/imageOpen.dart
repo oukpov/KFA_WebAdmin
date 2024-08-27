@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors, import_of_legacy_library_into_null_safe, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, avoid_print
 
 import 'package:file_picker/file_picker.dart';
-
 import 'package:open_file/open_file.dart';
 import 'package:flutter/material.dart';
 
-import '../Customs/Contants.dart';
+import 'colors.dart';
 
 class ImageOpen extends StatefulWidget {
   @override

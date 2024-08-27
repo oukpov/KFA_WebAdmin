@@ -7,7 +7,7 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../components/contants.dart';
+import '../../../../components/colors.dart';
 
 class new_Brand extends StatefulWidget {
   const new_Brand({super.key});

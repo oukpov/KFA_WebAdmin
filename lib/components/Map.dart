@@ -10,9 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:location_geocoder/location_geocoder.dart';
 import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:search_map_location/widget/search_widget.dart';
-
 import '../models/search_model.dart';
-import 'contants.dart';
+
 
 class HomeMap extends StatefulWidget {
   @override

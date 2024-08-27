@@ -10,14 +10,13 @@ import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';
-import '../../Profile/contants.dart';
+import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
-import '../navigate_home/Add/Add.dart';
+import '../navigate_home/Add/googlemap_verbal.dart';
 import '../navigate_home/Add/listPropertyCheck.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
@@ -28,7 +27,6 @@ import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
 import '../navigate_home/User/control_user.dart';
-import '../navigate_home/User/detail_notivigtion.dart';
 import '../navigate_home/User/list_notivigation.dart';
 import '../navigate_home/User/use_vpoint.dart';
 import '../navigate_home/Valuation/class/Executive_approvel.dart';
@@ -71,31 +69,9 @@ class homescreen extends StatefulWidget {
       {super.key,
       required this.device,
       required this.id,
-      required this.controllerUser,
-      required this.email,
-      required this.password,
-      required this.setEmail,
-      required this.user,
-      required this.firstName,
-      required this.lastName,
-      required this.gender,
-      required this.from,
-      required this.tel,
-      required this.setPassword,
       required this.url,
       required this.listUser});
   final String id;
-  final String controllerUser;
-  final String email;
-  final String password;
-  final String setEmail;
-  final String user;
-  final String firstName;
-  final String lastName;
-  final String gender;
-  final String from;
-  final String tel;
-  final String setPassword;
   final String device;
   final String url;
   final List listUser;
@@ -125,16 +101,7 @@ class _homescreenState extends State<homescreen> {
   @override
   void initState() {
     super.initState();
-    firstName = widget.firstName;
-    lastName = widget.lastName;
-    gender = widget.gender;
-    telNum = widget.tel;
-    email = widget.email;
-    knownFrom = widget.from;
-    password = widget.password;
 
-    username = widget.user;
-    controlleruser = widget.controllerUser;
     DateTime now = DateTime.now();
     DateTime onewday = DateTime(now.year, now.month, now.day);
     DateTime twowday = DateTime(now.year, now.month, now.day + 1);
@@ -171,18 +138,17 @@ class _homescreenState extends State<homescreen> {
       key: scaffoldKey,
       backgroundColor: backgroundScreen,
       drawer: DrawerWidget(
-          email: widget.email,
+          email: widget.listUser[0]['username'].toString(),
           listUser: widget.listUser,
-          password: widget.password),
+          password: widget.listUser[0]['username'].toString()),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           (widget.device == 't' || widget.device == 'd')
               ? DrawerOption(
                   device: widget.device,
-                  email: widget.email,
+                  email: widget.listUser[0]['username'].toString(),
                   listUser: widget.listUser,
-                  password: widget.password,
                 )
               : const SizedBox(),
           SizedBox(
@@ -337,7 +303,8 @@ class _homescreenState extends State<homescreen> {
                               if (i == 1) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => ComparableList(
-                                          name: widget.user,
+                                          name: widget.listUser[0]['username']
+                                              .toString(),
                                         )));
                               }
                               if (i == 2) {
@@ -380,9 +347,10 @@ class _homescreenState extends State<homescreen> {
                               }
                               if (i == 0) {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Add(
-                                          id_control_user: '97',
-                                          id: widget.id,
+                                    builder: (context) => VerbalAdmin(
+                                          addNew: (value) {},
+                                          listUser: widget.listUser,
+                                          type: (value) {},
                                         )));
                               }
                             },
@@ -394,14 +362,14 @@ class _homescreenState extends State<homescreen> {
                         child: InkWell(
                             onTap: () {
                               if (i == 0) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Add(
-                                        id_control_user: 'sdf96',
-                                        id: '12',
-                                      ),
-                                    ));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => const Add(
+                                //         id_control_user: 'sdf96',
+                                //         id: '12',
+                                //       ),
+                                //     ));
                               } else if (i == 1) {
                                 Navigator.push(
                                     context,
@@ -853,24 +821,6 @@ class _homescreenState extends State<homescreen> {
     {'title': 'Other'},
   ];
   Random random = Random();
-  Future<void> updateimage() async {
-    var request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/update/profile/${widget.controllerUser.toString()}'));
-
-    if (getBytes != null) {
-      request.files.add(http.MultipartFile.fromBytes('image', getBytes!,
-          filename: '${widget.controllerUser}${random.nextInt(999)}.jpg'));
-      print('1');
-    } else {
-      request.files.add(http.MultipartFile.fromBytes('image', byesData!,
-          filename: '${widget.controllerUser}${random.nextInt(999)}.jpg'));
-      print('2');
-    }
-
-    var res = await request.send();
-  }
 
   String imageUrl = '';
   Uint8List? selectedFile;
@@ -971,7 +921,7 @@ class _homescreenState extends State<homescreen> {
                                 width: 300,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: kwhite_new,
+                                  color: whileColors,
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Row(
@@ -1105,8 +1055,8 @@ class _homescreenState extends State<homescreen> {
                                     ],
                                   ),
                                   const SizedBox(height: 10),
-                                  SingleBox(
-                                    phone: widget.tel,
+                                  const SingleBox(
+                                    phone: "",
                                   ),
                                   const SizedBox(height: 10),
                                   Field_box(
@@ -1200,13 +1150,13 @@ class _homescreenState extends State<homescreen> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(widget.user,
+                          Text(widget.listUser[0]['username'].toString(),
                               style: TextStyle(
                                   color: whileColors,
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold)),
                           const SizedBox(height: 5),
-                          Text(widget.email,
+                          Text(widget.listUser[0]['username'].toString(),
                               style: TextStyle(
                                 color: whileColors,
                                 fontSize: 12,

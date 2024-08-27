@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../../../../../components/colors.dart';
 import '../../../../../../../components/first_pay.dart';
-import '../../../../component/Colors/colors.dart';
 import '../../../../component/Header.dart';
 import '../../../../component/fonttext/fontText.dart';
 import '../../../DetailScreen/DetailAll.dart';

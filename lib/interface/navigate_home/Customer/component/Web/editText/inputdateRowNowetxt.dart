@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../../../Profile/components/Drop_down.dart';
-import '../../../../../../api/contants.dart';
+import '../../../../../../components/colors.dart';
 import '../../../../../../components/colors/colors.dart';
-import '../../../../../../screen/Property/FirstProperty/component/Colors/colors.dart';
 
 class InputDateNowtxt extends StatefulWidget {
   const InputDateNowtxt({

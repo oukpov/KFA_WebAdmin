@@ -393,6 +393,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  dropdown_search:
+    dependency: "direct main"
+    description:
+      name: dropdown_search
+      sha256: "55106e8290acaa97ed15bea1fdad82c3cf0c248dd410e651f5a8ac6870f783ab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.6"
   email_validator:
     dependency: "direct main"
     description:
@@ -1312,6 +1320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  onesignal_flutter:
+    dependency: "direct main"
+    description:
+      name: onesignal_flutter
+      sha256: "29d2ac76d9e4821d98d754f3785db99d4dbfd69f96f7997a387582bef9d0daa5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.5.3"
   open_file:
     dependency: "direct main"
     description:

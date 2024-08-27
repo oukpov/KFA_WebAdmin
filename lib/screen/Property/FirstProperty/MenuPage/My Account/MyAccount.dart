@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import '../../../../../components/colors.dart';
 import '../../component/Colors/appbar.dart';
-import '../../component/Colors/colors.dart';
 import 'ChatUsers/Chats/chats_screen.dart';
 import 'MyFavorites/MyFavorites.dart';
 import 'package:http/http.dart' as http;

@@ -4,19 +4,14 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:getwidget/getwidget.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-
 import 'package:location_geocoder/location_geocoder.dart';
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Customs/ProgressHUD.dart';
-
 import '../models/search_model.dart';
-
-import 'contants.dart';
+import 'colors.dart';
 import 'numDisplay.dart';
 import 'property.dart';
 

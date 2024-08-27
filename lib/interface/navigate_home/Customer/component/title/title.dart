@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../../../components/colors.dart';
 
 Widget titletext(title, context) {
   return SizedBox(

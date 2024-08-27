@@ -60,11 +60,11 @@ class _MenuAutoVerbalState extends State<MenuAutoVerbal> {
                         builder: (context) => const Show_autoVerbals()));
                   }
                   if (i == 0) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Add(
-                              id_control_user: widget.id_control_user,
-                              id: widget.id,
-                            )));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => Add(
+                    //           id_control_user: widget.id_control_user,
+                    //           id: widget.id,
+                    //         )));
                   }
                 },
                 child: Container(

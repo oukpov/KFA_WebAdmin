@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../../components/contants.dart';
+
+import '../../../components/colors.dart';
 
 class Edit_Register extends StatefulWidget {
   Edit_Register({super.key, required this.list, required this.index});

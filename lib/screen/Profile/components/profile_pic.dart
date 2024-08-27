@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../api/contants.dart';
+import '../../../components/colors.dart';
 
 class Profile_pic extends StatefulWidget {
   const Profile_pic({Key? key}) : super(key: key);

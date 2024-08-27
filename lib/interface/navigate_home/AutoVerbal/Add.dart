@@ -14,16 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-
 import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/LandBuilding.dart';
 import '../../../../components/bank.dart';
 import '../../../../components/property.dart';
 import '../../../../components/slideUp.dart';
 import '../../../../customs/form.dart';
-import '../../../Customs/Contants.dart';
 import '../../../Customs/formTwinN.dart';
 import '../../../api/api_service.dart';
+import '../../../components/colors.dart';
 import '../../../components/comment.dart';
 import '../../../components/forceSale.dart';
 import '../../../models/autoVerbal.dart';

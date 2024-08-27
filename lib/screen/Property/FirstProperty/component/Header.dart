@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../Auth/login.dart';
+import '../../../../components/colors.dart';
 import '../MenuPage/AddProperty/Verbal_add.dart';
-import 'Colors/colors.dart';
 import '../MenuPage/ListProperty/ListProPerty.dart';
 
 Widget buttonDrawer(var icon, text, BuildContext context) {

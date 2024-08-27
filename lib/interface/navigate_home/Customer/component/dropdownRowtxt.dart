@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
 
-import '../../../../Profile/contants.dart';
+import '../../../../Profile/components/Drop_down.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/colors/colors.dart';
-import '../../../../components/property copy.dart';
 
 class DropDownRowtxt extends StatefulWidget {
   DropDownRowtxt(

@@ -1,14 +1,12 @@
 // ignore_for_file: unused_import, must_call_super, unused_local_variable, unused_field, must_be_immutable
 
 import 'dart:convert';
-
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../../components/contants.dart';
+import '../../../../components/colors.dart';
 import '../../../../models/executive/Appriaser.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

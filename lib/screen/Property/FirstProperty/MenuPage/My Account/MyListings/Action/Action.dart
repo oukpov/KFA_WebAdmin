@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../component/Colors/colors.dart';
+import '../../../../../../../components/colors.dart';
 
 class ActionWithUser extends StatefulWidget {
   const ActionWithUser({super.key});

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_admin/components/autoVerbalType.dart';
 import 'dart:convert';
-import '../../../../screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../../components/colors.dart';
 import '../component/Web/simple/dropdown.dart';
 import '../component/Web/simple/dropdownRow.dart';
 import '../component/Web/simple/inputdate.dart';

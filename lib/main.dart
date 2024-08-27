@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
+import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -11,11 +13,13 @@ import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
 import 'Auth/login.dart';
 import 'interface/homescreen/responsive_layout.dart';
+import 'interface/navigate_home/Add/googlemap_verbal.dart';
 
 List list = [];
 void main() async {
   WebViewPlatform.instance = WebWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
+
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -26,6 +30,11 @@ void main() async {
       ),
     );
   }
+  // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  // await OneSignal.shared.setAppId("d3025f03-32f5-444a-8100-7f7637a7f631");
+  // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+  //   print("Accepted permission: $accepted");
+  // });
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -50,26 +59,40 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: MaterialApp(
-        initialRoute: '/',
+      child: GetMaterialApp(
+        initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => const ResponsiveHomePage(
-                listUser: [],
-                url: '',
-                password: '',
-                controllerUser: '',
-                setEmail: '',
-                setPassword: '',
-                user: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-                gender: '',
-                from: '',
-                tel: '',
-                id: '',
-              ),
+          // "/Admin": (context) => const LoginPage()
+          "/Admin": (p0) => VerbalAdmin(
+                  addNew: (value) {},
+                  type: (value) {},
+                  listUser: const [
+                    {
+                      "id": 65,
+                      "user_role_id": 53,
+                      "agency": 83,
+                      "username": "somnang.se",
+                      "password": "9e6981b5813c4da23404c2a3e0f95e81",
+                      "user_status": 0
+                    }
+                  ]),
+          // '/Admin': (context) => const ResponsiveHomePage(
+          //       listUser: [],
+          //       url: '',
+          //       password: '',
+          //       controllerUser: '',
+          //       setEmail: '',
+          //       setPassword: '',
+          //       user: '',
+          //       email: '',
+          //       firstName: '',
+          //       lastName: '',
+          //       gender: '',
+          //       from: '',
+          //       tel: '',
+          //       id: '',
+          //     ),
         },
         onGenerateRoute: (RouteSettings settings) {
           final args = settings.name;

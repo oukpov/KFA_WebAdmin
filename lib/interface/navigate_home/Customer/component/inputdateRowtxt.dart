@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../Profile/contants.dart';
 import '../../../../components/bank_edit_dropdown.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/colors/colors.dart';
 
 class InputDateRowtxt extends StatefulWidget {

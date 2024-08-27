@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:web_admin/interface/navigate_home/Comparable/comparable3/search_screen.dart/search_map_com.dart';
 import 'package:web_admin/screen/Property/Map/ToFromDate_ForSale.dart';
-import '../../../../../../Profile/contants.dart';
 import '../../../../../../components/L_w_total.dart';
 import '../../../../../../components/bank.dart';
 import '../../../../../../components/property_type.dart';
 import '../../../../../../components/province.dart';
 import '../../../../../../components/road.dart';
 import '../../../../../../components/total_dropdown.dart';
+import '../../../../../components/colors.dart';
 
 class comparable_search extends StatefulWidget {
   const comparable_search({super.key});

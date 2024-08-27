@@ -2,8 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../Customs/Contants.dart';
-import '../../components/contants.dart';
+import '../../components/colors/colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 
@@ -44,9 +43,9 @@ class _DropdownState extends State<Dropdown> {
             )
             .toList(),
         // add extra sugar..
-        icon: const Icon(
+        icon: Icon(
           Icons.arrow_drop_down,
-          color: kwhite_new,
+          color: whileColors,
         ),
 
         decoration: const InputDecoration(

@@ -12,14 +12,14 @@ import '../../../../components/comment.dart';
 import '../../../../components/forceSale.dart';
 import '../../../../components/uplandBuilding.dart';
 import '../../../Customs/responsive.dart';
-import '../../../api/contants.dart';
 import '../../../components/bank.dart';
 import '../../../components/code.dart';
-import '../../../components/property copy.dart';
+import '../../../components/colors.dart';
 import '../../../components/slideUp.dart';
 import '../../../models/autoVerbal.dart';
 import '../../../models/land_building.dart';
 import '../../../server/api_service.dart';
+import 'property.dart';
 
 class Edit extends StatefulWidget {
   const Edit(

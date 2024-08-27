@@ -8,11 +8,11 @@ import 'package:getwidget/types/gf_button_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../api/contants.dart';
 import '../customs/formVLDN.dart';
 import '../customs/formnum.dart';
 import '../models/land_building.dart';
 import 'autoVerbalType.dart';
+import 'colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 

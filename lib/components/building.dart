@@ -1,9 +1,8 @@
-
 // ignore_for_file: unused_local_variable, prefer_final_fields, use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors, sized_box_for_whitespace, prefer_const_constructors_in_immutables, unnecessary_null_comparison, must_be_immutable
 
 import 'package:flutter/material.dart';
 
-import '../api/contants.dart';
+import 'colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 

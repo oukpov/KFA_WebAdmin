@@ -5,8 +5,7 @@ import 'package:getwidget/types/gf_button_type.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../../components/contants.dart';
+import '../../../../components/colors.dart';
 import '../../../../models/executive/executive.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

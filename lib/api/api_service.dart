@@ -10,24 +10,24 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIservice {
-  Future<LoginReponseModel> login(LoginRequestModel requestModel) async {
-    final response = await http.post(
-        Uri.parse(
-            'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins'),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: requestModel.toJson());
+  // Future<LoginReponseModel> login(LoginRequestModel requestModel) async {
+  //   final response = await http.post(
+  //       Uri.parse(
+  //           'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins'),
+  //       headers: {
+  //         "Accept": "application/json",
+  //         "Content-Type": "application/x-www-form-urlencoded"
+  //       },
+  //       body: requestModel.toJson());
 
-    if (response.statusCode == 200 || response.statusCode == 422) {
-      return LoginReponseModel.fromJson(json.decode(response.body));
-    } else if (response.statusCode == 201 || response.statusCode == 401) {
-      return LoginReponseModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load Data');
-    }
-  }
+  //   if (response.statusCode == 200 || response.statusCode == 422) {
+  //     return LoginReponseModel.fromJson(json.decode(response.body));
+  //   } else if (response.statusCode == 201 || response.statusCode == 401) {
+  //     return LoginReponseModel.fromJson(json.decode(response.body));
+  //   } else {
+  //     throw Exception('Failed to load Data');
+  //   }
+  // }
 
   Future<RegisterReponseModel> register(
       RegisterRequestModel requestModel) async {

@@ -3,7 +3,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
-import '../../../../Customs/Contants.dart';
+import '../../../components/colors.dart';
 import '../../../models/Verbal_limited.dart';
 import '../../../server/api_service.dart';
 

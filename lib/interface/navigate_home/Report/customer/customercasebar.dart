@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../../components/colors.dart';
 import '../../Customer/List/customerCando.dart';
 import '../../Customer/component/List/list.dart';
 import '../../Customer/component/Web/simple/dropdown.dart';

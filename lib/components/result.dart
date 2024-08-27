@@ -1,12 +1,8 @@
-// ignore_for_file: prefer_const_constructors, implementation_imports, unnecessary_import, prefer_final_fields, unused_field, non_constant_identifier_names
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-import 'contants.dart';
+import 'colors.dart';
 
 class Result extends StatefulWidget {
   const Result({Key? key}) : super(key: key);
@@ -99,7 +95,8 @@ class _ResultState extends State<Result> {
     setState(() {
       _loading = true;
     });
-    var rs = await http.get(Uri.parse('https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/property'));
+    var rs = await http.get(Uri.parse(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/property'));
     if (rs.statusCode == 200) {
       var jsonData = jsonDecode(rs.body);
       setState(() {

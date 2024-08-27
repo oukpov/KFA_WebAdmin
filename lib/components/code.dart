@@ -1,9 +1,10 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, avoid_print
 
-import '../components/contants.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+import 'colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 

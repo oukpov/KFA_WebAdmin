@@ -12,14 +12,13 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
-import 'package:web_admin/Profile/contants.dart';
 import 'dart:html' as html;
-
 import '../../../api/api_service.dart';
 import '../Customs/ProgressHUD.dart';
 import '../Customs/formTwin.dart';
 import '../Customs/formVLD.dart';
 import '../Customs/responsive.dart';
+import '../components/colors.dart';
 import '../models/register_model.dart';
 import 'login.dart';
 
@@ -215,7 +214,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
       appBar: AppBar(
         leading: SizedBox(),
-        backgroundColor: kwhite_new,
+        backgroundColor: whiteColor,
         elevation: 0,
         centerTitle: true,
         title: Image.asset(
@@ -225,7 +224,7 @@ class _RegisterState extends State<Register> {
         ),
         toolbarHeight: 100,
       ),
-      backgroundColor: kwhite_new,
+      backgroundColor: whiteColor,
       body: Container(
         decoration: BoxDecoration(
           color: kwhite,

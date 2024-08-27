@@ -1,21 +1,14 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:html' as html;
-import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:web_admin/Auth/register.dart';
-import 'package:web_admin/api/api_service.dart';
-import '../interface/homescreen/responsive_layout.dart';
-import '../../components/contants.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import '../Customs/ProgressHUD.dart';
 import '../Customs/responsive.dart';
-import '../models/login_model.dart';
+import '../components/colors.dart';
+import '../getx/Auth/Auth.dart';
+import '../models/Auth/auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -43,58 +36,16 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
-  late LoginRequestModel requestModel;
   bool isApiCallProcess = false;
   int id = 0;
-  String username = "";
-  String first_name = "";
-  String last_name = "";
-  String emails = "";
-  String gender = "";
-  String from = "";
-  String tel = "";
-  // static List<PeopleModel> list = [];
   static bool status = false;
-  // PeopleModel? peopleModel;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Fill in password field when page is loaded
-  //   fillInPassword();
-  // }
-  void saveEmail(String email) {
-    html.window.localStorage['email'] = email;
-  }
-
-  void savePassword(String password) {
-    html.window.localStorage['password'] = password;
-  }
-
-  void fillInEmail() {
-    final email = html.window.localStorage['email'];
-    if (email != null) {
-      _emailController.text = email;
-    }
-  }
-
-  void fillInPassword() {
-    final password = html.window.localStorage['password'];
-    if (password != null) {
-      _passwordController.text = password;
-    }
-  }
-
+  AuthenModel authenModel = AuthenModel();
   @override
   void initState() {
-    // selectPeople();
-    status;
-    // list;
     super.initState();
-    fillInEmail();
-    fillInPassword();
-    requestModel = LoginRequestModel(email: "", password: "");
+    authentication.login(authenModel, context);
   }
 
   @override
@@ -107,6 +58,7 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Authentication authentication = Authentication();
   Widget _uiSteup(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -126,7 +78,6 @@ class _LoginState extends State<Login> {
         height: double.infinity,
         decoration: const BoxDecoration(
           color: kwhite,
-          //color: Colors.amber.withOpacity(0.5),
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(35.0),
             topLeft: Radius.circular(35.0),
@@ -220,13 +171,18 @@ class _LoginState extends State<Login> {
               width: 150,
               child: GFButton(
                 onPressed: () {
-                  if (validateAndSave()) {
-                    loginFun();
-                  }
+                  setState(() {
+                    if (authenModel.user == null || authenModel.user!.isEmpty) {
+                      authenModel.user = [User()];
+                    }
+
+                    authenModel.user![0].username = 'somnang.se';
+                    authenModel.user![0].password = 'KFA@somnang2023';
+                  });
+                  authentication.login(authenModel, context);
                 },
                 color: kwhite_new,
                 text: "Login",
-                // elevation: 5,
                 hoverElevation: 10,
                 hoverColor: kImageColor,
                 boxShadow: const BoxShadow(
@@ -266,122 +222,47 @@ class _LoginState extends State<Login> {
   }
 
   bool successfuly = false;
-  Future firebaseLogin(value) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: requestModel.email,
-        password: requestModel.password,
-      );
+  // Future firebaseLogin(value) async {
+  //   try {
+  //     await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: requestModel.email,
+  //       password: requestModel.password,
+  //     );
 
-      AwesomeDialog(
-        btnOkOnPress: () {},
-        context: context,
-        animType: AnimType.leftSlide,
-        headerAnimationLoop: false,
-        dialogType: DialogType.success,
-        showCloseIcon: false,
-        title: 'value.message',
-        autoHide: const Duration(seconds: 3),
-        onDismissCallback: (type) {
-          // Navigator.of(context).push(MaterialPageRoute(
-          //   builder: (context) =>
-          //       Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
-          // builder: (context) => HomePage(
-          //   control_user: value.user['control_user'],
-          //   set_email: requestModel.email,
-          //   set_password: requestModel.password,
-          //   user: value.user['username'],
-          //   email: value.user['email'],
-          //   first_name: value.user['first_name'],
-          //   last_name: value.user['last_name'],
-          //   gender: value.user['gender'],
-          //   from: value.user['known_from'],
-          //   tel: value.user['tel_num'],
-          //   id: value.user['id'].toString(),
-          // ),
-          // ));
-        },
-      ).show();
-    } on FirebaseAuthException catch (e) {
-      final snackBar = SnackBar(content: Text(e.message!));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-  }
-
-  List listUser = [];
-  void loginFun() async {
-    var headers = {'Content-Type': 'application/json'};
-    var data =
-        json.encode({"email": "oukpov@gmail.com", "password": "Pov88889"});
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins',
-      options: Options(
-        method: 'POST',
-        headers: headers,
-      ),
-      data: data,
-    );
-
-    if (response.statusCode == 200) {
-      setState(() {
-        // print(json.encode(response.data));
-        listUser = jsonDecode(json.encode(response.data));
-
-        saveEmail(_emailController.text);
-        savePassword(_passwordController.text);
-        FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: requestModel.email,
-          password: requestModel.password,
-        );
-
-        AwesomeDialog(
-          btnOkOnPress: () {},
-          context: context,
-          animType: AnimType.leftSlide,
-          headerAnimationLoop: false,
-          dialogType: DialogType.success,
-          showCloseIcon: false,
-          title: 'Login Successfuly',
-          autoHide: const Duration(seconds: 3),
-          onDismissCallback: (type) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ResponsiveHomePage(
-                    listUser: listUser,
-                    url: listUser[0]['url'].toString(),
-                    password: requestModel.password,
-                    controllerUser: listUser[0]['control_user'].toString(),
-                    setEmail: requestModel.email,
-                    setPassword: requestModel.password,
-                    user: listUser[0]['username'].toString(),
-                    email: listUser[0]['email'].toString(),
-                    firstName: listUser[0]['first_name'].toString(),
-                    lastName: listUser[0]['last_name'].toString(),
-                    gender: listUser[0]['gender'].toString(),
-                    from: listUser[0]['known_from'].toString(),
-                    tel: listUser[0]['tel_num'].toString(),
-                    id: listUser[0]['id'].toString(),
-                  ),
-                ));
-          },
-        ).show();
-      });
-    } else {
-      AwesomeDialog(
-        context: context,
-        dialogType: DialogType.error,
-        animType: AnimType.rightSlide,
-        headerAnimationLoop: false,
-        title: 'Error',
-        desc: 'Please Try again',
-        btnOkOnPress: () {},
-        btnOkIcon: Icons.cancel,
-        btnOkColor: Colors.red,
-      ).show();
-    }
-  }
+  //     AwesomeDialog(
+  //       btnOkOnPress: () {},
+  //       context: context,
+  //       animType: AnimType.leftSlide,
+  //       headerAnimationLoop: false,
+  //       dialogType: DialogType.success,
+  //       showCloseIcon: false,
+  //       title: 'value.message',
+  //       autoHide: const Duration(seconds: 3),
+  //       onDismissCallback: (type) {
+  //         // Navigator.of(context).push(MaterialPageRoute(
+  //         //   builder: (context) =>
+  //         //       Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
+  //         // builder: (context) => HomePage(
+  //         //   control_user: value.user['control_user'],
+  //         //   set_email: requestModel.email,
+  //         //   set_password: requestModel.password,
+  //         //   user: value.user['username'],
+  //         //   email: value.user['email'],
+  //         //   first_name: value.user['first_name'],
+  //         //   last_name: value.user['last_name'],
+  //         //   gender: value.user['gender'],
+  //         //   from: value.user['known_from'],
+  //         //   tel: value.user['tel_num'],
+  //         //   id: value.user['id'].toString(),
+  //         // ),
+  //         // ));
+  //       },
+  //     ).show();
+  //   } on FirebaseAuthException catch (e) {
+  //     final snackBar = SnackBar(content: Text(e.message!));
+  //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  //   }
+  // }
 
   bool validateAndSave() {
     final form = _formKey.currentState;
@@ -405,7 +286,7 @@ class _LoginState extends State<Login> {
               // onEditingComplete: () => TextInput.finishAutofillContext(),
               // autofillHints:  [AutofillHints.email],
               // controller: Email,
-              onSaved: (input) => requestModel.email = input!,
+              // onSaved: (input) => requestModel.email = input!,
               decoration: InputDecoration(
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
@@ -450,7 +331,7 @@ class _LoginState extends State<Login> {
               //   textInputAction: TextInputAction.next,
               //  autofillHints:  [AutofillHints.password],
               //  onEditingComplete: () => TextInput.finishAutofillContext(),
-              onSaved: (input) => requestModel.password = input!,
+              // onSaved: (input) => requestModel.password = input!,
               obscureText: _isObscure,
               decoration: InputDecoration(
                 fillColor: kwhite,
@@ -507,15 +388,12 @@ class _LoginState extends State<Login> {
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
-              // textInputAction: TextInputAction.next,
-              // autofillHints:  [AutofillHints.email],
-              // onEditingComplete: () => TextInput.finishAutofillContext(),
               controller: _emailController,
-              onSaved: (input) => requestModel.email = input!,
+              onChanged: (input) => authenModel.user![0].username = input,
               decoration: InputDecoration(
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
-                labelText: 'Email',
+                labelText: 'UserName',
                 prefixIcon: const Icon(
                   Icons.email,
                   color: kImageColor,
@@ -553,15 +431,10 @@ class _LoginState extends State<Login> {
           ),
           const SizedBox(height: 10),
           Padding(
-            //   height: 55,
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
-              // textInputAction: TextInputAction.next,
-              // onEditingComplete: () => TextInput.finishAutofillContext(),
-              // autofillHints: [AutofillHints.password],
               controller: _passwordController,
-              // initialValue: "list[0].password",
-              onSaved: (input) => requestModel.password = input!,
+              onChanged: (input) => authenModel.user![0].password = input,
               obscureText: _isObscure,
               decoration: InputDecoration(
                 fillColor: kwhite,

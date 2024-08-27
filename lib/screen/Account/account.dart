@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,11 +13,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:web_admin/components/colors/colors.dart';
 import 'dart:html' as html;
-
 import '../../Auth/login.dart';
-import '../../api/contants.dart';
-import '../../components/contants.dart';
+import '../../components/colors.dart';
 import '../../models/register_model.dart';
 import '../Profile/components/Drop_down.dart';
 import '../Profile/components/FieldBox.dart';
@@ -282,9 +279,9 @@ class _AccountState extends State<Account> {
     final controller = TextEditingController(text: widget.username);
     //Get.lazyPut(() => ImageController());
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 245, 250, 246),
+      backgroundColor: whileColors,
       appBar: AppBar(
-        backgroundColor: kwhite_new,
+        backgroundColor: whileColors,
         elevation: 0,
         centerTitle: true,
         title: const Text(
@@ -317,7 +314,7 @@ class _AccountState extends State<Account> {
                       alignment: Alignment.center,
                       height: 200,
                       decoration: BoxDecoration(
-                        color: kwhite_new,
+                        color: whileColors,
                         borderRadius: kBottomBorderRadius,
                       ),
                       child: Row(
@@ -461,9 +458,9 @@ class _AccountState extends State<Account> {
                                     )
                                     .toList(),
                                 // add extra sugar..
-                                icon: const Icon(
+                                icon: Icon(
                                   Icons.arrow_drop_down,
-                                  color: kwhite_new,
+                                  color: whileColors,
                                 ),
 
                                 decoration: const InputDecoration(
@@ -619,7 +616,7 @@ class EditPicture extends StatelessWidget {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                   icon,
-                  color: kwhite_new,
+                  color: whileColors,
                 ),
               ),
               Text(

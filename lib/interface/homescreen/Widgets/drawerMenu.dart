@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../components/colors.dart';
 import '../../navigate_home/Report/Transetoin/history.dart';
 import '../../navigate_home/User/list_notivigation.dart';
 import '../component/list.dart';
@@ -107,20 +107,6 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                             builder: (context) => ResponsiveHomePage(
                               listUser: widget.listUser,
                               url: widget.listUser[0]['url'].toString(),
-                              password: widget.password,
-                              controllerUser:
-                                  widget.listUser[0]['control_user'].toString(),
-                              setEmail: widget.email,
-                              setPassword: widget.password,
-                              user: widget.listUser[0]['username'].toString(),
-                              email: widget.listUser[0]['email'].toString(),
-                              firstName:
-                                  widget.listUser[0]['first_name'].toString(),
-                              lastName:
-                                  widget.listUser[0]['last_name'].toString(),
-                              gender: widget.listUser[0]['gender'].toString(),
-                              from: widget.listUser[0]['known_from'].toString(),
-                              tel: widget.listUser[0]['tel_num'].toString(),
                               id: widget.listUser[0]['id'].toString(),
                             ),
                           ));

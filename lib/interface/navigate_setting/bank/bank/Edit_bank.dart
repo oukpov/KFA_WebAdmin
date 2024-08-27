@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
-
-import '../../../../Profile/contants.dart';
+import '../../../../components/colors.dart';
 import 'bank_list.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

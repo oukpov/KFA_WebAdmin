@@ -110,14 +110,14 @@ class MenuVerbal extends StatelessWidget {
                     // ),
                     InkWell(
                       onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => Add(
-                              id_control_user: id_control_user,
-                              id: id,
-                            ),
-                          ),
-                        );
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => Add(
+                        //       id_control_user: id_control_user,
+                        //       id: id,
+                        //     ),
+                        //   ),
+                        // );
                       },
                       child: Container(
                         height: 50,

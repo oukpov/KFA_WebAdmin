@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../../../../../components/colors.dart';
 import '../../ResponseDevice/responsive_layout.dart';
-import '../../component/Colors/colors.dart';
 import '../../component/LinkURL/AboutUS/aboutus.dart';
 import '../ListProperty/ListProPerty.dart';
 

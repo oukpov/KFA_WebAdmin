@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../../../Profile/components/FieldBox.dart';
-import '../../../../screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../../components/colors.dart';
 import '../../Customer/component/Web/simple/dropdown.dart';
 
 class customerCaseinOut extends StatefulWidget {

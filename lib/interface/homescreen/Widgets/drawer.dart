@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:web_admin/components/colors/colors.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
+import '../../../components/colors.dart';
 import '../../navigate_home/Report/Transetoin/history.dart';
 import '../../navigate_home/User/list_notivigation.dart';
 import '../component/list.dart';
@@ -12,12 +12,10 @@ class DrawerOption extends StatefulWidget {
     super.key,
     required this.device,
     required this.listUser,
-    required this.password,
     required this.email,
   });
   final String device;
   final List listUser;
-  final String password;
   final String email;
 
   @override
@@ -50,32 +48,32 @@ class _DrawerOptionState extends State<DrawerOption> {
                   height: 70,
                   width: MediaQuery.of(context).size.width * 0.04,
                 ),
-                DefaultTextStyle(
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                    shadows: [
-                      Shadow(
-                          blurRadius: 2,
-                          color: Color.fromARGB(255, 65, 119, 255))
-                    ],
-                    fontWeight: FontWeight.bold,
-                  ),
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      WavyAnimatedText(' Admin',
-                          textAlign: TextAlign.center,
-                          textStyle: const TextStyle(
-                              color: Color.fromARGB(255, 227, 234, 7))),
-                    ],
-                    pause: const Duration(milliseconds: 100),
-                    isRepeatingAnimation: true,
-                    repeatForever: true,
-                    onTap: () {},
-                  ),
-                ),
+                // DefaultTextStyle(
+                //   textAlign: TextAlign.center,
+                //   style: const TextStyle(
+                //     fontSize: 16.0,
+                //     shadows: [
+                //       Shadow(
+                //           blurRadius: 2,
+                //           color: Color.fromARGB(255, 65, 119, 255))
+                //     ],
+                //     fontWeight: FontWeight.bold,
+                //   ),
+                //   child: AnimatedTextKit(
+                //     animatedTexts: [
+                //       WavyAnimatedText(' Admin',
+                //           textAlign: TextAlign.center,
+                //           textStyle: const TextStyle(
+                //               color: Color.fromARGB(255, 227, 234, 7))),
+                //     ],
+                //     pause: const Duration(milliseconds: 100),
+                //     isRepeatingAnimation: true,
+                //     repeatForever: true,
+                //     onTap: () {},
+                //   ),
+                // ),
                 const Text(
-                  '  APP',
+                  '  Admin Web',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 13,
@@ -93,22 +91,9 @@ class _DrawerOptionState extends State<DrawerOption> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ResponsiveHomePage(
+                          id: widget.listUser[0]['agency'].toString(),
                           listUser: widget.listUser,
                           url: widget.listUser[0]['url'].toString(),
-                          password: widget.password,
-                          controllerUser:
-                              widget.listUser[0]['control_user'].toString(),
-                          setEmail: widget.email,
-                          setPassword: widget.password,
-                          user: widget.listUser[0]['username'].toString(),
-                          email: widget.listUser[0]['email'].toString(),
-                          firstName:
-                              widget.listUser[0]['first_name'].toString(),
-                          lastName: widget.listUser[0]['last_name'].toString(),
-                          gender: widget.listUser[0]['gender'].toString(),
-                          from: widget.listUser[0]['known_from'].toString(),
-                          tel: widget.listUser[0]['tel_num'].toString(),
-                          id: widget.listUser[0]['id'].toString(),
                         ),
                       ));
                 } else if (i == 1) {

@@ -1,11 +1,12 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../../components/contants.dart';
+
+import '../../../components/colors.dart';
+
 
 class New_Acompany extends StatefulWidget {
   const New_Acompany({super.key});

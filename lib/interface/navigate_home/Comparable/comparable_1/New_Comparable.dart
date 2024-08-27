@@ -4,12 +4,12 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../Profile/contants.dart';
 import '../../../../../components/property_type.dart';
 import '../../../../../components/province.dart';
 import '../../../../../components/road.dart';
 import '../../../../components/L_w_total.dart';
 import '../../../../components/bank.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/total_dropdown.dart';
 import '../../../../screen/Property/Map/map_in_add_verbal.dart';
 

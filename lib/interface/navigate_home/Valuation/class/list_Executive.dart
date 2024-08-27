@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:printing/printing.dart';
-import '../../../../../components/contants.dart';
+import '../../../../components/colors.dart';
 import '../../../../screen/Property/Map/ToFromDate_ForSale.dart';
 import '../Edit/Edit_Ex.dart';
 

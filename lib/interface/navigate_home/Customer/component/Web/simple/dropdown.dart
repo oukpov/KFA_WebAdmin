@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../../Profile/contants.dart';
+import '../../../../../../components/colors.dart';
 import '../../../../../../components/colors/colors.dart';
 import '../../../../../../components/landsize.dart';
 

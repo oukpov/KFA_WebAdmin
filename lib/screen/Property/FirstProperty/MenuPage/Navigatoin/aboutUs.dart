@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../../../../../components/colors.dart';
 import '../../component/Colors/appbar.dart';
-import '../../component/Colors/colors.dart';
 
 class AboutUs extends StatefulWidget {
   const AboutUs({super.key});
