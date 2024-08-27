@@ -1953,7 +1953,7 @@ class _HomePageState extends State<AddComparableNewPage> {
                                             height: 3, color: greyColorNolots),
                                         const SizedBox(height: 20),
                                         if (!checkdelete)
-                                          Text(
+                                          const Text(
                                             'PropertyType *',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -1963,7 +1963,7 @@ class _HomePageState extends State<AddComparableNewPage> {
                                         else
                                           Row(
                                             children: [
-                                              Text(
+                                              const Text(
                                                 'Comparable List',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,

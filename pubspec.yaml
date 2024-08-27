@@ -148,6 +148,7 @@ dependencies:
   permission_handler: ^11.0.1
   syncfusion_flutter_pdf: ^21.2.4
   dropdown_search: ^5.0.6
+  flutter_google_street_view: ^3.1.4
   # flutter_inappwebview_web: ^1.0.8
 
 dev_dependencies:

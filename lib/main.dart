@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
+import 'package:web_admin/screen/Property/Map/streetview_map.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
@@ -70,46 +71,46 @@ class _MyAppState extends State<MyApp> {
         // home: ComparableReportYear(
         //   device: '',
         // ),
-        //home: LineChartSample(),
+        home: StreetViewWidget(),
         //home: LineChartSample(),
         //home: ResponsiveHomePage();
-        routes: {
-          //'/': (context) => const ResponsiveHomePage(
-          // id: '12',
-          // name: 'ouk pov',
-          // controllerUser: '12831923',
-          // nativigation: true,
-          // email: 'oukpov@gmail.com')
-          '/': (BuildContext obj) => ResponsiveLayout(
-                myIdController: '',
-                email: '',
-                idController: '',
-              ),
-          // '/': (BuildContext obj) => ResponsivenewcomparableGet(
-          //       name: '',
-          //       index: 10,
-          //     ),
-          // '/': (BuildContext obj) => ResponsivenewcomparableAdd(
-          //       name: '',
-          //     ),
-          // '/': (context) => List_newcomparable(
-          //       name: '',
-          // //     )
-          //},
-          //   onGenerateRoute: (RouteSettings settings) {
-          //     final args = settings.name;
-          //     if (args != null) {
-          //       var data = settings.name!.split('/');
-          //       var value = data[1].toString();
-          //       return MaterialPageRoute(
-          //         builder: (context) {
-          //           return koko(
-          //             name: value.toString(),
-          //           );
-          //         },
-          //       );
-          //     }
-        },
+        // routes: {
+        //   //'/': (context) => const ResponsiveHomePage(
+        //   // id: '12',
+        //   // name: 'ouk pov',
+        //   // controllerUser: '12831923',
+        //   // nativigation: true,
+        //   // email: 'oukpov@gmail.com')
+        //   '/': (BuildContext obj) => ResponsiveLayout(
+        //         myIdController: '',
+        //         email: '',
+        //         idController: '',
+        //       ),
+        //   // '/': (BuildContext obj) => ResponsivenewcomparableGet(
+        //   //       name: '',
+        //   //       index: 10,
+        //   //     ),
+        //   // '/': (BuildContext obj) => ResponsivenewcomparableAdd(
+        //   //       name: '',
+        //   //     ),
+        //   // '/': (context) => List_newcomparable(
+        //   //       name: '',
+        //   // //     )
+        //   //},
+        //   //   onGenerateRoute: (RouteSettings settings) {
+        //   //     final args = settings.name;
+        //   //     if (args != null) {
+        //   //       var data = settings.name!.split('/');
+        //   //       var value = data[1].toString();
+        //   //       return MaterialPageRoute(
+        //   //         builder: (context) {
+        //   //           return koko(
+        //   //             name: value.toString(),
+        //   //           );
+        //   //         },
+        //   //       );
+        //   //     }
+        // },
         builder: BotToastInit(),
       ),
     );
