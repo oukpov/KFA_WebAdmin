@@ -44,25 +44,21 @@ class _ToFromDateState extends State<ToFromDate_p> {
                 decoration: InputDecoration(
                   prefixIcon: Icon(
                     Icons.calendar_today,
-                    color: kImageColor,
+                    color: Colors.black,
                     size: MediaQuery.of(context).size.height * 0.025,
                   ), //icon of text field
                   labelText: "From Date",
-
-                  fillColor: kwhite,
                   filled: true,
-
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: kPrimaryColor, width: 2.0),
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
-                      color: kPrimaryColor,
+                      color: Colors.black,
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
+                    // borderRadius: BorderRadius.circular(10.0),
                   ), //label text of field
                 ),
                 readOnly:
@@ -113,23 +109,21 @@ class _ToFromDateState extends State<ToFromDate_p> {
                 decoration: InputDecoration(
                   prefixIcon: Icon(
                     Icons.calendar_today,
-                    color: kImageColor,
+                    color: Colors.black,
                     size: MediaQuery.of(context).size.height * 0.025,
                   ), //icon of text field
                   labelText: "To Date",
-                  fillColor: kwhite,
                   filled: true,
                   focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: kPrimaryColor, width: 2.0),
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       width: 1,
-                      color: kPrimaryColor,
+                      color: Colors.black,
                     ),
-                    borderRadius: BorderRadius.circular(10.0),
+                    // borderRadius: BorderRadius.circular(10.0),
                   ), //label text of field
                 ),
                 readOnly:

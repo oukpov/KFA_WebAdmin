@@ -146,10 +146,11 @@ class _MultiplyFormState extends State<Land_building> {
               ),
               Container(
                 alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: 2, color: Colors.white),
-                    borderRadius: BorderRadius.circular(10)),
+                // decoration: BoxDecoration(
+                //   color: Colors.white,
+                //   border: Border.all(width: 2, color: Colors.white),
+                //   //borderRadius: BorderRadius.circular(10)
+                // ),
                 width: w,
                 height: MediaQuery.of(context).size.height * 0.065,
                 child: (_total != 0) ? Text('$_total') : Text('Total'),

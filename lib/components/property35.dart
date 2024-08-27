@@ -2,7 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../../components/ApprovebyAndVerifyby.dart';
+<<<<<<< HEAD
 import 'colors.dart';
+=======
+import '../../components/contants.dart';
+>>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 
 class PropertyDropdown35 extends StatefulWidget {
   final OnChangeCallback name;

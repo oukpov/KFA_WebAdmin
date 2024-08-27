@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:web_admin/Auth/register.dart';
+<<<<<<< HEAD
+=======
+import 'package:web_admin/api/api_service.dart';
+import '../page/homescreen/responsive_layout.dart';
+import '../../components/contants.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+>>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 import '../Customs/ProgressHUD.dart';
 import '../Customs/responsive.dart';
 import '../components/colors.dart';
@@ -229,6 +237,7 @@ class _LoginState extends State<Login> {
   //       password: requestModel.password,
   //     );
 
+<<<<<<< HEAD
   //     AwesomeDialog(
   //       btnOkOnPress: () {},
   //       context: context,
@@ -263,6 +272,119 @@ class _LoginState extends State<Login> {
   //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   //   }
   // }
+=======
+      AwesomeDialog(
+        btnOkOnPress: () {},
+        context: context,
+        animType: AnimType.leftSlide,
+        headerAnimationLoop: false,
+        dialogType: DialogType.success,
+        showCloseIcon: false,
+        title: 'value.message',
+        autoHide: const Duration(seconds: 3),
+        onDismissCallback: (type) {
+          // Navigator.of(context).push(MaterialPageRoute(
+          //   builder: (context) =>
+          //       Chat_Message(uid: '191K877F994A', userId: '192K381F363A'),
+          // builder: (context) => HomePage(
+          //   control_user: value.user['control_user'],
+          //   set_email: requestModel.email,
+          //   set_password: requestModel.password,
+          //   user: value.user['username'],
+          //   email: value.user['email'],
+          //   first_name: value.user['first_name'],
+          //   last_name: value.user['last_name'],
+          //   gender: value.user['gender'],
+          //   from: value.user['known_from'],
+          //   tel: value.user['tel_num'],
+          //   id: value.user['id'].toString(),
+          // ),
+          // ));
+        },
+      ).show();
+    } on FirebaseAuthException catch (e) {
+      final snackBar = SnackBar(content: Text(e.message!));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  List listUser = [];
+  void loginFun() async {
+    var headers = {'Content-Type': 'application/json'};
+    var data = json.encode({
+      "email": requestModel.email,
+      "password": requestModel.password,
+    });
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/logins',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        // print(json.encode(response.data));
+        listUser = jsonDecode(json.encode(response.data));
+
+        saveEmail(_emailController.text);
+        savePassword(_passwordController.text);
+        FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: requestModel.email,
+          password: requestModel.password,
+        );
+
+        AwesomeDialog(
+          btnOkOnPress: () {},
+          context: context,
+          animType: AnimType.leftSlide,
+          headerAnimationLoop: false,
+          dialogType: DialogType.success,
+          showCloseIcon: false,
+          title: 'Login Successfuly',
+          autoHide: const Duration(seconds: 3),
+          onDismissCallback: (type) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ResponsiveHomePage(
+                    listUser: listUser,
+                    url: listUser[0]['url'].toString(),
+                    password: requestModel.password,
+                    controllerUser: listUser[0]['control_user'].toString(),
+                    setEmail: requestModel.email,
+                    setPassword: requestModel.password,
+                    user: listUser[0]['username'].toString(),
+                    email: listUser[0]['email'].toString(),
+                    firstName: listUser[0]['first_name'].toString(),
+                    lastName: listUser[0]['last_name'].toString(),
+                    gender: listUser[0]['gender'].toString(),
+                    from: listUser[0]['known_from'].toString(),
+                    tel: listUser[0]['tel_num'].toString(),
+                    id: listUser[0]['id'].toString(),
+                  ),
+                ));
+          },
+        ).show();
+      });
+    } else {
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.error,
+        animType: AnimType.rightSlide,
+        headerAnimationLoop: false,
+        title: 'Error',
+        desc: 'Please Try again',
+        btnOkOnPress: () {},
+        btnOkIcon: Icons.cancel,
+        btnOkColor: Colors.red,
+      ).show();
+    }
+  }
+>>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 
   bool validateAndSave() {
     final form = _formKey.currentState;

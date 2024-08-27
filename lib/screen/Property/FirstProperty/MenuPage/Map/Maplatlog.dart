@@ -8,8 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+<<<<<<< HEAD
 import '../../../../../components/colors.dart';
 import '../../../../../interface/navigate_home/Comparable/comparable3/search_screen.dart/search_map_com.dart';
+=======
+import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
+
+import '../../../../../page/navigate_home/Comparable/comparable3/search_screen.dart/search_map_com.dart';
+>>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 import '../../component/Colors/appbar.dart';
 import '../DetailScreen/DetailAll.dart';
 

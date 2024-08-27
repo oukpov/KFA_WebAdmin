@@ -9,11 +9,15 @@ import 'package:intl/intl.dart';
 import 'package:location_geocoder/location_geocoder.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:web_admin/components/property%20copy.dart';
 import '../Customs/ProgressHUD.dart';
 import '../models/search_model.dart';
+<<<<<<< HEAD
 import 'colors.dart';
+=======
+import 'contants.dart';
+>>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc
 import 'numDisplay.dart';
-import 'property.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 

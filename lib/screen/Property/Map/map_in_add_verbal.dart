@@ -21,12 +21,16 @@ class Map_verbal_address_Sale extends StatefulWidget {
     required this.get_commune,
     required this.get_log,
     required this.get_lat,
+    this.log,
+    this.lat,
   });
   final OnChangeCallback get_province;
   final OnChangeCallback get_district;
   final OnChangeCallback get_commune;
   final OnChangeCallback get_log;
   final OnChangeCallback get_lat;
+  final double? log;
+  final double? lat;
   @override
   State<Map_verbal_address_Sale> createState() => _SearchPlacesScreenState();
 }
@@ -80,23 +84,73 @@ class _SearchPlacesScreenState extends State<Map_verbal_address_Sale> {
 
   double? lat1;
   double? log1;
-
+// គំរូ CurrentLocation
+  // Future<void> _getCurrentLocation() async {
+  //   if (widget.lat != null) {
+  //     setState(() {
+  //       print("object ${widget.lat}\n object ${widget.log}\n");
+  //       //print("object ${widget.log}\n");
+  //       mapController!.animateCamera(CameraUpdate.newCameraPosition(
+  //         CameraPosition(
+  //           target: LatLng(widget.log!, widget.lat!),
+  //           zoom: 16.0,
+  //         ),
+  //       ));
+  //       // lat1 = double.parse(widget.lat.toString());
+  //       // log1 = double.parse(widget.log.toString());
+  //       latLng = LatLng(widget.log!, widget.lat!);
+  //       _addMarker(latLng);
+  //     });
+  //   } else {
+  //     Position position = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high);
+  //     setState(() {
+  //       mapController!.animateCamera(CameraUpdate.newCameraPosition(
+  //         CameraPosition(
+  //           target: LatLng(position.latitude, position.longitude),
+  //           zoom: 16.0,
+  //         ),
+  //       ));
+  //       lat1 = position.latitude;
+  //       log1 = position.longitude;
+  //       latLng = LatLng(lat1!, log1!);
+  //       _addMarker(latLng);
+  //     });
+  //   }
+  // }
   Future<void> _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    if (widget.lat != null && widget.log != null) {
+      setState(() {
+        print("object ${widget.lat}\n object ${widget.log}\n");
+        //print("object ${widget.log}\n");
+        mapController!.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(widget.log!, widget.lat!),
+            zoom: 16.0,
+          ),
+        ));
+        lat1 = double.parse(widget.lat.toString());
+        log1 = double.parse(widget.log.toString());
+        latLngsp = LatLng(lat1!, log1!);
+        _addMarker(latLngsp);
+      });
+    } else {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
 
-    setState(() {
-      mapController!.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(position.latitude, position.longitude),
-          zoom: 16.0,
-        ),
-      ));
-      lat1 = position.latitude;
-      log1 = position.longitude;
-      latLng = LatLng(lat1!, log1!);
-      _addMarker(latLng);
-    });
+      setState(() {
+        mapController!.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom: 16.0,
+          ),
+        ));
+        lat1 = position.latitude;
+        log1 = position.longitude;
+        latLng = LatLng(lat1!, log1!);
+        _addMarker(latLng);
+      });
+    }
   }
 
   double? lat;
@@ -104,12 +158,29 @@ class _SearchPlacesScreenState extends State<Map_verbal_address_Sale> {
   @override
   void initState() {
     _handleLocationPermission();
+
     _getCurrentLocation();
+    if (widget.lat != null) {
+      setState(() {
+        print("object ${widget.lat}\n");
+        // mapController!.animateCamera(CameraUpdate.newCameraPosition(
+        //   CameraPosition(
+        //     target: LatLng(widget.log!, widget.lat!),
+        //     zoom: 16.0,
+        //   ),
+        // ));
+        lat1 = double.parse(widget.lat.toString());
+        log1 = double.parse(widget.log.toString());
+        latLngsp = LatLng(log1!, lat1!);
+        _addMarker(latLngsp);
+      });
+    }
     super.initState();
   }
 
   Uint8List? _imageFile;
   LatLng latLng = const LatLng(11.519037, 104.915120);
+  LatLng latLngsp = const LatLng(11.519037, 104.915120);
   CameraPosition? cameraPosition;
 
   Future<void> _addMarker(LatLng latLng) async {
