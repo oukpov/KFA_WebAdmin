@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
 import 'colors/colors.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

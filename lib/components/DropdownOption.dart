@@ -1,8 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import '../../../../../components/ApprovebyAndVerifyby.dart';
-import '../Profile/contants.dart';
-import '../colors.dart';
+import 'colors.dart';
 
 class DropdownOption extends StatefulWidget {
   const DropdownOption(

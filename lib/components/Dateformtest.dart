@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Profile/components/Drop_down.dart';
-import '../screen/Property/FirstProperty/component/Colors/colors.dart';
+import 'colors.dart';
+
 
 class DateDrop extends StatefulWidget {
   DateDrop({

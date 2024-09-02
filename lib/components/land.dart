@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:web_admin/Profile/components/Drop_down.dart';
 
-import '../Profile/contants.dart';
-import '../colors.dart';
+import 'colors.dart';
 
 class Landbuilding extends StatefulWidget {
   const Landbuilding(

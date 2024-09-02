@@ -16,8 +16,10 @@ import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
-import '../navigate_home/Add/listPropertyCheck.dart';
+import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
+import '../navigate_home/Auto_verbal/listPropertyCheck.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
+import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import '../navigate_home/Comparable/newComparable/listnewcomparable.dart';
 import '../navigate_home/Comparable/newComparable/responsivenewcomparableadd.dart';
 import '../navigate_home/Comparable/newComparable/responsivenewcomparableget.dart';
@@ -303,7 +305,7 @@ class _homescreenState extends State<homescreen> {
                                   builder: (context) {
                                     return ResponsivenewcomparableAdd(
                                       id: widget.id.toString(),
-                                      name: widget.user,
+                                      name: "",
                                     );
                                   },
                                 ));
@@ -311,7 +313,8 @@ class _homescreenState extends State<homescreen> {
                               if (i == 1) {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return AddComparableNewPage(
+                                    return AddComparable(
+                                      listlocalhosts: widget.listUser,
                                       addNew: (value) {},
                                       listUser: widget.listUser,
                                       type: (value) {},
@@ -320,13 +323,13 @@ class _homescreenState extends State<homescreen> {
                                 ));
                               }
                               if (i == 2) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ComparableList(
-                                          name: widget.listUser[0]['username']
-                                              .toString(),
-                                    builder: (context) => List_newcomparable( 
-                                          name: widget.user,
-                                        )));
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //     builder: (context) => ComparableList(
+                                //           name: widget.listUser[0]['username']
+                                //               .toString(),
+                                //     builder: (context) => List_newcomparable(
+                                //           name: widget.user,
+                                //         )));
                               }
                               if (i == 3) {
                                 Navigator.of(context).push(MaterialPageRoute(
@@ -392,14 +395,14 @@ class _homescreenState extends State<homescreen> {
                                 //       ),
                                 //     ));
                               } else if (i == 1) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const List_Auto(
-                                        id_control_user: 'sasdkf',
-                                        verbal_id: '0123',
-                                      ),
-                                    ));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => const ListAuto(
+                                //         id_control_user: 'sasdkf',
+                                //         verbal_id: '0123',
+                                //       ),
+                                //     ));
                               } else if (i == 2) {
                                 Navigator.push(
                                     context,

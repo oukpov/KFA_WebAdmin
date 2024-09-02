@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:web_admin/screen/Property/FirstProperty/component/Colors/colors.dart';
-import 'contants.dart';
+
+import 'colors.dart';
+
 
 typedef OnChangeCallback = void Function(dynamic value);
 

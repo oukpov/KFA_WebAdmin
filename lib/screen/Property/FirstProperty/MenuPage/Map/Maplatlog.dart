@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
+import '../../../../../components/colors.dart';
+import '../../../../../page/navigate_home/Comparable/comparable3/search_screen.dart/search_map_com.dart';
 import '../../component/Colors/appbar.dart';
 import '../DetailScreen/DetailAll.dart';
 

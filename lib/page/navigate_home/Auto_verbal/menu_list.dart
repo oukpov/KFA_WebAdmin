@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Customer/map_in_list_search _autoverbal.dart';
-import 'Add.dart';
+import 'Add/Add.dart';
 import 'listPropertyCheck.dart';
 
 class MenuVerbal extends StatelessWidget {
@@ -145,9 +145,12 @@ class MenuVerbal extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => List_Auto(
+                            builder: (context) => ListAuto(
+                              checkcolor: false,
+                              type: (value) {},
                               id_control_user: id_control_user,
-                              verbal_id: id,
+                              device: 'm',
+                              listUser: [],
                             ),
                           ),
                         );

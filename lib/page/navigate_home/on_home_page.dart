@@ -3,7 +3,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
-import 'Add/menu_list.dart';
+import 'Auto_verbal/menu_list.dart';
 import 'AutoVerbal/menu.dart';
 import 'Comparable/menucomparable.dart';
 import 'Customer/menu.dart';

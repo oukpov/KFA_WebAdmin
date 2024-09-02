@@ -22,6 +22,7 @@ import '../../../../components/Dateform.dart';
 import '../../../../components/L_w_totaltwo.dart';
 import '../../../../components/bankcolumn.dart';
 import '../../../../components/banktwo.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/property_typetwo.dart';
 import '../../../../components/roadtwo.dart';
 import '../../../../components/total_dropdowntwo.dart';

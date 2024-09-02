@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -10,44 +12,26 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import '../../../../../models/verbalModel/verbal_model.dart';
-import '../../../Customs/formTwinN.dart';
-import '../../../components/ApprovebyAndVerifyby.dart';
+import '../../../../../../components/bank_dropdown.dart';
+import '../../../../../../models/verbalModel/verbal_model.dart';
+import '../../../../../components/raod_type.dart';
+import '../../../../Customs/formTwinN.dart';
+import '../../../../Widgets/searchProperty.dart';
+import '../../../../components/ApprovebyAndVerifyby.dart';
 import 'package:universal_html/html.dart' as html;
 import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
-import '../../../components/bank_dropdown.dart';
-import '../../../components/colors.dart';
-import '../../../components/raod_type.dart';
-import '../../../components/searchProperty.dart';
-import '../../../getx/agent_credit/credit_agent.dart';
-import '../../../getx/dropdown_local/dropdown.dart';
-import '../../../getx/verbal/verbal.dart';
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:universal_html/html.dart' as html;
-import '../../../../components/ApprovebyAndVerifyby.dart';
-import '../../../../components/LandBuilding.dart';
-import '../../../../components/property.dart';
-import '../../../../components/slideUp.dart';
-import '../../../../customs/form.dart';
-import '../../../Customs/formTwinN.dart';
-import '../../../api/api_service.dart';
-import '../../../components/bank.dart';
-import '../../../components/comment.dart';
-import '../../../components/forceSale.dart';
-import '../../../models/autoVerbal.dart';
-import '../../../models/land_building.dart';
-
+import '../../../../components/colors.dart';
+import '../../../../components/input_controller.dart';
+import '../../../../getx/dropdown_local/dropdown.dart';
+import '../../../../getx/verbal/verbal.dart';
+import '../../../../models/LandBuilding/landmodel.dart';
 
 class Add extends StatefulWidget {
-  const Add({
+  Add({
     super.key,
     required this.backvalue,
-    // required this.id,
     required this.email,
-    // required this.password,
-
     required this.listUser,
     required this.device,
     required this.listLandBuilding,
@@ -59,6 +43,7 @@ class Add extends StatefulWidget {
     required this.checkMap,
     required this.option,
     required this.creditAgent,
+    required this.creditPoint,
   });
 
   final String device;
@@ -68,11 +53,13 @@ class Add extends StatefulWidget {
   final String lat;
   final String lng;
   final OnChangeCallback backvalue;
-  final List listLandBuilding;
+  // final List listLandBuilding;
+  List<LandbuildingModel> listLandBuilding = [];
   final bool checkMap;
   final double hscreen;
   final int option;
   final OnChangeCallback creditAgent;
+  final int creditPoint;
   final TextEditingController addressController;
 
   @override
@@ -121,7 +108,7 @@ class _Add_with_propertyState extends State<Add> {
   VerbalModels verbalModels = VerbalModels(data: []);
   Data datamodel = Data();
   String lable = '';
-  final CreditAgent creditAgent = Get.put(CreditAgent());
+  // final CreditAgent creditAgent = Get.put(CreditAgent());
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   File? file;
   Uint8List? get_bytes;
@@ -132,7 +119,7 @@ class _Add_with_propertyState extends State<Add> {
     super.initState();
     listOptin = listRaodNBorey;
     verbalUser = int.parse(widget.verbalID);
-    creditAgent.creditAgent(83);
+    // creditAgent.creditAgent(83);
   }
 
   int verbalUser = 0;
@@ -161,6 +148,7 @@ class _Add_with_propertyState extends State<Add> {
   // int? id_route;
   String bankName = '';
   String branchName = '';
+
   void saveAutoLocal() {
     // setState(() {
     //   final person = Person(
@@ -203,6 +191,7 @@ class _Add_with_propertyState extends State<Add> {
 
   bool checkboreyTP = false;
   int countwaiting = 0;
+  int countPost = 0;
   List listOptin = [];
   List listTitle = [
     {"title": "Cancle"},
@@ -224,6 +213,33 @@ class _Add_with_propertyState extends State<Add> {
   int count = 0;
   late Timer _timer;
   bool waitingCheck = false;
+  LandbuildingModel landbuildingModel = LandbuildingModel();
+  void updateLandbuilding(int index) async {
+    if (index < 0 || index >= widget.listLandBuilding.length) {
+      return;
+    }
+
+    setState(() {
+      widget.listLandBuilding[index].verbalLandDes =
+          landbuildingModel.verbalLandDes;
+      widget.listLandBuilding[index].verbalLandDp =
+          landbuildingModel.verbalLandDp;
+      widget.listLandBuilding[index].verbalLandArea =
+          landbuildingModel.verbalLandArea;
+      widget.listLandBuilding[index].verbalLandMinsqm =
+          landbuildingModel.verbalLandMinsqm;
+      widget.listLandBuilding[index].verbalLandMaxsqm =
+          landbuildingModel.verbalLandMaxsqm;
+      widget.listLandBuilding[index].verbalLandMaxvalue =
+          landbuildingModel.verbalLandMinvalue;
+      widget.listLandBuilding[index].verbalLandMaxvalue =
+          landbuildingModel.verbalLandMaxvalue;
+      indexselect = -1;
+    });
+  }
+
+  List list = [];
+  int indexselect = -1;
   @override
   Widget build(BuildContext context) {
     return (widget.listLandBuilding.isEmpty && check == false)
@@ -262,7 +278,7 @@ class _Add_with_propertyState extends State<Add> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const SizedBox(height: 10),
-                              Text(creditAgent.credit.value.toString()),
+
                               Row(
                                 children: [
                                   const SizedBox(width: 30),
@@ -286,6 +302,7 @@ class _Add_with_propertyState extends State<Add> {
                                         verbalAdd.iswaiting.value = true;
                                         await verbalAdd.timewating();
                                         setState(() {
+                                          list = [];
                                           datamodel.verbalAddress =
                                               widget.addressController.text;
                                           datamodel.latlongLa =
@@ -295,20 +312,58 @@ class _Add_with_propertyState extends State<Add> {
                                           datamodel.verbalOption =
                                               widget.option;
                                           datamodel.verbalUser = int.parse(
-                                              widget.listUser[0]['id']
+                                              widget.listUser[0]['agency']
                                                   .toString());
+
+                                          for (int i = 0;
+                                              i <
+                                                  widget
+                                                      .listLandBuilding.length;
+                                              i++) {
+                                            list.add({
+                                              "protectID": widget.verbalID,
+                                              "verbal_land_type": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandType,
+                                              "verbal_land_des": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandDes,
+                                              "verbal_land_dp": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandDp,
+                                              "verbal_land_area": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandArea,
+                                              "verbal_land_minsqm": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandMinsqm,
+                                              "verbal_land_maxsqm": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandMaxsqm,
+                                              "verbal_land_minvalue": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandMinvalue,
+                                              "verbal_land_maxvalue": widget
+                                                  .listLandBuilding[i]
+                                                  .verbalLandMaxvalue,
+                                              "address": widget
+                                                  .listLandBuilding[i].address,
+                                            });
+                                          }
                                         });
                                         if (formKey.currentState!.validate() &&
-                                            datamodel.road != null) {
+                                            datamodel.road != null &&
+                                            indexselect == -1) {
                                           if (widget
                                               .listLandBuilding.isNotEmpty) {
                                             await verbalAdd.saveAuto(
                                                 datamodel,
-                                                widget.verbalID,
-                                                widget.listLandBuilding,
+                                                verbalUser.toString(),
+                                                list,
                                                 base64string,
-                                                widget.listUser[0]['id'],
-                                                creditAgent.credit.value);
+                                                int.parse(datamodel.verbalUser
+                                                    .toString()),
+                                                widget.creditPoint);
                                             setState(() {
                                               widget.listLandBuilding.clear();
                                               widget.addressController.clear();
@@ -317,7 +372,7 @@ class _Add_with_propertyState extends State<Add> {
                                                   verbalAdd.verbalID.value);
 
                                               widget.creditAgent(
-                                                  "${creditAgent.credit.value + 1}");
+                                                  "${widget.creditPoint + 1}");
                                             });
                                           } else {
                                             getxsnackbar(
@@ -326,7 +381,8 @@ class _Add_with_propertyState extends State<Add> {
                                           }
                                         } else {
                                           getxsnackbar(
-                                              "Please Your Requestment", "");
+                                              "Please Your Requestment${(indexselect == -1) ? "" : " Land Building Edit"}",
+                                              "");
                                         }
                                       },
                                       child: Container(
@@ -453,6 +509,26 @@ class _Add_with_propertyState extends State<Add> {
                               //   },
                               // ),
 
+                              // if (widget.listLandBuilding.isNotEmpty)
+                              //   Column(
+                              //     children: [
+                              //       for (int x = 0;
+                              //           x < widget.listLandBuilding.length;
+                              //           x++)
+                              //         InkWell(
+                              //           onTap: () {
+                              //             setState(() {
+                              //               widget.listLandBuilding[x]
+                              //                   .verbalLandDes = "100";
+                              //             });
+                              //           },
+                              //           child: Text(widget
+                              //               .listLandBuilding[x].verbalLandDes
+                              //               .toString()),
+                              //         ),
+                              //     ],
+                              //   ),
+
                               if (widget.listLandBuilding.isNotEmpty)
                                 SizedBox(
                                   width:
@@ -468,216 +544,410 @@ class _Add_with_propertyState extends State<Add> {
                                                   widget
                                                       .listLandBuilding.length;
                                               i++)
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      10, 10, 10, 10),
-                                              child: Container(
-                                                width: 270,
-                                                //height: 210,
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  indexselect =
+                                                      (indexselect == i)
+                                                          ? -1
+                                                          : i;
+                                                  landbuildingModel
+                                                          .verbalLandDes =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandDes
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandDp =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandDp
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandArea =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandArea
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandMinsqm =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandMinsqm
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandMaxsqm =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandMaxsqm
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandMinvalue =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandMinvalue
+                                                          .toString();
+                                                  landbuildingModel
+                                                          .verbalLandMaxvalue =
+                                                      widget.listLandBuilding[i]
+                                                          .verbalLandMaxvalue
+                                                          .toString();
+                                                });
+                                              },
+                                              child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(10),
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: kPrimaryColor),
-                                                  borderRadius:
-                                                      const BorderRadius.all(
-                                                          Radius.circular(15)),
-                                                ),
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 10, 10, 10),
+                                                child: Container(
+                                                  width: 270,
+                                                  //height: 210,
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        width:
+                                                            (indexselect != i)
+                                                                ? 1
+                                                                : 2,
+                                                        color:
+                                                            (indexselect != i)
+                                                                ? kPrimaryColor
+                                                                : greenColors),
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
 
-                                                child: Column(
-                                                  children: [
-                                                    Stack(
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Text(
-                                                                '${widget.listLandBuilding[i]['verbal_landid']}',
+                                                  child: Column(
+                                                    children: [
+                                                      Stack(
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                '${widget.listLandBuilding[i].verbalLandid}',
                                                                 style:
                                                                     NameProperty(),
                                                               ),
-                                                            ),
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Align(
-                                                                alignment: Alignment
-                                                                    .centerRight,
-                                                                child:
-                                                                    IconButton(
-                                                                  icon:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .delete,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    size: 30,
-                                                                  ),
-                                                                  onPressed:
-                                                                      () {
-                                                                    setState(
-                                                                        () {
-                                                                      check =
-                                                                          true;
-                                                                      widget
-                                                                          .listLandBuilding
-                                                                          .removeAt(
+                                                              const Spacer(),
+
+                                                              (indexselect != i)
+                                                                  ? Icon(
+                                                                      Icons
+                                                                          .edit,
+                                                                      color:
+                                                                          greyColor,
+                                                                      size: 25)
+                                                                  : IconButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        setState(
+                                                                            () {
+                                                                          updateLandbuilding(
                                                                               i);
-                                                                    });
-                                                                  },
+                                                                        });
+                                                                      },
+                                                                      icon: Icon(
+                                                                          Icons
+                                                                              .edit,
+                                                                          color:
+                                                                              greenColors,
+                                                                          size:
+                                                                              25)),
+                                                              IconButton(
+                                                                icon:
+                                                                    const Icon(
+                                                                  Icons.delete,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  size: 30,
                                                                 ),
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                    check =
+                                                                        true;
+                                                                    widget
+                                                                        .listLandBuilding
+                                                                        .removeAt(
+                                                                            i);
+                                                                  });
+                                                                },
                                                               ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Text(
-                                                      '${widget.listLandBuilding[i]['address'] ?? ""} ',
-                                                      style: const TextStyle(
-                                                          color: Colors.grey,
-                                                          fontSize: 10,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    const SizedBox(height: 3.0),
-                                                    const Divider(
-                                                        height: 1,
-                                                        thickness: 1,
-                                                        color: kPrimaryColor),
-                                                    const SizedBox(height: 3.0),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                              "Depreciation",
-                                                              style: Label(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            if (widget.listLandBuilding[
-                                                                        i][
-                                                                    'verbal_land_des'] !=
-                                                                "Land")
-                                                              Text(
-                                                                "Floor",
-                                                                style: Label(),
-                                                              ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                              "Area",
-                                                              style: Label(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                              'Max Value/Sqm',
-                                                              style: Label(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                              'Min Value/Sqm',
-                                                              style: Label(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                              'Max Value',
-                                                              style: Label(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 3),
-                                                            Text(
-                                                              'Min Value',
-                                                              style: Label(),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 15),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            const SizedBox(
-                                                                height: 4),
-                                                            Text(
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_des'] ?? ""}',
-                                                              style: Name(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            if (widget.listLandBuilding[
-                                                                        i][
-                                                                    'verbal_land_des'] !=
-                                                                "land")
-                                                              Text(
-                                                                ' : ${widget.listLandBuilding[i]['verbal_land_dp'] ?? ""}',
-                                                                style: Name(),
-                                                              ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            Text(
-                                                              // ':   ' +
-                                                              //     (formatter.format(lb[i]
-                                                              //             .verbal_land_area
-                                                              //             .toInt()))
-                                                              //         .toString() +
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_area'] ?? ""}m\u00B2',
-                                                              // area + 'm' + '\u00B2',
-                                                              style: Name(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            Text(
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_minsqm'] ?? ""}\$',
-                                                              style: Name(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            Text(
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_maxsqm'] ?? ""}\$',
-                                                              style: Name(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            Text(
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_minvalue'] ?? ""}\$',
-                                                              style: Name(),
-                                                            ),
-                                                            const SizedBox(
-                                                                height: 2),
-                                                            Text(
-                                                              ' : ${widget.listLandBuilding[i]['verbal_land_maxvalue'] ?? ""}\$',
-                                                              style: Name(),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
+                                                              // )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Text(
+                                                        '${widget.listLandBuilding[i].address ?? ""} ',
+                                                        style: const TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 10,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 3.0),
+                                                      const Divider(
+                                                          height: 1,
+                                                          thickness: 1,
+                                                          color: kPrimaryColor),
+                                                      const SizedBox(
+                                                          height: 3.0),
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              textTitle(
+                                                                  "Depreciation",
+                                                                  i,
+                                                                  indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              if (widget
+                                                                      .listLandBuilding[
+                                                                          i]
+                                                                      .verbalLandDes !=
+                                                                  "LS")
+                                                                textTitle(
+                                                                    "Floor",
+                                                                    i,
+                                                                    indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              textTitle(
+                                                                  "Area",
+                                                                  i,
+                                                                  indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              textTitle(
+                                                                  "Max Value/Sqm",
+                                                                  i,
+                                                                  indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              textTitle(
+                                                                  "Min Value/Sqm",
+                                                                  i,
+                                                                  indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              textTitle(
+                                                                  "Max Value",
+                                                                  i,
+                                                                  indexselect),
+                                                              const SizedBox(
+                                                                  height: 3),
+                                                              textTitle(
+                                                                  "Min Value",
+                                                                  i,
+                                                                  indexselect),
+                                                            ],
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 15),
+                                                          Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandDes =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandDes ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandDes ?? ""}",
+                                                                ),
+                                                              if (widget
+                                                                      .listLandBuilding[
+                                                                          i]
+                                                                      .verbalLandDes !=
+                                                                  "LS")
+                                                                if (indexselect ==
+                                                                    i)
+                                                                  InputController(
+                                                                      controllerback:
+                                                                          (value) {
+                                                                        setState(
+                                                                            () {
+                                                                          if (value != "" ||
+                                                                              value != null) {
+                                                                            landbuildingModel.verbalLandDp =
+                                                                                value;
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                      value: widget
+                                                                              .listLandBuilding[i]
+                                                                              .verbalLandDp ??
+                                                                          "")
+                                                                else
+                                                                  textName(
+                                                                    " : ${widget.listLandBuilding[i].verbalLandDp ?? ""}",
+                                                                  ),
+                                                              const SizedBox(
+                                                                  height: 2),
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandArea =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandArea ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandArea ?? ""}m\u00B2",
+                                                                ),
+                                                              const SizedBox(
+                                                                  height: 2),
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandMinsqm =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandMinsqm ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}",
+                                                                ),
+                                                              const SizedBox(
+                                                                  height: 2),
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandMaxsqm =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandMaxsqm ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandMaxsqm ?? ""}",
+                                                                ),
+                                                              const SizedBox(
+                                                                  height: 2),
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandMinsqm =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandMinvalue ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}\$",
+                                                                ),
+                                                              const SizedBox(
+                                                                  height: 2),
+                                                              if (indexselect ==
+                                                                  i)
+                                                                InputController(
+                                                                    controllerback:
+                                                                        (value) {
+                                                                      setState(
+                                                                          () {
+                                                                        if (value !=
+                                                                                "" ||
+                                                                            value !=
+                                                                                null) {
+                                                                          landbuildingModel.verbalLandMaxvalue =
+                                                                              value;
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    value: widget
+                                                                            .listLandBuilding[i]
+                                                                            .verbalLandMaxvalue ??
+                                                                        "")
+                                                              else
+                                                                textName(
+                                                                  " : ${widget.listLandBuilding[i].verbalLandMaxvalue ?? ""}\$",
+                                                                ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -810,6 +1080,39 @@ class _Add_with_propertyState extends State<Add> {
                               //     ),
                               //   ),
                               // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(30, 10, 30, 0),
+                                child: TextFormField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      datamodel.titleNumber = value;
+                                    });
+                                  },
+                                  decoration: InputDecoration(
+                                    fillColor: kwhite,
+                                    filled: true,
+                                    labelText: "Title Number",
+                                    labelStyle:
+                                        const TextStyle(color: kTextLightColor),
+                                    prefixIcon: const Icon(
+                                        Icons.location_on_rounded,
+                                        color: kImageColor),
+                                    contentPadding:
+                                        const EdgeInsets.symmetric(vertical: 8),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: kPrimaryColor, width: 2.0),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          width: 1, color: kPrimaryColor),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 10.0),
                               Padding(
                                 padding:
@@ -1108,6 +1411,37 @@ class _Add_with_propertyState extends State<Add> {
           );
   }
 
+  Widget textTitle(title, i, indexselect) {
+    return (indexselect != i)
+        ? Text(
+            title,
+            style: const TextStyle(color: kPrimaryColor, fontSize: 12),
+          )
+        : Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Container(
+              alignment: Alignment.center,
+              height: 25,
+              child: Text(
+                title,
+                style: const TextStyle(color: kPrimaryColor, fontSize: 12),
+              ),
+            ),
+          );
+  }
+
+  Widget textName(title) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+              color: kImageColor, fontSize: 13, fontWeight: FontWeight.bold),
+        )
+      ],
+    );
+  }
+
   bool waiting = false;
   String? options;
   String commune = '';
@@ -1123,526 +1457,6 @@ class _Add_with_propertyState extends State<Add> {
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
                   fontSize: 14)),
-=======
-  Widget addVerbal(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(width: 40),
-              Icon(
-                Icons.qr_code,
-                color: kImageColor,
-                size: 30,
-              ),
-              SizedBox(width: 10),
-              Text(
-                verbal_id,
-                style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    color: kPrimaryColor),
-              )
-            ],
-          ),
-          SizedBox(height: 10),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (lat != null && lat1 == null)
-                InkWell(
-                  onTap: () async {
-                    await SlideUp(context);
-                  },
-                  child: Container(
-                    height: 180,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    // margin: EdgeInsets.only(top: 15, right: 13, left: 15),
-                    child: FadeInImage.assetNetwork(
-                      placeholderCacheHeight: 120,
-                      placeholderCacheWidth: 120,
-                      fit: BoxFit.cover,
-                      placeholderFit: BoxFit.fill,
-                      placeholder: 'assets/earth.gif',
-                      image:
-                          'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
-                    ),
-                  ),
-                )
-              else if (lat1 != null)
-                InkWell(
-                  onTap: () async {
-                    await SlideUp(context);
-                  },
-                  child: Container(
-                    height: 180,
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    child: FadeInImage.assetNetwork(
-                      placeholderCacheHeight: 50,
-                      placeholderCacheWidth: 50,
-                      placeholderFit: BoxFit.cover,
-                      placeholder: 'assets/earth.gif',
-                      image:
-                          'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
-                    ),
-                  ),
-                )
-              else
-                SizedBox(),
-              SizedBox(width: 20),
-              if (_byesData != null)
-                InkWell(
-                  onTap: () {
-                    OpenImgae();
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.45,
-                    height: 180,
-                    child: (get_bytes == null)
-                        ? Image.memory(
-                            _byesData!,
-                          )
-                        : Image.memory(get_bytes!),
-                  ),
-                )
-              else
-                InkWell(
-                    onTap: () {
-                      OpenImgae();
-                    },
-                    child: Container(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                        ),
-                        child: Stack(children: [
-                          CachedNetworkImage(
-                            imageUrl:
-                                'https://www.oneclickonedollar.com/laravel_kfa_2023/public/data_imgs_kfa/Form_Image/image_select.jpg',
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width * 0.45,
-                            height: 180,
-                            progressIndicatorBuilder:
-                                (context, url, downloadProgress) => Center(
-                              child: CircularProgressIndicator(
-                                  value: downloadProgress.progress),
-                            ),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
-                          ),
-                        ]),
-                      ),
-                    ))
-            ],
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 120),
-            child: Row(
-              children: [
-                Spacer(),
-                IconButton(
-                    onPressed: () {
-                      _cropImage();
-                    },
-                    icon: const Icon(
-                      Icons.crop,
-                      size: 35,
-                      color: Colors.grey,
-                    )),
-              ],
-            ),
-          ),
-          InkWell(
-              onTap: () async {
-                testComporessList();
-              },
-              child: Text('Compress Image')),
-          SizedBox(height: 10),
-          CommentAndOption(
-            value: (value) {
-              setState(() {
-                opt = int.parse(value);
-              });
-            },
-            comment1: (opt != null) ? opt.toString() : null,
-            id: (value) {
-              setState(() {
-                requestModelAuto.option = value;
-              });
-            },
-            comment: (newValue) {
-              setState(() {
-                requestModelAuto.comment = newValue!.toString();
-              });
-            },
-            opt_type_id: (value) {
-              setState(() {
-                opt_type_id = value.toString();
-              });
-            },
-          ),
-
-          if (id_khan != 0)
-            InkWell(
-              onTap: () {
-                _asyncInputDialog(context);
-                ++i;
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                height: 40,
-                margin: EdgeInsets.only(top: 5),
-                decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent[700],
-                    borderRadius: BorderRadius.circular(30)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.3,
-                      child: DefaultTextStyle(
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: 'Horizon',
-                          fontWeight: FontWeight.bold,
-                        ),
-                        child: AnimatedTextKit(
-                          animatedTexts: [
-                            RotateAnimatedText('land'),
-                            RotateAnimatedText('Building'),
-                          ],
-                          pause: const Duration(milliseconds: 100),
-                          repeatForever: true,
-                        ),
-                      ),
-                    ),
-                    GFAnimation(
-                      controller: controller,
-                      slidePosition: offsetAnimation,
-                      type: GFAnimationType.slideTransition,
-                      child: Icon(
-                        Icons.add_circle_outline,
-                        color: Colors.white,
-                        size: 30,
-                        shadows: [Shadow(blurRadius: 5, color: Colors.black)],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          if (i >= 0)
-            Container(
-              width: 500,
-              height: (lb.length > 1) ? 280 : 0,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    for (int i = 1; i < lb.length; i++)
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                        child: Container(
-                          width: 290,
-                          //height: 210,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1, color: kPrimaryColor),
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                          ),
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Text(
-                                          '${lb[i].verbal_land_type} ',
-                                          style: NameProperty(),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Align(
-                                          alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                              size: 30,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                deleteItemToList(i);
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3.0,
-                              ),
-                              Divider(
-                                height: 1,
-                                thickness: 1,
-                                color: kPrimaryColor,
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                '${lb[i].address} ',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Depreciation",
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        "Floor",
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        "Area",
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        'Min Value/Sqm',
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        'Max Value/Sqm',
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        'Min Value',
-                                        style: Label(),
-                                      ),
-                                      SizedBox(height: 3),
-                                      Text(
-                                        'Min Value',
-                                        style: Label(),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(width: 15),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 4),
-                                      Text(
-                                        ':   ' + lb[i].verbal_land_dp,
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' + lb[i].verbal_land_des,
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' +
-                                            (formatter.format(lb[i]
-                                                    .verbal_land_area
-                                                    .toInt()))
-                                                .toString() +
-                                            'm' +
-                                            '\u00B2',
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' +
-                                            (lb[i].verbal_land_minsqm)
-                                                .toString() +
-                                            '\$',
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' +
-                                            (lb[i].verbal_land_maxsqm)
-                                                .toString() +
-                                            '\$',
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' +
-                                            (formatter.format(
-                                                    lb[i].verbal_land_minvalue))
-                                                .toString() +
-                                            '\$',
-                                        style: Name(),
-                                      ),
-                                      SizedBox(height: 2),
-                                      Text(
-                                        ':   ' +
-                                            (formatter
-                                                    .format(lb[i]
-                                                        .verbal_land_maxvalue)
-                                                    .toString() +
-                                                '\$'),
-                                        style: Name(),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          SizedBox(
-            height: 10.0,
-          ),
-          PropertyDropdown(
-            name: (value) {
-              propertyType = value;
-            },
-            id: (value) {
-              requestModelAuto.property_type_id = value;
-            },
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-          BankDropdown(
-            bank: (value) {
-              requestModelAuto.bank_id = value;
-            },
-            bankbranch: (value) {
-              requestModelAuto.bank_branch_id = value;
-            },
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-          FormTwinN(
-            Label1: 'Owner',
-            Label2: 'Contact',
-            onSaved1: (input) {
-              requestModelAuto.owner = input!;
-            },
-            onSaved2: (input) {
-              requestModelAuto.contact = input!;
-            },
-            icon1: Icon(
-              Icons.person,
-              color: kImageColor,
-            ),
-            icon2: Icon(
-              Icons.phone,
-              color: kImageColor,
-            ),
-          ),
-          SizedBox(
-            height: 5.0,
-          ),
-          // DateComponents(
-          //   date: (value) {
-          //     requestModelAuto.date = value;
-          //   },
-          // ),
-          SizedBox(
-            height: 5.0,
-          ),
-          FormTwinN(
-            Label1: 'Bank Officer',
-            Label2: 'Contact',
-            onSaved1: (input) {
-              requestModelAuto.bank_officer = input!;
-            },
-            onSaved2: (input) {
-              requestModelAuto.bank_contact = input!;
-            },
-            icon1: Icon(
-              Icons.work,
-              color: kImageColor,
-            ),
-            icon2: Icon(
-              Icons.phone,
-              color: kImageColor,
-            ),
-          ),
-
-          SizedBox(
-            height: 5,
-          ),
-          ForceSaleAndValuation(
-            value: (value) {
-              requestModelAuto.verbal_con = value;
-            },
-          ),
-
-          SizedBox(
-            height: 10,
-          ),
-          ApprovebyAndVerifyby(
-            approve: (value) {
-              requestModelAuto.approve_id = value;
-            },
-            verify: (value) {
-              requestModelAuto.agent = value;
-            },
-          ),
-
-          Padding(
-            padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
-            child: FormS(
-              label: 'Phum optional',
-              onSaved: (input) {
-                requestModelAuto.address = input!;
-              },
-              iconname: Icon(
-                Icons.location_on_rounded,
-                color: kImageColor,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 30.0,
-          ),
->>>>>>> 4df899fe5c5b7786128f08f07b8f4c937ba094bc:lib/page/navigate_home/Add/Add.dart
         ],
       ),
     );
@@ -1819,15 +1633,6 @@ class _Add_with_propertyState extends State<Add> {
     } else {
       print(response.statusMessage);
     }
-  }
-
-  TextStyle Label() {
-    return TextStyle(color: kPrimaryColor, fontSize: 12);
-  }
-
-  TextStyle Name() {
-    return TextStyle(
-        color: kImageColor, fontSize: 13, fontWeight: FontWeight.bold);
   }
 
   TextStyle NameProperty() {

@@ -1,22 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:web_admin/components/road.dart';
-import '../Widgets/landEdit.dart';
-import '../Widgets/searchProperty.dart';
-import '../colors.dart';
+import '../../../../../components/colors.dart';
+import '../../../../Widgets/landEdit.dart';
+import '../../../../Widgets/searchProperty.dart';
+import '../../../../components/road.dart';
 
-class EditComparableNewPage extends StatefulWidget {
-  EditComparableNewPage({super.key, required this.item});
+class EditCom extends StatefulWidget {
+  EditCom({super.key, required this.item});
   var item;
   @override
-  State<EditComparableNewPage> createState() => _EditComparableNewPageState();
+  State<EditCom> createState() => _EditComState();
 }
 
-class _EditComparableNewPageState extends State<EditComparableNewPage> {
+class _EditComState extends State<EditCom> {
   List totally = [
     {
       'numer_id': 1,
@@ -1171,7 +1170,7 @@ class _EditDetailState extends State<EditDetail> {
         builder: (BuildContext context) {
           return Padding(
             padding: const EdgeInsets.only(left: 20, top: 30),
-            child: EditComparableNewPage(
+            child: EditCom(
               item: widget.item,
             ),
           );

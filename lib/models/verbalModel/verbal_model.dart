@@ -93,6 +93,7 @@ class Data {
   String? agenttypeName;
   String? agentTypePhone;
   String? agentTypeEmail;
+  String? typeValue;
   int? id;
   String? controlUser;
   String? firstName;
@@ -230,7 +231,8 @@ class Data {
       this.username,
       this.gender,
       this.telNum,
-      this.knownFrom});
+      this.knownFrom,
+      this.typeValue});
 
   Data.fromJson(Map<String, dynamic> json) {
     verbalId = json['verbal_id'];
@@ -288,6 +290,7 @@ class Data {
     agenttypeName = json['agenttype_name'];
     agentTypePhone = json['agent_type_phone'];
     agentTypeEmail = json['agent_type_email'];
+    typeValue = json['type_value'];
     id = json['id'];
     controlUser = json['control_user'];
     firstName = json['first_name'];
@@ -355,6 +358,7 @@ class Data {
     data['agenttype_name'] = agenttypeName;
     data['agent_type_phone'] = agentTypePhone;
     data['agent_type_email'] = agentTypeEmail;
+    data['type_value'] = typeValue;
     data['id'] = id;
     data['control_user'] = controlUser;
     data['first_name'] = firstName;

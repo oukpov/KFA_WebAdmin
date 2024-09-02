@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../../components/ApprovebyAndVerifyby.dart';
-import '../colors.dart';
+import '../components/colors.dart';
 
 class LandbuildingEdit extends StatefulWidget {
   const LandbuildingEdit(

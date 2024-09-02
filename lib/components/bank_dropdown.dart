@@ -74,14 +74,14 @@ class _BankDropdownState extends State<BankDropdownSearch> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: greyColorNolot,
-                            fontSize: 15),
+                            fontSize: 12),
                       )
                     : Text(
                         'Bank',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: greyColorNolot,
-                            fontSize: 15),
+                            fontSize: 12),
                       ),
                 const SizedBox(height: 5),
                 Container(
@@ -117,7 +117,7 @@ class _BankDropdownState extends State<BankDropdownSearch> {
                         widget.bank(value?['bank_id'].toString());
                         widget.banknameback(value?['bank_name'].toString());
 
-                        print(value?['bank_id'].toString());
+                        // print(value?['bank_id'].toString());
                       });
                     },
                     selectedItem: const {"title": "A"},
@@ -152,14 +152,14 @@ class _BankDropdownState extends State<BankDropdownSearch> {
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: greyColorNolot,
-                                  fontSize: 15),
+                                  fontSize: 12),
                             )
                           : Text(
                               'Branch',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: greyColorNolot,
-                                  fontSize: 15),
+                                  fontSize: 12),
                             ),
                       const SizedBox(height: 5),
                       Container(

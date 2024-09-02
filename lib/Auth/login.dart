@@ -176,8 +176,10 @@ class _LoginState extends State<Login> {
                       authenModel.user = [User()];
                     }
 
-                    authenModel.user![0].username = 'somnang.se';
-                    authenModel.user![0].password = 'KFA@somnang2023';
+                    // authenModel.user![0].username = 'somnang.se';
+                    // authenModel.user![0].password = 'KFA@somnang2023';
+                    authenModel.user![0].username = _emailController.text;
+                    authenModel.user![0].password = _passwordController.text;
                   });
                   authentication.login(authenModel, context);
                 },

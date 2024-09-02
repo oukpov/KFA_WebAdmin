@@ -10,8 +10,10 @@ import 'package:location_geocoder/location_geocoder.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:web_admin/components/property%20copy.dart';
+import 'package:web_admin/components/property.dart';
 import '../Customs/ProgressHUD.dart';
 import '../models/search_model.dart';
+import 'colors.dart';
 import 'numDisplay.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);

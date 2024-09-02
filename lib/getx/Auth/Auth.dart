@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/Auth/auth.dart';
+import '../../page/homescreen/responsive_layout.dart';
 
 class Authentication extends GetxController {
   var isLocalhost = true.obs;

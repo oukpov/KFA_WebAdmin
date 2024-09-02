@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 
-import '../page/navigate_home/Customer/component/Web/simple/inputfiledRowVld.dart';
-import '../page/navigate_home/Customer/component/Web/simple/inputfiledRowtwo.dart';
-import 'contants.dart';
+import 'colors.dart';
+
+
 
 typedef OnChangeCallback = void Function(dynamic value);
 

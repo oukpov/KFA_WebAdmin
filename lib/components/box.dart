@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../Profile/contants.dart';
+import 'colors.dart';
+
+
 
 class Textform extends StatefulWidget {
   const Textform({super.key, required this.flex, required this.text});

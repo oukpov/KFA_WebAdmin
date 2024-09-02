@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import '../../../components/ToFromDate.dart';
 import '../../../components/colors.dart';
-import '../Add/Detail_Autoverbal.dart';
+import '../Auto_verbal/Detail_Autoverbal.dart';
 
 class Show_autoVerbals extends StatefulWidget {
   const Show_autoVerbals({super.key});

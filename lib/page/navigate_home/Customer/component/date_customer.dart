@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../Profile/components/Drop_down.dart';
 import '../../../../components/colors.dart';
-
-typedef OnChangeCallback = void Function(dynamic value);
 
 class DateExpaned extends StatefulWidget {
   const DateExpaned({super.key, required this.value, required this.filedname});
@@ -20,15 +19,15 @@ class _DateExpanedState extends State<DateExpaned> {
   Widget build(BuildContext context) {
     return Expanded(
       child: TextField(
-        style: TextStyle(
-          fontSize: MediaQuery.textScaleFactorOf(context) * 12,
+        style: const TextStyle(
+          fontSize: 12,
         ),
         controller: todate,
         decoration: InputDecoration(
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             Icons.calendar_today,
             color: kImageColor,
-            size: MediaQuery.textScaleFactorOf(context) * 20,
+            size: 20,
           ),
           labelText: widget.filedname,
           fillColor: kwhite,
@@ -47,11 +46,42 @@ class _DateExpanedState extends State<DateExpaned> {
         ),
         readOnly: true,
         onTap: () async {
-          DateTime? pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime(2000),
-              lastDate: DateTime(2101));
+          DateTime? pickedDate = await showDialog<DateTime>(
+            context: context,
+            builder: (BuildContext context) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Dialog(
+                    // insetPadding: EdgeInsets.only(
+                    //     left: offset.dx, top: offset.dy), // Set custom offset
+                    child: SizedBox(
+                      height: 400,
+                      width: 300,
+                      child: Column(
+                        children: [
+                          CalendarDatePicker(
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                            onDateChanged: (DateTime date) {
+                              Navigator.of(context).pop(date);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+          // DateTime? pickedDate = await showDatePicker(
+          //     context: context,
+          //     initialDate: DateTime.now(),
+          //     firstDate: DateTime(2000),
+          //     lastDate: DateTime(2101));
 
           if (pickedDate != null) {
             String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);

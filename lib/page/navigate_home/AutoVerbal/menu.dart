@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Add/Add.dart';
+import '../Auto_verbal/Add/Add.dart';
 import 'AutoVerbal.dart';
 
 class MenuAutoVerbal extends StatefulWidget {

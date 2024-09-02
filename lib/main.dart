@@ -1,18 +1,24 @@
 import 'dart:convert';
-import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:animations/animations.dart';
 import 'package:get/get.dart';
+import 'package:graphic/graphic.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:web_admin/Auth/login.dart';
+import 'package:web_admin/page/navigate_home/Auto_verbal/classTest.dart';
+import 'package:web_admin/page/navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
+import 'package:web_admin/page/navigate_home/Auto_verbal/listPropertyCheck.dart';
+import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
-import 'package:web_admin/screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
-import 'package:web_admin/screen/Property/Map/streetview_map.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
+
+import 'page/homescreen/responsive_layout.dart';
 
 List list = [];
 String? district_id;
@@ -64,34 +70,25 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         routes: {
-          // "/Admin": (context) => const LoginPage()
-          "/Admin": (p0) => VerbalAdmin(
-                  addNew: (value) {},
-                  type: (value) {},
-                  listUser: const [
-                    {
-                      "id": 65,
-                      "user_role_id": 53,
-                      "agency": 83,
-                      "username": "somnang.se",
-                      "password": "9e6981b5813c4da23404c2a3e0f95e81",
-                      "user_status": 0
-                    }
-                  ]),
+          "/Admin": (context) => const LoginPage()
+          // "/Admin": (p0) => ClassTest(),
+
+          // "/Admin": (p0) => VerbalAdmin(
+          //         addNew: (value) {},
+          //         type: (value) {},
+          //         listUser: const [
+          //           {
+          //             "id": 65,
+          //             "user_role_id": 53,
+          //             "agency": 83,
+          //             "username": "somnang.se",
+          //             "password": "9e6981b5813c4da23404c2a3e0f95e81",
+          //             "user_status": 0
+          //           }
+          //         ]),
           // '/Admin': (context) => const ResponsiveHomePage(
           //       listUser: [],
           //       url: '',
-          //       password: '',
-          //       controllerUser: '',
-          //       setEmail: '',
-          //       setPassword: '',
-          //       user: '',
-          //       email: '',
-          //       firstName: '',
-          //       lastName: '',
-          //       gender: '',
-          //       from: '',
-          //       tel: '',
           //       id: '',
           //     ),
         },

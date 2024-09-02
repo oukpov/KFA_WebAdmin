@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 
-import '../Customs/Contants.dart';
+import 'colors.dart';
 
 class TextfieldValidate extends StatefulWidget {
   const TextfieldValidate({super.key});

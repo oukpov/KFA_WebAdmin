@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../../../../components/ApprovebyAndVerifyby.dart';
-import '../colors.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+
+import '../components/colors.dart';
 
 class propertyType extends StatefulWidget {
   const propertyType({

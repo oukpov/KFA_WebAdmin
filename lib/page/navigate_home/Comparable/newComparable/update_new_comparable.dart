@@ -21,6 +21,7 @@ import 'package:web_admin/models/savecomparablemodel.dart';
 import '../../../../components/L_w_totaltwo.dart';
 import '../../../../components/bankcolumn.dart';
 import '../../../../components/bankrow.dart';
+import '../../../../components/colors.dart';
 import '../../../../components/property_typetwo.dart';
 import '../../../../components/roadtwo.dart';
 import '../../../../components/total_dropdowntwocondition.dart';

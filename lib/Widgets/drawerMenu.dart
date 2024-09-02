@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import '../components/colors.dart';
 import '../page/navigate_home/Report/Transetoin/history.dart';
 import '../page/navigate_home/User/list_notivigation.dart';
 import '../page/homescreen/component/list.dart';

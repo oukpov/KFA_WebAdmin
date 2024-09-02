@@ -11,42 +11,45 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
-import '../../../../../models/search_model.dart';
-import '../../../../../models/verbalModel/verbal_model.dart';
-import '../../../Customs/CustromTwinForm.dart';
-import '../../../Customs/ProgressHUD.dart';
-import '../../../Customs/formnum.dart';
-import '../../../Profile/components/Drop_down.dart';
-import '../../../components/autoVerbalType_search.dart';
-import '../../../components/colors.dart';
-import '../../../components/numDisplay.dart';
-import '../../../components/property35.dart';
-import '../../../components/property35_search.dart';
-import '../../../components/raod_type.dart';
-import '../../../getx/Auth/Auth.dart';
-import '../../../getx/agent_credit/credit_agent.dart';
-import '../../../getx/dropdown_local/GoogMap.dart';
-import '../../../getx/verbal/verbal.dart';
-import '../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
-import 'Add.dart';
+import '../../../../../../models/search_model.dart';
+import '../../../../../../models/verbalModel/verbal_model.dart';
+import '../../../../Customs/CustromTwinForm.dart';
+import '../../../../Customs/ProgressHUD.dart';
+import '../../../../Customs/formnum.dart';
+import '../../../../Profile/components/Drop_down.dart';
+import '../../../../components/autoVerbalType_search.dart';
+import '../../../../components/colors.dart';
+import '../../../../components/numDisplay.dart';
+import '../../../../components/property35.dart';
+import '../../../../components/property35_search.dart';
+import '../../../../components/raod_type.dart';
+import '../../../../getx/Auth/Auth.dart';
+import '../../../../getx/dropdown_local/GoogMap.dart';
+import '../../../../getx/verbal/verbal.dart';
+import '../../../../getx/verbal/verbal_list.dart';
+import '../../../../models/LandBuilding/landbuilding_Model.dart';
+import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
+import 'Edit.dart';
 
-class VerbalAdmin extends StatefulWidget {
-  const VerbalAdmin(
+class EditVerbalAdmin extends StatefulWidget {
+  const EditVerbalAdmin(
       {super.key,
       required this.type,
       required this.listUser,
-      required this.addNew});
-
+      required this.addNew,
+      required this.listData,
+      required this.index});
+// final List<LandbuildingModels> listLandBuilding;
+  final List listData;
   final OnChangeCallback type;
   final OnChangeCallback addNew;
-
+  final int index;
   final List listUser;
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<VerbalAdmin> {
-  final CreditAgent creditAgent = Get.put(CreditAgent());
+class _HomePageState extends State<EditVerbalAdmin> {
   double _panelHeightOpen = 0;
   GoogleMapController? mapController;
   CameraPosition? cameraPosition;
@@ -63,7 +66,6 @@ class _HomePageState extends State<VerbalAdmin> {
   String sendAddrress = '';
   List data = [];
   double add_min = 20.0, add_max = 20.0;
-  // ignore: prefer_typing_uninitialized_variables
   var pty;
   var formatter = NumberFormat("##,###,###,###", "en_US");
   var date = DateFormat('yyyy-MM-dd').format(DateTime(2020, 01, 01));
@@ -103,6 +105,7 @@ class _HomePageState extends State<VerbalAdmin> {
     return true;
   }
 
+  List listData = [];
   VerbalAdd verbalAdd = VerbalAdd();
   TextEditingController addressController = TextEditingController();
   Future<void> getCurrentLocation() async {
@@ -176,10 +179,8 @@ class _HomePageState extends State<VerbalAdmin> {
     controller.songkatAPI();
     controller.optionAPI();
     controller.comparaCRAPI();
-    verbalAdd.verbalIdRadom(widget.listUser[0]['id']);
+    verbalAdd.verbalIdRadom(widget.listUser[0]['agency']);
   }
-
-  late String autoverbalType;
 
   final TextEditingController priceController = TextEditingController();
   TextEditingController searchraod = TextEditingController();
@@ -200,13 +201,15 @@ class _HomePageState extends State<VerbalAdmin> {
     controllerDS.dispose();
   }
 
+  VerbalData verbalData = VerbalData();
   var intValue = Random().nextInt(10);
 
   @override
   void initState() {
     _handleLocationPermission();
+    listData = widget.listData;
     waitingFuction();
-    creditAgent.creditAgent(83);
+
     distanceController.text = '5';
     requestModel = SearchRequestModel(
       property_type_id: "",
@@ -219,10 +222,19 @@ class _HomePageState extends State<VerbalAdmin> {
       fromDate: "",
       toDate: "",
     );
+    mainlandbuilding();
 
-    autoverbalType = "";
     super.initState();
     listOptin = listRaodNBorey;
+    addressController.text =
+        widget.listData[widget.index]['verbal_address'] ?? "";
+  }
+
+  void mainlandbuilding() async {
+    await verbalData.landbuidlingAuto(
+        (widget.listData[widget.index]["type_value"].toString() == "T")
+            ? widget.listData[widget.index]["protectID"]
+            : widget.listData[widget.index]["verbal_id"]);
   }
 
   List listOptin = [];
@@ -299,7 +311,7 @@ class _HomePageState extends State<VerbalAdmin> {
     );
 
     final bottomOffset = viewInsets.bottom;
-    const hiddenKeyboard = 0.0; // Always 0 if keyboard is not opened
+    const hiddenKeyboard = 0.0;
     final isNeedPadding = bottomOffset != hiddenKeyboard;
 
     return SizedBox(height: isNeedPadding ? bottomOffset : hiddenKeyboard);
@@ -545,9 +557,25 @@ class _HomePageState extends State<VerbalAdmin> {
   int selectindexs = 0;
   int pointCredit = 0;
   String checkdropdown = '';
-  List listBuilding = [];
+  // List listBuilding = [];
   bool boreybutton = false;
   bool clickdone = false;
+  // List<LandbuildingModels> landbuildingModel = [];
+  List icontop = [
+    {'icon': 'no1.png'},
+    {'icon': 'no2.png'},
+    {'icon': 'no3.png'},
+    {'icon': 'no4.png'},
+    {'icon': 'no5.png'},
+    {'icon': 'no6.png'},
+    {'icon': 'no7.png'},
+    {'icon': 'no8.png'},
+    {'icon': 'no9.png'},
+    {'icon': 'no10.png'}
+  ];
+
+  bool checkdelete = false;
+
   Widget mapShow() {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -555,1142 +583,1120 @@ class _HomePageState extends State<VerbalAdmin> {
       child: SingleChildScrollView(
         child: Stack(
           children: [
-            Obx(
-              () => Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Card(
-                    elevation: 10,
-                    child: Container(
-                        height: 90,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: const Color.fromARGB(255, 245, 243, 243),
-                            border: Border.all(
-                                width: 0.3,
-                                color:
-                                    const Color.fromARGB(255, 159, 157, 157))),
-                        child: (groupValue == 0)
-                            ? Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 20, left: 20, top: 10),
-                                child: Wrap(
-                                  alignment: WrapAlignment.start,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        widget.type(100);
+            Column(
+              children: [
+                const SizedBox(height: 10),
+                Card(
+                  elevation: 10,
+                  child: Container(
+                      height: 90,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: const Color.fromARGB(255, 245, 243, 243),
+                          border: Border.all(
+                              width: 0.3,
+                              color: const Color.fromARGB(255, 159, 157, 157))),
+                      child: (groupValue == 0)
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 20, left: 20, top: 10),
+                              child: Wrap(
+                                alignment: WrapAlignment.start,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      // Get.back();
+                                      Navigator.pop(context);
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_back,
+                                      color: Color.fromARGB(255, 52, 50, 50),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 35,
+                                    width: 350,
+                                    child: CustomTwinForm(
+                                      Label1: '$add_min% for min',
+                                      Label2: '$add_max% for max',
+                                      icon1: const Icon(Icons.remove),
+                                      icon2: const Icon(Icons.remove),
+                                      onSaved1: (String? newValue) {
+                                        setState(() {
+                                          add_min =
+                                              double.parse(newValue.toString());
+                                          // print("Price : $add_min");
+                                        });
                                       },
-                                      icon: const Icon(
-                                        Icons.arrow_back,
-                                        color: Color.fromARGB(255, 52, 50, 50),
-                                      ),
+                                      onSaved2: (String? newValue) {
+                                        setState(() {
+                                          add_max =
+                                              double.parse(newValue.toString());
+                                          // print("Price : $add_min");
+                                        });
+                                      },
                                     ),
-                                    SizedBox(
-                                      height: 35,
-                                      width: 350,
-                                      child: CustomTwinForm(
-                                        Label1: '$add_min% for min',
-                                        Label2: '$add_max% for max',
-                                        icon1: const Icon(Icons.remove),
-                                        icon2: const Icon(Icons.remove),
-                                        onSaved1: (String? newValue) {
-                                          setState(() {
-                                            add_min = double.parse(
-                                                newValue.toString());
-                                            // print("Price : $add_min");
-                                          });
-                                        },
-                                        onSaved2: (String? newValue) {
-                                          setState(() {
-                                            add_max = double.parse(
-                                                newValue.toString());
-                                            // print("Price : $add_min");
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 35,
-                                      width: 90,
-                                      child: TextFormField(
-                                        controller: distanceController,
-                                        decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                              Icons.photo_size_select_small,
-                                              size: 18),
-                                          fillColor: kwhite,
-                                          filled: true,
-                                          contentPadding:
-                                              const EdgeInsets.symmetric(
-                                                  vertical: 5, horizontal: 0),
-                                          labelStyle: const TextStyle(
-                                              color: kPrimaryColor,
-                                              fontSize: 12),
-                                          labelText: "Distance Km",
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: kPrimaryColor,
-                                                width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                width: 1, color: kPrimaryColor),
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                          ),
+                                  ),
+                                  SizedBox(
+                                    height: 35,
+                                    width: 90,
+                                    child: TextFormField(
+                                      controller: distanceController,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(
+                                            Icons.photo_size_select_small,
+                                            size: 18),
+                                        fillColor: kwhite,
+                                        filled: true,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 5, horizontal: 0),
+                                        labelStyle: const TextStyle(
+                                            color: kPrimaryColor, fontSize: 12),
+                                        labelText: "Distance Km",
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: kPrimaryColor, width: 2.0),
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              width: 1, color: kPrimaryColor),
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    "Borey",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: greyColor,
+                                        fontSize: 14),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          waitingCheck = true;
+                                          boreybutton = !boreybutton;
+                                          if (boreybutton) {
+                                            checkborey = 1;
+                                            listOptin = listRaodBorey;
+                                          } else {
+                                            checkborey = 0;
+                                            listOptin = listRaodNBorey;
+                                          }
+                                          _timer = Timer.periodic(
+                                              const Duration(seconds: 1),
+                                              (Timer timer) async {
+                                            setState(() {
+                                              count++;
+                                            });
 
+                                            if (count >= 1) {
+                                              _timer.cancel();
+                                              waitingCheck = false;
+                                            }
+                                          });
+                                        });
+                                      },
+                                      icon: Icon(boreybutton
+                                          ? Icons.check_box_outlined
+                                          : Icons.check_box_outline_blank)),
+                                  const SizedBox(width: 10),
+                                  waitingCheck
+                                      ? const Center(
+                                          child: CircularProgressIndicator())
+                                      : OptionRoadNew(
+                                          hight: 35,
+                                          pwidth: 250,
+                                          list: listOptin,
+                                          valueId: "road_id",
+                                          valueName: "road_name",
+                                          lable: "Road Name",
+                                          onbackValue: (value) {
+                                            setState(() {
+                                              List<String> parts =
+                                                  value!.split(',');
+
+                                              id_route = parts[0];
+                                              // print("id_route : $id_route");
+
+                                              lable = parts[1];
+                                            });
+                                          },
+                                        ),
+                                  const SizedBox(width: 10),
+                                  //         const SizedBox(width: 10),
+                                  if (route == "Unnamed Road" &&
+                                      checkborey == 0)
                                     Text(
-                                      "Borey",
+                                      "Specail Zone",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           color: greyColor,
                                           fontSize: 14),
                                     ),
+                                  const SizedBox(width: 5),
+                                  if (route == "Unnamed Road" &&
+                                      checkborey == 0)
                                     IconButton(
                                         onPressed: () {
                                           setState(() {
-                                            waitingCheck = true;
-                                            boreybutton = !boreybutton;
-                                            if (boreybutton) {
-                                              checkborey = 1;
-                                              listOptin = listRaodBorey;
-                                            } else {
-                                              checkborey = 0;
-                                              listOptin = listRaodNBorey;
-                                            }
-                                            _timer = Timer.periodic(
-                                                const Duration(seconds: 1),
-                                                (Timer timer) async {
-                                              setState(() {
-                                                count++;
-                                              });
-
-                                              if (count >= 1) {
-                                                _timer.cancel();
-                                                waitingCheck = false;
-                                              }
-                                            });
+                                            doneORudone = !doneORudone;
+                                            haveValue = !haveValue;
                                           });
                                         },
-                                        icon: Icon(boreybutton
-                                            ? Icons.check_box_outlined
-                                            : Icons.check_box_outline_blank)),
-                                    const SizedBox(width: 10),
-                                    waitingCheck
-                                        ? const Center(
-                                            child: CircularProgressIndicator())
-                                        : OptionRoadNew(
-                                            hight: 35,
-                                            pwidth: 250,
-                                            list: listOptin,
-                                            valueId: "road_id",
-                                            valueName: "road_name",
-                                            lable: "Road Name",
-                                            onbackValue: (value) {
-                                              setState(() {
-                                                List<String> parts =
-                                                    value!.split(',');
+                                        icon: !doneORudone
+                                            ? Icon(
+                                                Icons.check_box_outline_blank,
+                                                color: greyColorNolots,
+                                              )
+                                            : Icon(
+                                                Icons.check_box_outlined,
+                                                color: greyColor,
+                                              )),
+                                  // const Spacer(),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     getCurrentLocation();
+                                  //   },
+                                  //   child: Container(
+                                  //     height: 35,
+                                  //     width: 130,
+                                  //     decoration: BoxDecoration(
+                                  //         borderRadius: BorderRadius.circular(5),
+                                  //         border: Border.all(
+                                  //             width: 0.5, color: greyColor)),
+                                  //     child: Row(
+                                  //       mainAxisAlignment: MainAxisAlignment.center,
+                                  //       children: [
+                                  //         Icon(
+                                  //           Icons.location_history_outlined,
+                                  //           color: blackColor,
+                                  //           size: 25,
+                                  //         ),
+                                  //         const SizedBox(width: 5),
+                                  //         Text('My location',
+                                  //             style: TextStyle(
+                                  //                 fontSize: 12,
+                                  //                 fontWeight: FontWeight.bold,
+                                  //                 color: blackColor)),
+                                  //       ],
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  //         // const SizedBox(width: 10),
 
-                                                id_route = parts[0];
-                                                print("id_route : $id_route");
-
-                                                lable = parts[1];
-                                              });
-                                            },
-                                          ),
-                                    const SizedBox(width: 10),
-                                    //         const SizedBox(width: 10),
-                                    if (route == "Unnamed Road" &&
-                                        checkborey == 0)
-                                      Text(
-                                        "Specail Zone",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: greyColor,
-                                            fontSize: 14),
-                                      ),
-                                    const SizedBox(width: 5),
-                                    if (route == "Unnamed Road" &&
-                                        checkborey == 0)
-                                      IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              doneORudone = !doneORudone;
-                                              haveValue = !haveValue;
-                                            });
-                                          },
-                                          icon: !doneORudone
-                                              ? Icon(
-                                                  Icons.check_box_outline_blank,
-                                                  color: greyColorNolots,
-                                                )
-                                              : Icon(
-                                                  Icons.check_box_outlined,
-                                                  color: greyColor,
-                                                )),
-                                    // const Spacer(),
-                                    // InkWell(
-                                    //   onTap: () {
-                                    //     getCurrentLocation();
-                                    //   },
-                                    //   child: Container(
-                                    //     height: 35,
-                                    //     width: 130,
-                                    //     decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.circular(5),
-                                    //         border: Border.all(
-                                    //             width: 0.5, color: greyColor)),
-                                    //     child: Row(
-                                    //       mainAxisAlignment: MainAxisAlignment.center,
-                                    //       children: [
-                                    //         Icon(
-                                    //           Icons.location_history_outlined,
-                                    //           color: blackColor,
-                                    //           size: 25,
-                                    //         ),
-                                    //         const SizedBox(width: 5),
-                                    //         Text('My location',
-                                    //             style: TextStyle(
-                                    //                 fontSize: 12,
-                                    //                 fontWeight: FontWeight.bold,
-                                    //                 color: blackColor)),
-                                    //       ],
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    //         // const SizedBox(width: 10),
-
-                                    for (int i = 0; i < listMarkers.length; i++)
-                                      InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            checktypeMarker = !checktypeMarker;
-                                            selectindexs =
-                                                (selectindexs == i) ? -1 : i;
-                                          });
-                                        },
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Container(
-                                            height: 35,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                border: Border.all(
-                                                    width: (selectindexs == i)
-                                                        ? 2
-                                                        : 1,
-                                                    color: (selectindexs == i)
-                                                        ? redColors
-                                                        : blackColor)),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                if (i == 0)
-                                                  const Icon(Icons
-                                                      .location_on_outlined)
-                                                else
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(2),
-                                                    child: Image.asset(
-                                                      "assets/images/mutiple.png",
-                                                      width: 50,
-                                                    ),
-                                                  )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                  for (int i = 0; i < listMarkers.length; i++)
                                     InkWell(
                                       onTap: () {
-                                        clearMarkers();
                                         setState(() {
-                                          clearmarker = false;
+                                          checktypeMarker = !checktypeMarker;
+                                          selectindexs =
+                                              (selectindexs == i) ? -1 : i;
                                         });
                                       },
-                                      child: Container(
-                                        height: 35,
-                                        width: 80,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                              width:
-                                                  (clearmarker == true) ? 2 : 1,
-                                              color: (clearmarker == true)
-                                                  ? Colors.red
-                                                  : greyColor,
-                                            )),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Clear  ',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: greyColor),
-                                            ),
-                                            Icon(Icons.location_off_outlined,
-                                                color: (clearmarker == true)
-                                                    ? Colors.red
-                                                    : greyColor,
-                                                size: 20)
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-
-                                    const SizedBox(width: 40),
-                                    InkWell(
-                                      onTap: () {
-                                        searchComparable();
-                                      },
-                                      child: Card(
-                                        elevation: 20,
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 10),
                                         child: Container(
                                           height: 35,
-                                          width: 140,
+                                          width: 70,
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5),
-                                              color: const Color.fromARGB(
-                                                  255, 143, 187, 223),
                                               border: Border.all(
-                                                  width: 0.5,
-                                                  color: greyColor)),
+                                                  width: (selectindexs == i)
+                                                      ? 2
+                                                      : 1,
+                                                  color: (selectindexs == i)
+                                                      ? redColors
+                                                      : blackColor)),
                                           child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                'Search Price',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    color: greyColor,
-                                                    fontSize: 12),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Icon(Icons.search,
-                                                  color: greyColor, size: 20)
+                                              if (i == 0)
+                                                const Icon(
+                                                    Icons.location_on_outlined)
+                                              else
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(2),
+                                                  child: Image.asset(
+                                                    "assets/images/mutiple.png",
+                                                    width: 50,
+                                                  ),
+                                                )
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        if (adding_price != 0) {
-                                          showDailogs();
-                                        } else {
-                                          getxsnackbar(
-                                              "Please Check Price", "");
-                                        }
-
-                                        // if (list.isNotEmpty) {
-                                        //   if (groupValue == 0) {
-                                        //     Dialog(context);
-                                        //   } else {
-                                        //     for_market_price();
-                                        //   }
-                                        // } else {
-                                        //   aloadMenu();
-                                        // }
-                                      },
-                                      child: Image.asset(
-                                        "assets/icons/papersib.png",
-                                        height: 35,
-                                        width: 50,
-                                        fit: BoxFit.fitHeight,
-                                      ),
-                                    ),
-                                    clickdone
-                                        ? Text('Only Price',
-                                            style: TextStyle(color: colorsRed))
-                                        : Text('Location Price',
-                                            style: TextStyle(color: colorsRed)),
-                                    IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            clickdone = !clickdone;
-                                          });
-                                        },
-                                        icon: Icon(!clickdone
-                                            ? Icons.check_box_outline_blank
-                                            : Icons.check_box_outlined)),
-                                  ],
-                                ),
-                              )
-                            : Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        widget.type(100);
-                                      },
-                                      icon: Icon(
-                                        Icons.arrow_back,
-                                        color: greyColor,
-                                        size: 25,
-                                      ))
-                                ],
-                              )),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Container(
-                        color: appback,
-                        height: MediaQuery.of(context).size.height * 0.84,
-                        width: 500,
-                        child: SingleChildScrollView(
-                            child: Stack(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 30, left: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 20),
-                                  Row(
-                                    children: [
-                                      Image.asset("assets/icons/no1.png",
-                                          width: 60, fit: BoxFit.fitHeight),
-                                      const SizedBox(width: 15),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                  InkWell(
+                                    onTap: () {
+                                      clearMarkers();
+                                      setState(() {
+                                        clearmarker = false;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 35,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                            width:
+                                                (clearmarker == true) ? 2 : 1,
+                                            color: (clearmarker == true)
+                                                ? Colors.red
+                                                : greyColor,
+                                          )),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          if (!authentication.isLocalhost.value)
-                                            Text(
-                                              "${authentication.listlocalhost[0]['username'] ?? ""}",
-                                              style: TextStyle(
-                                                  color: colorsRed,
-                                                  fontSize: 17),
-                                            ),
-                                          const SizedBox(height: 5),
-                                          if (!creditAgent.isagent.value)
-                                            Text(
-                                              "${creditAgent.credit}",
-                                              style: TextStyle(
-                                                  color: colorsRed,
-                                                  fontSize: 17),
-                                            )
+                                          Text(
+                                            'Clear  ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: greyColor),
+                                          ),
+                                          Icon(Icons.location_off_outlined,
+                                              color: (clearmarker == true)
+                                                  ? Colors.red
+                                                  : greyColor,
+                                              size: 20)
                                         ],
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                  Text(
-                                    "Search by Latitude and Longitude",
-                                    style: TextStyle(
-                                        color: whiteColor, fontSize: 15),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      for (int j = 0;
-                                          j < listlatlog.length;
-                                          j++)
-                                        Expanded(
-                                          flex: 1,
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                right: (j == 0) ? 10 : 0),
-                                            child: Container(
-                                              height: 35,
-                                              // width: 170,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: whiteColor,
-                                                  border: Border.all(
-                                                      width: 0.5,
-                                                      color: blackColor)),
-                                              child: TextFormField(
-                                                keyboardType:
-                                                    TextInputType.text,
-                                                // controller: searchlatlog,
-                                                onFieldSubmitted: (value) {
-                                                  setState(() {
-                                                    if (j == 0) {
-                                                      // lat = double.parse(value);
-                                                      requestModel.lat =
-                                                          value.toString();
-                                                    } else {
-                                                      // log = double.parse(value);
-                                                      requestModel.lng =
-                                                          value.toString();
-                                                    }
-                                                  });
-                                                },
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    if (j == 0) {
-                                                      // lat = double.parse(value);
-                                                      requestModel.lat =
-                                                          value.toString();
-                                                    } else {
-                                                      // log = double.parse(value);
-                                                      requestModel.lng =
-                                                          value.toString();
-                                                    }
-                                                  });
-                                                },
-                                                //,
-                                                textInputAction:
-                                                    TextInputAction.search,
-                                                style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 10,
-                                                          horizontal: 8),
-                                                  suffixIcon: (j == 0)
-                                                      ? const SizedBox()
-                                                      : IconButton(
-                                                          onPressed: () {
-                                                            setState(() {
-                                                              maincheck();
-                                                              checklatlog =
-                                                                  false;
-                                                              findlocation(LatLng(
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lat),
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lng)));
-                                                              // findlocation(LatLng(
-                                                              //     11.499263, 104.874885));
-                                                              findByPiont(
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lat),
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lng));
-                                                              getAddress(LatLng(
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lat),
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lng)));
-                                                            });
-                                                          },
-                                                          icon: Icon(
-                                                            Icons.search,
-                                                            color: greyColor,
-                                                          )),
 
-                                                  fillColor: Colors.white,
-                                                  hintText: listlatlog[j]
-                                                          ['title']
-                                                      .toString(),
-                                                  border: InputBorder.none,
-                                                  // contentPadding:
-                                                  //     const EdgeInsets.symmetric(
-                                                  //         vertical: 8, horizontal: 5),
-                                                  hintStyle: const TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 118, 116, 116),
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
+                                  const SizedBox(width: 40),
+                                  InkWell(
+                                    onTap: () {
+                                      searchComparable();
+                                    },
+                                    child: Card(
+                                      elevation: 20,
+                                      child: Container(
+                                        height: 35,
+                                        width: 140,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            color: const Color.fromARGB(
+                                                255, 143, 187, 223),
+                                            border: Border.all(
+                                                width: 0.5, color: greyColor)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Search Price',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: greyColor,
+                                                  fontSize: 12),
                                             ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "Search Map",
-                                    style: TextStyle(
-                                        color: whiteColor, fontSize: 15),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Container(
-                                    height: 35,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: whiteColor,
-                                        border: Border.all(
-                                            width: 0.5, color: blackColor)),
-                                    child: TextFormField(
-                                      keyboardType: TextInputType.text,
-                                      controller: searchMap,
-                                      onFieldSubmitted: (value) {
-                                        setState(() {
-                                          onSearchChanged();
-                                        });
-                                      },
-                                      onChanged: (value) {
-                                        onSearchChanged();
-                                      },
-                                      textInputAction: TextInputAction.search,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      decoration: InputDecoration(
-                                        suffixIcon: ElevatedButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                onSearchChanged();
-                                                h = 0;
-                                              });
-                                            },
-                                            child: Icon(
-                                              Icons.search,
-                                              color: whiteColor,
-                                              size: 20,
-                                            )),
-                                        suffix: IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                searchMap.clear();
-                                                listMap = [];
-                                              });
-                                            },
-                                            icon: Icon(
-                                              Icons.remove_circle_outline,
-                                              color: greyColorNolot,
-                                            )),
-                                        fillColor: Colors.white,
-                                        hintText: "  Search",
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 0, vertical: 10),
-                                        hintStyle: const TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 118, 116, 116),
-                                          fontSize: 14,
+                                            const SizedBox(width: 10),
+                                            Icon(Icons.search,
+                                                color: greyColor, size: 20)
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
-                                  Divider(height: 3, color: greyColorNolots),
-                                  const SizedBox(height: 10),
-                                  if (comparedropdown2 != "")
-                                    Text('Specail Option',
-                                        style: TextStyle(
-                                            color: whiteColor, fontSize: 12)),
-                                  if (comparedropdown2 != "")
-                                    const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      if (comparedropdown2 != "")
-                                        Expanded(
-                                          flex: 1,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 10),
-                                            child: SizedBox(
-                                              height: 35,
-                                              child: DropdownButtonFormField<
-                                                  String>(
-                                                //value: genderValue,
+                                  InkWell(
+                                    onTap: () {
+                                      if (adding_price != 0) {
+                                        showDailogs();
+                                      } else {
+                                        getxsnackbar("Please Check Price", "");
+                                      }
 
-                                                value:
-                                                    searchlatlog.text.isNotEmpty
-                                                        ? searchlatlog.text
-                                                        : null,
-                                                isExpanded: true,
-                                                onChanged: (newValue) {
-                                                  setState(() {
-                                                    clearmarker = true;
-                                                    searchlatlog.text =
-                                                        newValue ?? "";
-                                                    if (newValue == 'N') {
-                                                      comparedropdown = '';
-                                                    } else {
-                                                      comparedropdown =
-                                                          newValue!;
-                                                      comparedropdown2 = 'P';
-                                                    }
-                                                    checkdropdown =
-                                                        comparedropdown;
-
-                                                    // print(
-                                                    //     '==> $comparedropdown');
-                                                  });
-                                                },
-
-                                                items: controller.listdropdown
-                                                    .map<
-                                                        DropdownMenuItem<
-                                                            String>>(
-                                                      (value) =>
-                                                          DropdownMenuItem<
-                                                              String>(
-                                                        value: value["type"]
-                                                            .toString(),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  bottom: 7),
-                                                          child: Row(
-                                                            children: [
-                                                              Expanded(
-                                                                  flex: 1,
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: const EdgeInsets
-                                                                            .only(
-                                                                        right:
-                                                                            5),
-                                                                    child: SizedBox(
-                                                                        height: 70,
-                                                                        // radius: 15,
-                                                                        // backgroundColor: Colors.white,
-                                                                        child: (value['id'] == 1)
-                                                                            ? Image.asset(
-                                                                                listassetImage[0]['image'].toString(),
-                                                                              )
-                                                                            : (value['id'] == 2)
-                                                                                ? Image.asset(listassetImage[1]['image'].toString())
-                                                                                : (value['id'] == 3)
-                                                                                    ? Image.asset(listassetImage[2]['image'].toString())
-                                                                                    : (value['id'] == 4)
-                                                                                        ? Image.asset(listassetImage[3]['image'].toString())
-                                                                                        : (value['id'] == 5)
-                                                                                            ? Image.asset(listassetImage[4]['image'].toString())
-                                                                                            : (value['id'] == 6)
-                                                                                                ? Image.asset(listassetImage[5]['image'].toString())
-                                                                                                : (value['id'] == 7)
-                                                                                                    ? Image.asset(listassetImage[6]['image'].toString())
-                                                                                                    : Image.asset(listassetImage[7]['image'].toString())),
-                                                                  )),
-                                                              Expanded(
-                                                                flex: 2,
-                                                                child: Text(
-                                                                    value["title"]
-                                                                        .toString(),
-                                                                    style: const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        fontSize:
-                                                                            14)),
-                                                              ),
-                                                              Expanded(
-                                                                  flex: 4,
-                                                                  child: Text(
-                                                                      value[
-                                                                          "name"],
-                                                                      style: const TextStyle(
-                                                                          fontSize:
-                                                                              12))),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    )
-                                                    .toList(),
-                                                // add extra sugar..
-                                                icon: const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: kImageColor,
-                                                ),
-
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 0,
-                                                          horizontal: 0),
-                                                  fillColor: Colors.white,
-                                                  filled: true,
-                                                  labelText: 'Special Option',
-                                                  hintText: 'Select one',
-                                                  prefixIcon: const Icon(
-                                                    Icons.home_outlined,
-                                                    color: kImageColor,
-                                                  ),
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      width: 1,
-                                                      color: kPrimaryColor,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      // Expanded(
-                                      //   flex: 1,
-                                      //   child: SizedBox(
-                                      //     height: 35,
-                                      //     child: DropdownButtonFormField<String>(
-                                      //       isExpanded: true,
-
-                                      //       onChanged: (newValue) {
-                                      //         setState(() {
-                                      //           if (newValue == "2024") {
-                                      //             id_route = null;
-                                      //           } else {
-                                      //             roadType = true;
-                                      //             id_route = newValue;
-                                      //           }
-                                      //           print("===> $id_route");
-                                      //         });
-                                      //       },
-
-                                      //       items: controller.listRaod
-                                      //           .map<DropdownMenuItem<String>>(
-                                      //             (value) =>
-                                      //                 DropdownMenuItem<String>(
-                                      //               value: value["road_id"]
-                                      //                   .toString(),
-                                      //               child: Text(value["road_name"]
-                                      //                   .toString()),
-                                      //               // child: Text(
-                                      //               //   value["name"],
-
-                                      //               //   style: TextStyle(
-                                      //               //       fontWeight: FontWeight.bold,
-                                      //               //       color: Colors.red),
-                                      //               // ),
-                                      //             ),
-                                      //           )
-                                      //           .toList(),
-                                      //       // add extra sugar..
-                                      //       icon: const Icon(
-                                      //         Icons.arrow_drop_down,
-                                      //         color: kImageColor,
-                                      //       ),
-
-                                      //       decoration: InputDecoration(
-                                      //         contentPadding:
-                                      //             const EdgeInsets.symmetric(
-                                      //                 vertical: 0, horizontal: 0),
-                                      //         fillColor: Colors.white,
-                                      //         filled: true,
-                                      //         labelText: (searchraod.text == "")
-                                      //             ? 'Road'
-                                      //             : searchraod.text,
-                                      //         hintStyle: TextStyle(
-                                      //             color: blackColor,
-                                      //             fontWeight: FontWeight.bold,
-                                      //             fontSize: 15),
-                                      //         hintText: 'Select one',
-                                      //         prefixIcon: const Icon(
-                                      //           Icons.edit_road_outlined,
-                                      //           color: kImageColor,
-                                      //         ),
-                                      //         focusedBorder: OutlineInputBorder(
-                                      //           borderSide: const BorderSide(
-                                      //               color: kPrimaryColor,
-                                      //               width: 2.0),
-                                      //           borderRadius:
-                                      //               BorderRadius.circular(5),
-                                      //         ),
-                                      //         enabledBorder: OutlineInputBorder(
-                                      //           borderSide: const BorderSide(
-                                      //             width: 1,
-                                      //             color: kPrimaryColor,
-                                      //           ),
-                                      //           borderRadius:
-                                      //               BorderRadius.circular(5),
-                                      //         ),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                    ],
+                                      // if (list.isNotEmpty) {
+                                      //   if (groupValue == 0) {
+                                      //     Dialog(context);
+                                      //   } else {
+                                      //     for_market_price();
+                                      //   }
+                                      // } else {
+                                      //   aloadMenu();
+                                      // }
+                                    },
+                                    child: Image.asset(
+                                      "assets/icons/papersib.png",
+                                      height: 35,
+                                      width: 50,
+                                      fit: BoxFit.fitHeight,
+                                    ),
                                   ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        child: Row(
-                                          children: [
-                                            GFRadio(
-                                              type: GFRadioType.square,
-                                              size: 25,
-                                              value: 0,
-                                              groupValue: groupValue,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  groupValue = int.parse(
-                                                      value.toString());
-                                                });
-                                              },
-                                              inactiveIcon: null,
-                                              activeBorderColor:
-                                                  const Color.fromARGB(
-                                                      255, 39, 39, 39),
-                                              radioColor: GFColors.PRIMARY,
-                                            ),
-                                            Text(
-                                              "  By Compareble",
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: whiteColor),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Container(
-                                        // width: MediaQuery.of(context).size.width * 0.15,
-                                        alignment: Alignment.centerLeft,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            GFRadio(
-                                              type: GFRadioType.square,
-                                              size: 25,
-                                              value: 1,
-                                              groupValue: groupValue,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  groupValue = int.parse(
-                                                      value.toString());
-                                                });
-                                              },
-                                              inactiveIcon: null,
-                                              activeBorderColor:
-                                                  const Color.fromARGB(
-                                                      255, 39, 39, 39),
-                                              radioColor: GFColors.PRIMARY,
-                                            ),
-                                            Text(
-                                              "  By Market price",
-                                              style: TextStyle(
-                                                  fontSize: 11,
-                                                  color: whiteColor),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
+                                  clickdone
+                                      ? Text('Only Price',
+                                          style: TextStyle(color: colorsRed))
+                                      : Text('Location Price',
+                                          style: TextStyle(color: colorsRed)),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          clickdone = !clickdone;
+                                        });
+                                      },
+                                      icon: Icon(!clickdone
+                                          ? Icons.check_box_outline_blank
+                                          : Icons.check_box_outlined)),
+                                ],
+                              ),
+                            )
+                          : Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () {
+                                      widget.type(100);
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back,
+                                      color: greyColor,
+                                      size: 25,
+                                    ))
+                              ],
+                            )),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Container(
+                      color: appback,
+                      height: MediaQuery.of(context).size.height * 0.84,
+                      width: 500,
+                      child: SingleChildScrollView(
+                          child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30, left: 30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 20),
+                                Text(
+                                  "Search by Latitude and Longitude",
+                                  style: TextStyle(
+                                      color: whiteColor, fontSize: 15),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    for (int j = 0; j < listlatlog.length; j++)
                                       Expanded(
                                         flex: 1,
-                                        child: NumDisplay(
-                                            onSaved: (newValue) => setState(() {
-                                                  requestModel.num = newValue!;
-                                                })),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      if (groupValue == 0)
-                                        Expanded(
-                                          flex: 1,
-                                          child: SizedBox(
-                                            // width: double.infinity,
-                                            child: PropertySearch(
-                                              // pro: "Land",
-                                              name: (value) {
-                                                // propertyType = value;
-                                              },
-                                              checkOnclick: (value) {
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              right: (j == 0) ? 10 : 0),
+                                          child: Container(
+                                            height: 35,
+                                            // width: 170,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: whiteColor,
+                                                border: Border.all(
+                                                    width: 0.5,
+                                                    color: blackColor)),
+                                            child: TextFormField(
+                                              keyboardType: TextInputType.text,
+                                              // controller: searchlatlog,
+                                              onFieldSubmitted: (value) {
                                                 setState(() {
-                                                  isChecked = value;
-                                                  isChecked_all = false;
-                                                });
-                                              },
-                                              id: (value) {
-                                                setState(() {
-                                                  if (value == '37') {
-                                                    pty = null;
-                                                    showAll = true;
+                                                  if (j == 0) {
+                                                    // lat = double.parse(value);
+                                                    requestModel.lat =
+                                                        value.toString();
                                                   } else {
-                                                    pty = value;
-                                                    showAll = true;
+                                                    // log = double.parse(value);
+                                                    requestModel.lng =
+                                                        value.toString();
                                                   }
                                                 });
                                               },
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Divider(height: 3, color: whiteColor),
-                                  const SizedBox(height: 10),
-                                  if (adding_price != 0 && groupValue == 0)
-                                    addLandBuilding()
-                                  else if (groupValue == 1)
-                                    markertPrice()
-                                ],
-                              ),
-                            ),
-                            Positioned(
-                              top: 160,
-                              child: (listMap.isEmpty)
-                                  ? const SizedBox()
-                                  : Padding(
-                                      padding: const EdgeInsets.only(left: 30),
-                                      child: Container(
-                                        height: 350,
-                                        width: 450,
-                                        color: whiteColor,
-                                        child: ListView.builder(
-                                          itemCount: listMap.length,
-                                          itemBuilder: (context, index) =>
-                                              InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                var location = listMap[index]
-                                                    ['geometry']['location'];
-                                                LatLng lat = LatLng(
-                                                    double.parse(location['lat']
-                                                        .toString()),
-                                                    double.parse(location['lng']
-                                                        .toString()));
-                                                findlocation(lat);
-                                              });
-                                            },
-                                            child: Container(
-                                              color: whiteColor,
-                                              height: 30,
-                                              child: Row(
-                                                children: [
-                                                  Icon(
-                                                    Icons.location_on_outlined,
-                                                    color: greyColorNolot,
-                                                    size: 20,
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                    listMap[index]['name']
-                                                        .toString(),
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ],
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  if (j == 0) {
+                                                    // lat = double.parse(value);
+                                                    requestModel.lat =
+                                                        value.toString();
+                                                  } else {
+                                                    // log = double.parse(value);
+                                                    requestModel.lng =
+                                                        value.toString();
+                                                  }
+                                                });
+                                              },
+                                              //,
+                                              textInputAction:
+                                                  TextInputAction.search,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12),
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 8),
+                                                suffixIcon: (j == 0)
+                                                    ? const SizedBox()
+                                                    : IconButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            maincheck();
+                                                            checklatlog = false;
+                                                            findlocation(LatLng(
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lat),
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lng)));
+                                                            // findlocation(LatLng(
+                                                            //     11.499263, 104.874885));
+                                                            findByPiont(
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lat),
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lng));
+                                                            getAddress(LatLng(
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lat),
+                                                                double.parse(
+                                                                    requestModel
+                                                                        .lng)));
+                                                          });
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.search,
+                                                          color: greyColor,
+                                                        )),
+
+                                                fillColor: Colors.white,
+                                                hintText: listlatlog[j]['title']
+                                                    .toString(),
+                                                border: InputBorder.none,
+                                                // contentPadding:
+                                                //     const EdgeInsets.symmetric(
+                                                //         vertical: 8, horizontal: 5),
+                                                hintStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 118, 116, 116),
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Search Map",
+                                  style: TextStyle(
+                                      color: whiteColor, fontSize: 15),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 35,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: whiteColor,
+                                      border: Border.all(
+                                          width: 0.5, color: blackColor)),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    controller: searchMap,
+                                    onFieldSubmitted: (value) {
+                                      setState(() {
+                                        onSearchChanged();
+                                      });
+                                    },
+                                    onChanged: (value) {
+                                      onSearchChanged();
+                                    },
+                                    textInputAction: TextInputAction.search,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                    decoration: InputDecoration(
+                                      suffixIcon: ElevatedButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              onSearchChanged();
+                                              h = 0;
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.search,
+                                            color: whiteColor,
+                                            size: 20,
+                                          )),
+                                      suffix: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              searchMap.clear();
+                                              listMap = [];
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.remove_circle_outline,
+                                            color: greyColorNolot,
+                                          )),
+                                      fillColor: Colors.white,
+                                      hintText: "  Search",
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 0, vertical: 10),
+                                      hintStyle: const TextStyle(
+                                        color:
+                                            Color.fromARGB(255, 118, 116, 116),
+                                        fontSize: 14,
+                                      ),
                                     ),
-                            )
-                          ],
-                        )),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.84,
-                          child: GoogleMap(
-                            markers: listMarkerIds.map((e) => e).toSet(),
-                            initialCameraPosition: CameraPosition(
-                              target: latLng,
-                              zoom: 12.0,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Divider(height: 3, color: greyColorNolots),
+                                const SizedBox(height: 10),
+                                if (comparedropdown2 != "")
+                                  Text('Specail Option',
+                                      style: TextStyle(
+                                          color: whiteColor, fontSize: 12)),
+                                if (comparedropdown2 != "")
+                                  const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    if (comparedropdown2 != "")
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: SizedBox(
+                                            height: 35,
+                                            child:
+                                                DropdownButtonFormField<String>(
+                                              //value: genderValue,
+
+                                              value:
+                                                  searchlatlog.text.isNotEmpty
+                                                      ? searchlatlog.text
+                                                      : null,
+                                              isExpanded: true,
+                                              onChanged: (newValue) {
+                                                setState(() {
+                                                  clearmarker = true;
+                                                  searchlatlog.text =
+                                                      newValue ?? "";
+                                                  if (newValue == 'N') {
+                                                    comparedropdown = '';
+                                                  } else {
+                                                    comparedropdown = newValue!;
+                                                    comparedropdown2 = 'P';
+                                                  }
+                                                  checkdropdown =
+                                                      comparedropdown;
+
+                                                  // print(
+                                                  //     '==> $comparedropdown');
+                                                });
+                                              },
+
+                                              items: controller.listdropdown
+                                                  .map<
+                                                      DropdownMenuItem<String>>(
+                                                    (value) => DropdownMenuItem<
+                                                        String>(
+                                                      value: value["type"]
+                                                          .toString(),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 7),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                                flex: 1,
+                                                                child: Padding(
+                                                                  padding: const EdgeInsets
+                                                                          .only(
+                                                                      right: 5),
+                                                                  child: SizedBox(
+                                                                      height: 70,
+                                                                      // radius: 15,
+                                                                      // backgroundColor: Colors.white,
+                                                                      child: (value['id'] == 1)
+                                                                          ? Image.asset(
+                                                                              listassetImage[0]['image'].toString(),
+                                                                            )
+                                                                          : (value['id'] == 2)
+                                                                              ? Image.asset(listassetImage[1]['image'].toString())
+                                                                              : (value['id'] == 3)
+                                                                                  ? Image.asset(listassetImage[2]['image'].toString())
+                                                                                  : (value['id'] == 4)
+                                                                                      ? Image.asset(listassetImage[3]['image'].toString())
+                                                                                      : (value['id'] == 5)
+                                                                                          ? Image.asset(listassetImage[4]['image'].toString())
+                                                                                          : (value['id'] == 6)
+                                                                                              ? Image.asset(listassetImage[5]['image'].toString())
+                                                                                              : (value['id'] == 7)
+                                                                                                  ? Image.asset(listassetImage[6]['image'].toString())
+                                                                                                  : Image.asset(listassetImage[7]['image'].toString())),
+                                                                )),
+                                                            Expanded(
+                                                              flex: 2,
+                                                              child: Text(
+                                                                  value["title"]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          14)),
+                                                            ),
+                                                            Expanded(
+                                                                flex: 4,
+                                                                child: Text(
+                                                                    value[
+                                                                        "name"],
+                                                                    style: const TextStyle(
+                                                                        fontSize:
+                                                                            12))),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .toList(),
+                                              // add extra sugar..
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                color: kImageColor,
+                                              ),
+
+                                              decoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 0,
+                                                        horizontal: 0),
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                labelText: 'Special Option',
+                                                hintText: 'Select one',
+                                                prefixIcon: const Icon(
+                                                  Icons.home_outlined,
+                                                  color: kImageColor,
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                      color: kPrimaryColor,
+                                                      width: 2.0),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    width: 1,
+                                                    color: kPrimaryColor,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    // Expanded(
+                                    //   flex: 1,
+                                    //   child: SizedBox(
+                                    //     height: 35,
+                                    //     child: DropdownButtonFormField<String>(
+                                    //       isExpanded: true,
+
+                                    //       onChanged: (newValue) {
+                                    //         setState(() {
+                                    //           if (newValue == "2024") {
+                                    //             id_route = null;
+                                    //           } else {
+                                    //             roadType = true;
+                                    //             id_route = newValue;
+                                    //           }
+                                    //           print("===> $id_route");
+                                    //         });
+                                    //       },
+
+                                    //       items: controller.listRaod
+                                    //           .map<DropdownMenuItem<String>>(
+                                    //             (value) =>
+                                    //                 DropdownMenuItem<String>(
+                                    //               value: value["road_id"]
+                                    //                   .toString(),
+                                    //               child: Text(value["road_name"]
+                                    //                   .toString()),
+                                    //               // child: Text(
+                                    //               //   value["name"],
+
+                                    //               //   style: TextStyle(
+                                    //               //       fontWeight: FontWeight.bold,
+                                    //               //       color: Colors.red),
+                                    //               // ),
+                                    //             ),
+                                    //           )
+                                    //           .toList(),
+                                    //       // add extra sugar..
+                                    //       icon: const Icon(
+                                    //         Icons.arrow_drop_down,
+                                    //         color: kImageColor,
+                                    //       ),
+
+                                    //       decoration: InputDecoration(
+                                    //         contentPadding:
+                                    //             const EdgeInsets.symmetric(
+                                    //                 vertical: 0, horizontal: 0),
+                                    //         fillColor: Colors.white,
+                                    //         filled: true,
+                                    //         labelText: (searchraod.text == "")
+                                    //             ? 'Road'
+                                    //             : searchraod.text,
+                                    //         hintStyle: TextStyle(
+                                    //             color: blackColor,
+                                    //             fontWeight: FontWeight.bold,
+                                    //             fontSize: 15),
+                                    //         hintText: 'Select one',
+                                    //         prefixIcon: const Icon(
+                                    //           Icons.edit_road_outlined,
+                                    //           color: kImageColor,
+                                    //         ),
+                                    //         focusedBorder: OutlineInputBorder(
+                                    //           borderSide: const BorderSide(
+                                    //               color: kPrimaryColor,
+                                    //               width: 2.0),
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(5),
+                                    //         ),
+                                    //         enabledBorder: OutlineInputBorder(
+                                    //           borderSide: const BorderSide(
+                                    //             width: 1,
+                                    //             color: kPrimaryColor,
+                                    //           ),
+                                    //           borderRadius:
+                                    //               BorderRadius.circular(5),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      child: Row(
+                                        children: [
+                                          GFRadio(
+                                            type: GFRadioType.square,
+                                            size: 25,
+                                            value: 0,
+                                            groupValue: groupValue,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                groupValue =
+                                                    int.parse(value.toString());
+                                              });
+                                            },
+                                            inactiveIcon: null,
+                                            activeBorderColor:
+                                                const Color.fromARGB(
+                                                    255, 39, 39, 39),
+                                            radioColor: GFColors.PRIMARY,
+                                          ),
+                                          Text(
+                                            "  By Compareble",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color: whiteColor),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Container(
+                                      // width: MediaQuery.of(context).size.width * 0.15,
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          GFRadio(
+                                            type: GFRadioType.square,
+                                            size: 25,
+                                            value: 1,
+                                            groupValue: groupValue,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                groupValue =
+                                                    int.parse(value.toString());
+                                              });
+                                            },
+                                            inactiveIcon: null,
+                                            activeBorderColor:
+                                                const Color.fromARGB(
+                                                    255, 39, 39, 39),
+                                            radioColor: GFColors.PRIMARY,
+                                          ),
+                                          Text(
+                                            "  By Market price",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color: whiteColor),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: NumDisplay(
+                                          onSaved: (newValue) => setState(() {
+                                                requestModel.num = newValue!;
+                                              })),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    if (groupValue == 0)
+                                      Expanded(
+                                        flex: 1,
+                                        child: SizedBox(
+                                          // width: double.infinity,
+                                          child: PropertySearch(
+                                            // pro: "Land",
+                                            name: (value) {
+                                              // propertyType = value;
+                                            },
+                                            checkOnclick: (value) {
+                                              setState(() {
+                                                isChecked = value;
+                                                isChecked_all = false;
+                                              });
+                                            },
+                                            id: (value) {
+                                              setState(() {
+                                                if (value == '37') {
+                                                  pty = null;
+                                                  showAll = true;
+                                                } else {
+                                                  pty = value;
+                                                  showAll = true;
+                                                }
+                                              });
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Divider(height: 3, color: whiteColor),
+                                const SizedBox(height: 10),
+                                if (widget.listUser.isNotEmpty && checkdelete)
+                                  TextButton(
+                                      onPressed: () {},
+                                      child: Row(
+                                        children: [
+                                          const Spacer(),
+                                          Text(
+                                            'Full  ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: whiteColor,
+                                                fontSize: 15),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                setState(() {});
+                                              },
+                                              icon: Icon(
+                                                Icons
+                                                    .screen_search_desktop_outlined,
+                                                size: 30,
+                                                color: whiteColor,
+                                              ))
+                                        ],
+                                      )),
+                                if (groupValue == 0 && !checkdelete)
+                                  addLandBuilding()
+                                else if (groupValue == 1 && !checkdelete)
+                                  markertPrice()
+                              ],
                             ),
-                            polygons: Set<Polygon>.of(polygons),
-                            myLocationButtonEnabled: true,
-                            myLocationEnabled: true,
-                            mapType: MapType.hybrid,
-                            onMapCreated: (controller) {
-                              setState(() {
-                                mapController = controller;
-                              });
-                            },
-                            onLongPress: (argument) {
-                              if (list.isNotEmpty) {
-                                if (groupValue == 0) {
-                                  Dialog(context);
-                                }
-                              } else {
-                                aloadMenu();
+                          ),
+                          Positioned(
+                            top: 160,
+                            child: (listMap.isEmpty)
+                                ? const SizedBox()
+                                : Padding(
+                                    padding: const EdgeInsets.only(left: 30),
+                                    child: Container(
+                                      height: 350,
+                                      width: 450,
+                                      color: whiteColor,
+                                      child: ListView.builder(
+                                        itemCount: listMap.length,
+                                        itemBuilder: (context, index) =>
+                                            InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              var location = listMap[index]
+                                                  ['geometry']['location'];
+                                              LatLng lat = LatLng(
+                                                  double.parse(location['lat']
+                                                      .toString()),
+                                                  double.parse(location['lng']
+                                                      .toString()));
+                                              findlocation(lat);
+                                            });
+                                          },
+                                          child: Container(
+                                            color: whiteColor,
+                                            height: 30,
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: greyColorNolot,
+                                                  size: 20,
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  listMap[index]['name']
+                                                      .toString(),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          )
+                        ],
+                      )),
+                    ),
+                    Expanded(
+                      flex: 6,
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.84,
+                        child: GoogleMap(
+                          markers: listMarkerIds.map((e) => e).toSet(),
+                          initialCameraPosition: CameraPosition(
+                            target: latLng,
+                            zoom: 12.0,
+                          ),
+                          polygons: Set<Polygon>.of(polygons),
+                          myLocationButtonEnabled: true,
+                          myLocationEnabled: true,
+                          mapType: MapType.hybrid,
+                          onMapCreated: (controller) {
+                            setState(() {
+                              mapController = controller;
+                            });
+                          },
+                          onLongPress: (argument) {
+                            if (list.isNotEmpty) {
+                              if (groupValue == 0) {
+                                Dialog(context);
                               }
-                            },
-                            onTap: (argument) {
-                              setState(() {
-                                latLng = argument;
-                                requestModel.lat = latLng.latitude.toString();
-                                requestModel.lng = latLng.longitude.toString();
-                                if (groupValue == 0) {
-                                  if (checktypeMarker == false) {
-                                    if (comparedropdown2 != "") {
-                                      typedrawerSe == false;
-                                    }
+                            } else {
+                              aloadMenu();
+                            }
+                          },
+                          onTap: (argument) {
+                            setState(() {
+                              latLng = argument;
+                              requestModel.lat = latLng.latitude.toString();
+                              requestModel.lng = latLng.longitude.toString();
+                              listData[widget.index]['latlong_log'] =
+                                  argument.longitude;
+                              listData[widget.index]['latlong_la'] =
+                                  argument.latitude;
+                              if (groupValue == 0) {
+                                if (checktypeMarker == false) {
+                                  if (comparedropdown2 != "") {
+                                    typedrawerSe == false;
+                                  }
 
-                                    typedrawer = true;
+                                  typedrawer = true;
 
-                                    if (comparedropdown2 == "") {
-                                      addMarkers(argument);
-                                      findByPiont(
-                                          double.parse(requestModel.lat),
-                                          double.parse(requestModel.lng));
-                                    } else if (comparedropdown2 != "" &&
-                                        typedrawerSe == false) {
-                                      addMarker(argument);
-                                      getAddress(argument);
-                                      Show(requestModel);
-                                    }
-                                  } else {
-                                    clickMap = true;
-                                    if (list.isNotEmpty) {
-                                      clearmarker = true;
-                                    }
-                                    if (typedrawerSe == false) {
-                                      addManyMarkers(argument);
-                                    }
+                                  if (comparedropdown2 == "") {
+                                    addMarkers(argument);
+                                    findByPiont(double.parse(requestModel.lat),
+                                        double.parse(requestModel.lng));
+                                  } else if (comparedropdown2 != "" &&
+                                      typedrawerSe == false) {
+                                    addMarker(argument);
+                                    getAddress(argument);
+                                    Show(requestModel);
                                   }
                                 } else {
-                                  addMarkers(argument);
-                                  findByPiont(double.parse(requestModel.lat),
-                                      double.parse(requestModel.lng));
+                                  clickMap = true;
+                                  if (list.isNotEmpty) {
+                                    clearmarker = true;
+                                  }
+                                  if (typedrawerSe == false) {
+                                    addManyMarkers(argument);
+                                  }
                                 }
-                              });
-                            },
-                            onCameraMove: (CameraPosition cameraPositiona) {
-                              cameraPosition =
-                                  cameraPositiona; //when map is dragging
-                            },
-                          ),
+                              } else {
+                                addMarkers(argument);
+                                findByPiont(double.parse(requestModel.lat),
+                                    double.parse(requestModel.lng));
+                              }
+                            });
+                          },
+                          onCameraMove: (CameraPosition cameraPositiona) {
+                            cameraPosition =
+                                cameraPositiona; //when map is dragging
+                          },
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
+            // ),
             if (typedrawer == true && comparedropdown2 == '') optionSearch()
           ],
         ),
@@ -2296,33 +2302,24 @@ class _HomePageState extends State<VerbalAdmin> {
               ),
             ),
           ),
-          Text(
-            creditAgent.credit.toString(),
-            style: TextStyle(color: whiteColor),
-          ),
-          Add(
-              creditAgent: (value) {
-                setState(() {
-                  creditAgent.credit.value = int.parse(value.toString());
-                });
-              },
-              option: int.parse(opionTypeID),
-              checkMap: checkMap,
+          // TextButton(
+          //     onPressed: () {
+          //       setState(() {
+          //         // listData[widget.index].titleNumber = "OKOKOKOK";
+          //         // print(listData[widget.index].titleNumber);
+          //         listData[widget.index].titleNumber = "OKOKOKOK";
+          //       });
+          //     },
+          //     child: Text(
+          //       'Click',
+          //       style: TextStyle(color: whiteColor),
+          //     )),
+          EditAutoVerbal(
               addressController: addressController,
-              lat: (requestModel.lat == "") ? "" : requestModel.lat,
-              lng: (requestModel.lng == "") ? "" : requestModel.lng,
-              verbalID: verbalAdd.verbalID.value,
+              listData: listData,
+              index: widget.index,
+              listLandBuilding: verbalData.listlandbuilding,
               hscreen: hscreen,
-              listLandBuilding: listBuilding,
-              backvalue: (value) {
-                setState(() {
-                  widget.type(100);
-                  if (value == 100) {
-                    widget.addNew(31);
-                  }
-                });
-              },
-              email: widget.listUser[0]['email'].toString(),
               listUser: widget.listUser,
               device: "m")
         ],
@@ -2345,7 +2342,7 @@ class _HomePageState extends State<VerbalAdmin> {
   late Timer _timer;
   int count = 0;
   bool checkMap = false;
-  double hscreen = 840;
+  double hscreen = 860;
   void calLs() {
     setState(() {
       if (haveValue == true) {
@@ -2429,18 +2426,21 @@ class _HomePageState extends State<VerbalAdmin> {
 
   void addItemToList() {
     setState(() {
-      listBuilding.add({
-        "verbal_land_type": autoverbalType,
-        "verbal_land_des": controllerDS.text,
-        "verbal_land_dp": dep,
-        "verbal_land_area": areas,
-        "verbal_land_minsqm": minSqm!.toStringAsFixed(0),
-        "verbal_land_maxsqm": maxSqm!.toStringAsFixed(0),
-        "verbal_land_minvalue": totalMin!.toStringAsFixed(0),
-        "verbal_land_maxvalue": totalMax!.toStringAsFixed(0),
-        "address": '$commune / $district',
-        "verbal_landid": verbalID
-      });
+      verbalData.listlandbuilding.add(LandbuildingModels(
+        typeValue: "N",
+        verbalLandDes: controllerDS.text,
+        verbalLandArea: areas,
+        verbalLandMinsqm: double.parse(minSqm!.toStringAsFixed(0).toString()),
+        verbalLandMaxsqm: double.parse(minSqm!.toStringAsFixed(0).toString()),
+        verbalLandMinvalue:
+            double.parse(totalMin!.toStringAsFixed(0).toString()),
+        verbalLandMaxvalue:
+            double.parse(totalMax!.toStringAsFixed(0).toString()),
+        address: '$commune / $district',
+        verbalLandid: (widget.listData[widget.index]['type_value'] == 'T')
+            ? widget.listData[widget.index]['protectID']
+            : widget.listData[widget.index]['verbal_id'],
+      ));
     });
   }
 
