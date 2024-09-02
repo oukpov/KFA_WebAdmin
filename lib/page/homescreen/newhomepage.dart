@@ -316,7 +316,7 @@ class _homescreenState extends State<homescreen> {
                                     return AddComparable(
                                       listlocalhosts: widget.listUser,
                                       addNew: (value) {},
-                                      listUser: widget.listUser,
+                                      // listUser: widget.listUser,
                                       type: (value) {},
                                     );
                                   },

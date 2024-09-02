@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pdf/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_admin/getx/Auth/Auth.dart';
 import '../../../../../../models/search_model.dart';
 import '../../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../Customs/ProgressHUD.dart';
@@ -34,14 +35,13 @@ class AddComparable extends StatefulWidget {
   const AddComparable(
       {super.key,
       required this.type,
-      required this.listUser,
       required this.addNew,
       required this.listlocalhosts});
 
   final OnChangeCallback type;
   final OnChangeCallback addNew;
   final List listlocalhosts;
-  final List listUser;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -203,6 +203,8 @@ class _HomePageState extends State<AddComparable> {
       });
     }
   }
+
+  Authentication authentication = Authentication();
 
   int countwaiting = 0;
   List<Map<dynamic, dynamic>> listPropertyModel = [];
@@ -377,7 +379,7 @@ class _HomePageState extends State<AddComparable> {
 
   @override
   void initState() {
-    verbalID = "${widget.listUser[0]['control_user']}${randomString(9)}";
+    verbalID = "${widget.listlocalhosts[0]['agency']}${randomString(9)}";
 
     _handleLocationPermission();
     _loadStringList();
@@ -997,6 +999,7 @@ class _HomePageState extends State<AddComparable> {
                       });
                     },
                     source: _DataSource(
+                        listBlock: authentication.listblock,
                         listlocalhosts: widget.listlocalhosts,
                         checklocation: (value) {
                           setState(() {
@@ -1562,6 +1565,8 @@ class _HomePageState extends State<AddComparable> {
                                                   setState(() {
                                                     checkdelete = !checkdelete;
                                                   });
+                                                  await authentication
+                                                      .blockAgent();
                                                   if (checkdelete) {
                                                     await waitinggetList(
                                                         'getComparableNew');
@@ -1871,10 +1876,11 @@ class _HomePageState extends State<AddComparable> {
                                               fontSize: 15),
                                         ),
                                         IconButton(
-                                            onPressed: () {
+                                            onPressed: () async {
                                               setState(() {
                                                 fullScreen = true;
                                               });
+                                              await authentication.blockAgent();
                                             },
                                             icon: Icon(
                                               Icons
@@ -3445,6 +3451,8 @@ class _HomePageState extends State<AddComparable> {
                                                     });
                                                   },
                                                   source: _DataSource(
+                                                      listBlock: authentication
+                                                          .listblock,
                                                       listlocalhosts:
                                                           widget.listlocalhosts,
                                                       checklocation: (value) {},
@@ -4807,8 +4815,10 @@ class _DataSource extends DataTableSource {
   final Function setStateCallback;
   final OnChangeCallback listback;
   final OnChangeCallback checklocation;
+  final List listBlock;
 
   _DataSource({
+    required this.listBlock,
     required this.listlocalhosts,
     required this.checklocation,
     required this.userID,
@@ -4828,6 +4838,7 @@ class _DataSource extends DataTableSource {
       'type': 'Sqm',
     }
   ];
+
   int ls = 0;
   int comparablePropertyID = 0;
   double comparableSoldWidth = 0;
@@ -4879,7 +4890,7 @@ class _DataSource extends DataTableSource {
                       color: Color.fromARGB(255, 145, 6, 52)),
                 ),
               ),
-              (item['comparabl_user'] == listlocalhosts[0]['agency'])
+              ((listBlock[0]['delete_agent'] == listlocalhosts[0]['agency']))
                   ? Padding(
                       padding: const EdgeInsets.only(right: 0),
                       child: InkWell(

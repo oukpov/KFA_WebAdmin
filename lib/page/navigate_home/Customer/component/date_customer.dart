@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../../Profile/components/Drop_down.dart';
+import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/colors.dart';
 
 class DateExpaned extends StatefulWidget {
@@ -17,7 +16,9 @@ class _DateExpanedState extends State<DateExpaned> {
   TextEditingController todate = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      width: 150,
+      height: 40,
       child: TextField(
         style: const TextStyle(
           fontSize: 12,
@@ -46,49 +47,18 @@ class _DateExpanedState extends State<DateExpaned> {
         ),
         readOnly: true,
         onTap: () async {
-          DateTime? pickedDate = await showDialog<DateTime>(
-            context: context,
-            builder: (BuildContext context) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Dialog(
-                    // insetPadding: EdgeInsets.only(
-                    //     left: offset.dx, top: offset.dy), // Set custom offset
-                    child: SizedBox(
-                      height: 400,
-                      width: 300,
-                      child: Column(
-                        children: [
-                          CalendarDatePicker(
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2101),
-                            onDateChanged: (DateTime date) {
-                              Navigator.of(context).pop(date);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-          // DateTime? pickedDate = await showDatePicker(
-          //     context: context,
-          //     initialDate: DateTime.now(),
-          //     firstDate: DateTime(2000),
-          //     lastDate: DateTime(2101));
+          DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101));
 
           if (pickedDate != null) {
             String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
 
             setState(() {
               todate.text = formattedDate;
-              widget.value(formattedDate);
+              widget.value(todate.text);
             });
           }
         },

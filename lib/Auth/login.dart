@@ -1,6 +1,7 @@
 import 'dart:html' as html;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:web_admin/Auth/register.dart';
@@ -170,7 +171,7 @@ class _LoginState extends State<Login> {
             SizedBox(
               width: 150,
               child: GFButton(
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     if (authenModel.user == null || authenModel.user!.isEmpty) {
                       authenModel.user = [User()];
@@ -181,7 +182,7 @@ class _LoginState extends State<Login> {
                     authenModel.user![0].username = _emailController.text;
                     authenModel.user![0].password = _passwordController.text;
                   });
-                  authentication.login(authenModel, context);
+                  await authentication.login(authenModel, context);
                 },
                 color: kwhite_new,
                 text: "Login",
@@ -196,27 +197,27 @@ class _LoginState extends State<Login> {
               ),
             ),
             const SizedBox(height: 20.0),
-            Text.rich(TextSpan(children: [
-              const TextSpan(
-                text: "Don't have any account? ",
-                style: TextStyle(fontSize: 16.0, color: kTextLightColor),
-              ),
-              TextSpan(
-                text: 'Register',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Register()));
-                  },
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  color: kImageColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ])),
+            // Text.rich(TextSpan(children: [
+            //   const TextSpan(
+            //     text: "Don't have any account? ",
+            //     style: TextStyle(fontSize: 16.0, color: kTextLightColor),
+            //   ),
+            //   TextSpan(
+            //     text: 'Register',
+            //     recognizer: TapGestureRecognizer()
+            //       ..onTap = () {
+            //         Navigator.pushReplacement(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => const Register()));
+            //       },
+            //     style: const TextStyle(
+            //       fontSize: 16.0,
+            //       color: kImageColor,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ])),
           ],
         ),
       ),
