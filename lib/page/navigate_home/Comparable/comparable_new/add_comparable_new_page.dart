@@ -183,6 +183,7 @@ class _HomePageState extends State<AddComparable> {
     {"road_id": 39, "road_name": "Borey Commercial"},
   ];
   bool waitingCheck = false;
+  bool waitingCheckFull = false;
   List<Map<dynamic, dynamic>> listvalueModel = [];
   List listagents = [];
   List<String> listagentData = [];
@@ -207,6 +208,7 @@ class _HomePageState extends State<AddComparable> {
   Authentication authentication = Authentication();
 
   int countwaiting = 0;
+  int countwaitingfull = 0;
   List<Map<dynamic, dynamic>> listPropertyModel = [];
   List listProperty = [];
   List<String> listpropertytData = [];
@@ -384,6 +386,7 @@ class _HomePageState extends State<AddComparable> {
     _handleLocationPermission();
     _loadStringList();
     listOptin = listRaodNBorey;
+    roadList = listRaodNBorey;
     distanceController.text = '5';
     requestModel = SearchRequestModel(
       property_type_id: "",
@@ -779,8 +782,8 @@ class _HomePageState extends State<AddComparable> {
   }
 
   List roadList = [
-    {"road_id": 1, "road_name": "Main Road"},
-    {"road_id": 2, "road_name": "Sub Road"}
+    // {"road_id": 1, "road_name": "Main Road"},
+    // {"road_id": 2, "road_name": "Sub Road"}
   ];
   bool viewMap = false;
   TextEditingController controllSearch = TextEditingController();
@@ -808,7 +811,7 @@ class _HomePageState extends State<AddComparable> {
               ),
               const SizedBox(width: 10),
               Text(
-                "View Map  ",
+                "Borey",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: !checkVerbal ? colorsRed : greyColor,
@@ -818,64 +821,85 @@ class _HomePageState extends State<AddComparable> {
                   onPressed: () {
                     setState(() {
                       doneORudone = !doneORudone;
-                      viewMap = !viewMap;
+                      waitingCheckFull = true;
+                      // checkboreyTP = !checkboreyTP;
+                      if (!doneORudone) {
+                        checkborey = 0;
+                        roadList = listRaodNBorey;
+                      } else {
+                        checkborey = 1;
+                        roadList = listRaodBorey;
+                      }
+                      _timer = Timer.periodic(const Duration(seconds: 1),
+                          (Timer timer) async {
+                        setState(() {
+                          countwaitingfull++;
+                        });
+
+                        if (countwaitingfull >= 1) {
+                          _timer.cancel();
+                          waitingCheckFull = false;
+                        }
+                      });
                     });
                   },
-                  icon: Icon(viewMap
+                  icon: Icon(doneORudone
                       ? Icons.check_box_outlined
                       : Icons.check_box_outline_blank)),
               const SizedBox(width: 50),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 40,
-                  width: 150,
-                  child: DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    onChanged: (newValue) {
-                      setState(() {
-                        roadID = int.parse(newValue!);
-                      });
-                    },
-                    items: roadList
-                        .map<DropdownMenuItem<String>>(
-                          (value) => DropdownMenuItem<String>(
-                            value: value["road_id"].toString(),
-                            child: Text(value["road_name"]),
+              waitingCheckFull
+                  ? const Center(child: CircularProgressIndicator())
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 40,
+                        width: 150,
+                        child: DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          onChanged: (newValue) {
+                            setState(() {
+                              roadID = int.parse(newValue!);
+                            });
+                          },
+                          items: roadList
+                              .map<DropdownMenuItem<String>>(
+                                (value) => DropdownMenuItem<String>(
+                                  value: value["road_id"].toString(),
+                                  child: Text(value["road_name"]),
+                                ),
+                              )
+                              .toList(),
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: kImageColor,
                           ),
-                        )
-                        .toList(),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: kImageColor,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 10),
-                      fillColor: kwhite,
-                      filled: true,
-                      labelText: "Raod",
-                      hintText: 'Select one',
-                      prefixIcon: const Icon(
-                        Icons.edit_road_outlined,
-                        color: kImageColor,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: kPrimaryColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 1,
-                          color: kPrimaryColor,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 10),
+                            fillColor: kwhite,
+                            filled: true,
+                            labelText: "Raod",
+                            hintText: 'Select one',
+                            prefixIcon: const Icon(
+                              Icons.edit_road_outlined,
+                              color: kImageColor,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: kPrimaryColor, width: 2.0),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                width: 1,
+                                color: kPrimaryColor,
+                              ),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(5.0),
                       ),
                     ),
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownOption(
