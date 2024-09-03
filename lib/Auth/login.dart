@@ -1,14 +1,12 @@
 import 'dart:html' as html;
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
-import 'package:web_admin/Auth/register.dart';
 import '../Customs/ProgressHUD.dart';
 import '../Customs/responsive.dart';
 import '../components/colors.dart';
-import '../getx/Auth/Auth.dart';
+import '../getx/Auth/Auth_admin.dart';
+import '../getx/Auth/Auth_agent.dart';
 import '../models/Auth/auth.dart';
 
 class LoginPage extends StatelessWidget {

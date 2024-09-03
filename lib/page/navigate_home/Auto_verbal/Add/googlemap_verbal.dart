@@ -23,7 +23,7 @@ import '../../../../components/numDisplay.dart';
 import '../../../../components/property35.dart';
 import '../../../../components/property35_search.dart';
 import '../../../../components/raod_type.dart';
-import '../../../../getx/Auth/Auth.dart';
+import '../../../../getx/Auth/Auth_agent.dart';
 import '../../../../getx/agent_credit/credit_agent.dart';
 import '../../../../getx/dropdown_local/GoogMap.dart';
 import '../../../../getx/verbal/verbal.dart';

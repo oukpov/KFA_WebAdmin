@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pdf/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_admin/getx/Auth/Auth.dart';
+import 'package:web_admin/getx/Auth/Auth_agent.dart';
 import '../../../../../../models/search_model.dart';
 import '../../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../Customs/ProgressHUD.dart';
@@ -25,7 +25,6 @@ import '../../../../components/land.dart';
 import '../../../../components/property35.dart';
 import '../../../../components/raod_type.dart';
 import 'package:pdf/widgets.dart' as pw;
-
 import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../screen/Property/Map/streetview_map.dart';
 import '../../Customer/component/date_customer.dart';
@@ -2002,101 +2001,103 @@ class _HomePageState extends State<AddComparable> {
                                                             CircularProgressIndicator())
                                                     : InkWell(
                                                         onTap: () async {
-                                                          if (data_adding_correct
-                                                              .isEmpty) {
-                                                            Get.snackbar(
-                                                              'Please Check Frist on Map',
-                                                              "",
-                                                              colorText:
-                                                                  Colors.black,
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      right: 50,
-                                                                      left: 50,
-                                                                      top: 20,
-                                                                      bottom:
-                                                                          20),
-                                                              borderColor:
-                                                                  const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      48,
-                                                                      47,
-                                                                      47),
-                                                              borderWidth: 1.0,
-                                                              borderRadius: 5,
-                                                              backgroundColor:
-                                                                  const Color
-                                                                          .fromARGB(
-                                                                      255,
-                                                                      235,
-                                                                      242,
-                                                                      246),
-                                                              icon: const Icon(
-                                                                  Icons
-                                                                      .add_alert),
-                                                            );
-                                                          } else {
-                                                            if (validateAndSave()) {
-                                                              main(10);
-                                                              if (totalland
-                                                                          .text !=
-                                                                      '' &&
-                                                                  askingPricett
-                                                                          .text !=
-                                                                      '' &&
-                                                                  latcontroller
-                                                                          .text !=
-                                                                      '' &&
-                                                                  logcontroller
-                                                                          .text !=
-                                                                      '' &&
-                                                                  comparableRoad !=
-                                                                      null &&
-                                                                  comparablePhone !=
-                                                                      null) {
-                                                                await calculate();
-                                                                await addComparable();
-                                                              } else {
-                                                                Get.snackbar(
-                                                                  'Please Check Requeest*',
-                                                                  "",
-                                                                  colorText:
-                                                                      Colors
-                                                                          .black,
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      right: 50,
-                                                                      left: 50,
-                                                                      top: 20,
-                                                                      bottom:
-                                                                          20),
-                                                                  borderColor:
-                                                                      const Color
-                                                                              .fromARGB(
-                                                                          255,
-                                                                          48,
-                                                                          47,
-                                                                          47),
-                                                                  borderWidth:
-                                                                      1.0,
-                                                                  borderRadius:
-                                                                      5,
-                                                                  backgroundColor:
-                                                                      const Color
-                                                                              .fromARGB(
-                                                                          255,
-                                                                          235,
-                                                                          242,
-                                                                          246),
-                                                                  icon: const Icon(
-                                                                      Icons
-                                                                          .add_alert),
-                                                                );
-                                                              }
+                                                          // if (data_adding_correct
+                                                          //     .isEmpty) {
+                                                          //   Get.snackbar(
+                                                          //     'Please Check Frist on Map',
+                                                          //     "",
+                                                          //     colorText:
+                                                          //         Colors.black,
+                                                          //     padding:
+                                                          //         const EdgeInsets
+                                                          //                 .only(
+                                                          //             right: 50,
+                                                          //             left: 50,
+                                                          //             top: 20,
+                                                          //             bottom:
+                                                          //                 20),
+                                                          //     borderColor:
+                                                          //         const Color
+                                                          //                 .fromARGB(
+                                                          //             255,
+                                                          //             48,
+                                                          //             47,
+                                                          //             47),
+                                                          //     borderWidth: 1.0,
+                                                          //     borderRadius: 5,
+                                                          //     backgroundColor:
+                                                          //         const Color
+                                                          //                 .fromARGB(
+                                                          //             255,
+                                                          //             235,
+                                                          //             242,
+                                                          //             246),
+                                                          //     icon: const Icon(
+                                                          //         Icons
+                                                          //             .add_alert),
+                                                          //   );
+                                                          // } else {
+                                                          if (validateAndSave()) {
+                                                            main(10);
+                                                            if (totalland
+                                                                        .text !=
+                                                                    '' &&
+                                                                askingPricett
+                                                                        .text !=
+                                                                    '' &&
+                                                                latcontroller
+                                                                        .text !=
+                                                                    '' &&
+                                                                logcontroller
+                                                                        .text !=
+                                                                    '' &&
+                                                                comparableRoad !=
+                                                                    null &&
+                                                                comparablePhone !=
+                                                                    null) {
+                                                              await calculate();
+                                                              await addComparable();
+                                                            } else {
+                                                              Get.snackbar(
+                                                                'Please Check Requeest*',
+                                                                "",
+                                                                colorText:
+                                                                    Colors
+                                                                        .black,
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        right:
+                                                                            50,
+                                                                        left:
+                                                                            50,
+                                                                        top: 20,
+                                                                        bottom:
+                                                                            20),
+                                                                borderColor:
+                                                                    const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        48,
+                                                                        47,
+                                                                        47),
+                                                                borderWidth:
+                                                                    1.0,
+                                                                borderRadius: 5,
+                                                                backgroundColor:
+                                                                    const Color
+                                                                            .fromARGB(
+                                                                        255,
+                                                                        235,
+                                                                        242,
+                                                                        246),
+                                                                icon: const Icon(
+                                                                    Icons
+                                                                        .add_alert),
+                                                              );
                                                             }
                                                           }
+                                                          // }
                                                         },
                                                         child: Container(
                                                           alignment:
