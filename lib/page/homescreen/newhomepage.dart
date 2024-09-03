@@ -17,12 +17,9 @@ import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
-import '../navigate_home/Auto_verbal/listPropertyCheck.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
-import '../navigate_home/Comparable/newComparable/listnewcomparable.dart';
 import '../navigate_home/Comparable/newComparable/responsivenewcomparableadd.dart';
-import '../navigate_home/Comparable/newComparable/responsivenewcomparableget.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
@@ -60,8 +57,6 @@ import '../navigate_setting/bank/brand/brand_list.dart';
 import '../navigate_setting/bank/brand/new_brand.dart';
 import '../navigate_home/Comparable/comparable3/search_screen.dart/comparable_search.dart';
 import '../navigate_home/Comparable/comparable4/list_comparable_filter.dart';
-import '../navigate_home/Comparable/comparable_1/New_Comparable.dart';
-import '../navigate_home/Comparable/comparable_2/Comparable_list_view.dart';
 import '../../Widgets/drawerMenu.dart';
 import '../../Widgets/drawer.dart';
 import '../../Widgets/widgets.dart';
@@ -1302,31 +1297,5 @@ class _homescreenState extends State<homescreen> {
     );
   }
 
-  // Future<void> updateUser() async {
-  //   var headers = {'Content-Type': 'application/json'};
-  //   var data = json.encode({
-  //     'first_name': firstName,
-  //     'last_name': lastName,
-  //     'gender': gender,
-  //     'tel_num': telNum,
-  //     'email': email,
-  //     'password': password,
-  //     'known_from': knownFrom,
-  //   });
-  //   var dio = Dio();
-  //   var response = await dio.request(
-  //     'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/user/edit/${widget.id}',
-  //     options: Options(
-  //       method: 'POST',
-  //       headers: headers,
-  //     ),
-  //     data: data,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     print(json.encode(response.data));
-  //   } else {
-  //     print(response.statusMessage);
-  //   }
-  // }
+ 
 }

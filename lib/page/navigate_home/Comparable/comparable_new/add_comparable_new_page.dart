@@ -1128,19 +1128,22 @@ class _HomePageState extends State<AddComparable> {
   bool boreybutton = false;
   bool checkcalculate = false;
   bool checkcalculateBuilding = false;
+  double priceLand = 0;
   Future<void> calculate() async {
     setState(() {
       double askingPrice = double.tryParse(askingPricett.text) ?? 0;
-      // double totalPrice = double.tryParse(totalPriceSqm.text) ?? 0;
+      double totalPrice = double.tryParse(totalPriceSqm.text) ?? 0;
       double totalLand = double.tryParse(totalland.text) ?? 1.0;
       double pricepersqmN = double.tryParse(pricepersqm.text) ?? 0;
       if (!checkcalculate) {
         //Asking Price
+        priceLand = totalLand * pricepersqmN;
         double pricepersqmresult = askingPrice / totalLand;
         pricepersqm.text = pricepersqmresult.toStringAsFixed(0);
       } else if (pricepersqmN != 0) {
         //Asking PriceTT
-        double askingPricettresult = totalLand * pricepersqmN;
+        priceLand = totalLand * pricepersqmN;
+        double askingPricettresult = totalLand * pricepersqmN + totalPrice;
         askingPricett.text = askingPricettresult.toStringAsFixed(0);
       }
     });
@@ -1155,8 +1158,12 @@ class _HomePageState extends State<AddComparable> {
       if (!checkcalculateBuilding) {
         double result = (totolprice * offeredPrice);
         totalPriceSqm.text = result.toStringAsFixed(0);
+        askingPricett.text =
+            (double.parse(totalPriceSqm.text) + priceLand).toString();
       } else {
         //Offerred Price
+        askingPricett.text =
+            (double.parse(totalPriceSqm.text) + priceLand).toString();
         double result = (totalPriceSqmN / totolprice);
         offerredPrice.text = result.toStringAsFixed(0);
       }
@@ -1177,60 +1184,7 @@ class _HomePageState extends State<AddComparable> {
   String? comparablePhone;
   double? latlongLog;
   double? latlongLa;
-  // List<String> listlocalhost = [];
-  // List widget.listlocalhosts = [];
   int? protectID;
-
-  // loginLocal(List<String> list) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setStringList('localhost', list);
-  //   setState(() {
-  //     listlocalhost = list;
-  //     widget.listlocalhosts = list.map((element) => element.toString()).toList();
-  //   });
-  // }
-
-  // void firstLogin() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     listlocalhost = prefs.getStringList('localhost') ?? [];
-  //     widget.listlocalhosts = listlocalhost
-  //         .map((item) => json.decode(item))
-  //         .cast<Map<String, dynamic>>()
-  //         .toList();
-  //   });
-  // }
-
-  // String username = '';
-  // // String password = '';
-  // Future<void> login() async {
-  //   var headers = {'Content-Type': 'application/json'};
-  //   var data = json.encode({"username": username, "password": password});
-  //   var dio = Dio();
-  //   var response = await dio.request(
-  //     'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/login/KFA',
-  //     options: Options(
-  //       method: 'POST',
-  //       headers: headers,
-  //     ),
-  //     data: data,
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     var responseData = response.data;
-  //     setState(() {
-  //       checkemail = responseData['success'];
-
-  //       widget.listlocalhosts = response.data['user'];
-  //       checkemails(checkemail);
-  //       listlocalhost =
-  //           widget.listlocalhosts.map((item) => json.encode(item)).toList();
-  //       loginLocal(listlocalhost);
-  //     });
-  //   } else {
-  //     print(response.statusMessage);
-  //   }
-  // }
 
   bool checksave = false;
   int count = 0;
@@ -1333,7 +1287,7 @@ class _HomePageState extends State<AddComparable> {
         listOwner = jsonDecode(json.encode(response.data));
       });
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
