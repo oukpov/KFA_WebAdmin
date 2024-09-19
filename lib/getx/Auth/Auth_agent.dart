@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/Auth/auth.dart';
+import '../../page/homescreen/responsive_layout.dart';
 import '../../page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 
 class Authentication extends GetxController {
@@ -17,7 +18,6 @@ class Authentication extends GetxController {
   List listlocalhost = [].obs;
   int countCredit = 0;
   Future<void> login(AuthenModel authenModel, BuildContext context) async {
-    print(isLocalhost.value.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     listLocalhostData = prefs.getStringList('localhost') ?? [];
     listlocalhost = listLocalhostData
@@ -63,17 +63,20 @@ class Authentication extends GetxController {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => AddComparable(
-                        type: (value) {},
-                        addNew: (value) {},
-                        listlocalhosts: listlocalhost,
-                      )
-                  // ResponsiveHomePage(
-                  //   listUser: listlocalhost,
-                  //   url: "",
-                  //   id: "",
-                  // ),
-                  ));
+                builder: (context) =>
+                    //For research
+                    // AddComparable(
+                    //       type: (value) {},
+                    //       addNew: (value) {},
+                    //       listlocalhosts: listlocalhost,
+                    //     )
+                    //Config Admin
+                    ResponsiveHomePage(
+                  listUser: listlocalhost,
+                  url: "",
+                  id: "",
+                ),
+              ));
         }
       } catch (e) {
         // print('Error occurred: $e');
@@ -100,17 +103,20 @@ class Authentication extends GetxController {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => AddComparable(
-                      type: (value) {},
-                      addNew: (value) {},
-                      listlocalhosts: listlocalhost,
-                    )
-                // ResponsiveHomePage(
-                //   listUser: listlocalhost,
-                //   url: "",
-                //   id: "",
-                // ),
-                ));
+              builder: (context) =>
+                  //Dmin
+                  // AddComparable(
+                  //       type: (value) {},
+                  //       addNew: (value) {},
+                  //       listlocalhosts: listlocalhost,
+                  //     )
+                  //Config Admin
+                  ResponsiveHomePage(
+                listUser: listlocalhost,
+                url: "",
+                id: "",
+              ),
+            ));
       }
     }
   }

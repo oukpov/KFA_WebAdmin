@@ -16,6 +16,8 @@ import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
+import '../navigate_home/Approvel/submit.dart';
+import '../navigate_home/Approvel/submit_list.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
@@ -133,6 +135,7 @@ class _homescreenState extends State<homescreen> {
     }
   }
 
+  int type = 0;
   @override
   Widget build(BuildContext context) {
     w = MediaQuery.of(context).size.width;
@@ -171,27 +174,31 @@ class _homescreenState extends State<homescreen> {
                   children: [
                     const SizedBox(height: 10),
                     profile(),
-                    (widget.device == 'd')
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              title('Home Page'),
-                              homeOptioWrap(),
-                              title('Setting Admin'),
-                              settingOptionWrap(),
-                              const SizedBox(height: 50),
-                            ],
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              title('Home Page'),
-                              homeOptioWrap(),
-                              title('Setting Admin'),
-                              settingOptionWrap(),
-                              const SizedBox(height: 50),
-                            ],
-                          ),
+                    if (widget.device == 'd')
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          title('Home Page'),
+                          homeOptioWrap(),
+                          title('Setting Admin'),
+                          settingOptionWrap(),
+                          const SizedBox(height: 50),
+                        ],
+                      )
+                    else if (type == 70)
+                      ListSubmitAdmin(
+                          device: widget.device, listUser: widget.listUser)
+                    else
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          title('Home Page'),
+                          homeOptioWrap(),
+                          title('Setting Admin'),
+                          settingOptionWrap(),
+                          const SizedBox(height: 50),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -244,7 +251,7 @@ class _homescreenState extends State<homescreen> {
                                   builder: (context) {
                                     return ResponsiveCustomer(
                                       email: '',
-                                      idController: '96',
+                                      idController: widget.id,
                                       myIdController: '',
                                     );
                                   },
@@ -420,6 +427,19 @@ class _homescreenState extends State<homescreen> {
                             child:
                                 textfield(verbalOption[i]['title'].toString())))
                 else if (index == 6)
+                  for (int i = 0; i < approvelList.length; i++)
+                    PopupMenuItem(
+                        child: InkWell(
+                            onTap: () {
+                              if (i == 0) {
+                                setState(() {
+                                  type = 70;
+                                });
+                              }
+                            },
+                            child:
+                                textfield(approvelList[i]['title'].toString())))
+                else if (index == 7)
                   for (int i = 0; i < userOption.length; i++)
                     PopupMenuItem(
                         child: InkWell(
@@ -439,14 +459,14 @@ class _homescreenState extends State<homescreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => User_Vpoint(
-                                        controller_user: '94',
+                                        controller_user: widget.id,
                                       ),
                                     ));
                               }
                             },
                             child:
                                 textfield(userOption[i]['title'].toString())))
-                else if (index == 7)
+                else if (index == 8)
                   for (int i = 0; i < reportOption.length; i++)
                     PopupMenuItem(
                         child: InkWell(
@@ -1296,6 +1316,4 @@ class _homescreenState extends State<homescreen> {
       ),
     );
   }
-
- 
 }

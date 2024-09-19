@@ -5,7 +5,6 @@ import 'package:getwidget/shape/gf_button_shape.dart';
 import '../Customs/ProgressHUD.dart';
 import '../Customs/responsive.dart';
 import '../components/colors.dart';
-import '../getx/Auth/Auth_admin.dart';
 import '../getx/Auth/Auth_agent.dart';
 import '../models/Auth/auth.dart';
 
@@ -175,10 +174,10 @@ class _LoginState extends State<Login> {
                       authenModel.user = [User()];
                     }
 
-                    // authenModel.user![0].username = 'somnang.se';
-                    // authenModel.user![0].password = 'KFA@somnang2023';
-                    authenModel.user![0].username = _emailController.text;
-                    authenModel.user![0].password = _passwordController.text;
+                    authenModel.user![0].username = 'somnang.se';
+                    authenModel.user![0].password = 'KFA@somnang2023';
+                    // authenModel.user![0].username = _emailController.text;
+                    // authenModel.user![0].password = _passwordController.text;
                   });
                   await authentication.login(authenModel, context);
                 },

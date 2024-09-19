@@ -7,6 +7,7 @@ List listTitle = [
   {"title": "Property"},
   {"title": "Auto Verbal"},
   {"title": "Verbal"},
+  {"title": "Approvel AutoVerbal"},
   {"title": "User"},
   {"title": "Report"},
 ];
@@ -40,6 +41,7 @@ List optionIconList = [
   {"icon": "assets/icons/Property.png"},
   {"icon": "assets/icons/AutoVerbal.png"},
   {"icon": "assets/icons/Verbal.png"},
+  {"icon": "assets/icons/Inspector.png"},
   {"icon": "assets/icons/User.png"},
   {"icon": "assets/icons/Report.png"},
 ];
@@ -90,6 +92,9 @@ List verbalOption = [
   {"title": "List Auto Verbal"},
   {"title": "Search Map"},
 ];
+List approvelList = [
+  {"title": "List Approvel"},
+];
 List userOption = [
   {"title": "New User"},
   {"title": "New Role"},
@@ -121,7 +126,6 @@ List brandOption = [
   {"title": "List Brand"},
 ];
 List approvedOption = [
-  {"title": "Approved New"},
   {"title": "Approved List"},
 ];
 List registerOption = [
