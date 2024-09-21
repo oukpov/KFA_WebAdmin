@@ -164,7 +164,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                                 'verbal_published'] ==
                                                             3)
                                                         ? "wating agent approve"
-                                                        : "${listAgent.listAgentModel[index]['agenttype_name'] ?? "Done!"}"),
+                                                        : "${listAgent.listAgentModel[index]['agenttype_name'] ?? "Approved!"}"),
                                                   ],
                                                 )
                                               ],
@@ -191,7 +191,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                                     .circular(
                                                                         20))),
                                                     child: const Text(
-                                                      'Not yet',
+                                                      'Pending',
                                                       style: TextStyle(
                                                           color: Colors.red,
                                                           fontWeight:
@@ -200,7 +200,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                     ),
                                                   )
                                                 : Text(
-                                                    'Done',
+                                                    'Approved',
                                                     style: TextStyle(
                                                         color: greyColorNolot,
                                                         fontSize: 14),

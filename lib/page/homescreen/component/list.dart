@@ -7,7 +7,7 @@ List listTitle = [
   {"title": "Property"},
   {"title": "Auto Verbal"},
   {"title": "Verbal"},
-  {"title": "Approvel AutoVerbal"},
+  {"title": "Approval AutoVerbal"},
   {"title": "User"},
   {"title": "Report"},
 ];

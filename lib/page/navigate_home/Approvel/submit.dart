@@ -495,7 +495,7 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
                                           MainAxisAlignment.center,
                                       children: const [
                                         Text(
-                                          'Submit  ',
+                                          'Approve',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14),
