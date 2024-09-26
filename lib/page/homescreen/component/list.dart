@@ -7,7 +7,7 @@ List listTitle = [
   {"title": "Property"},
   {"title": "Auto Verbal"},
   {"title": "Verbal"},
-  {"title": "Approvel AutoVerbal"},
+  {"title": "Approval AutoVerbal"},
   {"title": "User"},
   {"title": "Report"},
 ];
@@ -138,6 +138,7 @@ List drawerOption = [
   {"title": "News"},
   {"title": "Check VPointUser"},
   {"title": "New Users"},
+  {"title": "Logout"},
 ];
 //IconsDrawer
 List drawerIconOption = [
@@ -145,5 +146,6 @@ List drawerIconOption = [
   Icons.newspaper,
   Icons.policy_outlined,
   Icons.person_add_alt_1_outlined,
+  Icons.logout,
   // Icon(Icons.de),
 ];

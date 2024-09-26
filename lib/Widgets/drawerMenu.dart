@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:web_admin/Auth/login.dart';
 import '../components/colors.dart';
 import '../page/navigate_home/Report/Transetoin/history.dart';
 import '../page/navigate_home/User/list_notivigation.dart';
@@ -115,6 +116,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return const Trastoin_Payment();
+                        },
+                      ));
+                    }
+                    // else {
+                    //   Navigator.push(context, MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return const Notivigation_day();
+                    //     },
+                    //   ));
+                    // }
+                    else if (i == 3) {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const Login();
                         },
                       ));
                     } else {

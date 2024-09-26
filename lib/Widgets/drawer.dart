@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_admin/Auth/login.dart';
 import 'package:web_admin/components/colors/colors.dart';
 import '../components/colors.dart';
 import '../page/navigate_home/Report/Transetoin/history.dart';
@@ -103,12 +110,14 @@ class _DrawerOptionState extends State<DrawerOption> {
                       return const Trastoin_Payment();
                     },
                   ));
+                } else if (i == 4) {
+                  logOut();
                 } else {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const Notivigation_day();
-                    },
-                  ));
+                  // Navigator.push(context, MaterialPageRoute(
+                  //   builder: (context) {
+                  //     return const LoginPage();
+                  //   },
+                  // ));
                 }
               },
               onHover: (value) {
@@ -139,5 +148,42 @@ class _DrawerOptionState extends State<DrawerOption> {
         ],
       ),
     );
+  }
+
+  Future<void> logOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> listLocalhostData = prefs.getStringList('localhost') ?? [];
+    List<Map<String, dynamic>> listlocalhost = listLocalhostData
+        .map((item) => json.decode(item) as Map<String, dynamic>)
+        .toList();
+
+    // Find the index of the current user using both email and password
+    int userIndex = listlocalhost.indexWhere((item) =>
+        item['email'] == widget.listUser[0]['email'] &&
+        item['password'] == widget.listUser[0]['password']);
+
+    if (userIndex != -1) {
+      // Remove the entire user data
+      listlocalhost.removeAt(userIndex);
+    }
+
+    // Update the SharedPreferences with the modified list
+    List<String> updatedList =
+        listlocalhost.map((item) => json.encode(item)).toList();
+    await prefs.setStringList('localhost', updatedList);
+
+    Fluttertoast.showToast(
+      msg: 'Logged Out',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      textColor: Colors.blue,
+      fontSize: 20,
+    );
+    Get.offAll(() => const LoginPage());
+    // Navigator.pushAndRemoveUntil(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => const LoginPage()),
+    //   (Route<dynamic> route) => false,
+    // );
   }
 }

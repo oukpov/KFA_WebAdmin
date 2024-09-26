@@ -174,10 +174,10 @@ class _LoginState extends State<Login> {
                       authenModel.user = [User()];
                     }
 
-                    authenModel.user![0].username = 'somnang.se';
-                    authenModel.user![0].password = 'KFA@somnang2023';
-                    // authenModel.user![0].username = _emailController.text;
-                    // authenModel.user![0].password = _passwordController.text;
+                    // authenModel.user![0].username = 'somnang.se';
+                    // authenModel.user![0].password = 'KFA@somnang2023';
+                    authenModel.user![0].username = _emailController.text;
+                    authenModel.user![0].password = _passwordController.text;
                   });
                   await authentication.login(authenModel, context);
                 },
@@ -355,6 +355,7 @@ class _LoginState extends State<Login> {
             child: TextFormField(
               controller: _emailController,
               onChanged: (input) => authenModel.user![0].username = input,
+              obscureText: _isObscure,
               decoration: InputDecoration(
                 fillColor: const Color.fromARGB(255, 255, 255, 255),
                 filled: true,
@@ -362,6 +363,17 @@ class _LoginState extends State<Login> {
                 prefixIcon: const Icon(
                   Icons.email,
                   color: kImageColor,
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    color: kImageColor,
+                    _isObscure ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(

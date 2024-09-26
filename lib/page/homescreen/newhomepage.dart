@@ -16,6 +16,7 @@ import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
+import '../navigate_home/Approvel/classSubmit.dart';
 import '../navigate_home/Approvel/submit.dart';
 import '../navigate_home/Approvel/submit_list.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
@@ -185,9 +186,6 @@ class _homescreenState extends State<homescreen> {
                           const SizedBox(height: 50),
                         ],
                       )
-                    else if (type == 70)
-                      ListSubmitAdmin(
-                          device: widget.device, listUser: widget.listUser)
                     else
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,9 +430,15 @@ class _homescreenState extends State<homescreen> {
                         child: InkWell(
                             onTap: () {
                               if (i == 0) {
-                                setState(() {
-                                  type = 70;
-                                });
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ClassSubmit(
+                                        device: widget.device,
+                                        listUser: widget.listUser)));
+
+                                // setState(() {
+                                //   type = 70;
+                                //   print("OKOK : $type");
+                                // });
                               }
                             },
                             child:
