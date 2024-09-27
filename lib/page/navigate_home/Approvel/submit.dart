@@ -318,12 +318,13 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
 
       component.handleTap("Done!", "Update successfuly");
       listAgent.sendMessage(
-        "Client ID : ${listData['control_user']} 🆔\nName : ${listData['username']} 👤\nDate : ${listData['verbal_date']} ⏰\n---------------------------------------------------------------\nCode : ${listData['protectID']} 🔔\nSubmit Agent : Done! ✅\nApprove by Agent : ${widget.listUser[0]['username'] ?? ""}! 👨‍💻\nDate Done : $formattedDate ⏰\nLinkURl : https://oneclickonedollar.com/#/ 🌐",
+        "Client ID : ${listData['control_user']} 🆔\nName : ${listData['username'] ?? ""} 👤\nPhone : ${listData['tel_num'] ?? ""} ☎️\nDate : ${listData['verbal_date']} ⏰\n---------------------------\nCode : ${listData['protectID'] ?? ""} 🔔\nSubmit Agent : Done! ✅\nApprove by Agent : ${widget.listUser[0]['username'] ?? ""}! 👨‍💻\nDate Done : $formattedDate ⏰\nLinkURl : https://oneclickonedollar.com/#/ 🌐",
       );
     }
   }
 
   Component component = Component();
+
   Future<void> updateFirebase() async {
     FirebaseFirestore.instance
         .collection('verbal_approvelTable')
@@ -473,8 +474,8 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
                                     autoHide: const Duration(seconds: 2),
                                     btnOkOnPress: () async {
                                       await updateAuto(listEdit);
-                                      await listAgent.listAgent(
-                                          widget.perpage, widget.page);
+                                      await listAgent.listAgent(widget.perpage,
+                                          widget.page, 3, "", "", "");
                                       Navigator.pop(context);
                                     },
                                     btnCancelOnPress: () {},

@@ -22,16 +22,39 @@ class ListAgent extends GetxController {
   void onInit() {
     super.onInit();
     //Change value to name2
-    listAgent(10, 1);
+    listAgent(10, 1, 3, "", "", "");
   }
 
-  Future<void> listAgent(int perpages, int pages) async {
+  var url = "".obs;
+  Future<void> listAgent(
+      int perpages,
+      int pages,
+      int checkType,
+      String startDateController,
+      String endDateController,
+      String search) async {
+    print("OKOKOK : $checkType");
     try {
+      if (checkType == 1) {
+        url.value =
+            'get/Pagination?perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
+      } else if (checkType == 2) {
+        url.value =
+            'get/Pagination?check=1&approvel=100&perPage=$perpages&page=$pages&${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
+      } else if (checkType == 4) {
+        print("OKOKOK : $checkType");
+        url.value =
+            "search/listAuto?search=$search&page=$pages&perPage=$perpages";
+      } else {
+        url.value =
+            'get/Pagination?check=2&approvel=100&perPage=$perpages&page=$pages&${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
+      }
       isAgent.value = true;
       var headers = {'Content-Type': 'application/json'};
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agentListAll?perPage=$perpages&page=$pages',
+        // 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agentListAll?perPage=$perpages&page=$pages',
+        "https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/${url.value}",
         options: Options(
           method: 'GET',
           headers: headers,
