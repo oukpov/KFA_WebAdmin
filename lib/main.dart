@@ -4,8 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
+import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -61,6 +63,16 @@ class _MyAppState extends State<MyApp> {
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         home: LoginPage(),
+        // home: ClassSubmit(device: "d", listUser: [
+        //   {
+        //     "id": 65,
+        //     "user_role_id": 53,
+        //     "agency": 83,
+        //     "username": "somnang.se",
+        //     "password": "9e6981b5813c4da23404c2a3e0f95e81",
+        //     "user_status": 0
+        //   }
+        // ]),
         // routes: {
         //   "/Admin": (context) => const LoginPage()
         // "/Admin": (p0) => ClassTest(),

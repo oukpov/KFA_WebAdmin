@@ -35,7 +35,7 @@ class _DateExpanedState extends State<DateExpaned> {
           filled: true,
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(5.0),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(

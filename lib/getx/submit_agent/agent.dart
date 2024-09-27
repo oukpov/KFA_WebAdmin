@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:web_admin/screen/Property/FirstProperty/MenuPage/DetailScreen/DetailAll.dart';
 
 class ListAgent extends GetxController {
   ListAgent({required int ids}) {
@@ -51,49 +52,49 @@ class ListAgent extends GetxController {
     }
   }
 
-  Future<void> checkID(BuildContext context, List listAgent, int index,
-      int perpage, int page, List listUser) async {
-    try {
-      isAgentID.value = true;
-      var dio = Dio();
-      var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agentID/${listAgent[index]['protectID']}',
-        options: Options(
-          method: 'GET',
-        ),
-      );
+  // Future<void> checkID(BuildContext context, List listAgent, int index,
+  //     int perpage, int page, List listUser) async {
+  //   try {
+  //     isAgentID.value = true;
+  //     var dio = Dio();
+  //     var response = await dio.request(
+  //       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agentID/${listAgent[index]['protectID']}',
+  //       options: Options(
+  //         method: 'GET',
+  //       ),
+  //     );
 
-      if (response.statusCode == 200) {
-        listAgentID.value = jsonDecode(json.encode(response.data));
-        showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          context: context,
-          isScrollControlled: true,
-          builder: (BuildContext context) {
-            return DetailScreen(
-              listUser: listUser,
-              page: page,
-              perpage: perpage,
-              docID:
-                  "${(listAgent[index]['type_value'] == "T") ? listAgent[index]['protectID'] : listAgent[index]['verbal_id']}",
-              usernameAgent: listAgent[index]['username'].toString(),
-              indexs: index,
-              list: listAgent,
-              backvalue: (value) {},
-              device: 'd',
-              idController: listAgent[index]['verbal_user'].toString(),
-            );
-          },
-        );
-      } else {
-        // print(response.statusMessage);
-      }
-    } catch (e) {
-      // print(e);
-    } finally {
-      isAgentID.value = false;
-    }
-  }
+  //     if (response.statusCode == 200) {
+  //       listAgentID.value = jsonDecode(json.encode(response.data));
+  //       showModalBottomSheet(
+  //         backgroundColor: Colors.transparent,
+  //         context: context,
+  //         isScrollControlled: true,
+  //         builder: (BuildContext context) {
+  //           return DetailScreen(
+  //             listUser: listUser,
+  //             page: page,
+  //             perpage: perpage,
+  //             docID:
+  //                 "${(listAgent[index]['type_value'] == "T") ? listAgent[index]['protectID'] : listAgent[index]['verbal_id']}",
+  //             usernameAgent: listAgent[index]['username'].toString(),
+  //             indexs: index,
+  //             list: listAgent,
+  //             backvalue: (value) {},
+  //             device: 'd',
+  //             idController: listAgent[index]['verbal_user'].toString(),
+  //           );
+  //         },
+  //       );
+  //     } else {
+  //       // print(response.statusMessage);
+  //     }
+  //   } catch (e) {
+  //     // print(e);
+  //   } finally {
+  //     isAgentID.value = false;
+  //   }
+  // }
 
   Future<void> sendMessage(String text) async {
     var headers = {'Content-Type': 'application/json'};

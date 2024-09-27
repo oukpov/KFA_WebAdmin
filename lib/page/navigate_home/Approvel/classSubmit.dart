@@ -13,7 +13,6 @@ class _ClassSubmitState extends State<ClassSubmit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
