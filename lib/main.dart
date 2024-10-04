@@ -7,15 +7,9 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
-<<<<<<< HEAD
 import 'package:web_admin/page/verbal_report_page.dart';
-=======
 import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
-<<<<<<< HEAD
 import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
-=======
->>>>>>> e9255aabe7ed6c6b621de32a016e4cad8f600d7a
->>>>>>> 9125dfbee864687366d89b9e442fae258a0c906d
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -72,10 +66,9 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
+
         //home: LoginPage(),
-        home: VerbalReportPage(),
-=======
+        // home: VerbalReportPage(),
         home: LoginPage(),
         // home: AddComparable(
         //     type: (value) {},
@@ -100,7 +93,6 @@ class _MyAppState extends State<MyApp> {
         //     "user_status": 0
         //   }
         // ]),
->>>>>>> e9255aabe7ed6c6b621de32a016e4cad8f600d7a
         // routes: {
         //   "/Admin": (context) => const LoginPage()
         // "/Admin": (p0) => ClassTest(),
