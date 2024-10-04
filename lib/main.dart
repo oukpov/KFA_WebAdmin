@@ -8,10 +8,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
 import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
+import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 import 'package:http/http.dart' as http;
+
+import 'page/navigate_home/Comparable/newComparable/add_new_comparable.dart';
 
 List list = [];
 // String? district_id;
@@ -63,13 +66,26 @@ class _MyAppState extends State<MyApp> {
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         home: LoginPage(),
+        // home: AddComparable(
+        //     type: (value) {},
+        //     addNew: (value) {},
+        //     listlocalhosts: const [
+        //       {
+        //         "id": 52,
+        //         "user_role_id": 53,
+        //         "agency": 70,
+        //         "username": "Test",
+        //         "password": "333802e987dfce42e28b749a20dc257f",
+        //         "user_status": 0
+        //       }
+        //     ]),
         // home: ClassSubmit(device: "d", listUser: [
         //   {
-        //     "id": 65,
+        //     "id": 52,
         //     "user_role_id": 53,
-        //     "agency": 83,
-        //     "username": "somnang.se",
-        //     "password": "9e6981b5813c4da23404c2a3e0f95e81",
+        //     "agency": 70,
+        //     "username": "Test",
+        //     "password": "333802e987dfce42e28b749a20dc257f",
         //     "user_status": 0
         //   }
         // ]),
