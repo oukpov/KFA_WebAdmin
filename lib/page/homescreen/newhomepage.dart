@@ -124,7 +124,7 @@ class _homescreenState extends State<homescreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> updateUserStatus() async {
     setState(() {
-      if (widget.listUser[0]['agency'].toString() != "28") {
+      if (widget.listUser[0]['agency'].toString() == "28") {
         listReportOption = reportOptionS;
       } else {
         listReportOption = reportOption;
