@@ -71,7 +71,7 @@ class _PrinterComState extends State<PrinterCom> {
   Future<void> getimageMap(double lat, double log) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/staticmap?center=${(log > lat) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=normal&markers=color:red%7C%7C${(log > lat) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/staticmap?center=${(log > lat) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=normal&markers=color:red%7C%7C${(log > lat) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
       getbytes = response.bodyBytes;
     } catch (e) {
       throw Exception("Error getting bytes from URL: $e");

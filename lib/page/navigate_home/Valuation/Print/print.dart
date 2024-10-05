@@ -49,7 +49,7 @@ class _PrintState extends State<PrinterPDF> {
   Future<void> getImageMap(index, List list) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/staticmap?center=${list[index]['latlong_log']},${list[index]['latlong_la']}&zoom=16&size=1080x920&maptype=normal&markers=color:red%7C%7C${list[index]['latlong_log']},${list[index]['latlong_la']}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/staticmap?center=${list[index]['latlong_log']},${list[index]['latlong_la']}&zoom=16&size=1080x920&maptype=normal&markers=color:red%7C%7C${list[index]['latlong_log']},${list[index]['latlong_la']}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
       getBytes = response.bodyBytes;
     } catch (e) {
       throw Exception("Error getting bytes from URL: $e");

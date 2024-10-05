@@ -263,7 +263,7 @@ class _Map_verbal_address_Sale_twoState
     var check_charetor = place.split(',');
     if (check_charetor.length == 1) {
       String url =
-          'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI';
+          'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8';
       final response = await http.get(Uri.parse(url));
       final jsonResponse = json.decode(response.body);
       var location = jsonResponse['results'][0]['geometry']['location'];
@@ -317,7 +317,7 @@ class _Map_verbal_address_Sale_twoState
       }
     } else {
       final response = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
       // Successful response
       var jsonResponse = json.decode(response.body);
@@ -374,7 +374,7 @@ class _Map_verbal_address_Sale_twoState
 
   Future<void> get_name_search(var name) async {
     String url =
-        'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI&libraries=places';
+        'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8&libraries=places';
     final response = await http.get(Uri.parse(url));
     final jsonResponse = json.decode(response.body);
     List ls = jsonResponse['results'];
@@ -396,7 +396,7 @@ class _Map_verbal_address_Sale_twoState
 
   Future<void> Find_by_piont(double la, double lo) async {
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
     if (response.statusCode == 200) {
       // Successful response
@@ -468,7 +468,7 @@ class _Map_verbal_address_Sale_twoState
       //                   decoration: BoxDecoration(
       //                       image: DecorationImage(
       //                           image: NetworkImage(
-      //                               'https://maps.googleapis.com/maps/api/staticmap?center=${lati},${longi}&zoom=20&size=500x500&maptype=hybrid&markers=color:red%7Clabel:K%7C${lati},${longi}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))),
+      //                               'https://maps.googleapis.com/maps/api/staticmap?center=${lati},${longi}&zoom=20&size=500x500&maptype=hybrid&markers=color:red%7Clabel:K%7C${lati},${longi}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))),
       //                 ),
       //               );
       //             },
@@ -485,7 +485,7 @@ class _Map_verbal_address_Sale_twoState
 
   Future<void> poin_map_by_search(var ln, var lg) async {
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
     var jsonResponse = json.decode(response.body);
     latLng = LatLng(double.parse(lg), double.parse(ln));
     Marker newMarker = Marker(
@@ -532,7 +532,7 @@ class _Map_verbal_address_Sale_twoState
 
 // typedef OnChangeCallback = void Function(dynamic value);
 
-// const kGoogleApiKey = 'AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI';
+// const kGoogleApiKey = 'AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8';
 // final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 // class Map_verbal_address_Sale extends StatefulWidget {
@@ -867,7 +867,7 @@ class _Map_verbal_address_Sale_twoState
 
 //   Future<void> Find_by_piont(double la, double lo) async {
 //     final response = await http.get(Uri.parse(
-//         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+//         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
 //     if (response.statusCode == 200) {
 //       // Successful response
@@ -939,7 +939,7 @@ class _Map_verbal_address_Sale_twoState
 //       //                   decoration: BoxDecoration(
 //       //                       image: DecorationImage(
 //       //                           image: NetworkImage(
-//       //                               'https://maps.googleapis.com/maps/api/staticmap?center=${lati},${longi}&zoom=20&size=500x500&maptype=hybrid&markers=color:red%7Clabel:K%7C${lati},${longi}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))),
+//       //                               'https://maps.googleapis.com/maps/api/staticmap?center=${lati},${longi}&zoom=20&size=500x500&maptype=hybrid&markers=color:red%7Clabel:K%7C${lati},${longi}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))),
 //       //                 ),
 //       //               );
 //       //             },
@@ -959,7 +959,7 @@ class _Map_verbal_address_Sale_twoState
 //     var check_charetor = place.split(',');
 //     if (check_charetor.length == 1) {
 //       String url =
-//           'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI';
+//           'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8';
 //       final response = await http.get(Uri.parse(url));
 //       final jsonResponse = json.decode(response.body);
 //       var location = jsonResponse['results'][0]['geometry']['location'];
@@ -1013,7 +1013,7 @@ class _Map_verbal_address_Sale_twoState
 //       }
 //     } else {
 //       final response = await http.get(Uri.parse(
-//           'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+//           'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
 //       // Successful response
 //       var jsonResponse = json.decode(response.body);
@@ -1078,7 +1078,7 @@ class _Map_verbal_address_Sale_twoState
 //   List lg = [];
 //   Future<void> get_name_search(var name) async {
 //     String url =
-//         'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI&libraries=places';
+//         'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8&libraries=places';
 //     final response = await http.get(Uri.parse(url));
 //     final jsonResponse = json.decode(response.body);
 //     List ls = jsonResponse['results'];
@@ -1100,7 +1100,7 @@ class _Map_verbal_address_Sale_twoState
 
 //   Future<void> poin_map_by_search(var ln, var lg) async {
 //     final response = await http.get(Uri.parse(
-//         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+//         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 //     var jsonResponse = json.decode(response.body);
 //     latLng = LatLng(double.parse(lg), double.parse(ln));
 //     Marker newMarker = Marker(

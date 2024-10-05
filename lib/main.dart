@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,38 +9,44 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
+import 'package:web_admin/page/navigate_setting/online/add_agent.dart';
+import 'package:web_admin/page/navigate_setting/online/isonline.dart';
 import 'package:web_admin/page/verbal_report_page.dart';
 import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
 import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
-import 'package:http/http.dart' as http;
-
-import 'page/navigate_home/Comparable/newComparable/add_new_comparable.dart';
 
 List list = [];
 // String? district_id;
 // String? cummune_id;
 void main() async {
-  WebViewPlatform.instance = WebWebViewPlatform();
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyBYr3tPsGjHtaDSSrAV5zH0HN0tMHqxRho',
-        appId: '1:840429343818:web:63757f2574274bf9c3c2b3',
-        messagingSenderId: '840429343818',
-        projectId: 'chatappflutter-41d6b',
-      ),
-    );
+  try {
+    if (kIsWeb) {
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+          apiKey: 'AIzaSyAEHE_tC8re0HgCUv5G-csJO6uX4z1jYB8',
+          appId: '1:390050660817:web:eea1fd0da594d7661f20f0',
+          messagingSenderId: '390050660817',
+          projectId: 'verbalapprovel',
+          databaseURL: "https://verbalapprovel.firebaseio.com",
+        ),
+      ).then((value) => print('OKOK'));
+      // print("Firebase initialized successfully");
+    }
+  } catch (e) {
+    // print("Firebase initialization failed: $e");
   }
+  WebViewPlatform.instance = WebWebViewPlatform();
   // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   // await OneSignal.shared.setAppId("d3025f03-32f5-444a-8100-7f7637a7f631");
   // OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
   //   print("Accepted permission: $accepted");
   // });
+
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -63,13 +71,14 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
-
-        //home: LoginPage(),
-        // home: VerbalReportPage(),
+        // home: IsOnline(),
+        // home: AddUser(),
         home: LoginPage(),
+        // home: VerbalReportPage(),
+        // home: LoginPage(),
         // home: AddComparable(
         //     type: (value) {},
         //     addNew: (value) {},

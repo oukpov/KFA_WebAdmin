@@ -515,7 +515,7 @@
 //       "log": log,
 //       "image_map": (lat == null)
 //           ? null
-//           : 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+//           : 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
 //     });
 //     request.headers.addAll(headers);
 
@@ -1144,7 +1144,7 @@
 //                       child: Image(
 //                           fit: BoxFit.cover,
 //                           image: NetworkImage(
-//                             'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+//                             'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
 //                           )),
 //                     ),
 //                   )
@@ -2796,9 +2796,9 @@
 //         await rootBundle.load('assets/images/New_KFA_Logo.png');
 //     final Uint8List byteList = bytes.buffer.asUint8List();
 //     Uint8List image_latlog = (await NetworkAssetBundle(Uri.parse(
-//                 'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['lat'].toString()},${items[index]['log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['lat'].toString()},${items[index]['log'].toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+//                 'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['lat'].toString()},${items[index]['log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['lat'].toString()},${items[index]['log'].toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
 //             .load(
-//                 'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['lat'].toString()},${items[index]['log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['lat'].toString()},${items[index]['log'].toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+//                 'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['lat'].toString()},${items[index]['log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['lat'].toString()},${items[index]['log'].toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
 //         .buffer
 //         .asUint8List();
 //     pdf.addPage(pw.MultiPage(

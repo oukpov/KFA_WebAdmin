@@ -24,7 +24,7 @@ class Check_map extends StatefulWidget {
 class _Check_mapState extends State<Check_map> {
   double _panelHeightOpen = 0;
   final double _panelHeightClosed = 95.0;
-  String googleApikey = "AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI";
+  String googleApikey = "AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8";
   GoogleMapController? mapController; //contrller for Google map
   CameraPosition? cameraPosition;
   List<MarkerId> listMarkerIds = List<MarkerId>.empty(growable: true);
@@ -2036,7 +2036,7 @@ class _Check_mapState extends State<Check_map> {
   double? log_verbal;
   Future<void> poin_map_by_search(var ln, var lg) async {
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
     var jsonResponse = json.decode(response.body);
     latLng = LatLng(double.parse(lg), double.parse(ln));
     Marker newMarker = Marker(

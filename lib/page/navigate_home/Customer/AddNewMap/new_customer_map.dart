@@ -357,7 +357,7 @@ class _new_customerState extends State<new_customer_map> {
       // "lat": 2.00,
       // "log": 2.00,
       "image_map":
-          "https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI"
+          "https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8"
     });
     request.headers.addAll(headers);
 
@@ -554,7 +554,7 @@ class _new_customerState extends State<new_customer_map> {
                                 child: Image(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(
-                                      'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$log&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                     )),
                               ),
                             ),

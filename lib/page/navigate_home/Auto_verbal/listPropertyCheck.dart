@@ -116,7 +116,7 @@ class _ListAutoState extends State<ListAuto> {
   Future<void> getimageMap(lat, log) async {
     try {
       http.Response response = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/staticmap?center=$log,$lat&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$log,$lat&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/staticmap?center=$log,$lat&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$log,$lat&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
       get_bytes1 = response.bodyBytes;
     } catch (e) {
       throw Exception("Error getting bytes from URL: $e");
@@ -668,7 +668,7 @@ class _ListAutoState extends State<ListAuto> {
                         placeholderFit: BoxFit.contain,
                         placeholder: 'assets/earth.gif',
                         image:
-                            "https://maps.googleapis.com/maps/api/staticmap?center=${(listProtect[i]["latlong_log"] > listProtect[i]["latlong_la"]) ? "${listProtect[i]["latlong_la"]},${listProtect[i]["latlong_log"]}" : "${listProtect[i]["latlong_log"]},${listProtect[i]["latlong_la"]}"}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(listProtect[i]["latlong_log"] > listProtect[i]["latlong_la"]) ? "${listProtect[i]["latlong_la"]},${listProtect[i]["latlong_log"]}" : "${listProtect[i]["latlong_log"]},${listProtect[i]["latlong_la"]}"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI",
+                            "https://maps.googleapis.com/maps/api/staticmap?center=${(listProtect[i]["latlong_log"] > listProtect[i]["latlong_la"]) ? "${listProtect[i]["latlong_la"]},${listProtect[i]["latlong_log"]}" : "${listProtect[i]["latlong_log"]},${listProtect[i]["latlong_la"]}"}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(listProtect[i]["latlong_log"] > listProtect[i]["latlong_la"]) ? "${listProtect[i]["latlong_la"]},${listProtect[i]["latlong_log"]}" : "${listProtect[i]["latlong_log"]},${listProtect[i]["latlong_la"]}"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                       ),
                     ),
                     const SizedBox(width: 5),

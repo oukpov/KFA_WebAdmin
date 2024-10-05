@@ -556,8 +556,8 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
                                   placeholder: 'assets/earth.gif',
                                   image: (double.parse(lats) <
                                           double.parse(lngs))
-                                      ? 'https://maps.googleapis.com/maps/api/staticmap?center=$lats,$lngs&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$lats,$lngs&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'
-                                      : 'https://maps.googleapis.com/maps/api/staticmap?center=$lngs,$lats&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$lngs,$lats&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      ? 'https://maps.googleapis.com/maps/api/staticmap?center=$lats,$lngs&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$lats,$lngs&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'
+                                      : 'https://maps.googleapis.com/maps/api/staticmap?center=$lngs,$lats&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C$lngs,$lats&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                 ),
                               ),
                             )
@@ -578,7 +578,7 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
                                   placeholderFit: BoxFit.fill,
                                   placeholder: 'assets/earth.gif',
                                   image:
-                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                 ),
                               ),
                             ),

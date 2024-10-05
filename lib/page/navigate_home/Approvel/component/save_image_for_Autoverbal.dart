@@ -396,7 +396,7 @@ class _save_image_after_add_verbalState
                                   width: 240,
                                   height: 150,
                                   child: Image.network(
-                                    "https://maps.googleapis.com/maps/api/staticmap?center=${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&zoom=18&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI",
+                                    "https://maps.googleapis.com/maps/api/staticmap?center=${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&zoom=18&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                                     fit: BoxFit.cover,
                                   ),
                                 ),

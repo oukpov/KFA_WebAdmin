@@ -12,14 +12,13 @@ import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:search_map_location/widget/search_widget.dart';
 import '../models/search_model.dart';
 
-
 class HomeMap extends StatefulWidget {
   @override
   _HomeMapState createState() => _HomeMapState();
 }
 
 class _HomeMapState extends State<HomeMap> {
-  String googleApikey = "AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI";
+  String googleApikey = "AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8";
   GoogleMapController? mapController; //contrller for Google map
   CameraPosition? cameraPosition;
   List<MarkerId> listMarkerIds = List<MarkerId>.empty(growable: true);

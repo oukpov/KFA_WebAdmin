@@ -193,7 +193,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
       log = position.longitude;
     });
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
     if (response.statusCode == 200) {
       // Successful response
@@ -510,7 +510,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
                               width: MediaQuery.of(context).size.width * 0.4,
                               placeholder: 'assets/earth.gif',
                               image:
-                                  "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI",
+                                  "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                             ),
                           )
                         : Container(
@@ -524,7 +524,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
                               child: Stack(children: [
                                 CachedNetworkImage(
                                   imageUrl:
-                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                   fit: BoxFit.cover,
                                   height:
                                       MediaQuery.of(context).size.height * 0.3,
@@ -1123,7 +1123,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
                               width: MediaQuery.of(context).size.width * 0.35,
                               placeholder: 'assets/earth.gif',
                               image:
-                                  "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI",
+                                  "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                             ),
                           )
                         : Container(
@@ -1137,7 +1137,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
                               child: Stack(children: [
                                 CachedNetworkImage(
                                   imageUrl:
-                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                      'https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                   fit: BoxFit.cover,
                                   height:
                                       MediaQuery.of(context).size.height * 0.2,
@@ -1383,7 +1383,7 @@ class _Add_verbal_saleState extends State<AddProperty> {
                     placeholderFit: BoxFit.contain,
                     placeholder: 'assets/earth.gif',
                     image:
-                        "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI",
+                        "https://maps.googleapis.com/maps/api/staticmap?center=${lat.toString()},${log.toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat.toString()},${log.toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                   ),
                 ),
               ),

@@ -476,7 +476,7 @@ class _Add_with_propertyState extends State<Add> {
                                       placeholderFit: BoxFit.fill,
                                       placeholder: 'assets/earth.gif',
                                       image:
-                                          'https://maps.googleapis.com/maps/api/staticmap?center=${widget.lat},${widget.lng}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${widget.lat},${widget.lng}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                          'https://maps.googleapis.com/maps/api/staticmap?center=${widget.lat},${widget.lng}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${widget.lat},${widget.lng}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                     ),
                                   ),
                                 ),

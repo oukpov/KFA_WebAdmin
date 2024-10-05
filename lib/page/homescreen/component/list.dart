@@ -111,6 +111,17 @@ List reportOption = [
   {"title": "Total Amount"},
   {"title": "Controller VPoint's User"},
 ];
+List reportOptionS = [
+  {"title": "Customer"},
+  {"title": "Verbal"},
+  {"title": "Comparable"},
+  {"title": "Valuation"},
+  {"title": "Property"},
+  {"title": "Total Amount"},
+  {"title": "Controller VPoint's User"},
+  {"title": "Add Agent Action"},
+  {"title": "Action Agents List"},
+];
 //Optin setting
 List autoOptions = [
   {"title": "New Auto"},

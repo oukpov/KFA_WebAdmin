@@ -142,7 +142,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
       requestModelAuto.lng = log.toString();
     });
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
     if (response.statusCode == 200) {
       // Successful response
@@ -438,7 +438,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
                 placeholderFit: BoxFit.fill,
                 placeholder: 'assets/earth.gif',
                 image:
-                    'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                    'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
               ),
             ),
           )
@@ -457,7 +457,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
                 placeholderFit: BoxFit.cover,
                 placeholder: 'assets/earth.gif',
                 image:
-                    'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                    'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
               ),
             ),
           )
@@ -1138,7 +1138,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
     request.fields['cid'] = verbal_id.toString();
     if (lat1 == null) {
       final response1 = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/staticmap?center=${lat},${log}&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat},${log}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
       final byte = response1.bodyBytes;
       Uint8List get_image_byte1 = Uint8List.fromList(byte);
       request.files.add(await http.MultipartFile.fromBytes(
@@ -1146,7 +1146,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
           filename: 'k${random.nextInt(999)}f${random.nextInt(99)}a.png'));
     } else {
       final response2 = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/staticmap?center=${lat1},${log2}&zoom=20&size=720x720&maptype=hybrid&markers=color:red%7C%7C${lat1},${log2}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
       final byte = response2.bodyBytes;
       Uint8List get_image_byte2 = Uint8List.fromList(byte);
       request.files.add(await http.MultipartFile.fromBytes(

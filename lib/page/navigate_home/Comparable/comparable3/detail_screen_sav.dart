@@ -233,7 +233,7 @@ class _List_searchState extends State<List_search_marker> {
                       width: double.infinity,
                       // width: double.infinity,                                                                                                                                                               ${'&markers=color:red%7C${widget.list[0]['latlong_log'].toString()},${widget.list[0]['latlong_la'].toString()}'}
                       child: Image.network(
-                        'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=15&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                        'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=15&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -340,9 +340,9 @@ class _List_searchState extends State<List_search_marker> {
         await rootBundle.load('assets/images/New_KFA_Logo.png');
     final Uint8List byteList = bytes.buffer.asUint8List();
     Uint8List image_latlog = (await NetworkAssetBundle(Uri.parse(
-                'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=16&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+                'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=16&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
             .load(
-                'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=16&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+                'https://maps.googleapis.com/maps/api/staticmap?center=&markers=color:red%7C${list[i - 1]['latlong_log'].toString()},${list[i - 1]['latlong_la'].toString()}&zoom=16&size=720x720&maptype=normal$latlog0$latlog1$latlog2$latlog3$latlog4$latlog5$latlog6$latlog7$latlog8$latlog9$latlog10&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
         .buffer
         .asUint8List();
     final data = List<String>.generate(20, (index) => 'Item ${index + 1}');
@@ -482,5 +482,5 @@ class _List_searchState extends State<List_search_marker> {
     return pdf.save();
   }
 }
-// https://maps.googleapis.com/maps/api/staticmap?center=11.521079,104.928533&zoom=14&size=720x720&maptype=hybrid&markers=color:red%7C11.521079,104.928533&markers=color:red%7C11.517547,104.932438&markers=color:red%7C11.514961,&markers=color:red%7C11.514961,104.928830&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI
-// 'https://maps.googleapis.com/maps/api/staticmap?center=${'${widget.list[0]['latlong_log'].toString()},${widget.list[0]['latlong_la'].toString()}'}&zoom=15&size=720x720&maptype=hybrid${'&markers=color:red%7C${widget.list[0]['latlong_log'].toString()},${widget.list[0]['latlong_la'].toString()}'}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+// https://maps.googleapis.com/maps/api/staticmap?center=11.521079,104.928533&zoom=14&size=720x720&maptype=hybrid&markers=color:red%7C11.521079,104.928533&markers=color:red%7C11.517547,104.932438&markers=color:red%7C11.514961,&markers=color:red%7C11.514961,104.928830&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8
+// 'https://maps.googleapis.com/maps/api/staticmap?center=${'${widget.list[0]['latlong_log'].toString()},${widget.list[0]['latlong_la'].toString()}'}&zoom=15&size=720x720&maptype=hybrid${'&markers=color:red%7C${widget.list[0]['latlong_log'].toString()},${widget.list[0]['latlong_la'].toString()}'}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',

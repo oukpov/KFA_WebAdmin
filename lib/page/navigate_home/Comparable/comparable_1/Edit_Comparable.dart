@@ -1251,9 +1251,9 @@ class _Detail_ScreenState extends State<Detail_Screen> {
         await rootBundle.load('assets/images/New_KFA_Logo.png');
     final Uint8List byteList = bytes.buffer.asUint8List();
     Uint8List image_latlog = (await NetworkAssetBundle(Uri.parse(
-                'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+                'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
             .load(
-                'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'))
+                'https://maps.googleapis.com/maps/api/staticmap?center=${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&zoom=20&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${items[index]['latlong_la'].toString()},${items[index]['latlong_log'].toString()}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'))
         .buffer
         .asUint8List();
     pdf.addPage(pw.MultiPage(

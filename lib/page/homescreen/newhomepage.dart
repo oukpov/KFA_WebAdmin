@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
@@ -63,6 +65,8 @@ import '../navigate_home/Comparable/comparable4/list_comparable_filter.dart';
 import '../../Widgets/drawerMenu.dart';
 import '../../Widgets/drawer.dart';
 import '../../Widgets/widgets.dart';
+import '../navigate_setting/online/add_agent.dart';
+import '../navigate_setting/online/isonline.dart';
 import 'component/list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
@@ -102,17 +106,56 @@ class _homescreenState extends State<homescreen> {
   String? knownFrom;
   String? username;
   String? controlleruser;
+  List listReportOption = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
-
+    // isOnline();
+    updateUserStatus();
     DateTime now = DateTime.now();
     DateTime onewday = DateTime(now.year, now.month, now.day);
     DateTime twowday = DateTime(now.year, now.month, now.day + 1);
     String formattedDatenow = DateFormat('yyyy-MM-dd').format(onewday);
     String formattedDateago = DateFormat('yyyy-MM-dd').format(twowday);
     countnotifcations(formattedDatenow, formattedDateago);
+  }
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Future<void> updateUserStatus() async {
+    setState(() {
+      if (widget.listUser[0]['agency'].toString() != "28") {
+        listReportOption = reportOptionS;
+      } else {
+        listReportOption = reportOption;
+      }
+    });
+    // print("listUser : ${widget.listUser}");
+    final QuerySnapshot result = await _firestore
+        .collection('users')
+        .where('id_agent', isEqualTo: widget.listUser[0]['agency'].toString())
+        .limit(1)
+        .get();
+
+    if (result.docs.isNotEmpty) {
+      // User found
+      final userDocRef = result.docs.first.reference;
+
+      // Update user status
+      await userDocRef.update({
+        'isOnline': true,
+        'lastActive': FieldValue.serverTimestamp(),
+      });
+      window.onBeforeUnload.listen((event) async {
+        print("==========> Application is about to close.");
+        userDocRef.update({
+          'isOnline': false,
+          'lastActive': FieldValue.serverTimestamp(),
+        });
+
+        // Optionally, set a return value to display a confirmation dialog
+      });
+    }
   }
 
   String countNotification = '';
@@ -471,7 +514,7 @@ class _homescreenState extends State<homescreen> {
                             child:
                                 textfield(userOption[i]['title'].toString())))
                 else if (index == 8)
-                  for (int i = 0; i < reportOption.length; i++)
+                  for (int i = 0; i < listReportOption.length; i++)
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
@@ -555,9 +598,24 @@ class _homescreenState extends State<homescreen> {
                                   },
                                 ));
                               }
+                              if (i == 7) {
+                                //Add Agent Action
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return AddUser();
+                                  },
+                                ));
+                              }
+                              if (i == 8) {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return const IsOnline();
+                                  },
+                                ));
+                              }
                             },
-                            child:
-                                textfield(reportOption[i]['title'].toString())))
+                            child: textfield(
+                                listReportOption[i]['title'].toString())))
               ];
             },
             child: Padding(
@@ -926,32 +984,32 @@ class _homescreenState extends State<homescreen> {
 
   String imageUrl = '';
   Uint8List? selectedFile;
-  late File croppedFile;
+  // late File croppedFile;
   final completer = Completer<Uint8List>();
-  Future<void> openImgae() async {
-    html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+  // Future<void> openImgae() async {
+  //   html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
 
-    uploadInput.multiple = true;
-    uploadInput.draggable = true;
-    uploadInput.click();
+  //   uploadInput.multiple = true;
+  //   uploadInput.draggable = true;
+  //   uploadInput.click();
 
-    uploadInput.onChange.listen((event) {
-      final files = uploadInput.files;
-      final file = files!.elementAt(0);
-      final reader = html.FileReader();
-      reader.onLoadEnd.listen((event) {
-        setState(() {
-          byesData = const Base64Decoder()
-              .convert(reader.result.toString().split(',').last);
-          selectedFile = byesData;
-          croppedFile = File.fromRawPath(byesData!);
-          imageUrl = html.Url.createObjectUrlFromBlob(file.slice());
-          // Navigator.pop(context);
-        });
-      });
-      reader.readAsDataUrl(file);
-    });
-  }
+  //   uploadInput.onChange.listen((event) {
+  //     final files = uploadInput.files;
+  //     final file = files!.elementAt(0);
+  //     final reader = html.FileReader();
+  //     reader.onLoadEnd.listen((event) {
+  //       setState(() {
+  //         byesData = const Base64Decoder()
+  //             .convert(reader.result.toString().split(',').last);
+  //         selectedFile = byesData;
+  //         croppedFile = File.fromRawPath(byesData!);
+  //         imageUrl = html.Url.createObjectUrlFromBlob(file.slice());
+  //         // Navigator.pop(context);
+  //       });
+  //     });
+  //     reader.readAsDataUrl(file);
+  //   });
+  // }
 
   double fontsizepf = 12;
   Widget profile() {
@@ -1071,7 +1129,7 @@ class _homescreenState extends State<homescreen> {
                                                     )),
                                                 IconButton(
                                                     onPressed: () {
-                                                      openImgae();
+                                                      // openImgae();
                                                     },
                                                     icon: Icon(
                                                       Icons.edit,

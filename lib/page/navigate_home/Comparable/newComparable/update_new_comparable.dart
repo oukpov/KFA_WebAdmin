@@ -1351,7 +1351,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                           placeholderFit: BoxFit.contain,
                                           placeholder: 'assets/earth.gif',
                                           image:
-                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                         ),
                                       ),
                                     ),
@@ -1374,7 +1374,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                         placeholderFit: BoxFit.fill,
                                         placeholder: 'assets/earth.gif',
                                         image:
-                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                       ),
                                     ),
                                   )
@@ -2571,7 +2571,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                           placeholderFit: BoxFit.contain,
                                           placeholder: 'assets/earth.gif',
                                           image:
-                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                              'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                         ),
                                       ),
                                     ),
@@ -2594,7 +2594,7 @@ class _Update_NewComarableState extends State<Update_NewComarable> {
                                         placeholderFit: BoxFit.fill,
                                         placeholder: 'assets/earth.gif',
                                         image:
-                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI',
+                                            'https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&zoom=15&size=1080x920&maptype=hybrid&markers=color:red%7C%7C? ${(double.parse(lat.toString()) < double.parse(log.toString())) ? "$lat,$log" : "$log,$lat"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8',
                                       ),
                                     ),
                                   )

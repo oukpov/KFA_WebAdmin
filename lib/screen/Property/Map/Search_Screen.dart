@@ -15,7 +15,7 @@ import 'ToFromDate_ForSale.dart';
 
 typedef OnChangeCallback = void Function(dynamic value);
 
-const kGoogleApiKey = 'AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI';
+const kGoogleApiKey = 'AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8';
 final homeScaffoldKey = GlobalKey<ScaffoldState>();
 
 class Map_List_search_property extends StatefulWidget {
@@ -554,7 +554,7 @@ class _SearchPlacesScreenState extends State<Map_List_search_property> {
   int? index_map;
   Future<void> Find_by_piont(double la, double lo) async {
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${la},${lo}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
     if (response.statusCode == 200) {
       // Successful response
@@ -612,7 +612,7 @@ class _SearchPlacesScreenState extends State<Map_List_search_property> {
     var check_charetor = place.split(',');
     if (check_charetor.length == 1) {
       String url =
-          'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI';
+          'https://maps.googleapis.com/maps/api/geocode/json?address=${check_charetor[0]}&region=kh&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8';
       final response = await http.get(Uri.parse(url));
       final jsonResponse = json.decode(response.body);
       var location = jsonResponse['results'][0]['geometry']['location'];
@@ -666,7 +666,7 @@ class _SearchPlacesScreenState extends State<Map_List_search_property> {
       }
     } else {
       final response = await http.get(Uri.parse(
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${check_charetor[0]},${check_charetor[1]}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
 
       // Successful response
       var jsonResponse = json.decode(response.body);
@@ -730,7 +730,7 @@ class _SearchPlacesScreenState extends State<Map_List_search_property> {
   List lg = [];
   Future<void> get_name_search(var name) async {
     String url =
-        'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI&libraries=places';
+        'https://maps.googleapis.com/maps/api/place/textsearch/json?query=${name}&radius=1000&language=km&region=KH&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8&libraries=places';
     final response = await http.get(Uri.parse(url));
     final jsonResponse = json.decode(response.body);
     List ls = jsonResponse['results'];
@@ -753,7 +753,7 @@ class _SearchPlacesScreenState extends State<Map_List_search_property> {
 
   Future<void> poin_map_by_search(var ln, var lg) async {
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyAJt0Zghbk3qm_ZClIQOYeUT0AaV5TeOsI'));
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lg},${ln}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
     var jsonResponse = json.decode(response.body);
     latLng = LatLng(double.parse(lg), double.parse(ln));
     Marker newMarker = Marker(
