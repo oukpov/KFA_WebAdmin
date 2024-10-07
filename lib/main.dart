@@ -9,6 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
+import 'package:web_admin/page/homescreen/testss.dart';
 import 'package:web_admin/page/navigate_setting/online/add_agent.dart';
 import 'package:web_admin/page/navigate_setting/online/isonline.dart';
 import 'package:web_admin/page/verbal_report_page.dart';
@@ -76,6 +77,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         // home: IsOnline(),
         // home: AddUser(),
+        // home: ConnectivityExample(),
         home: LoginPage(),
         // home: VerbalReportPage(),
         // home: LoginPage(),

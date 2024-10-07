@@ -157,6 +157,7 @@ dependencies:
   share_plus: ^4.5.3
   webview_flutter_platform_interface: ^2.6.0
   firebase_database: ^10.4.0
+  connectivity_plus: ^5.0.2
 
 
 dev_dependencies:

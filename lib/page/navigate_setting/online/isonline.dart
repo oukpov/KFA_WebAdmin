@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:web_admin/components/colors.dart';
 
 class IsOnline extends StatefulWidget {
@@ -44,12 +45,19 @@ class _IsOnlineState extends State<IsOnline> {
           // List of users
           final users = snapshot.data!.docs;
 
+          // Format DateTime using the intl package
+
           return Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
                 final user = users[index];
+                Timestamp timestamp =
+                    user['lastActive']; // Adjust index as needed
+
+                // Convert Timestamp to DateTime
+                DateTime dateTime = timestamp.toDate();
                 final bool isOnline = user['isOnline'] ?? false;
                 return Padding(
                   padding:
@@ -106,6 +114,17 @@ class _IsOnlineState extends State<IsOnline> {
                                   ),
                                 ),
                               ],
+                            ),
+                            const Spacer(),
+                            Text(
+                              isOnline ? "" : "Last Action  ",
+                              style: const TextStyle(
+                                  color: Colors.red, fontSize: 13),
+                            ),
+                            Text(
+                              dateTime.toString(),
+                              style: const TextStyle(
+                                  fontSize: 13, fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),

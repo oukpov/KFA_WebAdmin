@@ -96,7 +96,6 @@ class _homescreenState extends State<homescreen> {
   int selectindexs = -1;
   bool isObscure = true;
   var url = "https://img.icons8.com/fluency/100/user-male-circle.png";
-
   String? firstName;
   String? lastName;
   String? gender;
@@ -111,7 +110,6 @@ class _homescreenState extends State<homescreen> {
   @override
   void initState() {
     super.initState();
-    // isOnline();
     updateUserStatus();
     DateTime now = DateTime.now();
     DateTime onewday = DateTime(now.year, now.month, now.day);
@@ -130,7 +128,6 @@ class _homescreenState extends State<homescreen> {
         listReportOption = reportOption;
       }
     });
-    // print("listUser : ${widget.listUser}");
     final QuerySnapshot result = await _firestore
         .collection('users')
         .where('id_agent', isEqualTo: widget.listUser[0]['agency'].toString())
@@ -140,21 +137,32 @@ class _homescreenState extends State<homescreen> {
     if (result.docs.isNotEmpty) {
       // User found
       final userDocRef = result.docs.first.reference;
-
-      // Update user status
       await userDocRef.update({
         'isOnline': true,
         'lastActive': FieldValue.serverTimestamp(),
       });
-      window.onBeforeUnload.listen((event) async {
-        print("==========> Application is about to close.");
-        userDocRef.update({
-          'isOnline': false,
-          'lastActive': FieldValue.serverTimestamp(),
-        });
-
-        // Optionally, set a return value to display a confirmation dialog
+      print("==========> PPP");
+      html.document.onVisibilityChange.listen((event) async {
+        if (html.document.hidden ?? false) {
+          print("==========> Application is about to close.");
+          await userDocRef.update({
+            'isOnline': false,
+            'lastActive': FieldValue.serverTimestamp(),
+          });
+        } else {
+          print("================>");
+        }
       });
+      // window.onBeforeUnload.listen((event) async {
+      //   print("==========> Application is about to close.");
+
+      //   await userDocRef.update({
+      //     'isOnline': false,
+      //     'lastActive': FieldValue.serverTimestamp(),
+      //   });
+
+      //   // Optionally, set a return value to display a confirmation dialog
+      // });
     }
   }
 

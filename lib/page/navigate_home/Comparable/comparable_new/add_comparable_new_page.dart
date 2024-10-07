@@ -4728,11 +4728,26 @@ class _HomePageState extends State<AddComparable> {
   String priceCm = '';
   var avg;
   Future<void> findByPiont(double la, double lo) async {
-    final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$la,$lo&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
+    // final response = await http.get(Uri.parse(
+    //     'https://maps.googleapis.com/maps/api/geocode/json?latlng=$la,$lo&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8'));
+    var headers = {
+      'Authorization':
+          'hEXieWCKYKHKD1wVdiTHDjgwkbY9NwITq_F(bQ8tenn(yIUHbOVaQcRukkLZKnh(j]7Cg[1uhoD%-K5)hSP"2W74Qy7/Elf',
+      'Content-Type': 'application/json'
+    };
+    var data = json.encode({"lat": la, "lng": lo});
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/findlatlog/Map',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
+    );
 
     if (response.statusCode == 200) {
-      var jsonResponse = json.decode(response.body);
+      var jsonResponse = response.data;
 
       List ls = jsonResponse['results'];
       List ac;
