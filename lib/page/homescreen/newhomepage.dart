@@ -119,6 +119,7 @@ class _homescreenState extends State<homescreen> {
     countnotifcations(formattedDatenow, formattedDateago);
   }
 
+  bool hasUnsavedData = true;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> updateUserStatus() async {
     setState(() {
@@ -141,28 +142,20 @@ class _homescreenState extends State<homescreen> {
         'isOnline': true,
         'lastActive': FieldValue.serverTimestamp(),
       });
-      print("==========> PPP");
-      html.document.onVisibilityChange.listen((event) async {
-        if (html.document.hidden ?? false) {
-          print("==========> Application is about to close.");
+
+      html.window.onBeforeUnload.listen((event) async {
+        event.preventDefault();
+        await userDocRef.update({
+          'isOnline': false,
+          'lastActive': FieldValue.serverTimestamp(),
+        });
+        Future.delayed(const Duration(seconds: 30), () async {
           await userDocRef.update({
-            'isOnline': false,
+            'isOnline': true,
             'lastActive': FieldValue.serverTimestamp(),
           });
-        } else {
-          print("================>");
-        }
+        });
       });
-      // window.onBeforeUnload.listen((event) async {
-      //   print("==========> Application is about to close.");
-
-      //   await userDocRef.update({
-      //     'isOnline': false,
-      //     'lastActive': FieldValue.serverTimestamp(),
-      //   });
-
-      //   // Optionally, set a return value to display a confirmation dialog
-      // });
     }
   }
 
