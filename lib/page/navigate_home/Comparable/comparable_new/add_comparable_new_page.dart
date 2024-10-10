@@ -1992,6 +1992,11 @@ class _HomePageState extends State<AddComparable> {
                                                           //   );
                                                           // } else {
                                                           if (validateAndSave()) {
+                                                            print("===> OKOK");
+                                                            await findByPiont(
+                                                                latLng.latitude,
+                                                                latLng
+                                                                    .longitude);
                                                             main(10);
                                                             if (totalland
                                                                         .text !=
@@ -3807,7 +3812,7 @@ class _HomePageState extends State<AddComparable> {
                             requestModel.lng = latLng.longitude.toString();
                             latcontroller.text = latLng.latitude.toString();
                             logcontroller.text = latLng.longitude.toString();
-                            findByPiont(latLng.latitude, latLng.longitude);
+                            // findByPiont(latLng.latitude, latLng.longitude);
                             if (comparedropdown2 == ""
                                 //  &&typedrawerSe == false
                                 ) {
