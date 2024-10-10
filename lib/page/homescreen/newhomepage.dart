@@ -12,6 +12,7 @@ import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:web_admin/page/v_point_page.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';
@@ -871,6 +872,16 @@ class _homescreenState extends State<homescreen> {
                             },
                             child: textfield(
                                 approvedOption[i]['title'].toString())))
+                else if (index == 19)
+                  for (int i = 0; i < vpointOption.length; i++)
+                    PopupMenuItem(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => VpointListPage()));
+                            },
+                            child:
+                                textfield(vpointOption[i]['title'].toString())))
               ];
             },
             child: Padding(
