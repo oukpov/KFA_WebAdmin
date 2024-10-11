@@ -12,12 +12,14 @@ import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_admin/page/v_point_page.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
+import '../../getx/Auth/Auth_agent.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import '../navigate_home/Approvel/classSubmit.dart';
 import '../navigate_home/Approvel/submit.dart';
@@ -120,6 +122,7 @@ class _homescreenState extends State<homescreen> {
     countnotifcations(formattedDatenow, formattedDateago);
   }
 
+  Authentication authentication = Authentication();
   bool hasUnsavedData = true;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> updateUserStatus() async {
@@ -157,6 +160,20 @@ class _homescreenState extends State<homescreen> {
           });
         });
       });
+    }
+  }
+
+  Future<void> clearAllExcept(String exceptionKey) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Get all keys in SharedPreferences
+    Set<String> keys = prefs.getKeys();
+
+    // Iterate through all keys and remove each one except the exception
+    for (String key in keys) {
+      if (key != exceptionKey) {
+        await prefs.remove(key); // Remove all except listlocalhostC
+      }
     }
   }
 
@@ -1340,6 +1357,13 @@ class _homescreenState extends State<homescreen> {
                   ),
                 ),
                 const Spacer(),
+                InkWell(
+                    onTap: () async {
+                      await authentication.checkUpdate();
+                    },
+                    child: options(
+                        'Allow Client', '', Icons.system_update_alt_rounded)),
+
                 (widget.device == 'd' || widget.device == 't')
                     ? options('Notification', '0', Icons.notification_add)
                     : Stack(children: [
@@ -1368,6 +1392,42 @@ class _homescreenState extends State<homescreen> {
                                       color: whiteColor))),
                         ),
                       ]),
+                // Container(
+                //   decoration: BoxDecoration(
+                //       color: whiteColor,
+                //       borderRadius: BorderRadius.circular(5)),
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(5),
+                //     child: Row(
+                //       children: [
+                //         if (registerController.checkUpdateNew == 1)
+                //           const Text(
+                //             "Update New ",
+                //             style: TextStyle(color: Colors.red, fontSize: 14),
+                //           )
+                //         else
+                //           const Text(
+                //             "Update Done! ",
+                //             style: TextStyle(color: Colors.red, fontSize: 14),
+                //           ),
+                //         if (registerController.checkUpdateNew == 1)
+                //           InkWell(
+                //             onTap: () async {
+                //               await registerController.checkUpdateDone(
+                //                   widget.listUser[0]['control_user']);
+                //               html.window.location.reload();
+                //               await clearAllExcept("localhost");
+                //             },
+                //             child: Image.asset(
+                //               "assets/images/refresh.png",
+                //               height: 35,
+                //               width: 35,
+                //             ),
+                //           ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 (widget.device == 'd' || widget.device == 't')
                     ? InkWell(
                         onTap: () {

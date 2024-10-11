@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/Auth/auth.dart';
 import '../../page/homescreen/responsive_layout.dart';
 import '../../page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
+import '../component/getx._snack.dart';
 
 class Authentication extends GetxController {
   var isLocalhost = true.obs;
@@ -150,6 +151,23 @@ class Authentication extends GetxController {
       // print(e);
     } finally {
       isblock.value = false;
+    }
+  }
+
+  Component component = Component();
+  Future<void> checkUpdate() async {
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/updateNews/All',
+      options: Options(
+        method: 'POST',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      component.handleTap("Done!", "Notification to Client Update New");
+    } else {
+      print(response.statusMessage);
     }
   }
 }
