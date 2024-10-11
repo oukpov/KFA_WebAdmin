@@ -5,6 +5,7 @@ import 'dart:html';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -1357,12 +1358,28 @@ class _homescreenState extends State<homescreen> {
                   ),
                 ),
                 const Spacer(),
-                InkWell(
-                    onTap: () async {
-                      await authentication.checkUpdate();
-                    },
-                    child: options(
-                        'Allow Client', '', Icons.system_update_alt_rounded)),
+                if (widget.listUser[0]['agency'] == 28)
+                  InkWell(
+                      onTap: () async {
+                        AwesomeDialog(
+                          padding: const EdgeInsets.only(
+                              right: 30, left: 30, bottom: 10, top: 10),
+                          alignment: Alignment.center,
+                          width: 350,
+                          context: context,
+                          dialogType: DialogType.question,
+                          animType: AnimType.rightSlide,
+                          headerAnimationLoop: false,
+                          title: "Update New",
+                          desc: "Allow to All Client Update New?",
+                          btnOkOnPress: () async {
+                            await authentication.checkUpdate();
+                          },
+                          btnCancelOnPress: () {},
+                        ).show();
+                      },
+                      child: options(
+                          'Allow Client', '', Icons.system_update_alt_rounded)),
 
                 (widget.device == 'd' || widget.device == 't')
                     ? options('Notification', '0', Icons.notification_add)
