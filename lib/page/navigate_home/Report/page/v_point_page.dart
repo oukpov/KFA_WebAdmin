@@ -90,10 +90,10 @@ class VpointDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('VPoint Detail'),
+        title: const Text('VPoint Detail'),
         actions: [
           IconButton(
-            icon: Icon(Icons.edit),
+            icon: const Icon(Icons.edit),
             onPressed: () {
               _showEditDialog(context, vpoint);
             },
@@ -111,7 +111,7 @@ class VpointDetailPage extends StatelessWidget {
                   radius: 50,
                   child: Text(
                     vpoint.username?[0] ?? 'N/A',
-                    style: TextStyle(fontSize: 32),
+                    style: const TextStyle(fontSize: 32),
                   ),
                 ),
               ),

@@ -6,8 +6,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../controller/road_and_commune_controller.dart';
+import '../../../models/raod_and_commune_model.dart';
 
 class AutoList extends StatefulWidget {
   const AutoList({super.key});
@@ -17,12 +22,15 @@ class AutoList extends StatefulWidget {
 }
 
 class _AutoListState extends State<AutoList>
-  with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   late List M_v;
   late List N_v;
 
   static TabController? controller;
   static int index = 0;
+  RoadAndCommnuneController roadAndCommnuneController =
+      Get.put(RoadAndCommnuneController());
+  late List<RoadAndCommnuneModel> list;
   @override
   void initState() {
     View_Data(
@@ -147,13 +155,16 @@ class _View_DataState extends State<View_Data> {
     Load();
     _list = [];
     print(widget.srt);
-    print(Title.elementAt(widget.srt));
+    print("${Title.elementAt(widget.srt)} district");
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    RoadAndCommnuneController roadAndCommnuneController =
+        Get.put(RoadAndCommnuneController());
+    var roadAndCommnune = roadAndCommnuneController.getRoadAndCommnune;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
           onPressed: () {},
@@ -259,9 +270,24 @@ class _View_DataState extends State<View_Data> {
                                   ),
                                   Expanded(
                                     flex: 3,
-                                    child: Text(
-                                      "${double.parse(_list[i]['max_value'].toString()).toStringAsFixed(2)} \$",
-                                      textAlign: TextAlign.right,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            double.parse(_list[i]['max_value']
+                                                    .toString())
+                                                .toStringAsFixed(2),
+                                            textAlign: TextAlign.right,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            _showEditDialog(
+                                                context, _list[i], 'max_value');
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   )
                                 ],
@@ -280,9 +306,24 @@ class _View_DataState extends State<View_Data> {
                                   ),
                                   Expanded(
                                     flex: 3,
-                                    child: Text(
-                                      "${double.parse(_list[i]['min_value'].toString()).toStringAsFixed(2)} \$",
-                                      textAlign: TextAlign.right,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            double.parse(_list[i]['min_value']
+                                                    .toString())
+                                                .toStringAsFixed(2),
+                                            textAlign: TextAlign.right,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            _showEditDialog(
+                                                context, _list[i], 'min_value');
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   )
                                 ],
@@ -336,5 +377,92 @@ class _View_DataState extends State<View_Data> {
         print("Length =  ${_list.length}");
       });
     }
+  }
+
+  Future<void> update(Map<String, dynamic> data) async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/update'));
+    request.body = json.encode({
+      "cid": data['cid'],
+      "option": data['option'],
+      "road_name": data['road_name'],
+      "commune_name": data['commune_name'],
+      "district": data['district'],
+      "province": data['province'],
+      "max_value": data['max_value'],
+      "min_value": data['min_value'],
+      "longitude": data['longitude'],
+      "latitude": data['latitude']
+    });
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      Load(); // Reload the data after update
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  void _showEditDialog(
+      BuildContext context, Map<String, dynamic> data, String field) {
+    TextEditingController controller =
+        TextEditingController(text: data[field].toString());
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit ${field == 'max_value' ? 'Max' : 'Min'} Value'),
+          content: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(labelText: 'Enter new value'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Update'),
+              onPressed: () async {
+                setState(() {
+                  data[field] = double.parse(controller.text);
+                });
+                await update(data);
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Success'),
+                      content: Text('Update successful'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

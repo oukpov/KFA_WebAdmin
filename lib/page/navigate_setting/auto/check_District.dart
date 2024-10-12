@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'GoogleMap.dart';
 
 class District extends StatefulWidget {

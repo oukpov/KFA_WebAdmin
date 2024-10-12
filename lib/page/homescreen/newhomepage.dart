@@ -14,7 +14,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_admin/page/v_point_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/v_point_page.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';

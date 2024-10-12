@@ -3,16 +3,16 @@ import 'package:get/get.dart';
 import 'package:web_admin/controller/v_point_controller.dart';
 import 'package:web_admin/models/v_point_model.dart';
 
-class VpointEditPage extends StatefulWidget {
+class VpointUpdatePage extends StatefulWidget {
   final VpointModel vpoint;
 
-  VpointEditPage({required this.vpoint});
+  VpointUpdatePage({required this.vpoint});
 
   @override
-  _VpointEditPageState createState() => _VpointEditPageState();
+  _VpointUpdatePageState createState() => _VpointUpdatePageState();
 }
 
-class _VpointEditPageState extends State<VpointEditPage> {
+class _VpointUpdatePageState extends State<VpointUpdatePage> {
   final VpointUpdateController controller = Get.find<VpointUpdateController>();
   late TextEditingController telNumController;
   late TextEditingController usernameController;
