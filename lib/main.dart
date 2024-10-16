@@ -17,6 +17,8 @@ import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
+import 'page/navigate_home/Report/page/searchpagetest.dart';
+
 List list = [];
 // String? district_id;
 // String? cummune_id;
@@ -77,10 +79,8 @@ class _MyAppState extends State<MyApp> {
         // home: AddUser(),
         // home: ConnectivityExample(),
         // home: LoginPage(),
-        // home: LoginPage(),
         // home: VerbalReportPage(),
         //home: VerbalReportPage(device: "d"),
-
         home: LoginPage(),
         // home: AddComparable(
         //     type: (value) {},
