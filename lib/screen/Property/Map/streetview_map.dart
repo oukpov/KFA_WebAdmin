@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_google_street_view/flutter_google_street_view.dart'
     as street_view;
+import 'package:web_admin/screen/Property/FirstProperty/component/Colors/appbar.dart';
 
 class StreetViewWidget extends StatefulWidget {
   @override
@@ -61,13 +62,14 @@ class FullScreenStreetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Street View'),
-        leading: IconButton(
-          icon: Icon(Icons.save),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: appback,
+        title: const Text('Street View'),
+        // leading: IconButton(
+        //   icon: Icon(Icons.save),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
       ),
       body: street_view.FlutterGoogleStreetView(
         initPos: street_view.LatLng(

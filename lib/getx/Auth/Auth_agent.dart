@@ -143,6 +143,7 @@ class Authentication extends GetxController {
 
       if (response.statusCode == 200) {
         listblock.value = jsonDecode(json.encode(response.data));
+
         // print(listblock.toString());
       } else {
         print(response.statusMessage);
@@ -154,20 +155,20 @@ class Authentication extends GetxController {
     }
   }
 
-  Component component = Component();
-  Future<void> checkUpdate() async {
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/updateNews/All',
-      options: Options(
-        method: 'POST',
-      ),
-    );
+  // Component component = Component();
+  // Future<void> checkUpdate() async {
+  //   var dio = Dio();
+  //   var response = await dio.request(
+  //     'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/updateNews/All',
+  //     options: Options(
+  //       method: 'POST',
+  //     ),
+  //   );
 
-    if (response.statusCode == 200) {
-      component.handleTap("Done!", "Notification to Client Update New");
-    } else {
-      print(response.statusMessage);
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     component.handleTap("Done!", "Notification to Client Update New");
+  //   } else {
+  //     print(response.statusMessage);
+  //   }
+  // }
 }

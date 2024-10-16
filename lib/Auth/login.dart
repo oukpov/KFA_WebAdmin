@@ -173,9 +173,6 @@ class _LoginState extends State<Login> {
                     if (authenModel.user == null || authenModel.user!.isEmpty) {
                       authenModel.user = [User()];
                     }
-
-                    // authenModel.user![0].username = 'somnang.se';
-                    // authenModel.user![0].password = 'KFA@somnang2023';
                     authenModel.user![0].username = _emailController.text;
                     authenModel.user![0].password = _passwordController.text;
                   });
@@ -194,27 +191,6 @@ class _LoginState extends State<Login> {
               ),
             ),
             const SizedBox(height: 20.0),
-            // Text.rich(TextSpan(children: [
-            //   const TextSpan(
-            //     text: "Don't have any account? ",
-            //     style: TextStyle(fontSize: 16.0, color: kTextLightColor),
-            //   ),
-            //   TextSpan(
-            //     text: 'Register',
-            //     recognizer: TapGestureRecognizer()
-            //       ..onTap = () {
-            //         Navigator.pushReplacement(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => const Register()));
-            //       },
-            //     style: const TextStyle(
-            //       fontSize: 16.0,
-            //       color: kImageColor,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            //   ),
-            // ])),
           ],
         ),
       ),
@@ -353,6 +329,19 @@ class _LoginState extends State<Login> {
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
+              onFieldSubmitted: (value) async {
+                setState(() {
+                  if (authenModel.user == null || authenModel.user!.isEmpty) {
+                    authenModel.user = [User()];
+                  }
+
+                  // authenModel.user![0].username = 'somnang.se';
+                  // authenModel.user![0].password = 'KFA@somnang2023';
+                  authenModel.user![0].username = _emailController.text;
+                  authenModel.user![0].password = _passwordController.text;
+                });
+                await authentication.login(authenModel, context);
+              },
               controller: _emailController,
               onChanged: (input) => authenModel.user![0].username = input,
               obscureText: _isObscure,
@@ -410,6 +399,19 @@ class _LoginState extends State<Login> {
           Padding(
             padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
             child: TextFormField(
+              onFieldSubmitted: (value) async {
+                setState(() {
+                  if (authenModel.user == null || authenModel.user!.isEmpty) {
+                    authenModel.user = [User()];
+                  }
+
+                  // authenModel.user![0].username = 'somnang.se';
+                  // authenModel.user![0].password = 'KFA@somnang2023';
+                  authenModel.user![0].username = _emailController.text;
+                  authenModel.user![0].password = _passwordController.text;
+                });
+                await authentication.login(authenModel, context);
+              },
               controller: _passwordController,
               onChanged: (input) => authenModel.user![0].password = input,
               obscureText: _isObscure,

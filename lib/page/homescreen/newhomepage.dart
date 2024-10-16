@@ -9,6 +9,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
@@ -21,10 +22,9 @@ import '../../Profile/components/singleBox.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../getx/Auth/Auth_agent.dart';
+import '../../getx/checkUpdate/updateCheck.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import '../navigate_home/Approvel/classSubmit.dart';
-import '../navigate_home/Approvel/submit.dart';
-import '../navigate_home/Approvel/submit_list.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
@@ -115,6 +115,7 @@ class _homescreenState extends State<homescreen> {
   void initState() {
     super.initState();
     updateUserStatus();
+
     DateTime now = DateTime.now();
     DateTime onewday = DateTime(now.year, now.month, now.day);
     DateTime twowday = DateTime(now.year, now.month, now.day + 1);
@@ -162,6 +163,7 @@ class _homescreenState extends State<homescreen> {
         });
       });
     }
+    controllerUpdate.checkUpdate(widget.listUser[0]['agency'].toString());
   }
 
   Future<void> clearAllExcept(String exceptionKey) async {
@@ -203,6 +205,7 @@ class _homescreenState extends State<homescreen> {
   @override
   Widget build(BuildContext context) {
     w = MediaQuery.of(context).size.width;
+    controllerUpdate = Get.put(ControllerUpdate());
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: backgroundScreen,
@@ -942,6 +945,7 @@ class _homescreenState extends State<homescreen> {
     );
   }
 
+  ControllerUpdate controllerUpdate = ControllerUpdate();
   int onrow = 10;
   String dd = '';
   Uint8List? getBytes;
@@ -1358,6 +1362,75 @@ class _homescreenState extends State<homescreen> {
                   ),
                 ),
                 const Spacer(),
+                Obx(() {
+                  if (controllerUpdate.checkS.value) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: whiteColor,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Row(
+                          children: [
+                            if (controllerUpdate.checkUpdateNew == 1)
+                              const Text(
+                                "Update New ",
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 14),
+                              )
+                            else
+                              const Text(
+                                "Update Done! ",
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 14),
+                              ),
+                            if (controllerUpdate.checkUpdateNew == 1)
+                              InkWell(
+                                onTap: () async {
+                                  await controllerUpdate.checkUpdateDone(
+                                      widget.listUser[0]['agency'].toString());
+                                  html.window.location.reload();
+                                  await clearAllExcept("localhost");
+                                },
+                                child: Image.asset(
+                                  "assets/images/refresh.png",
+                                  height: 35,
+                                  width: 35,
+                                ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                }),
+
+                const SizedBox(width: 10),
+                if (widget.listUser[0]['agency'] == 28)
+                  InkWell(
+                      onTap: () async {
+                        AwesomeDialog(
+                          padding: const EdgeInsets.only(
+                              right: 30, left: 30, bottom: 10, top: 10),
+                          alignment: Alignment.center,
+                          width: 350,
+                          context: context,
+                          dialogType: DialogType.question,
+                          animType: AnimType.rightSlide,
+                          headerAnimationLoop: false,
+                          title: "Update New",
+                          desc: "Allow to All Agent Update New?",
+                          btnOkOnPress: () async {
+                            await controllerUpdate.checkUpdateAll();
+                          },
+                          btnCancelOnPress: () {},
+                        ).show();
+                      },
+                      child: options(
+                          'Allow Agent', '', Icons.system_update_alt_rounded)),
+                const SizedBox(width: 10),
                 if (widget.listUser[0]['agency'] == 28)
                   InkWell(
                       onTap: () async {
@@ -1373,7 +1446,7 @@ class _homescreenState extends State<homescreen> {
                           title: "Update New",
                           desc: "Allow to All Client Update New?",
                           btnOkOnPress: () async {
-                            await authentication.checkUpdate();
+                            await controllerUpdate.checkUpdateAll();
                           },
                           btnCancelOnPress: () {},
                         ).show();
@@ -1381,85 +1454,50 @@ class _homescreenState extends State<homescreen> {
                       child: options(
                           'Allow Client', '', Icons.system_update_alt_rounded)),
 
-                (widget.device == 'd' || widget.device == 't')
-                    ? options('Notification', '0', Icons.notification_add)
-                    : Stack(children: [
-                        Icon(
-                          Icons.notifications,
-                          size: 40,
-                          color: whiteColor,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Notifications(
-                                          listnotificationlist:
-                                              listnotificationlist,
-                                        )));
-                          },
-                          child: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              radius: 13,
-                              child: Text(countNotification,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12,
-                                      color: whiteColor))),
-                        ),
-                      ]),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       color: whiteColor,
-                //       borderRadius: BorderRadius.circular(5)),
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(5),
-                //     child: Row(
-                //       children: [
-                //         if (registerController.checkUpdateNew == 1)
-                //           const Text(
-                //             "Update New ",
-                //             style: TextStyle(color: Colors.red, fontSize: 14),
-                //           )
-                //         else
-                //           const Text(
-                //             "Update Done! ",
-                //             style: TextStyle(color: Colors.red, fontSize: 14),
-                //           ),
-                //         if (registerController.checkUpdateNew == 1)
-                //           InkWell(
-                //             onTap: () async {
-                //               await registerController.checkUpdateDone(
-                //                   widget.listUser[0]['control_user']);
-                //               html.window.location.reload();
-                //               await clearAllExcept("localhost");
-                //             },
-                //             child: Image.asset(
-                //               "assets/images/refresh.png",
-                //               height: 35,
-                //               width: 35,
-                //             ),
-                //           ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-                (widget.device == 'd' || widget.device == 't')
-                    ? InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Notifications(
-                                        listnotificationlist:
-                                            listnotificationlist,
-                                      )));
-                        },
-                        child: options('New Users', countNotification,
-                            Icons.notification_add),
-                      )
-                    : const SizedBox(),
+                // (widget.device == 'd' || widget.device == 't')
+                //     ? options('Notification', '0', Icons.notification_add)
+                //     : Stack(children: [
+                //         Icon(
+                //           Icons.notifications,
+                //           size: 40,
+                //           color: whiteColor,
+                //         ),
+                //         InkWell(
+                //           onTap: () {
+                //             Navigator.push(
+                //                 context,
+                //                 MaterialPageRoute(
+                //                     builder: (context) => Notifications(
+                //                           listnotificationlist:
+                //                               listnotificationlist,
+                //                         )));
+                //           },
+                //           child: CircleAvatar(
+                //               backgroundColor: Colors.red,
+                //               radius: 13,
+                //               child: Text(countNotification,
+                //                   style: TextStyle(
+                //                       fontWeight: FontWeight.bold,
+                //                       fontSize: 12,
+                //                       color: whiteColor))),
+                //         ),
+                //       ]),
+
+                // (widget.device == 'd' || widget.device == 't')
+                //     ? InkWell(
+                //         onTap: () {
+                //           Navigator.push(
+                //               context,
+                //               MaterialPageRoute(
+                //                   builder: (context) => Notifications(
+                //                         listnotificationlist:
+                //                             listnotificationlist,
+                //                       )));
+                //         },
+                //         child: options('New Users', countNotification,
+                //             Icons.notification_add),
+                //       )
+                //     : const SizedBox(),
               ],
             ),
           ],

@@ -610,7 +610,7 @@ class _HomePageState extends State<AddComparable> {
         // print('No.3');
 
         maincheck();
-        getAddress(latLng);
+        // getAddress(latLng);
         Show(requestModel);
         findlocation(LatLng(
             double.parse(requestModel.lat), double.parse(requestModel.lng)));
@@ -700,7 +700,7 @@ class _HomePageState extends State<AddComparable> {
     var headers = {'Content-Type': 'application/json'};
     var dio = Dio();
 
-    // Filter out null values from query parameters
+    print("start : $start && end : $end");
     var queryParams = {
       if (start != null) "start": start,
       if (end != null) "end": end,
@@ -1568,7 +1568,7 @@ class _HomePageState extends State<AddComparable> {
                                       InkWell(
                                         onTap: () {
                                           addMarker(latLng);
-                                          getAddress(latLng);
+                                          // getAddress(latLng);
                                           Show(requestModel);
                                         },
                                         child: Container(
@@ -1626,45 +1626,22 @@ class _HomePageState extends State<AddComparable> {
                                               child: TextFormField(
                                                 keyboardType:
                                                     TextInputType.text,
-                                                // controller: searchlatlog,
+                                                controller: (j == 0)
+                                                    ? latcontroller
+                                                    : logcontroller,
                                                 onTap: () {},
-                                                onFieldSubmitted: (value) {
-                                                  setState(() {
-                                                    if (j == 0) {
-                                                      requestModel.lat =
-                                                          value.toString();
-                                                      latcontroller.text =
-                                                          value.toString();
-                                                    } else {
-                                                      requestModel.lng =
-                                                          value.toString();
-                                                      logcontroller.text =
-                                                          value.toString();
-                                                    }
-                                                  });
-                                                },
                                                 onChanged: (value) async {
                                                   setState(() {
                                                     maincheck();
                                                     if (j == 0) {
                                                       requestModel.lat =
                                                           value.toString();
-                                                      latcontroller.text =
-                                                          value.toString();
                                                     } else {
                                                       requestModel.lng =
                                                           value.toString();
-                                                      logcontroller.text =
-                                                          value.toString();
                                                     }
                                                   });
-                                                  await findlocation(LatLng(
-                                                      double.parse(
-                                                          requestModel.lat),
-                                                      double.parse(
-                                                          requestModel.lng)));
                                                 },
-                                                //,
                                                 textInputAction:
                                                     TextInputAction.search,
                                                 style: const TextStyle(
@@ -1691,13 +1668,13 @@ class _HomePageState extends State<AddComparable> {
                                                                   double.parse(
                                                                       requestModel
                                                                           .lng)));
-                                                              getAddress(LatLng(
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lat),
-                                                                  double.parse(
-                                                                      requestModel
-                                                                          .lng)));
+                                                              // getAddress(LatLng(
+                                                              //     double.parse(
+                                                              //         requestModel
+                                                              //             .lat),
+                                                              //     double.parse(
+                                                              //         requestModel
+                                                              //             .lng)));
                                                             });
                                                           },
                                                           icon: Icon(
@@ -1992,7 +1969,7 @@ class _HomePageState extends State<AddComparable> {
                                                           //   );
                                                           // } else {
                                                           if (validateAndSave()) {
-                                                            print("===> OKOK");
+                                                            // print("===> OKOK");
                                                             await findByPiont(
                                                                 latLng.latitude,
                                                                 latLng
@@ -2305,6 +2282,7 @@ class _HomePageState extends State<AddComparable> {
                                                       checkaskingPrice = false;
                                                     }
                                                   });
+                                                  return null;
                                                 },
                                                 controller: askingPricett,
                                                 keyboardType:
@@ -3791,8 +3769,13 @@ class _HomePageState extends State<AddComparable> {
                       });
                     },
                     onTap: (argument) {
+                      setState(() {
+                        latcontroller.clear();
+                        logcontroller.clear();
+                      });
                       if (viewMap) {
                         latLng = argument;
+
                         requestModel.lat = latLng.latitude.toString();
                         requestModel.lng = latLng.longitude.toString();
                         addMarkers(argument);
@@ -3820,7 +3803,7 @@ class _HomePageState extends State<AddComparable> {
                             } else if (comparedropdown2 != "" &&
                                 typedrawerSe == false) {
                               addMarker(argument);
-                              getAddress(argument);
+                              // getAddress(argument);
                               Show(requestModel);
                             }
                           } else {
@@ -4090,8 +4073,8 @@ class _HomePageState extends State<AddComparable> {
           });
           if (data_adding_correct.isNotEmpty) {
             for (int i = 0; i < data_adding_correct.length; i++) {
-              print(
-                  "No.${data_adding_correct[i]['comparable_id']} : ${data_adding_correct[i]['comparable_property_id']}\n");
+              // print(
+              //     "No.${data_adding_correct[i]['comparable_id']} : ${data_adding_correct[i]['comparable_property_id']}\n");
               if (data_adding_correct[i]['comparable_property_id'].toString() ==
                   '15') {
                 markerType(i, 'l.png');
@@ -4792,17 +4775,17 @@ class _HomePageState extends State<AddComparable> {
   }
 
   ///converts `coordinates` to actual `address` using google map api
-  Future<void> getAddress(LatLng latLng) async {
-    // final coordinates = Coordinates(latLng.latitude, latLng.longitude);
-    try {} catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('SOMETING WENT WRONG\nDID YOU ADD API KEY '),
-        ),
-      );
-      rethrow;
-    }
-  }
+  // Future<void> getAddress(LatLng latLng) async {
+  //   // final coordinates = Coordinates(latLng.latitude, latLng.longitude);
+  //   try {} catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('SOMETING WENT WRONG\nDID YOU ADD API KEY '),
+  //       ),
+  //     );
+  //     rethrow;
+  //   }
+  // }
 }
 
 class _DataSource extends DataTableSource {
@@ -4866,7 +4849,8 @@ class _DataSource extends DataTableSource {
           Row(
             children: [
               PrinterCom(item: item),
-              (item['comparabl_user'] == listlocalhosts[0]['agency'])
+              ((item['comparabl_user'] == listlocalhosts[0]['agency']) ||
+                      (listlocalhosts[0]['agency'] == 28))
                   ? EditDetail(item: item)
                   : const SizedBox(),
               Padding(
@@ -4889,7 +4873,8 @@ class _DataSource extends DataTableSource {
                       color: Color.fromARGB(255, 145, 6, 52)),
                 ),
               ),
-              ((listBlock[0]['delete_agent'] == listlocalhosts[0]['agency']))
+              //listBlock[0]['delete_agent']
+              ((listlocalhosts[0]['agency'] == 28))
                   ? Padding(
                       padding: const EdgeInsets.only(right: 0),
                       child: InkWell(
