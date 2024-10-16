@@ -106,13 +106,9 @@ class VpointListPage extends StatelessWidget {
                 );
               } else {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 100,
-                    child: Expanded(
-                        child:
-                            VpointListItem(vpoint: controller.listsearch[0])),
-                  ),
+                  padding: const EdgeInsets.only(
+                      top: 10, bottom: 500, left: 10, right: 10),
+                  child: VpointListItem(vpoint: controller.listsearch[0]),
                 );
               }
             }),
