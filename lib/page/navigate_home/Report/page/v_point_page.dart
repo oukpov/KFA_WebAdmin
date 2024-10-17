@@ -34,11 +34,11 @@ class VpointListPage extends StatelessWidget {
                         Expanded(
                           child: TextField(
                             controller: searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter Phone Number',
+                            decoration: const InputDecoration(
+                              hintText: 'Enter Phone Number or Username',
                               border: InputBorder.none,
-                              prefixIcon:
-                                  Icon(Icons.phone, color: Colors.grey[600]),
+                              // prefixIcon:
+                              //     Icon(Icons.phone, color: Colors.grey[600]),
                             ),
                           ),
                         ),
@@ -105,10 +105,14 @@ class VpointListPage extends StatelessWidget {
                   ),
                 );
               } else {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 500, left: 10, right: 10),
-                  child: VpointListItem(vpoint: controller.listsearch[0]),
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: VpointListItem(
+                      vpointList:
+                          controller.listsearch.cast<VpointModel>().toList(),
+                    ),
+                  ),
                 );
               }
             }),
@@ -120,35 +124,41 @@ class VpointListPage extends StatelessWidget {
 }
 
 class VpointListItem extends StatelessWidget {
-  final VpointModel vpoint;
+  final List<VpointModel> vpointList;
 
-  const VpointListItem({Key? key, required this.vpoint}) : super(key: key);
+  const VpointListItem({Key? key, required this.vpointList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text(vpoint.username?[0] ?? 'N/A'),
-        ),
-        title: Text(vpoint.username ?? 'N/A',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Tel: ${vpoint.telNum ?? 'N/A'}'),
-            Text('VPoint: ${vpoint.countAutoverbal ?? 'N/A'}',
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
-            Text('Expire Date: ${_formatDate(vpoint.expiry)}'),
-          ],
-        ),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          Get.to(() => VpointDetailPage(vpoint: vpoint));
-        },
-      ),
+    return ListView.builder(
+      itemCount: vpointList.length,
+      itemBuilder: (context, index) {
+        final vpoint = vpointList[index];
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Text(vpoint.username?[0] ?? 'N/A'),
+            ),
+            title: Text(vpoint.username ?? 'N/A',
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Tel: ${vpoint.telNum ?? 'N/A'}'),
+                Text('VPoint: ${vpoint.countAutoverbal ?? 'N/A'}',
+                    style: const TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold)),
+                Text('Expire Date: ${_formatDate(vpoint.expiry)}'),
+              ],
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Get.to(() => VpointDetailPage(vpoint: vpoint));
+            },
+          ),
+        );
+      },
     );
   }
 
