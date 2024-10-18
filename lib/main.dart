@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/Auth/login.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/Report/page/verbal_report_page.dart';
 import 'package:web_admin/page/navigate_setting/online/isonline.dart';
 import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
@@ -77,11 +78,11 @@ class _MyAppState extends State<MyApp> {
         // home: AddUser(),
         // home: ConnectivityExample(),
         // home: LoginPage(),
-        // home: LoginPage(),
+        home: LoginPage(),
         // home: VerbalReportPage(),
         //home: VerbalReportPage(device: "d"),
-
-        home: LoginPage(),
+        // home: ZoneMap(),
+        // home: LoginPage(),
         // home: AddComparable(
         //     type: (value) {},
         //     addNew: (value) {},

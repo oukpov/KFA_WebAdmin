@@ -25,6 +25,7 @@ import '../../getx/Auth/Auth_agent.dart';
 import '../../getx/checkUpdate/updateCheck.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import '../navigate_home/Approvel/classSubmit.dart';
+import '../navigate_home/AutoVerbal/Zone/add_zone.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
@@ -110,6 +111,7 @@ class _homescreenState extends State<homescreen> {
   String? username;
   String? controlleruser;
   List listReportOption = [];
+  List listAdminOption = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -131,8 +133,10 @@ class _homescreenState extends State<homescreen> {
     setState(() {
       if (widget.listUser[0]['agency'].toString() == "28") {
         listReportOption = reportOptionS;
+        listAdminOption = autoOptionAdmin;
       } else {
         listReportOption = reportOption;
+        listAdminOption = autoOption;
       }
     });
     final QuerySnapshot result = await _firestore
@@ -426,15 +430,10 @@ class _homescreenState extends State<homescreen> {
                           },
                           child: textfield('HomeProperty')))
                 else if (index == 4)
-                  for (int i = 0; i < autoOption.length; i++)
+                  for (int i = 0; i < listAdminOption.length; i++)
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 1) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Show_autoVerbals()));
-                              }
                               if (i == 0) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => VerbalAdmin(
@@ -443,9 +442,19 @@ class _homescreenState extends State<homescreen> {
                                           type: (value) {},
                                         )));
                               }
+                              if (i == 1) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Show_autoVerbals()));
+                              }
+
+                              if (i == 2) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const ZoneMap()));
+                              }
                             },
-                            child:
-                                textfield(autoOption[i]['title'].toString())))
+                            child: textfield(
+                                listAdminOption[i]['title'].toString())))
                 else if (index == 5)
                   for (int i = 0; i < verbalOption.length; i++)
                     PopupMenuItem(

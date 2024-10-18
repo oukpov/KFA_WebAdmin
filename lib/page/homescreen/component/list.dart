@@ -89,6 +89,11 @@ List autoOption = [
   {"title": "New Auto Verbal"},
   {"title": "Auto Verbal List"},
 ];
+List autoOptionAdmin = [
+  {"title": "New Auto Verbal"},
+  {"title": "Auto Verbal List"},
+  {"title": "Add Zone Specail"},
+];
 List verbalOption = [
   {"title": "Cross Check Price"},
   {"title": "List Auto Verbal"},
