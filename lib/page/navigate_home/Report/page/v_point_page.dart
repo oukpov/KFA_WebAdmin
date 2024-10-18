@@ -6,61 +6,159 @@ import 'package:intl/intl.dart';
 
 class VpointListPage extends StatelessWidget {
   final VpointUpdateController controller = Get.put(VpointUpdateController());
+  final TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('VPoint List'),
       ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return Center(child: CircularProgressIndicator());
-        } else if (controller.vpointList.isNotEmpty) {
-          return ListView.builder(
-            itemCount: controller.vpointList.length,
-            itemBuilder: (context, index) {
-              final vpoint = controller.vpointList[index];
-              return VpointListItem(vpoint: vpoint);
-            },
-          );
-        } else {
-          return Center(child: Text('No data available'));
-        }
-      }),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 500,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: searchController,
+                            decoration: const InputDecoration(
+                              hintText: 'Enter Phone Number or Username',
+                              border: InputBorder.none,
+                              // prefixIcon:
+                              //     Icon(Icons.phone, color: Colors.grey[600]),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            if (searchController.text.isNotEmpty) {
+                              controller.searchphone(searchController.text);
+                            }
+                          },
+                          icon: const Icon(Icons.search),
+                          label: const Text('Search'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            Obx(() {
+              if (controller.isSearch.value) {
+                return const CircularProgressIndicator();
+              } else if (controller.listsearch.isEmpty) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.vpointList.length,
+                    itemBuilder: (context, index) {
+                      VpointModel vpoint = controller.vpointList[index];
+                      return Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            child: Text(vpoint.username?[0] ?? 'N/A'),
+                          ),
+                          title: Text(vpoint.username ?? 'N/A',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Tel: ${vpoint.telNum ?? 'N/A'}'),
+                              Text('VPoint: ${vpoint.countAutoverbal ?? 'N/A'}',
+                                  style: const TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                  'Expire Date: ${DateFormat('yyyy-MM-dd').format(DateTime.parse(vpoint.expiry ?? ''))}'),
+                            ],
+                          ),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Get.to(() => VpointDetailPage(vpoint: vpoint));
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              } else {
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: VpointListItem(
+                      vpointList:
+                          controller.listsearch.cast<VpointModel>().toList(),
+                    ),
+                  ),
+                );
+              }
+            }),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class VpointListItem extends StatelessWidget {
-  final VpointModel vpoint;
+  final List<VpointModel> vpointList;
 
-  const VpointListItem({Key? key, required this.vpoint}) : super(key: key);
+  const VpointListItem({Key? key, required this.vpointList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text(vpoint.username?[0] ?? 'N/A'),
-        ),
-        title: Text(vpoint.username ?? 'N/A',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Tel: ${vpoint.telNum ?? 'N/A'}'),
-            Text('VPoint: ${vpoint.countAutoverbal ?? 'N/A'}',
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
-            Text('Expire Date: ${_formatDate(vpoint.expiry)}'),
-          ],
-        ),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () {
-          Get.to(() => VpointDetailPage(vpoint: vpoint));
-        },
-      ),
+    return ListView.builder(
+      itemCount: vpointList.length,
+      itemBuilder: (context, index) {
+        final vpoint = vpointList[index];
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: ListTile(
+            leading: CircleAvatar(
+              child: Text(vpoint.username?[0] ?? 'N/A'),
+            ),
+            title: Text(vpoint.username ?? 'N/A',
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Tel: ${vpoint.telNum ?? 'N/A'}'),
+                Text('VPoint: ${vpoint.countAutoverbal ?? 'N/A'}',
+                    style: const TextStyle(
+                        color: Colors.blue, fontWeight: FontWeight.bold)),
+                Text('Expire Date: ${_formatDate(vpoint.expiry)}'),
+              ],
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Get.to(() => VpointDetailPage(vpoint: vpoint));
+            },
+          ),
+        );
+      },
     );
   }
 

@@ -83,6 +83,9 @@ class _MyAppState extends State<MyApp> {
         //home: VerbalReportPage(device: "d"),
         // home: ZoneMap(),
         // home: LoginPage(),
+        // home: VerbalReportPage(),
+        //home: VerbalReportPage(device: "d"),
+
         // home: AddComparable(
         //     type: (value) {},
         //     addNew: (value) {},
