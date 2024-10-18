@@ -1,22 +1,16 @@
-import 'dart:convert';
-import 'dart:html';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:web_admin/Auth/login.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
-import 'package:web_admin/page/navigate_home/Report/page/verbal_report_page.dart';
-import 'package:web_admin/page/navigate_setting/online/isonline.dart';
-import 'package:web_admin/page/navigate_home/Approvel/classSubmit.dart';
 import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/v_point_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
+
+import 'Auth/login.dart';
 
 List list = [];
 // String? district_id;
@@ -74,18 +68,8 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
-        // home: IsOnline(),
-        // home: AddUser(),
-        // home: ConnectivityExample(),
-        // home: LoginPage(),
-        home: LoginPage(),
-        // home: VerbalReportPage(),
-        //home: VerbalReportPage(device: "d"),
         // home: ZoneMap(),
-        // home: LoginPage(),
-        // home: VerbalReportPage(),
-        //home: VerbalReportPage(device: "d"),
-
+        home: LoginPage(),
         // home: AddComparable(
         //     type: (value) {},
         //     addNew: (value) {},
@@ -99,54 +83,6 @@ class _MyAppState extends State<MyApp> {
         //         "user_status": 0
         //       }
         //     ]),
-        // home: ClassSubmit(device: "d", listUser: [
-        //   {
-        //     "id": 52,
-        //     "user_role_id": 53,
-        //     "agency": 70,
-        //     "username": "Test",
-        //     "password": "333802e987dfce42e28b749a20dc257f",
-        //     "user_status": 0
-        //   }
-        // ]),
-        // routes: {
-        //   "/Admin": (context) => const LoginPage()
-        // "/Admin": (p0) => ClassTest(),
-
-        // "/Admin": (p0) => VerbalAdmin(
-        //         addNew: (value) {},
-        //         type: (value) {},
-        //         listUser: const [
-        //           {
-        //             "id": 65,
-        //             "user_role_id": 53,
-        //             "agency": 83,
-        //             "username": "somnang.se",
-        //             "password": "9e6981b5813c4da23404c2a3e0f95e81",
-        //             "user_status": 0
-        //           }
-        //         ]),
-        // '/Admin': (context) => const ResponsiveHomePage(
-        //       listUser: [],
-        //       url: '',
-        //       id: '',
-        //     ),
-        // },
-        // onGenerateRoute: (RouteSettings settings) {
-        //   final args = settings.name;
-
-        //   if (args != null) {
-        //     var data = settings.name!.split('/');
-        //     var value = data[1].toString();
-        //     return MaterialPageRoute(
-        //       builder: (context) {
-        //         return koko(
-        //           name: value.toString(),
-        //         );
-        //       },
-        //     );
-        //   }
-        // },
       ),
     );
   }

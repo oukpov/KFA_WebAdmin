@@ -1112,6 +1112,16 @@ class _HomePageState extends State<AddComparable> {
       "check": 0,
     }
   ];
+  List listMarket = [
+    {
+      "title": "Market",
+      "check": 1,
+    },
+    {
+      "title": "No Market",
+      "check": 0,
+    }
+  ];
   bool clearmarker = false;
   bool checklatlog = false;
   LatLng? latlogModel;
@@ -1205,6 +1215,7 @@ class _HomePageState extends State<AddComparable> {
     });
   }
 
+  int market = 0;
   Future<void> addComparable() async {
     protectID = int.parse(
         "${widget.listlocalhosts[0]['agency']}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(100)}");
@@ -1214,6 +1225,7 @@ class _HomePageState extends State<AddComparable> {
       "comparable_property_id": comparablePropertyID,
       "comparable_road": comparableRoad,
       "protectID": protectID,
+      "markert": market,
       "comparable_land_length": comparableLandLength,
       "borey": checkborey,
       "comparable_land_width": comparableLandWidth,
@@ -1428,7 +1440,7 @@ class _HomePageState extends State<AddComparable> {
   }
 
   int on_row = 20;
-
+  bool checkMarket = false;
   Widget mapShow() {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -1917,6 +1929,34 @@ class _HomePageState extends State<AddComparable> {
                                                     },
                                                     icon: Icon(
                                                         !checkboreyTP
+                                                            ? Icons
+                                                                .check_box_outline_blank_outlined
+                                                            : Icons
+                                                                .check_box_outlined,
+                                                        size: 25,
+                                                        color: whiteColor),
+                                                    color: whiteColor),
+                                                Text(
+                                                  'Market  ',
+                                                  style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: 15),
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        //////////PPPPPPPPP
+                                                        checkMarket =
+                                                            !checkMarket;
+                                                        if (!checkMarket) {
+                                                          market = 0;
+                                                        } else {
+                                                          market = 1;
+                                                        }
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                        !checkMarket
                                                             ? Icons
                                                                 .check_box_outline_blank_outlined
                                                             : Icons
@@ -3967,6 +4007,7 @@ class _HomePageState extends State<AddComparable> {
       "check": check,
       "protectID": protectID,
       "comparable_id": comparableID,
+      "markert": market,
       "comparable_adding_price": price,
       "comparable_property_id": updateproperty,
       "comparable_road": updateraod,
@@ -3991,6 +4032,7 @@ class _HomePageState extends State<AddComparable> {
             element['comparable_road'] = updateraod;
             element['property_type_name'] = updatepropertyName;
             element['road_name'] = updateraodName;
+            element['markert'] = market;
             element['borey'] = checkborey;
             break;
           }
@@ -4378,6 +4420,68 @@ class _HomePageState extends State<AddComparable> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 35,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+
+                              onChanged: (newValue) {
+                                setState(() {
+                                  market = int.parse(newValue!);
+                                  print("market => $market");
+                                  // String roadDrop = newValue as String;
+                                });
+                              },
+
+                              items: listMarket
+                                  .map<DropdownMenuItem<String>>(
+                                    (value) => DropdownMenuItem<String>(
+                                      value: value["check"].toString(),
+                                      child: Text(value["title"].toString()),
+                                    ),
+                                  )
+                                  .toList(),
+                              // add extra sugar..
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: kImageColor,
+                              ),
+
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 0),
+                                fillColor: Colors.white,
+                                filled: true,
+                                labelText:
+                                    (data_adding_correct[i]['markert'] == 0 ||
+                                            data_adding_correct[i]['markert'] ==
+                                                null)
+                                        ? "No Market"
+                                        : "Market",
+                                hintStyle: TextStyle(
+                                    color: blackColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                                hintText: 'Select one',
+                                prefixIcon: const Icon(
+                                  Icons.edit_road_outlined,
+                                  color: kImageColor,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: kPrimaryColor, width: 2.0),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    width: 1,
+                                    color: kPrimaryColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ),
                           const SizedBox(height: 10),
                           SizedBox(
                             height: 35,
@@ -4386,7 +4490,7 @@ class _HomePageState extends State<AddComparable> {
 
                               onChanged: (newValue) {
                                 setState(() {
-                                  checkborey = int.parse(newValue!);
+                                  market = int.parse(newValue!);
                                   // String roadDrop = newValue as String;
                                 });
                               },

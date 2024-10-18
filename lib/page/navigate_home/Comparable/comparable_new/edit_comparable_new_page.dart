@@ -54,6 +54,10 @@ class _EditComState extends State<EditCom> {
       if (boreyvalue == 1) {
         checkboreyTP = true;
       }
+      market = int.parse("${widget.item['markert'] ?? "0"}");
+      if (market == 1) {
+        checkMarket = true;
+      }
       comparablePropertyID =
           int.parse(widget.item['comparable_property_id'].toString());
       comparableroad = int.parse(widget.item['comparable_road'].toString());
@@ -135,6 +139,8 @@ class _EditComState extends State<EditCom> {
     });
   }
 
+  int market = 0;
+  bool checkMarket = false;
   bool checkboreyTP = false;
   int boreyvalue = 0;
   int comparablePropertyID = 0;
@@ -209,6 +215,29 @@ class _EditComState extends State<EditCom> {
                           },
                           icon: Icon(
                               !checkboreyTP
+                                  ? Icons.check_box_outline_blank_outlined
+                                  : Icons.check_box_outlined,
+                              size: 25,
+                              color: whiteColor),
+                          color: whiteColor),
+                      Text(
+                        !checkboreyTP ? 'No Market' : 'Market  ',
+                        style: TextStyle(color: whiteColor, fontSize: 15),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              //////////PPPPPPPPP
+                              checkMarket = !checkMarket;
+                              if (!checkMarket) {
+                                market = 0;
+                              } else {
+                                market = 1;
+                              }
+                            });
+                          },
+                          icon: Icon(
+                              !checkMarket
                                   ? Icons.check_box_outline_blank_outlined
                                   : Icons.check_box_outlined,
                               size: 25,
