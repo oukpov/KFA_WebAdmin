@@ -55,11 +55,13 @@ class _ZoneMapState extends State<ZoneMap> {
       listLatlong.add({
         "lat": latLng.latitude,
         "log": latLng.longitude,
+        "market": marketvalue,
         "name_road": route
       });
       _createPolygon();
       LatLng centroid = _calculatePolygonCentroid(
           markers.map((marker) => marker.position).toList());
+      print("listLatlong : $listLatlong");
     });
   }
 
@@ -218,12 +220,14 @@ class _ZoneMapState extends State<ZoneMap> {
     }
   }
 
+  int? marketvalue;
   bool checkFindlatlong = false;
   LatLng? latlong;
   AddZone addZone = AddZone();
   List listLatlong = [];
   bool typeMap = false;
   bool checkMarker = false;
+  bool marketRN = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -287,13 +291,15 @@ class _ZoneMapState extends State<ZoneMap> {
                                   )),
                               const SizedBox(width: 10),
                               Text(
-                                "Add Zone",
+                                "Check Name Road",
                                 style:
                                     TextStyle(color: whiteColor, fontSize: 16),
                               ),
                               IconButton(
                                   onPressed: () {
                                     setState(() {
+                                      marketvalue = null;
+                                      marketRN = false;
                                       checkMarker = !checkMarker;
                                       checkFindlatlong = false;
                                       listMarkerIds.clear();
@@ -320,7 +326,7 @@ class _ZoneMapState extends State<ZoneMap> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Raod Name : ",
+                                  "Road Name : ",
                                   style: TextStyle(
                                       color: whiteColor, fontSize: 16),
                                 ),
@@ -339,7 +345,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Raod Name Used : ",
+                                      "Road Name Used : ",
                                       style: TextStyle(
                                           color: whiteColor, fontSize: 16),
                                     ),
@@ -357,7 +363,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Raod Name Click : ",
+                                      "Road Name Click : ",
                                       style: TextStyle(
                                           color: whiteColor, fontSize: 16),
                                     ),
@@ -429,9 +435,11 @@ class _ZoneMapState extends State<ZoneMap> {
                                           markers.clear();
                                           points.clear();
                                           listLatlong.clear();
+                                          marketvalue = null;
                                           route = "";
                                           listClicks.clear();
                                           routeClick = "";
+                                          marketRN = false;
                                         });
                                       },
                                       child: Container(
@@ -462,6 +470,30 @@ class _ZoneMapState extends State<ZoneMap> {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "Market : ",
+                                      style: TextStyle(
+                                          color: whiteColor, fontSize: 16),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            marketRN = !marketRN;
+                                            if (!marketRN) {
+                                              marketvalue = null;
+                                            } else {
+                                              marketvalue = 1;
+                                            }
+                                          });
+                                        },
+                                        icon: Icon(
+                                          !marketRN
+                                              ? Icons
+                                                  .check_box_outline_blank_outlined
+                                              : Icons.check_box_outlined,
+                                          color: whiteColor,
+                                        )),
                                   ],
                                 ),
                               ],
