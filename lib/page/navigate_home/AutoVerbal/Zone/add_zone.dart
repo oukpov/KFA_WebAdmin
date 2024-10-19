@@ -162,7 +162,11 @@ class _ZoneMapState extends State<ZoneMap> {
       int noZone = item['no_zone'];
       LatLng point = LatLng(item['lat'], item['log']);
       if (noZone >= 1 && noZone <= 20) {
-        zonePoints[noZone]!.add({"point": point, "no_zone": item['no_zone']});
+        zonePoints[noZone]!.add({
+          "point": point,
+          "no_zone": item['no_zone'],
+          "name_road": item['name_road']
+        });
       }
     }
 
@@ -185,10 +189,13 @@ class _ZoneMapState extends State<ZoneMap> {
                 title: 'Do you want to Delete this Zone?',
                 btnOkOnPress: () async {
                   int noZone = 0;
+                  String nameRoad = "";
                   for (var entry in zonePoints[zone]!) {
                     noZone = entry['no_zone'];
+                    nameRoad = entry['name_road'];
                   }
-                  await addZone.deleteZone(noZone);
+
+                  await addZone.deleteZone(noZone, nameRoad);
                   setState(() {
                     checkFindlatlong = false;
                     listMarkerIds.clear();
