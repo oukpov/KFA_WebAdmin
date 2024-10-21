@@ -106,8 +106,8 @@ class _PrinterComState extends State<PrinterCom> {
     if (listimage.isNotEmpty) {
       bytesLogo = base64Decode(listimage[0]['image']);
     }
-    double totallandBuidlig = double.parse(
-        "${widget.item['comparable_adding_price'] ?? 0 + widget.item['comparable_sold_price'] ?? 0}");
+    // double totallandBuidlig = double.parse(
+    //     "${widget.item['comparable_adding_price'] ?? 0 + widget.item['comparable_sold_price'] ?? 0}");
 
     pdf.addPage(pw.MultiPage(build: (context) {
       return [
@@ -186,7 +186,7 @@ class _PrinterComState extends State<PrinterCom> {
                     txtSimple("Offered Price"),
                     txtSimple("Offered Price"),
                     txtSimple("Sold Out Price"),
-                    txtSimple("Total (Land/Building)"),
+                    txtSimple("Total"),
                     txtSimple("Tel"),
                   ],
                 ),
@@ -205,10 +205,10 @@ class _PrinterComState extends State<PrinterCom> {
                     txtSimple(
                         " : \$${widget.item['comparableaddprice'] ?? ""}"),
                     txtSimple(
-                        " : \$${widget.item['comparableaddprice'] ?? ""}"),
+                        " : \$${widget.item['comparableboughtprice'] ?? ""}"),
                     txtSimple(
                         " : \$${widget.item['comparable_sold_price'] ?? ""}"),
-                    txtSimple(" : \$$totallandBuidlig"),
+                    txtSimple(" : \$${widget.item['comparableAmount'] ?? ""}"),
                     txtSimple(" : ${widget.item['comparable_phone'] ?? ""}"),
                   ],
                 ),
