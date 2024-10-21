@@ -1129,6 +1129,16 @@ class _HomePageState extends State<AddComparable> {
       "check": 0,
     }
   ];
+  List listCondo = [
+    {
+      "title": "Condo",
+      "check": 1,
+    },
+    {
+      "title": "No Condo",
+      "check": 0,
+    }
+  ];
   bool clearmarker = false;
   bool checklatlog = false;
   LatLng? latlogModel;
@@ -1224,6 +1234,7 @@ class _HomePageState extends State<AddComparable> {
 
   int? comparableUser;
   int market = 0;
+  int condo = 0;
   Future<void> addComparable() async {
     protectID = int.parse(
         "${widget.listlocalhosts[0]['agency']}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(100)}");
@@ -1234,6 +1245,7 @@ class _HomePageState extends State<AddComparable> {
       "comparable_road": comparableRoad,
       "protectID": protectID,
       "markert": market,
+      "condo": condo,
       "comparable_land_length": comparableLandLength,
       "borey": checkborey,
       "comparable_land_width": comparableLandWidth,
@@ -1288,6 +1300,7 @@ class _HomePageState extends State<AddComparable> {
       setState(() {
         countCredit = countCredit + 1;
         comparableUser = null;
+        print("protectID : $protectID");
       });
     } else {
       print(response.statusMessage);
@@ -1452,6 +1465,7 @@ class _HomePageState extends State<AddComparable> {
   bool _isSwitched = false;
   int on_row = 20;
   bool checkMarket = false;
+  bool condobool = false;
   Widget mapShow() {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
@@ -1899,102 +1913,7 @@ class _HomePageState extends State<AddComparable> {
                                             Row(
                                               children: [
                                                 //CheckBorey
-                                                Text(
-                                                  'Borey  ',
-                                                  style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontSize: 15),
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        waitingCheck = true;
-                                                        checkboreyTP =
-                                                            !checkboreyTP;
-                                                        if (!checkboreyTP) {
-                                                          checkborey = 0;
-                                                          listOptin =
-                                                              listRaodNBorey;
-                                                        } else {
-                                                          checkborey = 1;
-                                                          listOptin =
-                                                              listRaodBorey;
-                                                        }
-                                                        _timer = Timer.periodic(
-                                                            const Duration(
-                                                                seconds: 1),
-                                                            (Timer
-                                                                timer) async {
-                                                          setState(() {
-                                                            countwaiting++;
-                                                          });
 
-                                                          if (countwaiting >=
-                                                              1) {
-                                                            _timer.cancel();
-                                                            waitingCheck =
-                                                                false;
-                                                          }
-                                                        });
-                                                      });
-                                                    },
-                                                    icon: Icon(
-                                                        !checkboreyTP
-                                                            ? Icons
-                                                                .check_box_outline_blank_outlined
-                                                            : Icons
-                                                                .check_box_outlined,
-                                                        size: 25,
-                                                        color: whiteColor),
-                                                    color: whiteColor),
-                                                Text(
-                                                  'Market  ',
-                                                  style: TextStyle(
-                                                      color: whiteColor,
-                                                      fontSize: 15),
-                                                ),
-                                                IconButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        //////////PPPPPPPPP
-                                                        checkMarket =
-                                                            !checkMarket;
-                                                        if (!checkMarket) {
-                                                          market = 0;
-                                                        } else {
-                                                          market = 1;
-                                                        }
-                                                      });
-                                                    },
-                                                    icon: Icon(
-                                                        !checkMarket
-                                                            ? Icons
-                                                                .check_box_outline_blank_outlined
-                                                            : Icons
-                                                                .check_box_outlined,
-                                                        size: 25,
-                                                        color: whiteColor),
-                                                    color: whiteColor),
-                                                Text(
-                                                  _isSwitched
-                                                      ? 'No Auto  '
-                                                      : 'Auto  ',
-                                                  style: const TextStyle(
-                                                      color: Color.fromARGB(
-                                                          255, 47, 242, 8),
-                                                      fontSize: 15),
-                                                ),
-                                                Switch(
-                                                  value: _isSwitched,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      _isSwitched = value;
-                                                    });
-                                                  },
-                                                  activeTrackColor:
-                                                      Colors.lightGreenAccent,
-                                                  activeColor: Colors.green,
-                                                ),
                                                 const Spacer(),
                                                 const SizedBox(width: 10),
                                                 checksave
@@ -2137,6 +2056,137 @@ class _HomePageState extends State<AddComparable> {
                                                           ),
                                                         ),
                                                       )
+                                              ],
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  'Borey  ',
+                                                  style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: 15),
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        waitingCheck = true;
+                                                        checkboreyTP =
+                                                            !checkboreyTP;
+                                                        if (!checkboreyTP) {
+                                                          checkborey = 0;
+                                                          listOptin =
+                                                              listRaodNBorey;
+                                                        } else {
+                                                          checkborey = 1;
+                                                          listOptin =
+                                                              listRaodBorey;
+                                                        }
+                                                        _timer = Timer.periodic(
+                                                            const Duration(
+                                                                seconds: 1),
+                                                            (Timer
+                                                                timer) async {
+                                                          setState(() {
+                                                            countwaiting++;
+                                                          });
+
+                                                          if (countwaiting >=
+                                                              1) {
+                                                            _timer.cancel();
+                                                            waitingCheck =
+                                                                false;
+                                                          }
+                                                        });
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                        !checkboreyTP
+                                                            ? Icons
+                                                                .check_box_outline_blank_outlined
+                                                            : Icons
+                                                                .check_box_outlined,
+                                                        size: 25,
+                                                        color: whiteColor),
+                                                    color: whiteColor),
+                                                Text(
+                                                  'Market  ',
+                                                  style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: 15),
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        //////////PPPPPPPPP
+                                                        checkMarket =
+                                                            !checkMarket;
+                                                        if (!checkMarket) {
+                                                          market = 0;
+                                                        } else {
+                                                          market = 1;
+                                                        }
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                        !checkMarket
+                                                            ? Icons
+                                                                .check_box_outline_blank_outlined
+                                                            : Icons
+                                                                .check_box_outlined,
+                                                        size: 25,
+                                                        color: whiteColor),
+                                                    color: whiteColor),
+                                                Text(
+                                                  'Condo  ',
+                                                  style: TextStyle(
+                                                      color: whiteColor,
+                                                      fontSize: 15),
+                                                ),
+                                                IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        //////////PPPPPPPPP
+                                                        condobool = !condobool;
+                                                        if (!condobool) {
+                                                          condo = 0;
+                                                          comparableRoad = null;
+                                                        } else {
+                                                          condo =
+                                                              comparableRoad =
+                                                                  1;
+                                                        }
+                                                      });
+                                                    },
+                                                    icon: Icon(
+                                                        !condobool
+                                                            ? Icons
+                                                                .check_box_outline_blank_outlined
+                                                            : Icons
+                                                                .check_box_outlined,
+                                                        size: 25,
+                                                        color: whiteColor),
+                                                    color: whiteColor),
+                                                Text(
+                                                  _isSwitched
+                                                      ? 'No Auto  '
+                                                      : 'Auto  ',
+                                                  style: const TextStyle(
+                                                      color: Color.fromARGB(
+                                                          255, 47, 242, 8),
+                                                      fontSize: 15),
+                                                ),
+                                                Switch(
+                                                  value: _isSwitched,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      _isSwitched = value;
+                                                    });
+                                                  },
+                                                  activeTrackColor:
+                                                      Colors.lightGreenAccent,
+                                                  activeColor: Colors.green,
+                                                ),
                                               ],
                                             ),
                                             const SizedBox(height: 10),
@@ -2446,41 +2496,48 @@ class _HomePageState extends State<AddComparable> {
                                               ),
                                             ),
                                             const SizedBox(height: 10),
-                                            Text("Road *",
-                                                style: TextStyle(
-                                                    color: !checkraod
-                                                        ? whiteColor
-                                                        : colorsRed,
-                                                    fontSize: 14)),
+                                            if (!condobool)
+                                              Text("Road *",
+                                                  style: TextStyle(
+                                                      color: !checkraod
+                                                          ? whiteColor
+                                                          : colorsRed,
+                                                      fontSize: 14)),
                                             const SizedBox(height: 5),
                                             waitingCheck
                                                 ? const Center(
                                                     child:
                                                         CircularProgressIndicator())
-                                                : SizedBox(
-                                                    height: 45,
-                                                    width: double.infinity,
-                                                    child: OptionRoadNew(
-                                                      pwidth: 250,
-                                                      hight: 35,
-                                                      list: listOptin,
-                                                      valueId: "road_id",
-                                                      valueName: "road_name",
-                                                      lable: "Road",
-                                                      onbackValue: (value) {
-                                                        setState(() {
-                                                          List<String> parts =
-                                                              value!.split(',');
+                                                : (!condobool)
+                                                    ? SizedBox(
+                                                        height: 45,
+                                                        width: double.infinity,
+                                                        child: OptionRoadNew(
+                                                          pwidth: 250,
+                                                          hight: 35,
+                                                          list: listOptin,
+                                                          valueId: "road_id",
+                                                          valueName:
+                                                              "road_name",
+                                                          lable: "Road",
+                                                          onbackValue: (value) {
+                                                            setState(() {
+                                                              List<String>
+                                                                  parts = value!
+                                                                      .split(
+                                                                          ',');
 
-                                                          comparableRoad =
-                                                              int.parse(parts[0]
-                                                                  .toString());
-                                                          print(
-                                                              "Route : $comparableRoad");
-                                                        });
-                                                      },
-                                                    ),
-                                                  ),
+                                                              comparableRoad =
+                                                                  int.parse(parts[
+                                                                          0]
+                                                                      .toString());
+                                                              print(
+                                                                  "Route : $comparableRoad");
+                                                            });
+                                                          },
+                                                        ),
+                                                      )
+                                                    : const SizedBox(),
                                             if (comparablePropertyID != 15)
                                               const SizedBox(height: 10),
                                             if (comparablePropertyID != 15)
@@ -4106,6 +4163,7 @@ class _HomePageState extends State<AddComparable> {
             element['road_name'] = updateraodName;
             element['markert'] = market;
             element['borey'] = checkborey;
+            element['condo'] = condo;
             break;
           }
         }
@@ -4168,7 +4226,7 @@ class _HomePageState extends State<AddComparable> {
             list = jsonDecode(json.encode(response.data))['autoverbal'];
           });
         }
-        if (list.length >= 5) {
+        if (list.length >= 1) {
           List<dynamic> filteredList = filterDuplicates(
               list, "comparable_adding_price", "latlong_la", "latlong_log");
 
@@ -4347,7 +4405,7 @@ class _HomePageState extends State<AddComparable> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: whiteColor),
-                  height: 550,
+                  height: 600,
                   width: 330,
                   child: SingleChildScrollView(
                     child: Padding(
@@ -4492,6 +4550,68 @@ class _HomePageState extends State<AddComparable> {
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 35,
+                            child: DropdownButtonFormField<String>(
+                              isExpanded: true,
+
+                              onChanged: (newValue) {
+                                setState(() {
+                                  condo = int.parse(newValue!);
+
+                                  // String roadDrop = newValue as String;
+                                });
+                              },
+
+                              items: listCondo
+                                  .map<DropdownMenuItem<String>>(
+                                    (value) => DropdownMenuItem<String>(
+                                      value: value["check"].toString(),
+                                      child: Text(value["title"].toString()),
+                                    ),
+                                  )
+                                  .toList(),
+                              // add extra sugar..
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: kImageColor,
+                              ),
+
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 0),
+                                fillColor: Colors.white,
+                                filled: true,
+                                labelText: (data_adding_correct[i]['condo'] ==
+                                            0 ||
+                                        data_adding_correct[i]['condo'] == null)
+                                    ? "No Condo"
+                                    : "Condo",
+                                hintStyle: TextStyle(
+                                    color: blackColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                                hintText: 'Select one',
+                                prefixIcon: const Icon(
+                                  Icons.edit_road_outlined,
+                                  color: kImageColor,
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                      color: kPrimaryColor, width: 2.0),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    width: 1,
+                                    color: kPrimaryColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
                           SizedBox(
                             height: 35,
                             child: DropdownButtonFormField<String>(

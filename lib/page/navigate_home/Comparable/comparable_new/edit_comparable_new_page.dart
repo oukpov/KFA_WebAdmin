@@ -58,6 +58,10 @@ class _EditComState extends State<EditCom> {
       if (market == 1) {
         checkMarket = true;
       }
+      condo = int.parse("${widget.item['condo'] ?? "0"}");
+      if (condo == 1) {
+        condobool = true;
+      }
       comparablePropertyID =
           int.parse(widget.item['comparable_property_id'].toString());
       comparableroad = int.parse(widget.item['comparable_road'].toString());
@@ -103,6 +107,7 @@ class _EditComState extends State<EditCom> {
     });
   }
 
+  int condo = 0;
   bool checksave = false;
   int count = 0;
   late Timer _timer;
@@ -139,6 +144,7 @@ class _EditComState extends State<EditCom> {
     });
   }
 
+  bool condobool = false;
   bool _isSwitched = false;
   int market = 0;
   bool checkMarket = false;
@@ -270,6 +276,30 @@ class _EditComState extends State<EditCom> {
                           },
                           icon: Icon(
                               !checkMarket
+                                  ? Icons.check_box_outline_blank_outlined
+                                  : Icons.check_box_outlined,
+                              size: 25,
+                              color: whiteColor),
+                          color: whiteColor),
+                      Text(
+                        // 'Condo  $condo',
+                        !condobool ? 'No Condo' : 'Condo  ',
+                        style: TextStyle(color: whiteColor, fontSize: 15),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              //////////PPPPPPPPP
+                              condobool = !condobool;
+                              if (!condobool) {
+                                condo = 0;
+                              } else {
+                                condo = comparableroad = 1;
+                              }
+                            });
+                          },
+                          icon: Icon(
+                              !condobool
                                   ? Icons.check_box_outline_blank_outlined
                                   : Icons.check_box_outlined,
                               size: 25,
@@ -1140,6 +1170,7 @@ class _EditComState extends State<EditCom> {
     var data = json.encode({
       "check": check,
       "borey": boreyvalue,
+      "condo": condo,
       "comparable_road": comparableroad,
       "comparable_property_id": comparablePropertyID,
       "protectID": widget.item['protectID'],

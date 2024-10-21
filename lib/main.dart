@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
+import 'package:web_admin/screen/Property/FirstProperty/MenuPage/AddProperty/Verbal_add.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
@@ -65,9 +66,10 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
+        // home: AddProperty(idUserController: "59"),
         // home: ZoneMap(),
         home: LoginPage(),
         // home: AddComparable(

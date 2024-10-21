@@ -809,43 +809,51 @@ class _HomePageState extends State<AddComparable> {
                     )),
               ),
               const SizedBox(width: 10),
-              Text(
-                "Borey",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: !checkVerbal ? colorsRed : greyColor,
-                    fontSize: 14),
-              ),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      doneORudone = !doneORudone;
-                      waitingCheckFull = true;
-                      // checkboreyTP = !checkboreyTP;
-                      if (!doneORudone) {
-                        checkborey = 0;
-                        roadList = listRaodNBorey;
-                      } else {
-                        checkborey = 1;
-                        roadList = listRaodBorey;
-                      }
-                      _timer = Timer.periodic(const Duration(seconds: 1),
-                          (Timer timer) async {
-                        setState(() {
-                          countwaitingfull++;
-                        });
+              SizedBox(
+                height: 35,
+                width: 90,
+                child: Row(
+                  children: [
+                    Text(
+                      "Borey",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: !checkVerbal ? colorsRed : greyColor,
+                          fontSize: 15),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            doneORudone = !doneORudone;
+                            waitingCheckFull = true;
+                            // checkboreyTP = !checkboreyTP;
+                            if (!doneORudone) {
+                              checkborey = 0;
+                              roadList = listRaodNBorey;
+                            } else {
+                              checkborey = 1;
+                              roadList = listRaodBorey;
+                            }
+                            _timer = Timer.periodic(const Duration(seconds: 1),
+                                (Timer timer) async {
+                              setState(() {
+                                countwaitingfull++;
+                              });
 
-                        if (countwaitingfull >= 1) {
-                          _timer.cancel();
-                          waitingCheckFull = false;
-                        }
-                      });
-                    });
-                  },
-                  icon: Icon(doneORudone
-                      ? Icons.check_box_outlined
-                      : Icons.check_box_outline_blank)),
-              const SizedBox(width: 50),
+                              if (countwaitingfull >= 1) {
+                                _timer.cancel();
+                                waitingCheckFull = false;
+                              }
+                            });
+                          });
+                        },
+                        icon: Icon(doneORudone
+                            ? Icons.check_box_outlined
+                            : Icons.check_box_outline_blank)),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
               waitingCheckFull
                   ? const Center(child: CircularProgressIndicator())
                   : Padding(
@@ -925,8 +933,7 @@ class _HomePageState extends State<AddComparable> {
                   lable: "Agent",
                   value: (value) {
                     setState(() {
-                      agentID = int.parse(value);
-                      print("Agent => $agentID");
+                      comparableUser = int.parse(value);
                     });
                   },
                   valuenameback: (value) {},
@@ -1215,6 +1222,7 @@ class _HomePageState extends State<AddComparable> {
     });
   }
 
+  int? comparableUser;
   int market = 0;
   Future<void> addComparable() async {
     protectID = int.parse(
@@ -1244,7 +1252,8 @@ class _HomePageState extends State<AddComparable> {
       "comparable_phone": comparablePhone,
       "latlong_log": latcontroller.text,
       "latlong_la": logcontroller.text,
-      "comparabl_user": widget.listlocalhosts[0]['agency'].toString(),
+      "comparabl_user":
+          comparableUser ?? widget.listlocalhosts[0]['agency'].toString(),
       "comparable_remark": remark,
       "province": province.text,
       "district": district.text,
@@ -1278,6 +1287,7 @@ class _HomePageState extends State<AddComparable> {
       refrechValue();
       setState(() {
         countCredit = countCredit + 1;
+        comparableUser = null;
       });
     } else {
       print(response.statusMessage);
@@ -2052,7 +2062,10 @@ class _HomePageState extends State<AddComparable> {
                                                                     null &&
                                                                 comparablePhone !=
                                                                     null) {
-                                                              await calculate();
+                                                              if (!_isSwitched) {
+                                                                await calculate();
+                                                              }
+
                                                               await addComparable();
                                                             } else {
                                                               Get.snackbar(
@@ -2126,6 +2139,32 @@ class _HomePageState extends State<AddComparable> {
                                                       )
                                               ],
                                             ),
+                                            const SizedBox(height: 10),
+                                            Text("Agent",
+                                                style: TextStyle(
+                                                    color: !checkpricepersqm
+                                                        ? whiteColor
+                                                        : colorsRed,
+                                                    fontSize: 14)),
+                                            const SizedBox(height: 5),
+                                            SizedBox(
+                                              width: double.infinity,
+                                              child: DropdownOption(
+                                                icon: Icons
+                                                    .support_agent_outlined,
+                                                dataid: "agenttype_id",
+                                                dataname: "agenttype_name",
+                                                listData: listvalueModel,
+                                                lable: "Agent",
+                                                value: (value) {
+                                                  setState(() {
+                                                    agentID = int.parse(value);
+                                                  });
+                                                },
+                                                valuenameback: (value) {},
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
                                             if (ls != 0)
                                               Landbuilding(
                                                 checkvalidate: true,
@@ -2143,7 +2182,9 @@ class _HomePageState extends State<AddComparable> {
                                                     comparableLandTotal =
                                                         double.parse(
                                                             value.toString());
-                                                    calculate();
+                                                    if (!_isSwitched) {
+                                                      calculate();
+                                                    }
                                                   });
                                                 },
                                                 w: (value) {
@@ -2195,7 +2236,9 @@ class _HomePageState extends State<AddComparable> {
                                                       onChanged: (value) {
                                                         setState(() {
                                                           checkcalculate = true;
-                                                          calculate();
+                                                          if (!_isSwitched) {
+                                                            calculate();
+                                                          }
                                                         });
                                                       },
                                                       decoration:
@@ -2324,6 +2367,85 @@ class _HomePageState extends State<AddComparable> {
                                               ],
                                             ),
                                             const SizedBox(height: 10),
+                                            Text("Asking Price(TTAmount)",
+                                                style: TextStyle(
+                                                    color: !checkaskingPrice
+                                                        ? whiteColor
+                                                        : colorsRed,
+                                                    fontSize: 14)),
+                                            const SizedBox(height: 5),
+                                            SizedBox(
+                                              height: 40,
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  setState(() {
+                                                    if (askingPricett.text ==
+                                                        '') {
+                                                      checkaskingPrice = true;
+                                                    } else {
+                                                      checkaskingPrice = false;
+                                                    }
+                                                  });
+                                                  return null;
+                                                },
+                                                controller: askingPricett,
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    checkcalculate = false;
+                                                    if (!_isSwitched) {
+                                                      calculate();
+                                                    }
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 8,
+                                                          horizontal: 10),
+                                                  prefixIcon: const Icon(
+                                                    Icons
+                                                        .question_answer_outlined,
+                                                    color: kImageColor,
+                                                  ),
+                                                  hintText:
+                                                      'Asking Price(TTAmount)',
+                                                  hintStyle: TextStyle(
+                                                      color: greyColorNolots),
+                                                  fillColor: kwhite,
+                                                  filled: true,
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color:
+                                                                kPrimaryColor,
+                                                            width: 2.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            width: 1,
+                                                            color:
+                                                                kPrimaryColor),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
                                             Text("Road *",
                                                 style: TextStyle(
                                                     color: !checkraod
@@ -2379,7 +2501,9 @@ class _HomePageState extends State<AddComparable> {
                                                     comparableSoldTotal =
                                                         double.parse(
                                                             value.toString());
-                                                    calculatebuilding();
+                                                    if (!_isSwitched) {
+                                                      calculatebuilding();
+                                                    }
                                                   });
                                                 },
                                                 w: (value) {
@@ -2426,7 +2550,9 @@ class _HomePageState extends State<AddComparable> {
                                                               setState(() {
                                                                 checkcalculateBuilding =
                                                                     false;
-                                                                calculatebuilding();
+                                                                if (!_isSwitched) {
+                                                                  calculatebuilding();
+                                                                }
                                                               });
                                                             },
                                                             decoration:
@@ -2621,7 +2747,9 @@ class _HomePageState extends State<AddComparable> {
                                                               setState(() {
                                                                 checkcalculateBuilding =
                                                                     true;
-                                                                calculatebuilding();
+                                                                if (!_isSwitched) {
+                                                                  calculatebuilding();
+                                                                }
                                                               });
                                                             },
                                                             decoration:
@@ -2781,83 +2909,6 @@ class _HomePageState extends State<AddComparable> {
                                                   ),
                                                 ],
                                               ),
-                                            const SizedBox(height: 10),
-                                            Text("Asking Price(TTAmount)",
-                                                style: TextStyle(
-                                                    color: !checkaskingPrice
-                                                        ? whiteColor
-                                                        : colorsRed,
-                                                    fontSize: 14)),
-                                            const SizedBox(height: 5),
-                                            SizedBox(
-                                              height: 40,
-                                              child: TextFormField(
-                                                validator: (value) {
-                                                  setState(() {
-                                                    if (askingPricett.text ==
-                                                        '') {
-                                                      checkaskingPrice = true;
-                                                    } else {
-                                                      checkaskingPrice = false;
-                                                    }
-                                                  });
-                                                  return null;
-                                                },
-                                                controller: askingPricett,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    checkcalculate = false;
-                                                    calculate();
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          vertical: 8,
-                                                          horizontal: 10),
-                                                  prefixIcon: const Icon(
-                                                    Icons
-                                                        .question_answer_outlined,
-                                                    color: kImageColor,
-                                                  ),
-                                                  hintText:
-                                                      'Asking Price(TTAmount)',
-                                                  hintStyle: TextStyle(
-                                                      color: greyColorNolots),
-                                                  fillColor: kwhite,
-                                                  filled: true,
-                                                  focusedBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            color:
-                                                                kPrimaryColor,
-                                                            width: 2.0),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                            width: 1,
-                                                            color:
-                                                                kPrimaryColor),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5.0),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
                                             const SizedBox(height: 10),
                                             Row(
                                               children: [
