@@ -139,6 +139,7 @@ class _EditComState extends State<EditCom> {
     });
   }
 
+  bool _isSwitched = false;
   int market = 0;
   bool checkMarket = false;
   bool checkboreyTP = false;
@@ -198,6 +199,37 @@ class _EditComState extends State<EditCom> {
                   const SizedBox(height: 10),
                   Row(
                     children: [
+                      const Spacer(),
+                      checksave
+                          ? const Center(child: CircularProgressIndicator())
+                          : InkWell(
+                              onTap: () async {
+                                mainsecond(15);
+                                updateData(widget.item['comparable_id']);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                height: 40,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: greenColors,
+                                    border: Border.all(
+                                        width: 2, color: whiteColor)),
+                                child: Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: whiteColor,
+                                      fontSize: 15),
+                                ),
+                              ),
+                            )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
                       Text(
                         !checkboreyTP ? 'No borey' : 'Borey  ',
                         style: TextStyle(color: whiteColor, fontSize: 15),
@@ -243,33 +275,22 @@ class _EditComState extends State<EditCom> {
                               size: 25,
                               color: whiteColor),
                           color: whiteColor),
-                      const Spacer(),
-                      const SizedBox(width: 10),
-                      checksave
-                          ? const Center(child: CircularProgressIndicator())
-                          : InkWell(
-                              onTap: () async {
-                                mainsecond(15);
-                                updateData(widget.item['comparable_id']);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 40,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: greenColors,
-                                    border: Border.all(
-                                        width: 2, color: whiteColor)),
-                                child: Text(
-                                  'Edit',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: whiteColor,
-                                      fontSize: 15),
-                                ),
-                              ),
-                            )
+                      Text(
+                        _isSwitched ? 'No Auto  ' : 'Auto  ',
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 47, 242, 8),
+                            fontSize: 15),
+                      ),
+                      Switch(
+                        value: _isSwitched,
+                        onChanged: (value) {
+                          setState(() {
+                            _isSwitched = value;
+                          });
+                        },
+                        activeTrackColor: Colors.lightGreenAccent,
+                        activeColor: Colors.green,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -308,8 +329,9 @@ class _EditComState extends State<EditCom> {
                     total: (value) {
                       setState(() {
                         totalland.text = value.toString();
-
-                        calculate();
+                        if (!_isSwitched) {
+                          calculate();
+                        }
                       });
                     },
                     w: (value) {
@@ -354,7 +376,9 @@ class _EditComState extends State<EditCom> {
                             onChanged: (value) {
                               setState(() {
                                 checkcalculate = true;
-                                calculate();
+                                if (!_isSwitched) {
+                                  calculate();
+                                }
                               });
                             },
                             decoration: InputDecoration(
@@ -461,7 +485,9 @@ class _EditComState extends State<EditCom> {
                       onChanged: (value) {
                         setState(() {
                           checkcalculate = false;
-                          calculate();
+                          if (!_isSwitched) {
+                            calculate();
+                          }
                         });
                       },
                       decoration: InputDecoration(
@@ -521,8 +547,9 @@ class _EditComState extends State<EditCom> {
                       total: (value) {
                         setState(() {
                           totalPrice.text = value.toString();
-
-                          calculatebuilding();
+                          if (!_isSwitched) {
+                            calculatebuilding();
+                          }
                         });
                       },
                       w: (value) {
@@ -556,7 +583,9 @@ class _EditComState extends State<EditCom> {
                                   onChanged: (value) {
                                     setState(() {
                                       checkcalculateBuilding = false;
-                                      calculatebuilding();
+                                      if (!_isSwitched) {
+                                        calculatebuilding();
+                                      }
                                     });
                                   },
                                   decoration: InputDecoration(
@@ -674,7 +703,10 @@ class _EditComState extends State<EditCom> {
                                   onChanged: (value) {
                                     setState(() {
                                       checkcalculateBuilding = true;
-                                      calculatebuilding();
+
+                                      if (!_isSwitched) {
+                                        calculatebuilding();
+                                      }
                                     });
                                   },
                                   decoration: InputDecoration(
