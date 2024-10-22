@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web_admin/components/colors.dart';
 import 'package:web_admin/page/navigate_home/Comparable/newComparable/clone_newcomparable.dart';
 import 'package:web_admin/screen/Property/FirstProperty/component/Colors/appbar.dart';
+
 import '../../../../Customs/ProgressHUD.dart';
 import '../../../../getx/add_zone/add_zone.dart';
-import '../../../../getx/component/getx._snack.dart';
 
 class ZoneMap extends StatefulWidget {
   const ZoneMap({super.key});
@@ -51,16 +52,16 @@ class _ZoneMapState extends State<ZoneMap> {
     setState(() {
       markers.add(marker);
       listMarkerIds.add(marker);
-
       listLatlong.add({
         "lat": latLng.latitude,
         "log": latLng.longitude,
-        "type_zone": typeZone,
+        "market": marketvalue,
         "name_road": route
       });
       _createPolygon();
       LatLng centroid = _calculatePolygonCentroid(
           markers.map((marker) => marker.position).toList());
+      print("listLatlong : $listLatlong");
     });
   }
 
@@ -131,7 +132,6 @@ class _ZoneMapState extends State<ZoneMap> {
     });
   }
 
-  bool checkOption = false;
   Future<void> checkZoneSpecail() async {
     polygons.clear();
 
@@ -227,30 +227,14 @@ class _ZoneMapState extends State<ZoneMap> {
     }
   }
 
-  Component component = Component();
-  int? typeZone;
+  int? marketvalue;
   bool checkFindlatlong = false;
   LatLng? latlong;
   AddZone addZone = AddZone();
   List listLatlong = [];
   bool typeMap = false;
   bool checkMarker = false;
-  int typeZoneRN = -1;
-
-  List listTypeZone = [
-    {
-      "id": 1,
-      "title": "Market",
-    },
-    {
-      "id": 2,
-      "title": "Borey",
-    },
-    {
-      "id": 3,
-      "title": "None",
-    },
-  ];
+  bool marketRN = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -284,7 +268,7 @@ class _ZoneMapState extends State<ZoneMap> {
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    height: 250,
+                    height: 180,
                     width: double.infinity,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -321,8 +305,8 @@ class _ZoneMapState extends State<ZoneMap> {
                               IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      typeZone = null;
-                                      typeZoneRN = -1;
+                                      marketvalue = null;
+                                      marketRN = false;
                                       checkMarker = !checkMarker;
                                       checkFindlatlong = false;
                                       listMarkerIds.clear();
@@ -377,7 +361,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 250, 42, 27),
-                                          fontSize: 14),
+                                          fontSize: 16),
                                     ),
                                   ],
                                 ),
@@ -388,7 +372,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                     Text(
                                       "Road Name Click : ",
                                       style: TextStyle(
-                                          color: whiteColor, fontSize: 14),
+                                          color: whiteColor, fontSize: 16),
                                     ),
                                     Text(
                                       routeClick,
@@ -415,12 +399,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                           title: 'Do you want to add New Zone?',
                                           // autoHide: const Duration(seconds: 2),
                                           btnOkOnPress: () async {
-                                            if (checkOption == true) {
-                                              addZone.addZone(listLatlong);
-                                            } else {
-                                              component.handleTap(
-                                                  "Please Check Option", "");
-                                            }
+                                            addZone.addZone(listLatlong);
                                           },
                                           btnCancelOnPress: () {},
                                         ).show();
@@ -463,12 +442,11 @@ class _ZoneMapState extends State<ZoneMap> {
                                           markers.clear();
                                           points.clear();
                                           listLatlong.clear();
-                                          typeZone = null;
+                                          marketvalue = null;
                                           route = "";
                                           listClicks.clear();
                                           routeClick = "";
-                                          typeZoneRN = -1;
-                                          // typeZoneRN = false;
+                                          marketRN = false;
                                         });
                                       },
                                       child: Container(
@@ -499,51 +477,32 @@ class _ZoneMapState extends State<ZoneMap> {
                                         ),
                                       ),
                                     ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      "Market : ",
+                                      style: TextStyle(
+                                          color: whiteColor, fontSize: 16),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            marketRN = !marketRN;
+                                            if (!marketRN) {
+                                              marketvalue = null;
+                                            } else {
+                                              marketvalue = 1;
+                                            }
+                                          });
+                                        },
+                                        icon: Icon(
+                                          !marketRN
+                                              ? Icons
+                                                  .check_box_outline_blank_outlined
+                                              : Icons.check_box_outlined,
+                                          color: whiteColor,
+                                        )),
                                   ],
                                 ),
-                              ],
-                            ),
-                          // const SizedBox(height: 10),
-
-                          if (route != "" && !checkMarker)
-                            Row(
-                              children: [
-                                for (int i = 0; i < listTypeZone.length; i++)
-                                  SizedBox(
-                                    height: 40,
-                                    width: 90,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "${listTypeZone[i]['title']}",
-                                          style: TextStyle(
-                                              color: whiteColor, fontSize: 16),
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                typeZoneRN =
-                                                    (typeZoneRN == i) ? -1 : i;
-                                                checkOption = true;
-                                                if (i == 0) {
-                                                  typeZone = 1;
-                                                } else if (i == 1) {
-                                                  typeZone = 2;
-                                                } else if (i == 2) {
-                                                  typeZone = null;
-                                                }
-                                              });
-                                            },
-                                            icon: Icon(
-                                              (typeZoneRN == i)
-                                                  ? Icons.check_box_outlined
-                                                  : Icons
-                                                      .check_box_outline_blank_outlined,
-                                              color: whiteColor,
-                                            )),
-                                      ],
-                                    ),
-                                  ),
                               ],
                             )
                         ],
@@ -564,7 +523,7 @@ class _ZoneMapState extends State<ZoneMap> {
                   const SizedBox(height: 10),
                   if (route != "" && !checkMarker)
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height * 0.62,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
@@ -612,14 +571,13 @@ class _ZoneMapState extends State<ZoneMap> {
                   setState(() {
                     latlong = argument;
                   });
-
                   if (checkMarker == false) {
                     if (checkFindlatlong == false) {
                       await waitMarker(true);
-                      // print("No.1");
+                      print("No.1");
                     } else {
                       await waitMarker(false);
-                      // print("No.2");
+                      print("No.2");
                     }
                   } else {
                     addMarker(argument);
