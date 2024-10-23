@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
         // home: ZoneMap(),
-        //home: LoginPage(),
+        // home: LoginPage(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
