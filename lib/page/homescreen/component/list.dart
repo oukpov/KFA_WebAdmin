@@ -32,6 +32,7 @@ List listTitlesetting = [
   {"title": "District"},
   {"title": "Commune"},
   {"title": "Add Point"},
+  {"title": "Banner"},
 ];
 
 //ICons
@@ -66,7 +67,8 @@ List optionIconListsetting = [
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/locations.png"},
-  {"icon": "assets/icons/vpoint.png"},
+  {"icon": "assets/icons/v.jpg"},
+  {"icon": "assets/icons/sponsor.jpg"},
 ];
 // option homepage
 List customeroption = [
@@ -148,6 +150,9 @@ List approvedOption = [
 ];
 List vpointOption = [
   {"title": "Vpoint List"},
+];
+List sponsorOption = [
+  {"title": "Sponsor List"},
 ];
 List registerOption = [
   {"title": "Register New"},

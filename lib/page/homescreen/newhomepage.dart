@@ -72,6 +72,7 @@ import '../../Widgets/drawer.dart';
 import '../../Widgets/widgets.dart';
 import '../navigate_setting/online/add_agent.dart';
 import '../navigate_setting/online/isonline.dart';
+import '../sponsor_list_page.dart';
 import 'component/list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
@@ -912,6 +913,17 @@ class _homescreenState extends State<homescreen> {
                             },
                             child:
                                 textfield(vpointOption[i]['title'].toString())))
+                else if (index == 20)
+                  for (int i = 0; i < sponsorOption.length; i++)
+                    PopupMenuItem(
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      const SponsorListPage()));
+                            },
+                            child: textfield(
+                                sponsorOption[i]['title'].toString())))
               ];
             },
             child: Padding(
