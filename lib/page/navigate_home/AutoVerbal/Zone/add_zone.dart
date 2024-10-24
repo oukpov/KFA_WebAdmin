@@ -9,6 +9,7 @@ import 'package:web_admin/screen/Property/FirstProperty/component/Colors/appbar.
 import '../../../../Customs/ProgressHUD.dart';
 import '../../../../getx/add_zone/add_zone.dart';
 import '../../../../getx/component/getx._snack.dart';
+import 'package:http/http.dart' as http;
 
 class ZoneMap extends StatefulWidget {
   const ZoneMap({super.key});
@@ -251,6 +252,74 @@ class _ZoneMapState extends State<ZoneMap> {
       "title": "None",
     },
   ];
+  bool searchGoogle = false;
+  Future<void> waitingSearch() async {
+    searchGoogle = true;
+    Future.wait([mainsearch()]);
+    setState(() {
+      searchGoogle = false;
+    });
+  }
+
+  double h = 0;
+  List listMap = [];
+  Future<void> mainsearch() async {
+    final response = await http.get(Uri.parse(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/search/place/map?query=${searchMap.text}'));
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body)['data'];
+      setState(() {
+        listMap = jsonResponse['results'];
+
+        for (int i = 0; i < listMap.length; i++) {
+          if (h == 0 || h < 240) {
+            h += 35;
+          }
+        }
+      });
+    } else {
+      print(response.reasonPhrase);
+    }
+  }
+
+  LatLng latLng = const LatLng(11.5489, 104.9214);
+  GoogleMapController? mapController;
+  bool searchBool = false;
+  Future<void> findlocation(LatLng latlog) async {
+    setState(() {
+      searchBool = true;
+      // print("latLng : ${latLng.latitude} || longitude : ${latLng.longitude}");
+      latLng = LatLng(latlog.latitude, latlog.longitude);
+      mapController?.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: latLng, zoom: 17)));
+      Marker marker = Marker(
+        draggable: true,
+        markerId: MarkerId(latLng.toString()),
+        position: latLng,
+        onDragEnd: (value) {
+          latLng = value;
+        },
+      );
+      setState(() {
+        listMarkerIds.clear();
+        listMarkerIds.add(marker);
+      });
+    });
+  }
+
+  bool checkpoint = false;
+  void maincheck() {
+    checkpoint = true;
+    listMarkerIds.clear();
+    markers.clear();
+  }
+
+  List listlatlog = [
+    {"title": "latitude"},
+    {"title": "longitude"},
+  ];
+  double lat = 0, log = 0;
+  TextEditingController searchMap = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -266,109 +335,268 @@ class _ZoneMapState extends State<ZoneMap> {
             color: appback,
             child: Padding(
               padding: const EdgeInsets.all(10),
-              child: Column(
+              child: Stack(
                 children: [
-                  const SizedBox(height: 30),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(
-                            Icons.arrow_back,
-                            color: whiteColor,
-                            size: 25,
-                          ))
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Container(
-                    height: 250,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(width: 1, color: whiteColor)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
+                      const SizedBox(height: 30),
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Type Map : ",
-                                style:
-                                    TextStyle(color: whiteColor, fontSize: 16),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      typeMap = !typeMap;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    typeMap
-                                        ? Icons.check_box_outline_blank_outlined
-                                        : Icons.check_box_outlined,
-                                    color: whiteColor,
-                                  )),
-                              const SizedBox(width: 10),
-                              Text(
-                                "Check Name Road",
-                                style:
-                                    TextStyle(color: whiteColor, fontSize: 16),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      typeZone = null;
-                                      typeZoneRN = -1;
-                                      checkMarker = !checkMarker;
-                                      checkFindlatlong = false;
-                                      listMarkerIds.clear();
-                                      polygons.clear();
-                                      markers.clear();
-                                      points.clear();
-                                      listLatlong.clear();
-                                      route = "";
-                                      listClicks.clear();
-                                      routeClick = "";
-                                    });
-                                  },
-                                  icon: Icon(
-                                    !checkMarker
-                                        ? Icons.check_box_outline_blank_outlined
-                                        : Icons.check_box_outlined,
-                                    color: whiteColor,
-                                  )),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          if (checkMarker)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Road Name : ",
-                                  style: TextStyle(
-                                      color: whiteColor, fontSize: 16),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: whiteColor,
+                                size: 25,
+                              ))
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Search by Latitude and Longitude",
+                        style: TextStyle(color: whiteColor, fontSize: 15),
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          for (int j = 0; j < listlatlog.length; j++)
+                            Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.only(right: (j == 0) ? 10 : 0),
+                                child: Container(
+                                  height: 35,
+                                  // width: 170,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: whiteColor,
+                                      border: Border.all(
+                                          width: 0.5, color: blackColor)),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.text,
+                                    // controller: searchlatlog,
+                                    onFieldSubmitted: (value) {
+                                      setState(() {
+                                        if (j == 0) {
+                                          // lat = double.parse(value);
+                                          lat = double.parse(value);
+                                        } else {
+                                          log = double.parse(value);
+                                        }
+                                      });
+                                    },
+                                    onChanged: (value) {
+                                      setState(() {
+                                        if (j == 0) {
+                                          // lat = double.parse(value);
+                                          lat = double.parse(value);
+                                        } else {
+                                          // log = double.parse(value);
+                                          log = double.parse(value);
+                                        }
+                                      });
+                                    },
+                                    //,
+                                    textInputAction: TextInputAction.search,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12),
+                                    decoration: InputDecoration(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              vertical: 10, horizontal: 8),
+                                      suffixIcon: (j == 0)
+                                          ? const SizedBox()
+                                          : IconButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  maincheck();
+
+                                                  findlocation(
+                                                      LatLng(lat, log));
+                                                  // findlocation(LatLng(
+                                                  //     11.499263, 104.874885));
+                                                  // findByPiont(
+                                                  //     double.parse(
+                                                  //         requestModel.lat),
+                                                  //     double.parse(
+                                                  //         requestModel.lng));
+                                                  // getAddress(LatLng(
+                                                  //     double.parse(
+                                                  //         requestModel
+                                                  //             .lat),
+                                                  //     double.parse(
+                                                  //         requestModel
+                                                  //             .lng)));
+                                                });
+                                              },
+                                              icon: Icon(
+                                                Icons.search,
+                                                color: greyColor,
+                                              )),
+
+                                      fillColor: Colors.white,
+                                      hintText:
+                                          listlatlog[j]['title'].toString(),
+                                      border: InputBorder.none,
+                                      // contentPadding:
+                                      //     const EdgeInsets.symmetric(
+                                      //         vertical: 8, horizontal: 5),
+                                      hintStyle: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 118, 116, 116),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  route,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 250, 42, 27),
-                                      fontSize: 16),
-                                ),
-                              ],
+                              ),
                             ),
-                          if (route != "" && !checkMarker)
-                            Column(
-                              children: [
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        "Search Map",
+                        style: TextStyle(color: whiteColor, fontSize: 15),
+                      ),
+                      const SizedBox(height: 5),
+                      Container(
+                        height: 35,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: whiteColor,
+                            border: Border.all(width: 0.5, color: blackColor)),
+                        child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          controller: searchMap,
+                          onFieldSubmitted: (value) {
+                            setState(() {
+                              waitingSearch();
+                            });
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              if (searchMap.text != '') {
+                                waitingSearch();
+                              } else {
+                                listMap = [];
+                                // print('OK');
+                              }
+                            });
+                          },
+                          textInputAction: TextInputAction.search,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          decoration: InputDecoration(
+                            suffixIcon: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    mainsearch();
+                                    h = 0;
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.search,
+                                  color: whiteColor,
+                                  size: 20,
+                                )),
+                            suffix: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    searchMap.clear();
+                                    listMap = [];
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.remove_circle_outline,
+                                  color: greyColorNolots,
+                                )),
+                            fillColor: Colors.white,
+                            hintText: "  Search",
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 10),
+                            hintStyle: const TextStyle(
+                              color: Color.fromARGB(255, 118, 116, 116),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        height: 220,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 1, color: whiteColor)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Type Map : ",
+                                    style: TextStyle(
+                                        color: whiteColor, fontSize: 16),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          typeMap = !typeMap;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        typeMap
+                                            ? Icons
+                                                .check_box_outline_blank_outlined
+                                            : Icons.check_box_outlined,
+                                        color: whiteColor,
+                                      )),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    "Check Name Road",
+                                    style: TextStyle(
+                                        color: whiteColor, fontSize: 16),
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          typeZone = null;
+                                          typeZoneRN = -1;
+                                          checkMarker = !checkMarker;
+                                          checkFindlatlong = false;
+                                          listMarkerIds.clear();
+                                          polygons.clear();
+                                          markers.clear();
+                                          points.clear();
+                                          listLatlong.clear();
+                                          route = "";
+                                          listClicks.clear();
+                                          routeClick = "";
+                                        });
+                                      },
+                                      icon: Icon(
+                                        !checkMarker
+                                            ? Icons
+                                                .check_box_outline_blank_outlined
+                                            : Icons.check_box_outlined,
+                                        color: whiteColor,
+                                      )),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              if (checkMarker)
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Road Name Used : ",
+                                      "Road Name : ",
                                       style: TextStyle(
                                           color: whiteColor, fontSize: 16),
                                     ),
@@ -377,227 +605,306 @@ class _ZoneMapState extends State<ZoneMap> {
                                       style: const TextStyle(
                                           color:
                                               Color.fromARGB(255, 250, 42, 27),
-                                          fontSize: 14),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Road Name Click : ",
-                                      style: TextStyle(
-                                          color: whiteColor, fontSize: 14),
-                                    ),
-                                    Text(
-                                      routeClick,
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 227, 231, 232),
                                           fontSize: 16),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
-                                Row(
+                              if (route != "" && !checkMarker)
+                                Column(
                                   children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        AwesomeDialog(
-                                          alignment: Alignment.centerLeft,
-                                          width: 400,
-                                          context: context,
-                                          animType: AnimType.leftSlide,
-                                          headerAnimationLoop: false,
-                                          dialogType: DialogType.success,
-                                          showCloseIcon: false,
-                                          title: 'Do you want to add New Zone?',
-                                          // autoHide: const Duration(seconds: 2),
-                                          btnOkOnPress: () async {
-                                            if (checkOption == true) {
-                                              addZone.addZone(listLatlong);
-                                            } else {
-                                              component.handleTap(
-                                                  "Please Check Option", "");
-                                            }
-                                          },
-                                          btnCancelOnPress: () {},
-                                        ).show();
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        height: 50,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 7, 167, 13),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                width: 1, color: whiteColor)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Add Zone',
-                                              style:
-                                                  TextStyle(color: whiteColor),
-                                            ),
-                                            Icon(
-                                              Icons.location_on_outlined,
-                                              color: whiteColor,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    InkWell(
-                                      onTap: () async {
-                                        setState(() {
-                                          checkFindlatlong = false;
-                                          listMarkerIds.clear();
-                                          polygons.clear();
-                                          markers.clear();
-                                          points.clear();
-                                          listLatlong.clear();
-                                          typeZone = null;
-                                          route = "";
-                                          listClicks.clear();
-                                          routeClick = "";
-                                          typeZoneRN = -1;
-                                          // typeZoneRN = false;
-                                        });
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        height: 50,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 222, 15, 0),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                width: 1, color: whiteColor)),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Clear Markers',
-                                              style:
-                                                  TextStyle(color: whiteColor),
-                                            ),
-                                            Icon(
-                                              Icons.location_on_outlined,
-                                              color: whiteColor,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          // const SizedBox(height: 10),
-
-                          if (route != "" && !checkMarker)
-                            Row(
-                              children: [
-                                for (int i = 0; i < listTypeZone.length; i++)
-                                  SizedBox(
-                                    height: 40,
-                                    width: 90,
-                                    child: Row(
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${listTypeZone[i]['title']}",
+                                          "Road Name Used : ",
                                           style: TextStyle(
                                               color: whiteColor, fontSize: 16),
                                         ),
-                                        IconButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                typeZoneRN =
-                                                    (typeZoneRN == i) ? -1 : i;
-                                                checkOption = true;
-                                                if (i == 0) {
-                                                  typeZone = 1;
-                                                } else if (i == 1) {
-                                                  typeZone = 2;
-                                                } else if (i == 2) {
-                                                  typeZone = null;
-                                                }
-                                              });
-                                            },
-                                            icon: Icon(
-                                              (typeZoneRN == i)
-                                                  ? Icons.check_box_outlined
-                                                  : Icons
-                                                      .check_box_outline_blank_outlined,
-                                              color: whiteColor,
-                                            )),
+                                        Text(
+                                          route,
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 250, 42, 27),
+                                              fontSize: 14),
+                                        ),
                                       ],
                                     ),
-                                  ),
-                              ],
-                            )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  if (route != "" && !checkMarker)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Please Check Zone First",
-                          style: TextStyle(color: whiteColor, fontSize: 16),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Road Name Click : ",
+                                          style: TextStyle(
+                                              color: whiteColor, fontSize: 14),
+                                        ),
+                                        Text(
+                                          routeClick,
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 227, 231, 232),
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            AwesomeDialog(
+                                              alignment: Alignment.centerLeft,
+                                              width: 400,
+                                              context: context,
+                                              animType: AnimType.leftSlide,
+                                              headerAnimationLoop: false,
+                                              dialogType: DialogType.success,
+                                              showCloseIcon: false,
+                                              title:
+                                                  'Do you want to add New Zone?',
+                                              // autoHide: const Duration(seconds: 2),
+                                              btnOkOnPress: () async {
+                                                if (checkOption == true) {
+                                                  addZone.addZone(listLatlong);
+                                                } else {
+                                                  component.handleTap(
+                                                      "Please Check Option",
+                                                      "");
+                                                }
+                                              },
+                                              btnCancelOnPress: () {},
+                                            ).show();
+                                          },
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            height: 35,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 7, 167, 13),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: whiteColor)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Add Zone',
+                                                  style: TextStyle(
+                                                      color: whiteColor),
+                                                ),
+                                                Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: whiteColor,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        InkWell(
+                                          onTap: () async {
+                                            setState(() {
+                                              checkFindlatlong = false;
+                                              listMarkerIds.clear();
+                                              polygons.clear();
+                                              markers.clear();
+                                              points.clear();
+                                              listLatlong.clear();
+                                              typeZone = null;
+                                              route = "";
+                                              listClicks.clear();
+                                              routeClick = "";
+                                              typeZoneRN = -1;
+                                              // typeZoneRN = false;
+                                            });
+                                          },
+                                          child: Container(
+                                            alignment: Alignment.center,
+                                            height: 35,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 222, 15, 0),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: whiteColor)),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Clear Markers',
+                                                  style: TextStyle(
+                                                      color: whiteColor),
+                                                ),
+                                                Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: whiteColor,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              // const SizedBox(height: 10),
+
+                              if (route != "" && !checkMarker)
+                                Row(
+                                  children: [
+                                    for (int i = 0;
+                                        i < listTypeZone.length;
+                                        i++)
+                                      SizedBox(
+                                        height: 40,
+                                        width: 90,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              "${listTypeZone[i]['title']}",
+                                              style: TextStyle(
+                                                  color: whiteColor,
+                                                  fontSize: 16),
+                                            ),
+                                            IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    typeZoneRN =
+                                                        (typeZoneRN == i)
+                                                            ? -1
+                                                            : i;
+                                                    checkOption = true;
+                                                    if (i == 0) {
+                                                      typeZone = 1;
+                                                    } else if (i == 1) {
+                                                      typeZone = 2;
+                                                    } else if (i == 2) {
+                                                      typeZone = null;
+                                                    }
+                                                  });
+                                                },
+                                                icon: Icon(
+                                                  (typeZoneRN == i)
+                                                      ? Icons.check_box_outlined
+                                                      : Icons
+                                                          .check_box_outline_blank_outlined,
+                                                  color: whiteColor,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                  ],
+                                )
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  const SizedBox(height: 10),
-                  if (route != "" && !checkMarker)
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 1, color: whiteColor)),
-                      child: ListView.builder(
-                        itemCount: listClicks.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(width: 1, color: whiteColor)),
-                            height: 50,
-                            width: double.infinity,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "No.${index + 1} Road : ",
-                                  style: TextStyle(
-                                      color: whiteColor, fontSize: 16),
-                                ),
-                                Text(
-                                  listClicks[index]['road'].toString(),
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 250, 42, 27),
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
                       ),
-                    )
+                      const SizedBox(height: 10),
+                      if (route != "" && !checkMarker)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Please Check Zone First",
+                              style: TextStyle(color: whiteColor, fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      const SizedBox(height: 10),
+                      if (route != "" && !checkMarker)
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(width: 1, color: whiteColor)),
+                          child: ListView.builder(
+                            itemCount: listClicks.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1, color: whiteColor)),
+                                height: 50,
+                                width: double.infinity,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "No.${index + 1} Road : ",
+                                      style: TextStyle(
+                                          color: whiteColor, fontSize: 16),
+                                    ),
+                                    Text(
+                                      listClicks[index]['road'].toString(),
+                                      style: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 250, 42, 27),
+                                          fontSize: 16),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                    ],
+                  ),
+                  Positioned(
+                    top: 140,
+                    child: (listMap.isEmpty)
+                        ? const SizedBox()
+                        : Container(
+                            height: 350,
+                            width: 450,
+                            color: whiteColor,
+                            child: ListView.builder(
+                              itemCount: listMap.length,
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    var location =
+                                        listMap[index]['geometry']['location'];
+                                    LatLng lat = LatLng(
+                                        double.parse(
+                                            location['lat'].toString()),
+                                        double.parse(
+                                            location['lng'].toString()));
+                                    findlocation(lat);
+                                  });
+                                },
+                                child: Container(
+                                  color: whiteColor,
+                                  height: 30,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        color: greyColorNolots,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        listMap[index]['name'].toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                  )
                 ],
               ),
             ),
@@ -633,7 +940,9 @@ class _ZoneMapState extends State<ZoneMap> {
                   zoom: 14,
                 ),
                 polygons: Set<Polygon>.of(polygons),
-                onMapCreated: (GoogleMapController controller) {},
+                onMapCreated: (GoogleMapController controller) {
+                  mapController = controller;
+                },
               ),
             ),
           )

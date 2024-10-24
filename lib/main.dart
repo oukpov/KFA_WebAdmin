@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:web_admin/page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 import 'Auth/login.dart';
+import 'page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 
 List list = [];
 // String? district_id;
@@ -65,16 +66,13 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
         // home: ZoneMap(),
-<<<<<<< HEAD
         home: LoginPage(),
-=======
         // home: LoginPage(),
->>>>>>> 3eb28eb703dca609e7065058f8810aba3c9d830b
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),

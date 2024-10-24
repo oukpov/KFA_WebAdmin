@@ -342,6 +342,7 @@ class _HomePageState extends State<AddComparable> {
     });
   }
 
+  String? floorcontroller;
   bool checkList = false;
   late String autoverbalType;
   final TextEditingController priceController = TextEditingController();
@@ -352,7 +353,7 @@ class _HomePageState extends State<AddComparable> {
   final TextEditingController totalland = TextEditingController();
   final TextEditingController askingPricett = TextEditingController();
   final TextEditingController offerredPrice = TextEditingController();
-  final TextEditingController floorcontroller = TextEditingController();
+  // final TextEditingController floorcontroller = TextEditingController();
   final TextEditingController latcontroller = TextEditingController();
   final TextEditingController logcontroller = TextEditingController();
   final TextEditingController province = TextEditingController();
@@ -480,7 +481,7 @@ class _HomePageState extends State<AddComparable> {
 
   Future<void> mainsearch() async {
     final response = await http.get(Uri.parse(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/search/place/mapUse?query=${searchMap.text}'));
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/search/place/map?query=${searchMap.text}'));
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body)['data'];
       setState(() {
@@ -1270,8 +1271,7 @@ class _HomePageState extends State<AddComparable> {
       "province": province.text,
       "district": district.text,
       "commune": commune.text,
-      "comparable_floor":
-          (floorcontroller.text == '') ? null : floorcontroller.text,
+      "comparable_floor": (floorcontroller == null) ? null : floorcontroller,
     });
     var dio = Dio();
     var response = await dio.request(
@@ -1372,7 +1372,7 @@ class _HomePageState extends State<AddComparable> {
       totalland.clear();
       askingPricett.clear();
       offerredPrice.clear();
-      floorcontroller.clear();
+      floorcontroller = null;
       latcontroller.clear();
       logcontroller.clear();
       ls = 0;
@@ -3130,8 +3130,8 @@ class _HomePageState extends State<AddComparable> {
                                                         SizedBox(
                                                           height: 40,
                                                           child: TextFormField(
-                                                            controller:
-                                                                floorcontroller,
+                                                            // controller:
+                                                            //     floorcontroller,
                                                             keyboardType:
                                                                 TextInputType
                                                                     .number,
@@ -3142,8 +3142,7 @@ class _HomePageState extends State<AddComparable> {
                                                                         .bold),
                                                             onChanged: (value) {
                                                               setState(() {
-                                                                floorcontroller
-                                                                        .text =
+                                                                floorcontroller =
                                                                     value;
                                                               });
                                                             },
@@ -4008,7 +4007,7 @@ class _HomePageState extends State<AddComparable> {
                       ],
                     ),
                     Positioned(
-                      top: 160,
+                      top: 280,
                       child: (listMap.isEmpty)
                           ? const SizedBox()
                           : Padding(
