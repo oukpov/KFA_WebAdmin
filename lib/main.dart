@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
-
+import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 import 'Auth/login.dart';
-import 'page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 
 List list = [];
 // String? district_id;
@@ -72,6 +70,8 @@ class _MyAppState extends State<MyApp> {
         // home: AddProperty(idUserController: "59"),
         // home: ZoneMap(),
         home: LoginPage(),
+
+        // home: AutoList(),
         // home: LoginPage(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
