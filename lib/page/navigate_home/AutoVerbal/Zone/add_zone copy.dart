@@ -249,11 +249,7 @@ class _ZoneMapState extends State<ZoneMap> {
     },
     {
       "id": 3,
-      "title": "Sub Road",
-    },
-    {
-      "id": 4,
-      "title": "Main Road",
+      "title": "None",
     },
   ];
   bool searchGoogle = false;
@@ -583,7 +579,6 @@ class _ZoneMapState extends State<ZoneMap> {
                                           route = "";
                                           listClicks.clear();
                                           routeClick = "";
-                                          checkOption = false;
                                         });
                                       },
                                       icon: Icon(
@@ -672,8 +667,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                               // autoHide: const Duration(seconds: 2),
                                               btnOkOnPress: () async {
                                                 if (checkOption == true) {
-                                                  // addZone.addZone(listLatlong);
-                                                  print("Add Successfuly");
+                                                  addZone.addZone(listLatlong);
                                                 } else {
                                                   component.handleTap(
                                                       "Please Check Option",
@@ -727,7 +721,6 @@ class _ZoneMapState extends State<ZoneMap> {
                                               listClicks.clear();
                                               routeClick = "";
                                               typeZoneRN = -1;
-                                              checkOption = false;
                                               // typeZoneRN = false;
                                             });
                                           },
@@ -774,14 +767,14 @@ class _ZoneMapState extends State<ZoneMap> {
                                         i++)
                                       SizedBox(
                                         height: 40,
-                                        width: 100,
+                                        width: 90,
                                         child: Row(
                                           children: [
                                             Text(
                                               "${listTypeZone[i]['title']}",
                                               style: TextStyle(
                                                   color: whiteColor,
-                                                  fontSize: 12),
+                                                  fontSize: 16),
                                             ),
                                             IconButton(
                                                 onPressed: () {
@@ -797,8 +790,6 @@ class _ZoneMapState extends State<ZoneMap> {
                                                       typeZone = 2;
                                                     } else if (i == 2) {
                                                       typeZone = null;
-                                                    } else if (i == 3) {
-                                                      typeZone = 3;
                                                     }
                                                   });
                                                 },
