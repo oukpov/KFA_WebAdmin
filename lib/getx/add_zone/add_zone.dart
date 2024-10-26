@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-
 import '../component/getx._snack.dart';
 
 class AddZone extends GetxController {
   var listZone = [].obs;
   var isZone = false.obs;
+  var isZoneLatlog = false.obs;
   Future<void> addZone(List list) async {
     var headers = {'Content-Type': 'application/json'};
     var data = json.encode({"listZone": list});
@@ -30,27 +29,53 @@ class AddZone extends GetxController {
     }
   }
 
-  Component component = Component();
-  Future<void> fetchZone(nameRoad) async {
+  Future<void> fetchZoneLatlog(double lat, double log, double distance) async {
     try {
       isZone.value = true;
+      var headers = {'Content-Type': 'application/json'};
+      var data = json.encode({"distance": distance, "lat": lat, "log": log});
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/Specail/Zone/$nameRoad',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/zone/checkset',
         options: Options(
-          method: 'GET',
+          method: 'POST',
+          headers: headers,
         ),
+        data: data,
       );
 
       if (response.statusCode == 200) {
         listZone.value = jsonDecode(json.encode(response.data));
+        // print(listZone.toString());
       }
     } catch (e) {
       // print(e);
     } finally {
-      isZone.value = false;
+      isZoneLatlog.value = false;
     }
   }
+
+  Component component = Component();
+  // Future<void> fetchZone(nameRoad) async {
+  //   try {
+  //     isZone.value = true;
+  //     var dio = Dio();
+  //     var response = await dio.request(
+  //       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/Specail/Zone/$nameRoad',
+  //       options: Options(
+  //         method: 'GET',
+  //       ),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       listZone.value = jsonDecode(json.encode(response.data));
+  //     }
+  //   } catch (e) {
+  //     // print(e);
+  //   } finally {
+  //     isZone.value = false;
+  //   }
+  // }
 
   Future<void> deleteZone(int zoneID, String nameRoad) async {
     var dio = Dio();

@@ -17,6 +17,8 @@ class Authentication extends GetxController {
   var listblock = [].obs;
   List<String> listLocalhostData = [];
   List listlocalhost = [].obs;
+  var listAdminUser = [].obs;
+  var isAdmin = true.obs;
   int countCredit = 0;
   Future<void> login(AuthenModel authenModel, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -45,6 +47,7 @@ class Authentication extends GetxController {
         if (response.statusCode == 200) {
           listlocalhost = jsonDecode(json.encode(response.data))['user'];
           List<dynamic> responseData = response.data['user'];
+          print(responseData.toString());
           listLocalhostData =
               responseData.map((item) => json.encode(item)).toList();
           localhostList(listLocalhostData);
@@ -155,6 +158,26 @@ class Authentication extends GetxController {
     }
   }
 
+  Future<void> checkAdminUser(int agency) async {
+    try {
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/checkUser/Admin/$agency',
+        options: Options(
+          method: 'POST',
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        listAdminUser.value = jsonDecode(json.encode(response.data));
+        print(listAdminUser.toString());
+      }
+    } catch (e) {
+      // print(e);
+    } finally {
+      isAdmin.value = false;
+    }
+  }
   // Component component = Component();
   // Future<void> checkUpdate() async {
   //   var dio = Dio();

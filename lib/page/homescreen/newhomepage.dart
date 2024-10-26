@@ -131,14 +131,18 @@ class _homescreenState extends State<homescreen> {
   bool hasUnsavedData = true;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> updateUserStatus() async {
+    await authentication.checkAdminUser(widget.listUser[0]['agency']);
+
     setState(() {
-      if (widget.listUser[0]['agency'].toString() == "28") {
+      if ((widget.listUser[0]['agency'].toString() == "28") ||
+          (authentication.listAdminUser[0]['zone_Allow'].toString() == "1")) {
         listReportOption = reportOptionS;
         listAdminOption = autoOptionAdmin;
       } else {
         listReportOption = reportOption;
         listAdminOption = autoOption;
       }
+      print("Zone_Allow => ${authentication.listAdminUser[0]['zone_Allow']}");
     });
     final QuerySnapshot result = await _firestore
         .collection('users')
@@ -451,7 +455,10 @@ class _homescreenState extends State<homescreen> {
 
                               if (i == 2) {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const ZoneMap()));
+                                    builder: (context) => ZoneMap(
+                                          listLocalHost:
+                                              authentication.listAdminUser,
+                                        )));
                               }
                             },
                             child: textfield(
