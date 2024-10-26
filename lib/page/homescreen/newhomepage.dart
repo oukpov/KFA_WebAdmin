@@ -730,7 +730,7 @@ class _homescreenState extends State<homescreen> {
                                   }
                                 if (i == 1) {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => const AutoList()));
+                                      builder: (context) => AutoList()));
                                 }
                                 if (i == 2) {
                                   Navigator.of(context).push(MaterialPageRoute(

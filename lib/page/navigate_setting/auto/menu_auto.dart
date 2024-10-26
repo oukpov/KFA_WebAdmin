@@ -74,8 +74,8 @@ class _MenuAutoState extends State<MenuAuto> {
                         builder: (context) => const NewAuto()));
                   }
                   if (i == 1) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AutoList()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AutoList()));
                   }
                   if (i == 2) {
                     Navigator.of(context).push(MaterialPageRoute(
