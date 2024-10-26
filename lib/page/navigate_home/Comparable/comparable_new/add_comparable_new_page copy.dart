@@ -359,9 +359,6 @@ class _HomePageState extends State<AddComparable> {
   final TextEditingController province = TextEditingController();
   final TextEditingController district = TextEditingController();
   final TextEditingController commune = TextEditingController();
-  String provinces = "";
-  String districts = "";
-  String communes = "";
   @override
   void dispose() {
     totalPrice.dispose();
@@ -1271,9 +1268,9 @@ class _HomePageState extends State<AddComparable> {
       "comparabl_user":
           comparableUser ?? widget.listlocalhosts[0]['agency'].toString(),
       "comparable_remark": remark,
-      "province": provinces,
-      "district": districts,
-      "commune": communes,
+      "province": province.text,
+      "district": district.text,
+      "commune": commune.text,
       "comparable_floor": (floorcontroller == null) ? null : floorcontroller,
     });
     var dio = Dio();
@@ -1962,10 +1959,10 @@ class _HomePageState extends State<AddComparable> {
                                                           //   );
                                                           // } else {
                                                           if (condobool) {
-                                                            // await findByPiont(
-                                                            //     latLng.latitude,
-                                                            //     latLng
-                                                            //         .longitude);
+                                                            await findByPiont(
+                                                                latLng.latitude,
+                                                                latLng
+                                                                    .longitude);
                                                             main(10);
                                                             if (askingPricett.text != '' &&
                                                                 latcontroller
@@ -2024,11 +2021,11 @@ class _HomePageState extends State<AddComparable> {
                                                             }
                                                           } else {
                                                             if (validateAndSave()) {
-                                                              // await findByPiont(
-                                                              //     latLng
-                                                              //         .latitude,
-                                                              //     latLng
-                                                              //         .longitude);
+                                                              await findByPiont(
+                                                                  latLng
+                                                                      .latitude,
+                                                                  latLng
+                                                                      .longitude);
                                                               main(10);
                                                               if (totalland
                                                                           .text !=
@@ -3324,7 +3321,7 @@ class _HomePageState extends State<AddComparable> {
                                                 controller: province,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    provinces = value;
+                                                    province.text = value;
                                                   });
                                                 },
                                                 decoration: InputDecoration(
@@ -3372,7 +3369,7 @@ class _HomePageState extends State<AddComparable> {
                                                 controller: district,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    districts = value;
+                                                    district.text = value;
                                                   });
                                                 },
                                                 decoration: InputDecoration(
@@ -3420,7 +3417,7 @@ class _HomePageState extends State<AddComparable> {
                                                 controller: commune,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    communes = value;
+                                                    commune.text = value;
                                                   });
                                                 },
                                                 decoration: InputDecoration(
@@ -4107,7 +4104,7 @@ class _HomePageState extends State<AddComparable> {
                             requestModel.lng = latLng.longitude.toString();
                             latcontroller.text = latLng.latitude.toString();
                             logcontroller.text = latLng.longitude.toString();
-                            findByPiont(latLng.latitude, latLng.longitude);
+                            // findByPiont(latLng.latitude, latLng.longitude);
                             if (comparedropdown2 == ""
                                 //  &&typedrawerSe == false
                                 ) {
@@ -5188,7 +5185,7 @@ class _HomePageState extends State<AddComparable> {
                 "political") {
               setState(() {
                 checkKn = true;
-                districts = district.text = (jsonResponse['results'][j]
+                district.text = (jsonResponse['results'][j]
                     ['address_components'][i]['short_name']);
               });
             }
@@ -5197,15 +5194,15 @@ class _HomePageState extends State<AddComparable> {
                 "administrative_area_level_3") {
               setState(() {
                 checkSk = true;
-                communes = commune.text = (jsonResponse['results'][j]
-                    ['address_components'][i]['short_name']);
+                commune.text = (jsonResponse['results'][j]['address_components']
+                    [i]['short_name']);
               });
             }
             if (jsonResponse['results'][j]['address_components'][i]['types']
                     [0] ==
                 "administrative_area_level_1") {
-              provinces = province.text = (jsonResponse['results'][j]
-                  ['address_components'][i]['short_name']);
+              province.text = (jsonResponse['results'][j]['address_components']
+                  [i]['short_name']);
             }
           }
         }
