@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -68,7 +69,28 @@ class _MyAppState extends State<MyApp> {
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
-        // home: ZoneMap(),
+        // home: const ZoneMap(listLocalHost: [
+        //   {
+        //     "id": 328,
+        //     "control_user": "202492386253",
+        //     "OTP_Code": null,
+        //     "first_name": null,
+        //     "last_name": null,
+        //     "username": null,
+        //     "gender": null,
+        //     "tel_num": "010406807",
+        //     "known_from": null,
+        //     "email": null,
+        //     "email_verified_at": null,
+        //     "password": null,
+        //     "remember_token": null,
+        //     "deleted": 0,
+        //     "created_at": null,
+        //     "updated_at": null,
+        //     "update_new": 0,
+        //     "Image": null
+        //   },
+        // ]),
         home: LoginPage(),
 
         // home: AutoList(),
