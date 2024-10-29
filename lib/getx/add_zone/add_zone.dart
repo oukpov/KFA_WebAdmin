@@ -78,6 +78,7 @@ class AddZone extends GetxController {
   // }
 
   Future<void> deleteZone(int zoneID, String nameRoad) async {
+    print("zoneID : $zoneID || nameRoad : $nameRoad");
     var dio = Dio();
     var response = await dio.request(
       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/delete/Specail/Zone/$zoneID/$nameRoad',

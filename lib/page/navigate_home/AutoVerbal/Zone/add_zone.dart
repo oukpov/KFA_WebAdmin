@@ -42,8 +42,8 @@ class _ZoneMapState extends State<ZoneMap> {
 
     setState(() {
       markers.add(marker);
+      points.add(latLng);
       listMarkerIds.add(marker);
-
       listLatlong.add({
         "lat": latLng.latitude,
         "log": latLng.longitude,
@@ -52,26 +52,26 @@ class _ZoneMapState extends State<ZoneMap> {
         "name_road": route
       });
       _createPolygon();
-      LatLng centroid = _calculatePolygonCentroid(
-          markers.map((marker) => marker.position).toList());
+      // LatLng centroid = _calculatePolygonCentroid(
+      //     markers.map((marker) => marker.position).toList());
     });
   }
 
   bool markerwait = false;
-  LatLng _calculatePolygonCentroid(List<LatLng> points) {
-    double centroidLat = 0.0;
-    double centroidLng = 0.0;
+  // LatLng _calculatePolygonCentroid(List<LatLng> points) {
+  //   double centroidLat = 0.0;
+  //   double centroidLng = 0.0;
 
-    for (LatLng point in points) {
-      centroidLat += point.latitude;
-      centroidLng += point.longitude;
-    }
+  //   for (LatLng point in points) {
+  //     centroidLat += point.latitude;
+  //     centroidLng += point.longitude;
+  //   }
 
-    centroidLat /= points.length;
-    centroidLng /= points.length;
+  //   centroidLat /= points.length;
+  //   centroidLng /= points.length;
 
-    return LatLng(centroidLat, centroidLng);
-  }
+  //   return LatLng(centroidLat, centroidLng);
+  // }
 
   Future<void> waitMarker(bool check) async {
     setState(() {
@@ -86,43 +86,41 @@ class _ZoneMapState extends State<ZoneMap> {
     });
   }
 
-  Future<void> noneMethod() async {}
+  Future<void> noneMethod() async {
+    print("No Add");
+  }
+
   List<LatLng> points = [];
   void _createPolygon() {
-    for (Marker marker in markers) {
-      points.add(marker.position);
-    }
-    final Polygon polygon = Polygon(
+    // for (Marker marker in markers) {
+    //   points.add(marker.position);
+    // }
+    _polygons.add(Polygon(
       polygonId: const PolygonId('polygon'),
       points: points,
       strokeWidth: 2,
       strokeColor: const Color.fromARGB(255, 5, 94, 167),
       fillColor: Colors.blue.withOpacity(0.2),
-    );
-
-    setState(() {
-      polygons.add(polygon);
-    });
+    ));
   }
 
-  Future<void> addMarker(LatLng latLng) async {
-    Marker marker = Marker(
-      visible: true,
-      draggable: true,
-      markerId: MarkerId(latLng.toString()),
-      position: latLng,
-      onDragEnd: (value) {
-        latLng = value;
-      },
-    );
+  // Future<void> addMarker(LatLng latLng) async {
+  //   Marker marker = Marker(
+  //     visible: true,
+  //     draggable: true,
+  //     markerId: MarkerId(latLng.toString()),
+  //     position: latLng,
+  //     onDragEnd: (value) {
+  //       latLng = value;
+  //     },
+  //   );
 
-    setState(() {
-      route = "";
-      listMarkerIds.clear();
-
-      listMarkerIds.add(marker);
-    });
-  }
+  //   setState(() {
+  //     route = "";
+  //     listMarkerIds.clear();
+  //     // listMarkerIds.add(marker);
+  //   });
+  // }
 
   bool checkOption = false;
   Future<void> checkZoneSpecail() async {
@@ -135,6 +133,7 @@ class _ZoneMapState extends State<ZoneMap> {
     for (int i = 1; i <= maxZoneNumber; i++) {
       zonePoints[i] = [];
     }
+
     for (var item in addZone.listZone) {
       int noZone = item['no_zone'] ?? 0;
       LatLng point = LatLng(item['lat'], item['log']);
@@ -152,7 +151,7 @@ class _ZoneMapState extends State<ZoneMap> {
         List<LatLng> polygonPoints =
             zonePoints[zone]!.map((entry) => entry['point'] as LatLng).toList();
 
-        Polygon polygon = Polygon(
+        _polygons.add(Polygon(
           onTap: () {
             setState(() {
               AwesomeDialog(
@@ -179,6 +178,7 @@ class _ZoneMapState extends State<ZoneMap> {
                     polygons.clear();
                     markers.clear();
                     points.clear();
+                    _polygons.clear();
                     listLatlong.clear();
                     route = "";
                     listClicks.clear();
@@ -195,11 +195,11 @@ class _ZoneMapState extends State<ZoneMap> {
           strokeWidth: 2,
           strokeColor: Colors.blue,
           fillColor: Colors.red.withOpacity(0.2),
-        );
+        ));
 
-        setState(() {
-          polygons.add(polygon);
-        });
+        // setState(() {
+        //   polygons.add(polygon);
+        // });
       }
     }
   }
@@ -213,6 +213,14 @@ class _ZoneMapState extends State<ZoneMap> {
   bool typeMap = false;
   bool checkMarker = false;
   int typeZoneRN = -1;
+  final Set<Polygon> _polygons = {};
+  // final List<LatLng> polygonCoordinates = [
+  //   LatLng(11.525069724444075, 104.91717817131298),
+  //   LatLng(11.518768869134183, 104.91577470242815),
+  //   LatLng(11.517368659885603, 104.92016373239524),
+  //   LatLng(11.526369883353812, 104.92973283842808),
+  //   LatLng(11.52997029200921, 104.92325136394182), // Close the polygon
+  // ];
 
   List listTypeZone = [
     {
@@ -556,6 +564,8 @@ class _ZoneMapState extends State<ZoneMap> {
                                             checkFindlatlong = false;
                                             listMarkerIds.clear();
                                             polygons.clear();
+                                            _polygons.clear();
+                                            points.clear();
                                             markers.clear();
                                             points.clear();
                                             listLatlong.clear();
@@ -753,6 +763,8 @@ class _ZoneMapState extends State<ZoneMap> {
                                                   route = "";
                                                   listClicks.clear();
                                                   routeClick = "";
+                                                  _polygons.clear();
+                                                  points.clear();
                                                   typeZoneRN = -1;
                                                   checkOption = false;
                                                   // typeZoneRN = false;
@@ -970,7 +982,7 @@ class _ZoneMapState extends State<ZoneMap> {
                         await waitMarker(false);
                       }
                     } else {
-                      addMarker(argument);
+                      // addMarker(argument);
                       findByPiont(latlong!.latitude, latlong!.longitude, true);
                     }
                   }
@@ -981,7 +993,9 @@ class _ZoneMapState extends State<ZoneMap> {
                   target: LatLng(11.549288, 104.898100),
                   zoom: 14,
                 ),
-                polygons: Set<Polygon>.of(polygons),
+                // polygons: Set<Polygon>.of(polygons),
+
+                polygons: _polygons,
                 onMapCreated: (GoogleMapController controller) {
                   mapController = controller;
                 },
