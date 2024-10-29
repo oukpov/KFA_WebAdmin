@@ -34,7 +34,36 @@ class _ZoneMapState extends State<ZoneMap> {
     Marker marker = Marker(
       markerId: markerId,
       position: latLng,
+      infoWindow: InfoWindow(title: markerId.toString()),
       icon: BitmapDescriptor.defaultMarker,
+      onTap: () {
+        AwesomeDialog(
+          alignment: Alignment.centerLeft,
+          width: 400,
+          context: context,
+          animType: AnimType.leftSlide,
+          headerAnimationLoop: false,
+          dialogType: DialogType.success,
+          showCloseIcon: false,
+          title: 'Do you want to Delete this Zone?',
+          btnOkOnPress: () async {
+            setState(() {
+              points.removeWhere((point) =>
+                  point.latitude == latLng.latitude &&
+                  point.longitude == latLng.longitude);
+              listLatlong.removeWhere((element) =>
+                  element['lat'] == latLng.latitude &&
+                  element['log'] == latLng.longitude);
+              removeMarker(markerId);
+              listClicks.removeWhere((element) =>
+                  element['lat'] == latLng.latitude &&
+                  element['lng'] == latLng.longitude);
+              // print("listLatlong : ${listLatlong.length}");
+            });
+          },
+          btnCancelOnPress: () {},
+        ).show();
+      },
       onDragEnd: (value) {
         latLng = value;
       },
@@ -55,6 +84,10 @@ class _ZoneMapState extends State<ZoneMap> {
       // LatLng centroid = _calculatePolygonCentroid(
       //     markers.map((marker) => marker.position).toList());
     });
+  }
+
+  void removeMarker(MarkerId markerId) {
+    listMarkerIds.removeWhere((marker) => marker.markerId == markerId);
   }
 
   bool markerwait = false;
@@ -701,19 +734,26 @@ class _ZoneMapState extends State<ZoneMap> {
                                                   showCloseIcon: false,
                                                   title:
                                                       'Do you want to add New Zone?',
-                                                  // autoHide: const Duration(seconds: 2),
                                                   btnOkOnPress: () async {
-                                                    // if (typeZone == null) {
-                                                    print("Click");
                                                     await addZone
                                                         .addZone(listLatlong);
-                                                    // print(
-                                                    //     "listLatlong : $listLatlong");
-                                                    // } else {
-                                                    //   component.handleTap(
-                                                    //       "Please Check Option",
-                                                    //       "");
-                                                    // }
+                                                    setState(() {
+                                                      checkFindlatlong = false;
+                                                      listMarkerIds.clear();
+                                                      polygons.clear();
+                                                      markers.clear();
+                                                      points.clear();
+                                                      listLatlong.clear();
+                                                      typeZone = null;
+                                                      route = "";
+                                                      listClicks.clear();
+                                                      routeClick = "";
+                                                      _polygons.clear();
+                                                      points.clear();
+                                                      typeZoneRN = -1;
+                                                      checkOption = false;
+                                                      // typeZoneRN = false;
+                                                    });
                                                   },
                                                   btnCancelOnPress: () {},
                                                 ).show();
@@ -1084,7 +1124,7 @@ class _ZoneMapState extends State<ZoneMap> {
                     routeClick = (jsonResponse['results'][j]
                             ['address_components'][i]['short_name'] ??
                         "");
-                    listClicks.add({"road": routeClick});
+                    listClicks.add({"road": routeClick, "lat": la, "lng": lo});
                   });
                 }
                 // print("route ==> $route");
