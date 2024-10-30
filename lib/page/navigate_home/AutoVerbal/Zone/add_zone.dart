@@ -50,7 +50,7 @@ class _ZoneMapState extends State<ZoneMap> {
       points: points,
       strokeWidth: 1,
       strokeColor: const Color.fromARGB(255, 235, 42, 3),
-      fillColor: const Color.fromARGB(255, 157, 155, 234).withOpacity(0.1),
+      fillColor: colorback.withOpacity(0.07),
     ));
 
     // Add marker for each unique point in points list
@@ -133,6 +133,7 @@ class _ZoneMapState extends State<ZoneMap> {
     });
   }
 
+  var colorback = const Color.fromARGB(255, 210, 231, 248);
   List<LatLng> points = [];
 
   bool checkOption = false;
