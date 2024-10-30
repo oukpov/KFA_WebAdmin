@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -22,67 +23,93 @@ class _ZoneMapState extends State<ZoneMap> {
   final Set<Marker> listMarkerIds = {};
   List<Marker> markers = [];
   Set<Polygon> polygons = {};
+  int indexPolygon = 0;
+  final Random random = Random();
+  Future<void> addMarkerAndPolygon(LatLng latLng) async {
+    setState(() {
+      // Add the initial point to the points list if not already present
+      if (!points.contains(latLng)) {
+        points.add(latLng);
+      }
+    });
 
-  Future<void> addManyMarkers(LatLng latLng) async {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(40, 40)),
-            'assets/images/pin.png')
-        .then((d) {});
+    // Load custom icon
+    BitmapDescriptor icon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(40, 40)),
+      'assets/images/pin.png',
+    );
 
-    final int markerCount = markers.length;
-    final MarkerId markerId = MarkerId(markerCount.toString());
-    Marker marker = Marker(
+    // Create marker ID
+    int markerID = random.nextInt(1000);
+
+    final MarkerId markerId = MarkerId(markerID.toString());
+
+    // Add Polygon
+    _polygons.add(Polygon(
+      polygonId: PolygonId(markerID.toString()),
+      points: points,
+      strokeWidth: 1,
+      strokeColor: const Color.fromARGB(255, 235, 42, 3),
+      fillColor: const Color.fromARGB(255, 157, 155, 234).withOpacity(0.1),
+    ));
+
+    // Add marker for each unique point in points list
+    listMarkerIds.add(Marker(
       markerId: markerId,
       position: latLng,
-      infoWindow: InfoWindow(title: markerId.toString()),
-      icon: BitmapDescriptor.defaultMarker,
+      icon: icon,
+      draggable: true,
       onTap: () {
         AwesomeDialog(
+          width: 450,
           alignment: Alignment.centerLeft,
-          width: 400,
           context: context,
-          animType: AnimType.leftSlide,
-          headerAnimationLoop: false,
           dialogType: DialogType.success,
-          showCloseIcon: false,
-          title: 'Do you want to Delete this Zone?',
-          btnOkOnPress: () async {
+          title: 'Do you want to Delete Point Zone?',
+          btnOkOnPress: () {
             setState(() {
               points.removeWhere((point) =>
                   point.latitude == latLng.latitude &&
                   point.longitude == latLng.longitude);
+              listMarkerIds
+                  .removeWhere((marker) => marker.markerId == markerId);
               listLatlong.removeWhere((element) =>
                   element['lat'] == latLng.latitude &&
                   element['log'] == latLng.longitude);
-              removeMarker(markerId);
-              listClicks.removeWhere((element) =>
-                  element['lat'] == latLng.latitude &&
-                  element['lng'] == latLng.longitude);
-              // print("listLatlong : ${listLatlong.length}");
             });
           },
           btnCancelOnPress: () {},
         ).show();
       },
-      onDragEnd: (value) {
-        latLng = value;
+      onDragStart: (value) {
+        setState(() {
+          indexPolygon = points.indexOf(value);
+        });
       },
-    );
+      onDragEnd: (newPosition) {
+        setState(() {
+          for (int i = 0; i < points.length; i++) {
+            if (indexPolygon == i) {
+              points[i] = newPosition;
+              listLatlong[i]['lat'] = newPosition.latitude;
+              listLatlong[i]['log'] = newPosition.longitude;
+
+              break;
+            }
+          }
+          latLng = newPosition;
+        });
+      },
+    ));
 
     setState(() {
-      markers.add(marker);
-      points.add(latLng);
-      listMarkerIds.add(marker);
       listLatlong.add({
         "lat": latLng.latitude,
         "log": latLng.longitude,
         "type_zone": typeZone,
         "agency": widget.listLocalHost[0]['agency'] ?? 0,
-        "name_road": route
+        "name_road": ""
       });
-      _createPolygon();
-      // LatLng centroid = _calculatePolygonCentroid(
-      //     markers.map((marker) => marker.position).toList());
     });
   }
 
@@ -91,69 +118,22 @@ class _ZoneMapState extends State<ZoneMap> {
   }
 
   bool markerwait = false;
-  // LatLng _calculatePolygonCentroid(List<LatLng> points) {
-  //   double centroidLat = 0.0;
-  //   double centroidLng = 0.0;
 
-  //   for (LatLng point in points) {
-  //     centroidLat += point.latitude;
-  //     centroidLng += point.longitude;
-  //   }
-
-  //   centroidLat /= points.length;
-  //   centroidLng /= points.length;
-
-  //   return LatLng(centroidLat, centroidLng);
-  // }
-
-  Future<void> waitMarker(bool check) async {
+  Future<void> waitMarker() async {
     setState(() {
       markerwait = true;
     });
     await Future.wait([
-      findByPiont(latlong!.latitude, latlong!.longitude, check),
-      (route != "") ? addManyMarkers(latlong!) : noneMethod(),
+      (!checkFindlatlong)
+          ? findByPiont(latlong!.latitude, latlong!.longitude)
+          : addMarkerAndPolygon(latlong!),
     ]);
     setState(() {
       markerwait = false;
     });
   }
 
-  Future<void> noneMethod() async {
-    print("No Add");
-  }
-
   List<LatLng> points = [];
-  void _createPolygon() {
-    // for (Marker marker in markers) {
-    //   points.add(marker.position);
-    // }
-    _polygons.add(Polygon(
-      polygonId: const PolygonId('polygon'),
-      points: points,
-      strokeWidth: 2,
-      strokeColor: const Color.fromARGB(255, 5, 94, 167),
-      fillColor: Colors.blue.withOpacity(0.2),
-    ));
-  }
-
-  // Future<void> addMarker(LatLng latLng) async {
-  //   Marker marker = Marker(
-  //     visible: true,
-  //     draggable: true,
-  //     markerId: MarkerId(latLng.toString()),
-  //     position: latLng,
-  //     onDragEnd: (value) {
-  //       latLng = value;
-  //     },
-  //   );
-
-  //   setState(() {
-  //     route = "";
-  //     listMarkerIds.clear();
-  //     // listMarkerIds.add(marker);
-  //   });
-  // }
 
   bool checkOption = false;
   Future<void> checkZoneSpecail() async {
@@ -174,7 +154,7 @@ class _ZoneMapState extends State<ZoneMap> {
         zonePoints[noZone]!.add({
           "point": point,
           "no_zone": item['no_zone'],
-          "name_road": item['name_road']
+          // "name_road": item['name_road']
         });
       }
     }
@@ -201,7 +181,7 @@ class _ZoneMapState extends State<ZoneMap> {
                   String nameRoad = "";
                   for (var entry in zonePoints[zone]!) {
                     noZone = entry['no_zone'];
-                    nameRoad = entry['name_road'];
+                    // nameRoad = entry['name_road'];
                   }
 
                   await addZone.deleteZone(noZone, nameRoad);
@@ -214,7 +194,7 @@ class _ZoneMapState extends State<ZoneMap> {
                     _polygons.clear();
                     listLatlong.clear();
                     route = "";
-                    listClicks.clear();
+                    listLatlong.clear();
                     routeClick = "";
                     polygons.clear();
                   });
@@ -329,6 +309,7 @@ class _ZoneMapState extends State<ZoneMap> {
     });
   }
 
+  LatLng _markerPosition = LatLng(11.556473531854941, 104.92818808498154);
   bool checkpoint = false;
   void maincheck() {
     checkpoint = true;
@@ -603,7 +584,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                             points.clear();
                                             listLatlong.clear();
                                             route = "";
-                                            listClicks.clear();
+                                            listLatlong.clear();
                                             routeClick = "";
                                             checkOption = false;
                                           });
@@ -618,24 +599,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                if (checkMarker)
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Road Name : ",
-                                        style: TextStyle(
-                                            color: whiteColor, fontSize: 16),
-                                      ),
-                                      Text(
-                                        route,
-                                        style: const TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 250, 42, 27),
-                                            fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
+
                                 Container(
                                   height: 25,
                                   // width: 170,
@@ -673,7 +637,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                     ),
                                   ),
                                 ),
-                                if (route != "" && !checkMarker)
+                                if (!checkMarker)
                                   Column(
                                     children: [
                                       // Row(
@@ -696,25 +660,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                       //   ],
                                       // ),
                                       const SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Road Name Click : ",
-                                            style: TextStyle(
-                                                color: whiteColor,
-                                                fontSize: 14),
-                                          ),
-                                          Text(
-                                            routeClick,
-                                            style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 227, 231, 232),
-                                                fontSize: 16),
-                                          ),
-                                        ],
-                                      ),
+
                                       const SizedBox(height: 10),
 
                                       if (checkOption == true)
@@ -746,7 +692,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                                       listLatlong.clear();
                                                       typeZone = null;
                                                       route = "";
-                                                      listClicks.clear();
+                                                      listLatlong.clear();
                                                       routeClick = "";
                                                       _polygons.clear();
                                                       points.clear();
@@ -801,7 +747,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                                   listLatlong.clear();
                                                   typeZone = null;
                                                   route = "";
-                                                  listClicks.clear();
+                                                  listLatlong.clear();
                                                   routeClick = "";
                                                   _polygons.clear();
                                                   points.clear();
@@ -912,7 +858,7 @@ class _ZoneMapState extends State<ZoneMap> {
                             ],
                           ),
                         const SizedBox(height: 10),
-                        if (route != "" && !checkMarker)
+                        if (!checkMarker)
                           Container(
                             height: MediaQuery.of(context).size.height * 0.35,
                             width: double.infinity,
@@ -921,7 +867,7 @@ class _ZoneMapState extends State<ZoneMap> {
                                 border:
                                     Border.all(width: 1, color: whiteColor)),
                             child: ListView.builder(
-                              itemCount: listClicks.length,
+                              itemCount: points.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                   decoration: BoxDecoration(
@@ -933,12 +879,13 @@ class _ZoneMapState extends State<ZoneMap> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "No.${index + 1} Road : ",
+                                        "No.${index + 1} Latlong: ",
                                         style: TextStyle(
                                             color: whiteColor, fontSize: 16),
                                       ),
                                       Text(
-                                        listClicks[index]['road'].toString(),
+                                        // listLatlong[index]['lat'].toString(),
+                                        points[index].latitude.toString(),
                                         style: const TextStyle(
                                             color: Color.fromARGB(
                                                 255, 250, 42, 27),
@@ -1012,25 +959,21 @@ class _ZoneMapState extends State<ZoneMap> {
                   setState(() {
                     latlong = argument;
                   });
+
                   if (checkOption == true) {
                     if (checkMarker == false) {
-                      if (checkFindlatlong == false) {
-                        print("No.1");
-                        await waitMarker(true);
-                      } else {
-                        print("No.2");
-                        await waitMarker(false);
-                      }
+                      await waitMarker();
                     } else {
                       // addMarker(argument);
-                      findByPiont(latlong!.latitude, latlong!.longitude, true);
+                      findByPiont(latlong!.latitude, latlong!.longitude);
                     }
                   }
                 },
                 mapType: typeMap ? MapType.normal : MapType.hybrid,
-                markers: listMarkerIds.map((e) => e).toSet(),
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(11.549288, 104.898100),
+                // markers: listMarkerIds.map((e) => e).toSet(),
+                markers: listMarkerIds,
+                initialCameraPosition: CameraPosition(
+                  target: _markerPosition,
                   zoom: 14,
                 ),
                 // polygons: Set<Polygon>.of(polygons),
@@ -1047,99 +990,16 @@ class _ZoneMapState extends State<ZoneMap> {
     ));
   }
 
-  List listClicks = [];
+  // List listClicks = [];
   String route = '';
   String routes = '';
   String routeClick = '';
-  Future<void> findByPiont(double la, double lo, bool checkOnlyR) async {
-    var headers = {
-      'Authorization':
-          'hEXieWCKYKHKD1wVdiTHDjgwkbY9NwITq_F(bQ8tenn(yIUHbOVaQcRukkLZKnh(j]7Cg[1uhoD%-K5)hSP"2W74Qy7/Elf',
-      'Content-Type': 'application/json'
-    };
-    var data = json.encode({"lat": la, "lng": lo});
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/findlatlog/Map',
-      options: Options(
-        method: 'POST',
-        headers: headers,
-      ),
-      data: data,
-    );
-
-    if (response.statusCode == 200) {
-      var jsonResponse = response.data;
-
-      List ls = jsonResponse['results'] ?? [];
-
-      List ac;
-      bool checkSk = false, checkKn = false;
-      for (int j = 0; j < ls.length; j++) {
-        ac = jsonResponse['results'][j]['address_components'];
-        for (int i = 0; i < ac.length; i++) {
-          if (checkKn == false || checkSk == false) {
-            if (jsonResponse['results'][j]['address_components'][i]['types']
-                    [0] ==
-                "political") {
-              setState(() {
-                checkKn = true;
-                district = (jsonResponse['results'][j]['address_components'][i]
-                        ['short_name'] ??
-                    "");
-              });
-            }
-            if (jsonResponse['results'][j]['address_components'][i]['types']
-                    [0] ==
-                "administrative_area_level_3") {
-              setState(() {
-                checkSk = true;
-                commune = (jsonResponse['results'][j]['address_components'][i]
-                        ['short_name'] ??
-                    "");
-              });
-            }
-            if (jsonResponse['results'][j]['address_components'][i]['types']
-                    [0] ==
-                "administrative_area_level_1") {
-              province = (jsonResponse['results'][j]['address_components'][i]
-                      ['short_name'] ??
-                  "");
-            }
-          }
-        }
-        if (jsonResponse['results'][j]['types'][0] == "route") {
-          List r = jsonResponse['results'][j]['address_components'];
-          for (int i = 0; i < r.length; i++) {
-            if (jsonResponse['results'][j]['address_components'][i]['types']
-                    [0] ==
-                "route") {
-              setState(() {
-                if (checkOnlyR == true) {
-                  route = (jsonResponse['results'][j]['address_components'][i]
-                          ['short_name'] ??
-                      "");
-                } else {
-                  setState(() {
-                    routeClick = (jsonResponse['results'][j]
-                            ['address_components'][i]['short_name'] ??
-                        "");
-                    listClicks.add({"road": routeClick, "lat": la, "lng": lo});
-                  });
-                }
-                // print("route ==> $route");
-              });
-            }
-          }
-        }
-      }
-      if (checkOnlyR == true) {
-        await addZone.fetchZoneLatlog(la, lo, distance);
-        await checkZoneSpecail();
-        setState(() {
-          checkFindlatlong = true;
-        });
-      }
-    }
+  Future<void> findByPiont(double la, double lo) async {
+    await addZone.fetchZoneLatlog(la, lo, distance);
+    await checkZoneSpecail();
+    setState(() {
+      checkOption = true;
+      checkFindlatlong = true;
+    });
   }
 }

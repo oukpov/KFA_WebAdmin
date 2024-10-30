@@ -81,7 +81,7 @@ class AddZone extends GetxController {
     print("zoneID : $zoneID || nameRoad : $nameRoad");
     var dio = Dio();
     var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/delete/Specail/Zone/$zoneID/$nameRoad',
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/delete/Specail/Zone/$zoneID',
       options: Options(
         method: 'DELETE',
       ),
