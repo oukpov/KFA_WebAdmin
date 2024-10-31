@@ -105,49 +105,71 @@ class UserListForAdmin extends StatelessWidget {
                         ),
                       ],
                     ),
-                    trailing: InkWell(
-                      onTap: () async {
-                        userController.disApproveUser(
-                            int.parse(user['userId'].toString()));
-                        AwesomeDialog(
-                          padding: const EdgeInsets.only(
-                              right: 30, left: 30, bottom: 10, top: 10),
-                          alignment: Alignment.center,
-                          width: 350,
-                          context: context,
-                          dialogType: DialogType.success,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: "Success",
-                          desc: "User has been disapproved successfully",
-                          btnOkOnPress: () {
-                            Navigator.of(context).pop();
-                          },
-                          btnOkText: "OK",
-                          btnOkColor: Colors.green,
-                        ).show();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: user['approval_status'] == 'approved'
-                              ? Colors.green[100]
-                              : Colors.orange[100],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          user['approval_status'] == 'approved'
-                              ? 'APPROVED'
-                              : 'PENDING',
-                          style: TextStyle(
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
                             color: user['approval_status'] == 'approved'
-                                ? Colors.green[900]
-                                : Colors.orange[900],
-                            fontWeight: FontWeight.bold,
+                                ? Colors.green[100]
+                                : Colors.orange[100],
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            user['approval_status'] == 'approved'
+                                ? 'APPROVED'
+                                : 'PENDING',
+                            style: TextStyle(
+                              color: user['approval_status'] == 'approved'
+                                  ? Colors.green[900]
+                                  : Colors.orange[900],
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          icon: const Icon(Icons.power_settings_new,
+                              color: Colors.red),
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.warning,
+                              animType: AnimType.rightSlide,
+                              title: 'Disapprove User',
+                              desc:
+                                  'Are you sure you want to disapprove this user?',
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () {
+                                userController.disApproveUser(
+                                    int.parse(user['userId'].toString()));
+                                AwesomeDialog(
+                                  padding: const EdgeInsets.only(
+                                      right: 30, left: 30, bottom: 10, top: 10),
+                                  alignment: Alignment.center,
+                                  width: 350,
+                                  context: context,
+                                  dialogType: DialogType.success,
+                                  animType: AnimType.rightSlide,
+                                  headerAnimationLoop: false,
+                                  title: "Success",
+                                  desc:
+                                      "User has been disapproved successfully",
+                                  btnOkOnPress: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  btnOkText: "OK",
+                                  btnOkColor: Colors.green,
+                                ).show();
+                              },
+                              btnOkColor: Colors.red,
+                              btnOkText: 'Disapprove',
+                            ).show();
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 );
