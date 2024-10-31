@@ -39,6 +39,8 @@ import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
 import '../navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../navigate_home/Report/page/comparable_case_page.dart';
+import '../navigate_home/Report/page/userlist_for_adminpage.dart';
+import '../navigate_home/Report/page/userlist_page.dart';
 import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/list_notivigation.dart';
@@ -531,6 +533,18 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
+                              if (i == 0) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => UserListPage(
+                                        id: widget.listUser[0]['id']
+                                            .toString())));
+                              }
+                              if (i == 1) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => UserListForAdmin(
+                                        id: widget.listUser[0]['id']
+                                            .toString())));
+                              }
                               if (i == 2) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => const CTL_User()));
