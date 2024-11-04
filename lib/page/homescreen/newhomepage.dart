@@ -141,8 +141,13 @@ class _homescreenState extends State<homescreen> {
           (authentication.listAdminUser[0]['zone_Allow'].toString() == "1")) {
         listReportOption = reportOptionS;
         listAdminOption = autoOptionAdmin;
+        listControllerTitle = listTitleAdmin;
+        listControllerIcons = optionIconListAdmin;
       } else {
+        listControllerTitle = listTitle;
+        listControllerIcons = optionIconList;
         listReportOption = reportOption;
+
         listAdminOption = autoOption;
       }
       // print("Zone_Allow => ${authentication.listAdminUser[0]['zone_Allow']}");
@@ -307,12 +312,16 @@ class _homescreenState extends State<homescreen> {
     );
   }
 
+  List listControllerTitle = [];
+  List listControllerIcons = [];
   Widget homeOptioWrap() {
     return Wrap(
       alignment:
           (widget.device == 'm') ? WrapAlignment.center : WrapAlignment.start,
       children: [
-        for (int index = 0; index < listTitle.length; index++)
+        // (widget.listUser[0]['agency'].toString() == "28") ?  listTitle.length:
+
+        for (int index = 0; index < listControllerTitle.length; index++)
           PopupMenuButton(
             elevation: 15,
             itemBuilder: (context) {
@@ -332,9 +341,7 @@ class _homescreenState extends State<homescreen> {
                                     );
                                   },
                                 ));
-                              }
-
-                              if (i == 1) {
+                              } else {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
                                     return const Customer_List();
@@ -349,26 +356,28 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const New_Executive();
-                                  },
-                                ));
-                              }
-                              if (i == 1) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return Executive_List();
-                                  },
-                                ));
-                              }
-                              if (i == 2) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return Executive_approvals();
-                                  },
-                                ));
+                              switch (i) {
+                                case 0:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return const New_Executive();
+                                    },
+                                  ));
+                                  break;
+                                case 1:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return Executive_List();
+                                    },
+                                  ));
+                                  break;
+
+                                default:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return Executive_approvals();
+                                    },
+                                  ));
                               }
                             },
                             child: textfield(
@@ -378,46 +387,45 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return ResponsivenewcomparableAdd(
-                                      id: widget.id.toString(),
-                                      name: "",
-                                    );
-                                  },
-                                ));
-                              }
-                              if (i == 1) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return AddComparable(
-                                      listlocalhosts: widget.listUser,
-                                      addNew: (value) {},
-                                      // listUser: widget.listUser,
-                                      type: (value) {},
-                                    );
-                                  },
-                                ));
-                              }
-                              if (i == 2) {
-                                // Navigator.of(context).push(MaterialPageRoute(
-                                //     builder: (context) => ComparableList(
-                                //           name: widget.listUser[0]['username']
-                                //               .toString(),
-                                //     builder: (context) => List_newcomparable(
-                                //           name: widget.user,
-                                //         )));
-                              }
-                              if (i == 3) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const comparable_search()));
-                              }
-                              if (i == 4) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const List_comparable_filter()));
+                              switch (i) {
+                                // case 0:
+                                //   Navigator.push(context, MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return ResponsivenewcomparableAdd(
+                                //         id: widget.id.toString(),
+                                //         name: "",
+                                //       );
+                                //     },
+                                //   ));
+                                //   break;
+                                case 0:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return AddComparable(
+                                        listlocalhosts: widget.listUser,
+                                        addNew: (value) {},
+                                        // listUser: widget.listUser,
+                                        type: (value) {},
+                                      );
+                                    },
+                                  ));
+                                //   break;
+                                // case 3:
+                                //   Navigator.of(context).push(MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           const comparable_search()));
+                                //   break;
+                                // case 4:
+                                //   Navigator.of(context).push(MaterialPageRoute(
+                                //       builder: (context) =>
+                                //           const List_comparable_filter()));
+                                //   break;
+                                // default:
+                                //   Navigator.push(context, MaterialPageRoute(
+                                //     builder: (context) {
+                                //       return Executive_approvals();
+                                //     },
+                                //   ));
                               }
                             },
                             child: textfield(
@@ -442,26 +450,27 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => VerbalAdmin(
-                                          addNew: (value) {},
-                                          listUser: widget.listUser,
-                                          type: (value) {},
-                                        )));
-                              }
-                              if (i == 1) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const Show_autoVerbals()));
-                              }
-
-                              if (i == 2) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ZoneMap(
-                                          listLocalHost:
-                                              authentication.listAdminUser,
-                                        )));
+                              switch (i) {
+                                case 0:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => VerbalAdmin(
+                                            addNew: (value) {},
+                                            listUser: widget.listUser,
+                                            type: (value) {},
+                                          )));
+                                  break;
+                                case 1:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          const Show_autoVerbals()));
+                                  break;
+                                default:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ZoneMap(
+                                            listLocalHost:
+                                                authentication.listAdminUser,
+                                          )));
+                                  break;
                               }
                             },
                             child: textfield(
@@ -471,41 +480,45 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => const Add(
-                                //         id_control_user: 'sdf96',
-                                //         id: '12',
-                                //       ),
-                                //     ));
-                              } else if (i == 1) {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => const ListAuto(
-                                //         id_control_user: 'sasdkf',
-                                //         verbal_id: '0123',
-                                //       ),
-                                //     ));
-                              } else if (i == 2) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          Map_List_search_auto_verbal(
-                                        get_commune: (value) {},
-                                        get_district: (value) {},
-                                        get_lat: (value) {},
-                                        get_log: (value) {},
-                                        get_max1: (value) {},
-                                        get_max2: (value) {},
-                                        get_min1: (value) {},
-                                        get_min2: (value) {},
-                                        get_province: (value) {},
-                                      ),
-                                    ));
+                              switch (i) {
+                                case 0:
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => const Add(
+                                  //         id_control_user: 'sdf96',
+                                  //         id: '12',
+                                  //       ),
+                                  //     ));
+                                  break;
+                                case 1:
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => const ListAuto(
+                                  //         id_control_user: 'sasdkf',
+                                  //         verbal_id: '0123',
+                                  //       ),
+                                  //     ));
+                                  break;
+                                default:
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            Map_List_search_auto_verbal(
+                                          get_commune: (value) {},
+                                          get_district: (value) {},
+                                          get_lat: (value) {},
+                                          get_log: (value) {},
+                                          get_max1: (value) {},
+                                          get_max2: (value) {},
+                                          get_min1: (value) {},
+                                          get_min2: (value) {},
+                                          get_province: (value) {},
+                                        ),
+                                      ));
+                                  break;
                               }
                             },
                             child:
@@ -534,36 +547,41 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => UserListPage(
-                                        id: widget.listUser[0]['id']
-                                            .toString())));
-                              }
-                              if (i == 1) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => UserListForAdmin(
-                                        id: widget.listUser[0]['id']
-                                            .toString())));
-                              }
-                              if (i == 2) {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const CTL_User()));
-                              } else if (i == 3) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const Notivigation_day(),
-                                    ));
-                              } else if (i == 4) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => User_Vpoint(
-                                        controller_user: widget.id,
-                                      ),
-                                    ));
+                              switch (i) {
+                                case 0:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => UserListPage(
+                                          id: widget.listUser[0]['id']
+                                              .toString())));
+                                  break;
+                                case 1:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => UserListForAdmin(
+                                          id: widget.listUser[0]['id']
+                                              .toString())));
+                                  break;
+                                case 2:
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => const CTL_User()));
+                                  break;
+                                case 3:
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Notivigation_day(),
+                                      ));
+                                  break;
+
+                                default:
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => User_Vpoint(
+                                          controller_user: widget.id,
+                                        ),
+                                      ));
+                                  break;
                               }
                             },
                             child:
@@ -573,104 +591,253 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              if (i == 0) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return MenuCostomerResport(id: widget.id);
-                                  },
-                                ));
-                              }
-                              if (i == 2) {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      contentPadding: EdgeInsets.zero,
-                                      content: IntrinsicWidth(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              title: const Text(
-                                                  'Comparable Year Report'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ResponsiveReportYear(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            ListTile(
-                                              title:
-                                                  const Text('Comparable Case'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ComparableCasePage(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            ListTile(
-                                              title: const Text(
-                                                  'Comparable Case Bar Chart'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const ComparableCaseBarChartPage(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ],
+                              switch (i) {
+                                case 0:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return MenuCostomerResport(id: widget.id);
+                                    },
+                                  ));
+                                  break;
+                                case 2:
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        contentPadding: EdgeInsets.zero,
+                                        content: IntrinsicWidth(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              ListTile(
+                                                title: const Text(
+                                                    'Comparable Year Report'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ResponsiveReportYear(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                    'Comparable Case'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ComparableCasePage(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              ListTile(
+                                                title: const Text(
+                                                    'Comparable Case Bar Chart'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ComparableCaseBarChartPage(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              }
-                              if (i == 5) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const Total_Amount();
-                                  },
-                                ));
-                              }
-                              if (i == 6) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const Trastoin_Payment();
-                                  },
-                                ));
-                              }
-                              if (i == 7) {
-                                //Add Agent Action
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return AddUser();
-                                  },
-                                ));
-                              }
-                              if (i == 8) {
-                                Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) {
-                                    return const IsOnline();
-                                  },
-                                ));
+                                      );
+                                    },
+                                  );
+                                  break;
+                                case 5:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return const Total_Amount();
+                                    },
+                                  ));
+                                  break;
+                                case 6:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return const Trastoin_Payment();
+                                    },
+                                  ));
+                                  break;
+                                case 7:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return AddUser();
+                                    },
+                                  ));
+                                  break;
+                                default:
+                                  Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) {
+                                      return const IsOnline();
+                                    },
+                                  ));
                               }
                             },
                             child: textfield(
                                 listReportOption[i]['title'].toString())))
+                else if (index == 9)
+                  for (int i = 0; i < adminControllerList.length; i++)
+                    PopupMenuItem(
+                        child: InkWell(
+                            onTap: () {
+                              switch (i) {
+                                case 0:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Client Update!",
+                                    desc:
+                                        "Do you want Allow to client All for New Update?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate
+                                          .checkUpdateClientAll(context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+                                case 1:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Admin Update!",
+                                    desc:
+                                        "Do you want Allow to Admin All for New Update?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate
+                                          .checkUpdateAll(context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+                                case 2:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Off Client System!",
+                                    desc: "Do you want Off system Client?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate.checkOFFSystemAll(
+                                          1, 1, context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+
+                                case 3:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Open Client System!",
+                                    desc: "Do you want Open system Client?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate.checkOFFSystemAll(
+                                          1, 0, context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+                                case 4:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Off Admin System!",
+                                    desc: "Do you want Off system Admin?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate.checkOFFSystemAll(
+                                          2, 2, context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+                                case 5:
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 400,
+                                    context: context,
+                                    dialogType: DialogType.question,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Open Admin System!",
+                                    desc: "Do you want Open system Admin?",
+                                    btnOkOnPress: () async {
+                                      await controllerUpdate.checkOFFSystemAll(
+                                          2, 0, context);
+                                    },
+                                    btnCancelOnPress: () {},
+                                  ).show();
+                                  break;
+                                case 6:
+                                  break;
+                                default:
+                              }
+                            },
+                            child: textfield(
+                                adminControllerList[i]['title'].toString())))
+                // else if(index==9)
               ];
             },
             child: Padding(
@@ -685,7 +852,7 @@ class _homescreenState extends State<homescreen> {
                     children: [
                       const SizedBox(height: 10),
                       Image.asset(
-                        optionIconList[index]['icon'].toString(),
+                        listControllerIcons[index]['icon'].toString(),
                         fit: BoxFit.cover,
                         height: 90,
                         width: (widget.device == 't' || widget.device == 'd')
@@ -694,7 +861,7 @@ class _homescreenState extends State<homescreen> {
                       ),
                       const SizedBox(height: 15),
                       Text(
-                        listTitle[index]['title'],
+                        listControllerTitle[index]['title'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: fontsizes,
@@ -1451,50 +1618,7 @@ class _homescreenState extends State<homescreen> {
                 }),
                 const SizedBox(width: 10),
                 if (widget.listUser[0]['agency'].toString() == "28")
-                  InkWell(
-                      onTap: () async {
-                        AwesomeDialog(
-                          padding: const EdgeInsets.only(
-                              right: 30, left: 30, bottom: 10, top: 10),
-                          alignment: Alignment.center,
-                          width: 350,
-                          context: context,
-                          dialogType: DialogType.question,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: "Update New",
-                          desc: "Allow to All Agent Update New?",
-                          btnOkOnPress: () async {
-                            await controllerUpdate.checkUpdateAll();
-                          },
-                          btnCancelOnPress: () {},
-                        ).show();
-                      },
-                      child: options(
-                          'Allow Agent', '', Icons.system_update_alt_rounded)),
-                const SizedBox(width: 10),
-                if (widget.listUser[0]['agency'].toString() == "28")
-                  InkWell(
-                      onTap: () async {
-                        AwesomeDialog(
-                          padding: const EdgeInsets.only(
-                              right: 30, left: 30, bottom: 10, top: 10),
-                          alignment: Alignment.center,
-                          width: 350,
-                          context: context,
-                          dialogType: DialogType.question,
-                          animType: AnimType.rightSlide,
-                          headerAnimationLoop: false,
-                          title: "Update New",
-                          desc: "Allow to All Client Update New?",
-                          btnOkOnPress: () async {
-                            await controllerUpdate.checkUpdateAll();
-                          },
-                          btnCancelOnPress: () {},
-                        ).show();
-                      },
-                      child: options(
-                          'Allow Client', '', Icons.system_update_alt_rounded)),
+                  const SizedBox(width: 10),
               ],
             ),
           ],

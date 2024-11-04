@@ -149,8 +149,9 @@ class _ZoneMapState extends State<ZoneMap> {
     }
 
     for (var item in addZone.listZone) {
-      int noZone = item['no_zone'] ?? 0;
-      LatLng point = LatLng(item['lat'], item['log']);
+      int noZone = int.parse("${item['no_zone'] ?? 0}");
+      LatLng point = LatLng(double.parse(item['lat'].toString()),
+          double.parse(item['log'].toString()));
       if (noZone >= 1 && noZone <= maxZoneNumber) {
         zonePoints[noZone]!.add({
           "point": point,
@@ -181,7 +182,7 @@ class _ZoneMapState extends State<ZoneMap> {
                   int noZone = 0;
                   String nameRoad = "";
                   for (var entry in zonePoints[zone]!) {
-                    noZone = entry['no_zone'];
+                    noZone = int.parse(entry['no_zone'].toString());
                     // nameRoad = entry['name_road'];
                   }
 

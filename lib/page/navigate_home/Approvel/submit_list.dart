@@ -397,8 +397,8 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: (listAgent.listAgentModel[index]
-                                                ['verbal_published'] ==
+                                    color: (int.parse(
+                                                "${listAgent.listAgentModel[index]['verbal_published'] ?? 0}") ==
                                             3
                                         ? const Color.fromARGB(
                                             255, 213, 213, 217)
@@ -453,10 +453,8 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                             ['verbal_date']
                                                         .toString()),
                                                     sizeH,
-                                                    txtFieldValues((listAgent
-                                                                        .listAgentModel[
-                                                                    index][
-                                                                'verbal_published'] ==
+                                                    txtFieldValues((int.parse(
+                                                                "${listAgent.listAgentModel[index]['verbal_published'] ?? 0}") ==
                                                             3)
                                                         ? "wating agent approve"
                                                         : "${listAgent.listAgentModel[index]['agenttype_name'] ?? "Done!"}"),
@@ -527,8 +525,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                     CircularProgressIndicator(),
                                               ),
                                             const SizedBox(width: 10),
-                                            (listAgent.listAgentModel[index]
-                                                        ['verbal_published'] ==
+                                            (int.parse("${listAgent.listAgentModel[index]['verbal_published'] ?? 0}") ==
                                                     3)
                                                 ? Container(
                                                     height: 30,

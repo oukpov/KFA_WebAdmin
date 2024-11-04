@@ -42,7 +42,7 @@ class ListAgent extends GetxController {
         url.value =
             'get/Pagination?check=1&approvel=100&perPage=$perpages&page=$pages&${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
       } else if (checkType == 4) {
-        print("OKOKOK : $checkType");
+        // print("OKOKOK : $checkType");
         url.value =
             "search/listAuto?search=$search&page=$pages&perPage=$perpages";
       } else {
@@ -53,7 +53,6 @@ class ListAgent extends GetxController {
       var headers = {'Content-Type': 'application/json'};
       var dio = Dio();
       var response = await dio.request(
-        // 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agentListAll?perPage=$perpages&page=$pages',
         "https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/${url.value}",
         options: Options(
           method: 'GET',

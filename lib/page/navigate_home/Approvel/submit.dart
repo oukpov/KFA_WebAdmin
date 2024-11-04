@@ -16,6 +16,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/bank_dropdown.dart';
 import '../../../components/colors.dart';
+import '../../../components/colors/colors.dart';
 import '../../../getx/component/getx._snack.dart';
 import '../../../getx/submit_agent/agent_admin.dart';
 import 'component/googleMapApprovel.dart';
@@ -187,16 +188,15 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
     super.initState();
   }
 
+  String commentAgent = "";
   ListAgent listAgent = ListAgent();
   var sizeh = const SizedBox(height: 15);
   var listEdit;
   void mainValue() async {
-    setState(() {
-      // waiting = true;
-    });
     listEdit = widget.list[widget.indexs];
     verbalID = listEdit['verbal_id'].toString();
-    if (listEdit['latlong_la'] < listEdit['latlong_la']) {
+    if (double.parse(listEdit['latlong_la'].toString()) <
+        double.parse(listEdit['latlong_la'].toString())) {
       lats = listEdit['latlong_la'].toString();
       lngs = listEdit['latlong_log'].toString();
     } else {
@@ -318,7 +318,7 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
 
       component.handleTap("Done!", "Update successfuly");
       listAgent.sendMessage(
-        "Client ID : ${listData['control_user']} 🆔\nName : ${listData['username'] ?? ""} 👤\nPhone : ${listData['tel_num'] ?? ""} ☎️\nDate : ${listData['verbal_date']} ⏰\n---------------------------\nCode : ${listData['protectID'] ?? ""} 🔔\nSubmit Agent : Done! ✅\nApprove by Agent : ${widget.listUser[0]['username'] ?? ""}! 👨‍💻\nDate Done : $formattedDate ⏰\nLinkURl : https://oneclickonedollar.com/#/ 🌐",
+        "Client ID : ${listData['control_user']} 🆔\nName : ${listData['username'] ?? ""} 👤\nPhone : ${listData['tel_num'] ?? ""} ☎️\nDate : ${listData['verbal_date']} ⏰\n---------------------------\nCode : ${listData['protectID'] ?? ""} 🔔\nSubmit Agent : Done! ✅\nApprove by Agent : ${widget.listUser[0]['username'] ?? ""}! 👨‍💻\nDate Done : $formattedDate ⏰\nComment Agent : $commentAgent\nLinkURl : https://oneclickonedollar.com/#/ 🌐",
       );
     }
   }
@@ -463,23 +463,176 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
                               const Spacer(),
                               InkWell(
                                 onTap: () async {
-                                  AwesomeDialog(
-                                    width: 400,
+                                  showModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
                                     context: context,
-                                    animType: AnimType.leftSlide,
-                                    headerAnimationLoop: false,
-                                    dialogType: DialogType.success,
-                                    showCloseIcon: false,
-                                    title: 'Do you want to Update',
-                                    autoHide: const Duration(seconds: 2),
-                                    btnOkOnPress: () async {
-                                      await updateAuto(listEdit);
-                                      await listAgent.listAgent(widget.perpage,
-                                          widget.page, 3, "", "", "");
-                                      Navigator.pop(context);
+                                    isScrollControlled: true,
+                                    builder: (BuildContext context) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 50, top: 100),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: whileColors,
+                                                  border: Border.all(width: 1),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              height: 400,
+                                              width: 400,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    const SizedBox(height: 20),
+                                                    Row(
+                                                      children: [
+                                                        Text(
+                                                          "Submit To Agent Check",
+                                                          style: TextStyle(
+                                                              color: greyColor,
+                                                              fontSize: 15,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        const Spacer(),
+                                                        IconButton(
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .dangerous_outlined,
+                                                              color: greyColor,
+                                                            ))
+                                                      ],
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    SizedBox(
+                                                      height: 250,
+                                                      width: 400,
+                                                      child: TextFormField(
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            commentAgent =
+                                                                value;
+                                                          });
+                                                        },
+                                                        maxLines: 10,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          border: OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                      width:
+                                                                          1.5,
+                                                                      color:
+                                                                          blueColor)),
+                                                          hintText: 'Comment',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () async {
+                                                            AwesomeDialog(
+                                                              width: 400,
+                                                              context: context,
+                                                              animType: AnimType
+                                                                  .leftSlide,
+                                                              headerAnimationLoop:
+                                                                  false,
+                                                              dialogType:
+                                                                  DialogType
+                                                                      .success,
+                                                              showCloseIcon:
+                                                                  false,
+                                                              title:
+                                                                  'Do you want to Update',
+                                                              autoHide:
+                                                                  const Duration(
+                                                                      seconds:
+                                                                          2),
+                                                              btnOkOnPress:
+                                                                  () async {
+                                                                await updateAuto(
+                                                                    listEdit);
+                                                                await listAgent.listAgent(
+                                                                    widget
+                                                                        .perpage,
+                                                                    widget.page,
+                                                                    3,
+                                                                    "",
+                                                                    "",
+                                                                    "");
+                                                                Navigator.pop(
+                                                                    context);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              btnCancelOnPress:
+                                                                  () {},
+                                                            ).show();
+                                                          },
+                                                          child: Container(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            height: 35,
+                                                            width: 150,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: const Color
+                                                                      .fromARGB(
+                                                                  255,
+                                                                  6,
+                                                                  31,
+                                                                  223),
+                                                              border: Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .black),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                            ),
+                                                            child: const Text(
+                                                              "Submit",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
                                     },
-                                    btnCancelOnPress: () {},
-                                  ).show();
+                                  );
                                 },
                                 child: Card(
                                   elevation: 20,
@@ -1266,8 +1419,6 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
   }
 
   Future<void> slideUp(BuildContext context) async {
-//=============================================================
-    print('lats : $lats || lngs : $lngs');
     await Navigator.of(context).push(
       MaterialPageRoute(
           builder: (context) => GoogleMapApprovel(

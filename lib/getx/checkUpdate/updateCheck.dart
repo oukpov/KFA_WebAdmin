@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../component/getx._snack.dart';
 
@@ -47,7 +51,7 @@ class ControllerUpdate extends GetxController {
   }
 
   Component component = Component();
-  Future<void> checkUpdateAll() async {
+  Future<void> checkUpdateAll(BuildContext context) async {
     var dio = Dio();
     var response = await dio.request(
       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/updateNewsAdmin/All',
@@ -58,6 +62,46 @@ class ControllerUpdate extends GetxController {
 
     if (response.statusCode == 200) {
       component.handleTap("Done!", "Notification to Agent Update New");
+      Navigator.pop(context);
+    } else {
+      print(response.statusMessage);
+    }
+  }
+
+  Future<void> checkUpdateClientAll(BuildContext context) async {
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/updateNews/All',
+      options: Options(
+        method: 'POST',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      component.handleTap("Done!", "Notification to Client Update New");
+      Navigator.pop(context);
+    } else {
+      print(response.statusMessage);
+    }
+  }
+
+  Future<void> checkOFFSystemAll(
+      int id, int check, BuildContext context) async {
+    var headers = {'Content-Type': 'application/json'};
+    var data = json.encode({"id": id, "checks": check});
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/checkAllow/off',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: data,
+    );
+
+    if (response.statusCode == 200) {
+      component.handleTap("Done!", "Update Successfuly");
+      Navigator.pop(context);
     } else {
       print(response.statusMessage);
     }

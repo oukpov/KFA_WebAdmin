@@ -11,6 +11,18 @@ List listTitle = [
   {"title": "User"},
   {"title": "Report"},
 ];
+List listTitleAdmin = [
+  {"title": "Customer"},
+  {"title": "Valuation"},
+  {"title": "Comparable"},
+  {"title": "Property"},
+  {"title": "Auto Verbal"},
+  {"title": "Verbal"},
+  {"title": "Approval AutoVerbal"},
+  {"title": "User"},
+  {"title": "Report"},
+  {"title": "Admin"},
+];
 List listTitlesetting = [
   {"title": "Biulding Type"},
   {"title": "Register"},
@@ -47,6 +59,18 @@ List optionIconList = [
   {"icon": "assets/icons/User.png"},
   {"icon": "assets/icons/Report.png"},
 ];
+List optionIconListAdmin = [
+  {"icon": "assets/icons/Costomer.png"},
+  {"icon": "assets/icons/Valuation.png"},
+  {"icon": "assets/icons/Comparable.png"},
+  {"icon": "assets/icons/Property.png"},
+  {"icon": "assets/icons/AutoVerbal.png"},
+  {"icon": "assets/icons/Verbal.png"},
+  {"icon": "assets/icons/Inspector.png"},
+  {"icon": "assets/icons/User.png"},
+  {"icon": "assets/icons/Report.png"},
+  {"icon": "assets/icons/Admin.png"},
+];
 List optionIconListsetting = [
   {"icon": "assets/icons/apartment.png"},
   {"icon": "assets/icons/Register.png"},
@@ -81,11 +105,11 @@ List valuationoption = [
   {"title": "Executive Approvals"},
 ];
 List comparableotion = [
-  {"title": "Old Comparable"},
-  {"title": "New Comparable"},
-  {"title": "Comparable List"},
-  {"title": "Comparable Search"},
-  {"title": "Comparable Map List"},
+  // {"title": "Old Comparable"},
+  {"title": "Add Comparable"},
+//   {"title": "Comparable List"},
+//   {"title": "Comparable Search"},
+//   {"title": "Comparable Map List"},
 ];
 List autoOption = [
   {"title": "New Auto Verbal"},
@@ -166,6 +190,16 @@ List drawerOption = [
   {"title": "Check VPointUser"},
   {"title": "New Users"},
   {"title": "Logout"},
+];
+List adminControllerList = [
+  {"title": "Update Client System"},
+  {"title": "Update Agent System"},
+  {"title": "Off System Client"},
+  {"title": "Open System Client"},
+  {"title": "Off System Admin"},
+  {"title": "Open System Admin"},
+  {"title": "Promotion Slider"},
+  {"title": "Allow Option Agent"},
 ];
 //IconsDrawer
 List drawerIconOption = [
