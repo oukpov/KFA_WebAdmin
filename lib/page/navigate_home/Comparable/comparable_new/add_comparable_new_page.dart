@@ -142,6 +142,7 @@ class _HomePageState extends State<AddComparable> {
           .map((item) => json.decode(item))
           .cast<Map<String, dynamic>>()
           .toList();
+
       listagents = listagentData
           .map((item) => json.decode(item))
           .cast<Map<String, dynamic>>()
@@ -1395,8 +1396,10 @@ class _HomePageState extends State<AddComparable> {
 
     if (response.statusCode == 200) {
       setState(() {
-        countCredit = jsonDecode(json.encode(response.data))['credit'];
-        top = jsonDecode(json.encode(response.data))['No'];
+        countCredit = int.parse(
+            jsonDecode(json.encode(response.data))['credit'].toString());
+        top =
+            int.parse(jsonDecode(json.encode(response.data))['No'].toString());
         checktop = true;
       });
     } else {
@@ -4564,18 +4567,21 @@ class _HomePageState extends State<AddComparable> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold)),
                               PrinterCom(item: data_adding_correct[i]),
-                              if (data_adding_correct[i]['comparabl_user'] ==
-                                  widget.listlocalhosts[0]['agency'])
+                              if (data_adding_correct[i]['comparabl_user']
+                                      .toString() ==
+                                  widget.listlocalhosts[0]['agency'].toString())
                                 const SizedBox(width: 10),
-                              if (data_adding_correct[i]['comparabl_user'] ==
-                                  widget.listlocalhosts[0]['agency'])
+                              if (data_adding_correct[i]['comparabl_user']
+                                      .toString() ==
+                                  widget.listlocalhosts[0]['agency'].toString())
                                 const Text('Edit',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 57, 56, 56),
                                         fontSize: 14)),
-                              if (data_adding_correct[i]['comparabl_user'] ==
-                                  widget.listlocalhosts[0]['agency'])
+                              if (data_adding_correct[i]['comparabl_user']
+                                      .toString() ==
+                                  widget.listlocalhosts[0]['agency'].toString())
                                 EditDetail(item: data_adding_correct[i]),
                               const SizedBox(width: 10),
                               ElevatedButton(
@@ -4624,10 +4630,12 @@ class _HomePageState extends State<AddComparable> {
                                   IconButton(
                                       onPressed: () {
                                         onMapTapped(
-                                            data_adding_correct[i]
-                                                ['latlong_la'],
-                                            data_adding_correct[i]
-                                                ['latlong_log']);
+                                            double.parse(data_adding_correct[i]
+                                                    ['latlong_la']
+                                                .toString()),
+                                            double.parse(data_adding_correct[i]
+                                                    ['latlong_log']
+                                                .toString()));
                                       },
                                       icon: Icon(
                                         Icons.share_location,
@@ -4725,8 +4733,9 @@ class _HomePageState extends State<AddComparable> {
                                     vertical: 0, horizontal: 0),
                                 fillColor: Colors.white,
                                 filled: true,
-                                labelText: (data_adding_correct[i]['condo'] ==
-                                            0 ||
+                                labelText: (data_adding_correct[i]['condo']
+                                                .toString() ==
+                                            "0" ||
                                         data_adding_correct[i]['condo'] == null)
                                     ? "No Condo"
                                     : "Condo",
@@ -4787,12 +4796,13 @@ class _HomePageState extends State<AddComparable> {
                                     vertical: 0, horizontal: 0),
                                 fillColor: Colors.white,
                                 filled: true,
-                                labelText:
-                                    (data_adding_correct[i]['markert'] == 0 ||
-                                            data_adding_correct[i]['markert'] ==
-                                                null)
-                                        ? "No Market"
-                                        : "Market",
+                                labelText: (data_adding_correct[i]['markert']
+                                                .toString() ==
+                                            "0" ||
+                                        data_adding_correct[i]['markert'] ==
+                                            null)
+                                    ? "No Market"
+                                    : "Market",
                                 hintStyle: TextStyle(
                                     color: blackColor,
                                     fontWeight: FontWeight.bold,
@@ -4856,10 +4866,11 @@ class _HomePageState extends State<AddComparable> {
                                     vertical: 0, horizontal: 0),
                                 fillColor: Colors.white,
                                 filled: true,
-                                labelText:
-                                    (data_adding_correct[i]['borey'] == 0)
-                                        ? "No Borey"
-                                        : "Borey",
+                                labelText: (data_adding_correct[i]['borey']
+                                            .toString() ==
+                                        "0")
+                                    ? "No Borey"
+                                    : "Borey",
                                 hintStyle: TextStyle(
                                     color: blackColor,
                                     fontWeight: FontWeight.bold,
@@ -4899,7 +4910,7 @@ class _HomePageState extends State<AddComparable> {
                                 });
                               },
 
-                              items: listRaod
+                              items: listRaodNBorey
                                   .map<DropdownMenuItem<String>>(
                                     (value) => DropdownMenuItem<String>(
                                       value:

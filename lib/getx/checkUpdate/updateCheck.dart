@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-
 import '../component/getx._snack.dart';
 
 class ControllerUpdate extends GetxController {
@@ -17,7 +16,7 @@ class ControllerUpdate extends GetxController {
 
     if (response.statusCode == 200) {
       var list = response.data;
-      checkUpdateNew.value = list[0]['update_new'];
+      checkUpdateNew.value = int.parse("${list[0]['update_new'] ?? 0}");
 
       // print(list.toString());
     } else {
@@ -38,8 +37,7 @@ class ControllerUpdate extends GetxController {
 
       if (response.statusCode == 200) {
         var list = response.data;
-        checkUpdateNew.value = list[0]['update_new'];
-        print("checkUpdateNew : $checkUpdateNew");
+        checkUpdateNew.value = int.parse("${list[0]['update_new'] ?? 0}");
       }
     } catch (e) {
       // print(e);

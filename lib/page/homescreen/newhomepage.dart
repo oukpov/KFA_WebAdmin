@@ -131,7 +131,8 @@ class _homescreenState extends State<homescreen> {
   bool hasUnsavedData = true;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Future<void> updateUserStatus() async {
-    await authentication.checkAdminUser(widget.listUser[0]['agency']);
+    await authentication
+        .checkAdminUser(int.parse(widget.listUser[0]['agency'].toString()));
 
     setState(() {
       if ((widget.listUser[0]['agency'].toString() == "28") ||
@@ -142,7 +143,7 @@ class _homescreenState extends State<homescreen> {
         listReportOption = reportOption;
         listAdminOption = autoOption;
       }
-      print("Zone_Allow => ${authentication.listAdminUser[0]['zone_Allow']}");
+      // print("Zone_Allow => ${authentication.listAdminUser[0]['zone_Allow']}");
     });
     final QuerySnapshot result = await _firestore
         .collection('users')
@@ -1402,7 +1403,7 @@ class _homescreenState extends State<homescreen> {
                         padding: const EdgeInsets.all(5),
                         child: Row(
                           children: [
-                            if (controllerUpdate.checkUpdateNew == 1)
+                            if (controllerUpdate.checkUpdateNew.value == 1)
                               const Text(
                                 "Update New ",
                                 style:
@@ -1414,7 +1415,7 @@ class _homescreenState extends State<homescreen> {
                                 style:
                                     TextStyle(color: Colors.red, fontSize: 14),
                               ),
-                            if (controllerUpdate.checkUpdateNew == 1)
+                            if (controllerUpdate.checkUpdateNew.value == 1)
                               InkWell(
                                 onTap: () async {
                                   await controllerUpdate.checkUpdateDone(
@@ -1434,9 +1435,8 @@ class _homescreenState extends State<homescreen> {
                     );
                   }
                 }),
-
                 const SizedBox(width: 10),
-                if (widget.listUser[0]['agency'] == 28)
+                if (widget.listUser[0]['agency'].toString() == "28")
                   InkWell(
                       onTap: () async {
                         AwesomeDialog(
@@ -1459,7 +1459,7 @@ class _homescreenState extends State<homescreen> {
                       child: options(
                           'Allow Agent', '', Icons.system_update_alt_rounded)),
                 const SizedBox(width: 10),
-                if (widget.listUser[0]['agency'] == 28)
+                if (widget.listUser[0]['agency'].toString() == "28")
                   InkWell(
                       onTap: () async {
                         AwesomeDialog(
@@ -1481,51 +1481,6 @@ class _homescreenState extends State<homescreen> {
                       },
                       child: options(
                           'Allow Client', '', Icons.system_update_alt_rounded)),
-
-                // (widget.device == 'd' || widget.device == 't')
-                //     ? options('Notification', '0', Icons.notification_add)
-                //     : Stack(children: [
-                //         Icon(
-                //           Icons.notifications,
-                //           size: 40,
-                //           color: whiteColor,
-                //         ),
-                //         InkWell(
-                //           onTap: () {
-                //             Navigator.push(
-                //                 context,
-                //                 MaterialPageRoute(
-                //                     builder: (context) => Notifications(
-                //                           listnotificationlist:
-                //                               listnotificationlist,
-                //                         )));
-                //           },
-                //           child: CircleAvatar(
-                //               backgroundColor: Colors.red,
-                //               radius: 13,
-                //               child: Text(countNotification,
-                //                   style: TextStyle(
-                //                       fontWeight: FontWeight.bold,
-                //                       fontSize: 12,
-                //                       color: whiteColor))),
-                //         ),
-                //       ]),
-
-                // (widget.device == 'd' || widget.device == 't')
-                //     ? InkWell(
-                //         onTap: () {
-                //           Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => Notifications(
-                //                         listnotificationlist:
-                //                             listnotificationlist,
-                //                       )));
-                //         },
-                //         child: options('New Users', countNotification,
-                //             Icons.notification_add),
-                //       )
-                //     : const SizedBox(),
               ],
             ),
           ],
