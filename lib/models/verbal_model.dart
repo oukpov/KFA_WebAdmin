@@ -1,4 +1,4 @@
-class verbal_model {
+class Verbal_model {
   int? verbalId;
   Null? titleNumber;
   Null? approvel;
@@ -62,7 +62,7 @@ class verbal_model {
   Null? telNum;
   Null? knownFrom;
 
-  verbal_model(
+  Verbal_model(
       {this.verbalId,
       this.titleNumber,
       this.approvel,
@@ -126,7 +126,7 @@ class verbal_model {
       this.telNum,
       this.knownFrom});
 
-  verbal_model.fromJson(Map<String, dynamic> json) {
+  Verbal_model.fromJson(Map<String, dynamic> json) {
     verbalId = json['verbal_id'];
     titleNumber = json['title_number'];
     approvel = json['approvel'];
