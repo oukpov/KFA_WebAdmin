@@ -8,6 +8,7 @@ import 'colors.dart';
 class ApprovebyAndVerifybySearch extends StatefulWidget {
   final OnChangeCallback name;
   final OnChangeCallback id;
+  final OnChangeCallback listback;
   Map<String, dynamic>? defaultValue;
 
   final String? pro;
@@ -17,6 +18,7 @@ class ApprovebyAndVerifybySearch extends StatefulWidget {
     required this.id,
     this.defaultValue,
     this.pro,
+    required this.listback,
   }) : super(key: key);
 
   @override
@@ -68,6 +70,7 @@ class _PropertySearchState extends State<ApprovebyAndVerifybySearch> {
               setState(() {
                 widget.id(value?['autoverbal_id'].toString());
                 widget.name(value?['type'].toString());
+                widget.listback(value);
               });
             },
             selectedItem: widget.defaultValue ?? const {"type": "LS"},

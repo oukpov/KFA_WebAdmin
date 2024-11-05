@@ -462,6 +462,7 @@ class _EditState extends State<Edit> with SingleTickerProviderStateMixin {
               ),
               const SizedBox(height: 10.0),
               FormTwinN(
+                h: 58,
                 Label1: 'Owner',
                 Label2: 'Contact',
                 Label1_e: widget.owner,
@@ -488,6 +489,7 @@ class _EditState extends State<Edit> with SingleTickerProviderStateMixin {
               const SizedBox(height: 10.0),
               const SizedBox(height: 10.0),
               FormTwinN(
+                h: 58,
                 Label1: 'Bank Officer',
                 Label2: 'Contact',
                 Label1_e: widget.bank_officer,

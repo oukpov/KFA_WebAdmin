@@ -1499,6 +1499,7 @@ class _HomePageState extends State<EditVerbalAdmin> {
                                         child: SizedBox(
                                           // width: double.infinity,
                                           child: PropertySearch(
+                                            h: 45,
                                             // pro: "Land",
                                             name: (value) {
                                               // propertyType = value;
@@ -1971,29 +1972,29 @@ class _HomePageState extends State<EditVerbalAdmin> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 35,
-                              width: double.infinity,
-                              child: ApprovebyAndVerifybySearch(
-                                name: (value) {
-                                  setState(() {
-                                    controllerDS.text = value;
-                                  });
-                                },
-                                id: (value) {
-                                  setState(() {
-                                    autoverbalTypeValue = value;
-                                  });
-                                },
-                                defaultValue: const {
-                                  'type': 'LS',
-                                  'autoverbal_id': '100'
-                                },
-                              ),
-                            ),
-                          ),
+                          // Expanded(
+                          //   flex: 1,
+                          //   child: SizedBox(
+                          //     height: 35,
+                          //     width: double.infinity,
+                          //     child: ApprovebyAndVerifybySearch(
+                          //       name: (value) {
+                          //         setState(() {
+                          //           controllerDS.text = value;
+                          //         });
+                          //       },
+                          //       id: (value) {
+                          //         setState(() {
+                          //           autoverbalTypeValue = value;
+                          //         });
+                          //       },
+                          //       defaultValue: const {
+                          //         'type': 'LS',
+                          //         'autoverbal_id': '100'
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
                           if (autoverbalTypeValue != "100")
                             const SizedBox(width: 10),
                           if (autoverbalTypeValue != "100")
@@ -2383,12 +2384,7 @@ class _HomePageState extends State<EditVerbalAdmin> {
           double avgmax = caculateRen(0.7);
           minSqm = avgmin + (avgmin * double.parse(opionTypeID) / 100);
           maxSqm = avgmax + (avgmax * double.parse(opionTypeID) / 100);
-        } else if (areas > 3000) {
-          double avgmin = caculateRen(0.7);
-          double avgmax = caculateRen(0.65);
-          minSqm = avgmin + (avgmin * double.parse(opionTypeID) / 100);
-          maxSqm = avgmax + (avgmax * double.parse(opionTypeID) / 100);
-        }
+        } else if (areas > 3000) {}
       }
       totalMin = (minSqm! * areas);
       totalMax = (maxSqm! * areas);

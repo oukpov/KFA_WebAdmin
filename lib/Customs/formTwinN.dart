@@ -14,6 +14,7 @@ class FormTwinN extends StatefulWidget {
   final Widget icon2;
   final FormFieldSetter<String> onSaved1;
   final FormFieldSetter<String> onSaved2;
+  final double h;
   const FormTwinN({
     Key? key,
     required this.Label1,
@@ -24,6 +25,7 @@ class FormTwinN extends StatefulWidget {
     required this.onSaved2,
     this.Label1_e,
     this.Label2_e,
+    required this.h,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,6 @@ class FormTwinN extends StatefulWidget {
 }
 
 class _FormTwinNState extends State<FormTwinN> {
-  // final TextEditingController _controller = TextEditingController();
   late TextEditingController Owner;
   late TextEditingController Contect;
   @override
@@ -40,8 +41,6 @@ class _FormTwinNState extends State<FormTwinN> {
       Owner = TextEditingController(text: widget.Label1_e);
       Contect = TextEditingController(text: widget.Label2_e);
     }
-
-    // TODO: implement initState
     super.initState();
   }
 
@@ -52,7 +51,7 @@ class _FormTwinNState extends State<FormTwinN> {
         (widget.Label1_e != null)
             ? Expanded(
                 child: SizedBox(
-                  height: 58,
+                  height: widget.h,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                     child: TextFormField(
@@ -72,14 +71,14 @@ class _FormTwinNState extends State<FormTwinN> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: kPrimaryColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 1,
                             color: kPrimaryColor,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                     ),
@@ -88,7 +87,7 @@ class _FormTwinNState extends State<FormTwinN> {
               )
             : Expanded(
                 child: SizedBox(
-                  height: 55,
+                  height: widget.h,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
                     child: TextFormField(
@@ -103,14 +102,14 @@ class _FormTwinNState extends State<FormTwinN> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: kPrimaryColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 1,
                             color: kPrimaryColor,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                     ),
@@ -123,7 +122,7 @@ class _FormTwinNState extends State<FormTwinN> {
         (widget.Label1_e != null)
             ? Expanded(
                 child: SizedBox(
-                  height: 58,
+                  height: widget.h,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                     child: TextFormField(
@@ -150,14 +149,14 @@ class _FormTwinNState extends State<FormTwinN> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: kPrimaryColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 1,
                             color: kPrimaryColor,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                     ),
@@ -166,7 +165,7 @@ class _FormTwinNState extends State<FormTwinN> {
               )
             : Expanded(
                 child: SizedBox(
-                  height: 55,
+                  height: widget.h,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                     child: TextFormField(
@@ -188,14 +187,14 @@ class _FormTwinNState extends State<FormTwinN> {
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
                               color: kPrimaryColor, width: 2.0),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 1,
                             color: kPrimaryColor,
                           ),
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                     ),

@@ -6,6 +6,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
+import 'package:web_admin/page/navigate_home/verbal/slideUp.dart';
+import 'package:web_admin/page/navigate_home/verbal/test.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -93,10 +95,23 @@ class _MyAppState extends State<MyApp> {
         //   },
         // ]),
         // home: MapScreen(),
-        home: LoginPage(),
-
-        // home: AutoList(),
         // home: LoginPage(),
+
+        // home: MyFormTTTT(),
+        home: VerbalAgent(
+          type: (value) {},
+          listUser: const [
+            {
+              "id": 52,
+              "user_role_id": 59,
+              "agency": 70,
+              "username": "Test",
+              "password": "333802e987dfce42e28b749a20dc257f",
+              "user_status": 0
+            }
+          ],
+          addNew: (value) {},
+        ),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
@@ -112,7 +127,8 @@ class _MyAppState extends State<MyApp> {
         //         "password": "333802e987dfce42e28b749a20dc257f",
         //         "user_status": 0
         //       }
-        //     ]),
+        //     ]
+        // ),
       ),
     );
   }

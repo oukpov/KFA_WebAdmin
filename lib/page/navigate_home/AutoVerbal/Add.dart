@@ -815,6 +815,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
           height: 5.0,
         ),
         FormTwinN(
+          h: 58,
           Label1: 'Owner',
           Label2: 'Contact',
           onSaved1: (input) {
@@ -844,6 +845,7 @@ class _AddState extends State<Add> with SingleTickerProviderStateMixin {
           height: 5.0,
         ),
         FormTwinN(
+          h: 58,
           Label1: 'Bank Officer',
           Label2: 'Contact',
           onSaved1: (input) {

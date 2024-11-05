@@ -1679,6 +1679,7 @@ class _HomePageState extends State<VerbalAdmin> {
                                                 child: SizedBox(
                                                   // width: double.infinity,
                                                   child: PropertySearch(
+                                                    h: 45,
                                                     // pro: "Land",
                                                     name: (value) {
                                                       // propertyType = value;
@@ -2194,29 +2195,29 @@ class _HomePageState extends State<VerbalAdmin> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 35,
-                              width: double.infinity,
-                              child: ApprovebyAndVerifybySearch(
-                                name: (value) {
-                                  setState(() {
-                                    controllerDS.text = value;
-                                  });
-                                },
-                                id: (value) {
-                                  setState(() {
-                                    autoverbalTypeValue = value;
-                                  });
-                                },
-                                defaultValue: const {
-                                  'type': 'LS',
-                                  'autoverbal_id': '100'
-                                },
-                              ),
-                            ),
-                          ),
+                          // Expanded(
+                          //   flex: 1,
+                          //   child: SizedBox(
+                          //     height: 35,
+                          //     width: double.infinity,
+                          //     child: ApprovebyAndVerifybySearch(
+                          //       name: (value) {
+                          //         setState(() {
+                          //           controllerDS.text = value;
+                          //         });
+                          //       },
+                          //       id: (value) {
+                          //         setState(() {
+                          //           autoverbalTypeValue = value;
+                          //         });
+                          //       },
+                          //       defaultValue: const {
+                          //         'type': 'LS',
+                          //         'autoverbal_id': '100'
+                          //       },
+                          //     ),
+                          //   ),
+                          // ),
                           if (autoverbalTypeValue != "100")
                             const SizedBox(width: 10),
                           if (autoverbalTypeValue != "100")

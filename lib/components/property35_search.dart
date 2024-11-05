@@ -9,13 +9,15 @@ class PropertySearch extends StatefulWidget {
   final OnChangeCallback name;
   final OnChangeCallback id;
   final OnChangeCallback checkOnclick;
+  final double h;
   final String? pro;
   const PropertySearch(
       {Key? key,
       required this.name,
       required this.id,
       this.pro,
-      required this.checkOnclick})
+      required this.checkOnclick,
+      required this.h})
       : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class _PropertySearchState extends State<PropertySearch> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 35,
+          height: widget.h,
           decoration: BoxDecoration(
               border: Border.all(width: 1, color: kPrimaryColor),
               borderRadius: BorderRadius.circular(10)),

@@ -1224,6 +1224,7 @@ class _Add_with_propertyState extends State<Add> {
                               ),
 
                               FormTwinN(
+                                h: 58,
                                 Label1: 'Owner',
                                 Label2: 'Contact',
                                 onSaved1: (input) {
@@ -1253,6 +1254,7 @@ class _Add_with_propertyState extends State<Add> {
                               // ),
 
                               FormTwinN(
+                                h: 58,
                                 Label1: 'Bank Officer',
                                 Label2: 'Contact',
                                 onSaved1: (input) {
