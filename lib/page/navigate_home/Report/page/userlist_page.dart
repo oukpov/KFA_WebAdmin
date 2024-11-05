@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
 
-class UserListPage extends StatelessWidget {
+class UserListPage extends StatefulWidget {
   final String id;
   UserListPage({super.key, required this.id});
+
+  @override
+  State<UserListPage> createState() => _UserListPageState();
+}
+
+class _UserListPageState extends State<UserListPage> {
   final UserController userController = Get.put(UserController());
 
   @override
@@ -13,7 +19,8 @@ class UserListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: const Text('User List', style: TextStyle(color: Colors.white)),
+        title: Text('User List ${widget.id}',
+            style: TextStyle(color: Colors.white)),
         elevation: 0,
       ),
       body: Obx(() {
@@ -103,8 +110,11 @@ class UserListPage extends StatelessWidget {
                     trailing: InkWell(
                       onTap: () async {
                         if (user.approvalStatus != 'approved') {
-                          userController.isApproving.value = id.toString();
-                          await userController.approveUser(user.userId!);
+                          await userController.approveUser(
+                              user.userId!, int.parse(widget.id));
+                          print(
+                              "tessssssssssss: ${userController.isApproving.value}");
+                          print("tessssssssssss: ${user.userId!}");
                           // ignore: use_build_context_synchronously
                           AwesomeDialog(
                             padding: const EdgeInsets.only(

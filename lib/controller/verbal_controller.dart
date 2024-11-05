@@ -11,32 +11,10 @@ class VerbalController extends GetxController {
   var list = [].obs;
   var id = 0.obs;
   var isLoading = true.obs;
-
+  var verbalModel = Verbal_model();
   @override
   void onInit() {
     super.onInit();
-    // fetchVerbalReportById(332);
-    fetchVerbalReports();
-    // Remove initial fetch calls since they're causing duplicate requests
-  }
-
-  static const String apiUrl =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/reportverbal';
-
-  Future<List<Verbal_model>> fetchVerbalReports() async {
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-
-      if (response.statusCode == 200) {
-        List<dynamic> jsonData = json.decode(response.body);
-        return jsonData.map((json) => Verbal_model.fromJson(json)).toList();
-      } else {
-        throw Exception(
-            'Failed to load verbal reports: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Error fetching verbal reports: $e');
-    }
   }
 
   Future<void> fetchVerbalReportById(int id) async {
@@ -58,7 +36,7 @@ class VerbalController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        list.value = jsonDecode(json.encode(response.data));
+        list.value = jsonDecode(json.encode(response.data))['data'];
         print("listlength: ${list.length}");
       } else {
         print(response.statusMessage);
@@ -67,6 +45,33 @@ class VerbalController extends GetxController {
       print("Error fetching verbal report: $e");
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<void> checkPrice() async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+      var data = json.encode({"verbal_user": id.value});
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/checkPrice/Agent',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        verbalReport = jsonDecode(json.encode(response.data))['data'];
+      } else {
+        print("Error checking price: ${response.statusMessage}");
+      }
+    } catch (e) {
+      print("Error checking price: $e");
     }
   }
 }

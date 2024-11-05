@@ -75,30 +75,29 @@ class UserListForAdmin extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.to(() => ReportVerbalAllUserForAdminPage(
-                                    index: userController.adminuser,
-                                    approved_name: approved_name,
-                                  ));
-                            },
-                            child: Row(
-                              children: const [
-                                Text(
-                                  'All Verbals',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Icon(Icons.all_inbox, color: Colors.white),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
+                      // Row(
+                      //   children: [
+                      //     InkWell(
+                      //       onTap: () {
+                      //         Get.to(() => ReportVerbalAllUserForAdminPage(
+                      //               id: int.parse(id),
+                      //             ));
+                      //       },
+                      //       child: Row(
+                      //         children: const [
+                      //           Text(
+                      //             'All Verbals',
+                      //             style: TextStyle(
+                      //               color: Colors.white,
+                      //               fontWeight: FontWeight.bold,
+                      //             ),
+                      //           ),
+                      //           Icon(Icons.all_inbox, color: Colors.white),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ],
+                      // )
                     ],
                   ),
                 ),
@@ -116,7 +115,7 @@ class UserListForAdmin extends StatelessWidget {
                         child: ListTile(
                           onTap: () {
                             Get.to(() => ReportVerbalUserForAdmin(
-                                  id: user['userId'],
+                                  id: user['userId'].toString(),
                                   tel_num: user['tel_num'],
                                   agency: approved_name,
                                 ));
@@ -212,6 +211,8 @@ class UserListForAdmin extends StatelessWidget {
                                     btnOkOnPress: () {
                                       userController.disApproveUser(
                                           int.parse(user['userId'].toString()));
+                                      print(
+                                          "tessssssssssss: ${user['userId']}");
                                       AwesomeDialog(
                                         padding: const EdgeInsets.only(
                                             right: 30,
