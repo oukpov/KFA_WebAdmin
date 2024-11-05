@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
+import 'package:web_admin/page/navigate_home/Report/page/reportverbal_user_for_admin.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -113,6 +114,11 @@ class _MyAppState extends State<MyApp> {
         //         "user_status": 0
         //       }
         //     ]),
+        // home: ReportVerbalUserForAdmin(
+        //   id: '344',
+        //   tel_num: '010406807',
+        //   agency: 'Test',
+        // ),
       ),
     );
   }

@@ -1,66 +1,66 @@
 class Verbal_model {
   int? verbalId;
-  Null? titleNumber;
-  Null? approvel;
-  Null? agentName;
-  Null? agentId;
+  String? titleNumber;
+  String? approvel;
+  String? agentName;
+  int? agentId;
   int? protectID;
-  Null? verbalPropertyId;
-  Null? borey;
+  int? verbalPropertyId;
+  String? borey;
   int? road;
-  Null? verbalBankId;
-  Null? verbalBankBranchId;
-  Null? verbalBankContact;
-  Null? verbalOwner;
-  Null? verbalContact;
-  Null? verbalDate;
-  Null? verbalBankOfficer;
-  Null? verbalAddress;
-  Null? verbalProvinceId;
-  Null? roadName;
-  Null? verbalApproveId;
-  Null? verbalApprovesId;
-  Null? verbalComment;
+  int? verbalBankId;
+  int? verbalBankBranchId;
+  String? verbalBankContact;
+  String? verbalOwner;
+  String? verbalContact;
+  String? verbalDate;
+  String? verbalBankOfficer;
+  String? verbalAddress;
+  int? verbalProvinceId;
+  String? roadName;
+  int? verbalApproveId;
+  int? verbalApprovesId;
+  String? verbalComment;
   double? latlongLog;
   double? latlongLa;
-  Null? verbalCom;
-  Null? verbalCon;
-  Null? verbalOption;
+  String? verbalCom;
+  String? verbalCon;
+  String? verbalOption;
   int? verbalStatusId;
   int? verbalUser;
   int? verbalComp;
-  Null? verifyAgent;
-  Null? verbalCreatedBy;
+  String? verifyAgent;
+  int? verbalCreatedBy;
   String? verbalCreatedDate;
-  Null? verbalModifyBy;
-  Null? verbalKhan;
-  Null? propertyTypeId;
-  Null? propertyTypeName;
-  Null? propertyTypePublished;
-  Null? propertyTypeColor;
-  Null? propertyColos;
-  Null? bankAcronym;
-  Null? bankBranchName;
-  Null? bankName;
-  Null? bankofficer;
-  Null? bankcontact;
-  Null? bankProvinceId;
-  Null? bankDistrictId;
-  Null? bankCommuneId;
-  Null? bankVillage;
-  Null? approveId;
-  Null? approveName;
-  Null? agenttypeId;
-  Null? agenttypeName;
-  Null? agentTypePhone;
-  Null? agentTypeEmail;
-  Null? controlUser;
-  Null? firstName;
-  Null? lastName;
-  Null? username;
-  Null? gender;
-  Null? telNum;
-  Null? knownFrom;
+  int? verbalModifyBy;
+  String? verbalKhan;
+  int? propertyTypeId;
+  String? propertyTypeName;
+  bool? propertyTypePublished;
+  String? propertyTypeColor;
+  String? propertyColos;
+  String? bankAcronym;
+  String? bankBranchName;
+  String? bankName;
+  String? bankofficer;
+  String? bankcontact;
+  int? bankProvinceId;
+  int? bankDistrictId;
+  int? bankCommuneId;
+  String? bankVillage;
+  int? approveId;
+  String? approveName;
+  int? agenttypeId;
+  String? agenttypeName;
+  String? agentTypePhone;
+  String? agentTypeEmail;
+  int? controlUser;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? gender;
+  String? telNum;
+  String? knownFrom;
 
   Verbal_model(
       {this.verbalId,
@@ -127,68 +127,116 @@ class Verbal_model {
       this.knownFrom});
 
   Verbal_model.fromJson(Map<String, dynamic> json) {
-    verbalId = json['verbal_id'];
-    titleNumber = json['title_number'];
-    approvel = json['approvel'];
-    agentName = json['agent_name'];
-    agentId = json['agent_id'];
-    protectID = json['protectID'];
-    verbalPropertyId = json['verbal_property_id'];
-    borey = json['borey'];
-    road = json['road'];
-    verbalBankId = json['verbal_bank_id'];
-    verbalBankBranchId = json['verbal_bank_branch_id'];
-    verbalBankContact = json['verbal_bank_contact'];
-    verbalOwner = json['verbal_owner'];
-    verbalContact = json['verbal_contact'];
-    verbalDate = json['verbal_date'];
-    verbalBankOfficer = json['verbal_bank_officer'];
-    verbalAddress = json['verbal_address'];
-    verbalProvinceId = json['verbal_province_id'];
-    roadName = json['road_name'];
-    verbalApproveId = json['verbal_approve_id'];
-    verbalApprovesId = json['verbal_approves_id'];
-    verbalComment = json['verbal_comment'];
-    latlongLog = json['latlong_log'];
-    latlongLa = json['latlong_la'];
-    verbalCom = json['verbal_com'];
-    verbalCon = json['verbal_con'];
-    verbalOption = json['verbal_option'];
-    verbalStatusId = json['verbal_status_id'];
-    verbalUser = json['verbal_user'];
-    verbalComp = json['verbal_comp'];
-    verifyAgent = json['VerifyAgent'];
-    verbalCreatedBy = json['verbal_created_by'];
-    verbalCreatedDate = json['verbal_created_date'];
-    verbalModifyBy = json['verbal_modify_by'];
-    verbalKhan = json['verbal_khan'];
-    propertyTypeId = json['property_type_id'];
-    propertyTypeName = json['property_type_name'];
-    propertyTypePublished = json['property_type_published'];
-    propertyTypeColor = json['property_type_color'];
-    propertyColos = json['property_colos'];
-    bankAcronym = json['bank_acronym'];
-    bankBranchName = json['bank_branch_name'];
-    bankName = json['bank_name'];
-    bankofficer = json['bankofficer'];
-    bankcontact = json['bankcontact'];
-    bankProvinceId = json['bank_province_id'];
-    bankDistrictId = json['bank_district_id'];
-    bankCommuneId = json['bank_commune_id'];
-    bankVillage = json['bank_village'];
-    approveId = json['approve_id'];
-    approveName = json['approve_name'];
-    agenttypeId = json['agenttype_id'];
-    agenttypeName = json['agenttype_name'];
-    agentTypePhone = json['agent_type_phone'];
-    agentTypeEmail = json['agent_type_email'];
-    controlUser = json['control_user'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    username = json['username'];
-    gender = json['gender'];
-    telNum = json['tel_num'];
-    knownFrom = json['known_from'];
+    verbalId = json['verbal_id'] != null
+        ? int.tryParse(json['verbal_id'].toString())
+        : null;
+    titleNumber = json['title_number']?.toString();
+    approvel = json['approvel']?.toString();
+    agentName = json['agent_name']?.toString();
+    agentId = json['agent_id'] != null
+        ? int.tryParse(json['agent_id'].toString())
+        : null;
+    protectID = json['protectID'] != null
+        ? int.tryParse(json['protectID'].toString())
+        : null;
+    verbalPropertyId = json['verbal_property_id'] != null
+        ? int.tryParse(json['verbal_property_id'].toString())
+        : null;
+    borey = json['borey']?.toString();
+    road = json['road'] != null ? int.tryParse(json['road'].toString()) : null;
+    verbalBankId = json['verbal_bank_id'] != null
+        ? int.tryParse(json['verbal_bank_id'].toString())
+        : null;
+    verbalBankBranchId = json['verbal_bank_branch_id'] != null
+        ? int.tryParse(json['verbal_bank_branch_id'].toString())
+        : null;
+    verbalBankContact = json['verbal_bank_contact']?.toString();
+    verbalOwner = json['verbal_owner']?.toString();
+    verbalContact = json['verbal_contact']?.toString();
+    verbalDate = json['verbal_date']?.toString();
+    verbalBankOfficer = json['verbal_bank_officer']?.toString();
+    verbalAddress = json['verbal_address']?.toString();
+    verbalProvinceId = json['verbal_province_id'] != null
+        ? int.tryParse(json['verbal_province_id'].toString())
+        : null;
+    roadName = json['road_name']?.toString();
+    verbalApproveId = json['verbal_approve_id'] != null
+        ? int.tryParse(json['verbal_approve_id'].toString())
+        : null;
+    verbalApprovesId = json['verbal_approves_id'] != null
+        ? int.tryParse(json['verbal_approves_id'].toString())
+        : null;
+    verbalComment = json['verbal_comment']?.toString();
+    latlongLog = json['latlong_log'] != null
+        ? double.tryParse(json['latlong_log'].toString())
+        : null;
+    latlongLa = json['latlong_la'] != null
+        ? double.tryParse(json['latlong_la'].toString())
+        : null;
+    verbalCom = json['verbal_com']?.toString();
+    verbalCon = json['verbal_con']?.toString();
+    verbalOption = json['verbal_option']?.toString();
+    verbalStatusId = json['verbal_status_id'] != null
+        ? int.tryParse(json['verbal_status_id'].toString())
+        : null;
+    verbalUser = json['verbal_user'] != null
+        ? int.tryParse(json['verbal_user'].toString())
+        : null;
+    verbalComp = json['verbal_comp'] != null
+        ? int.tryParse(json['verbal_comp'].toString())
+        : null;
+    verifyAgent = json['VerifyAgent']?.toString();
+    verbalCreatedBy = json['verbal_created_by'] != null
+        ? int.tryParse(json['verbal_created_by'].toString())
+        : null;
+    verbalCreatedDate = json['verbal_created_date']?.toString();
+    verbalModifyBy = json['verbal_modify_by'] != null
+        ? int.tryParse(json['verbal_modify_by'].toString())
+        : null;
+    verbalKhan = json['verbal_khan']?.toString();
+    propertyTypeId = json['property_type_id'] != null
+        ? int.tryParse(json['property_type_id'].toString())
+        : null;
+    propertyTypeName = json['property_type_name']?.toString();
+    propertyTypePublished = json['property_type_published'] != null
+        ? json['property_type_published'] as bool
+        : null;
+    propertyTypeColor = json['property_type_color']?.toString();
+    propertyColos = json['property_colos']?.toString();
+    bankAcronym = json['bank_acronym']?.toString();
+    bankBranchName = json['bank_branch_name']?.toString();
+    bankName = json['bank_name']?.toString();
+    bankofficer = json['bankofficer']?.toString();
+    bankcontact = json['bankcontact']?.toString();
+    bankProvinceId = json['bank_province_id'] != null
+        ? int.tryParse(json['bank_province_id'].toString())
+        : null;
+    bankDistrictId = json['bank_district_id'] != null
+        ? int.tryParse(json['bank_district_id'].toString())
+        : null;
+    bankCommuneId = json['bank_commune_id'] != null
+        ? int.tryParse(json['bank_commune_id'].toString())
+        : null;
+    bankVillage = json['bank_village']?.toString();
+    approveId = json['approve_id'] != null
+        ? int.tryParse(json['approve_id'].toString())
+        : null;
+    approveName = json['approve_name']?.toString();
+    agenttypeId = json['agenttype_id'] != null
+        ? int.tryParse(json['agenttype_id'].toString())
+        : null;
+    agenttypeName = json['agenttype_name']?.toString();
+    agentTypePhone = json['agent_type_phone']?.toString();
+    agentTypeEmail = json['agent_type_email']?.toString();
+    controlUser = json['control_user'] != null
+        ? int.tryParse(json['control_user'].toString())
+        : null;
+    firstName = json['first_name']?.toString();
+    lastName = json['last_name']?.toString();
+    username = json['username']?.toString();
+    gender = json['gender']?.toString();
+    telNum = json['tel_num']?.toString();
+    knownFrom = json['known_from']?.toString();
   }
 
   Map<String, dynamic> toJson() {

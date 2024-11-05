@@ -1,136 +1,170 @@
 import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:web_admin/models/user_model.dart';
 
 class UserController extends GetxController {
+  final Dio _dio = Dio();
   var users = <UserModel>[].obs;
   var isLoading = true.obs;
   var isApproving = ''.obs;
   var isDisApproving = ''.obs;
   var adminuser = [].obs;
   var id = ''.obs;
+  var errorMessage = ''.obs;
+
   @override
   void onInit() {
+    super.onInit();
+    _initializeDio();
     fetchUsers();
     fetchOneUser(id.value);
-    super.onInit();
   }
 
-  void fetchUsers() async {
-    var headers = {
+  void _initializeDio() {
+    _dio.options.baseUrl =
+        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api';
+    _dio.options.headers = {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
     };
-    var dio = Dio();
+
+    // Add interceptor for debugging
+    _dio.interceptors.add(InterceptorsWrapper(
+      onError: (error, handler) {
+        print('Error Status Code: ${error.response?.statusCode}');
+        print('Error Message: ${error.message}');
+        print('Error Response: ${error.response?.data}');
+        return handler.next(error);
+      },
+      onRequest: (options, handler) {
+        print('Making request to: ${options.uri}');
+        return handler.next(options);
+      },
+      onResponse: (response, handler) {
+        print('Received response: ${response.statusCode}');
+        return handler.next(response);
+      },
+    ));
+  }
+
+  Future<void> fetchUsers() async {
     try {
-      var response = await dio.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/getalluser',
-        options: Options(
-          method: 'GET',
-          headers: headers,
-        ),
-      );
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      final response = await _dio.get('/getalluser');
 
       if (response.statusCode == 200) {
-        var userList = (response.data as List)
+        final userList = (response.data as List)
             .map((user) => UserModel.fromJson(user))
             .toList();
         users.value = userList;
+        print('User List: ${users.value.length}');
       } else {
-        // print(response.statusMessage);
+        errorMessage.value = 'Failed to load users: ${response.statusMessage}';
       }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
     } catch (e) {
-      // print(e);
+      errorMessage.value = 'An unexpected error occurred: $e';
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future fetchOneUser(String userId) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/getoneuser/$userId',
-      options: Options(
-        method: 'GET',
-        headers: headers,
-      ),
-    );
+  Future<void> fetchOneUser(String userId) async {
+    try {
+      if (userId.isEmpty) return;
 
-    if (response.statusCode == 200) {
-      // print(json.encode(response.data));
-      adminuser.value = jsonDecode(json.encode(response.data));
-    } else {
-      // print(response.statusMessage);
+      final response = await _dio.get('/getoneuser/$userId');
+
+      if (response.statusCode == 200) {
+        adminuser.value = jsonDecode(json.encode(response.data));
+      } else {
+        errorMessage.value = 'Failed to load user details';
+      }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
+    } catch (e) {
+      errorMessage.value = 'An unexpected error occurred: $e';
     }
   }
 
   Future<void> disApproveUser(int userId) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var dio = Dio();
     try {
-      var response = await dio.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/approve/$userId',
-        options: Options(
-          method: 'POST',
-          headers: headers,
-        ),
+      isDisApproving.value = userId.toString();
+
+      final response = await _dio.post(
+        '/approve/$userId',
         data: {
           'approval_status': 'pending',
           'approved_by': '',
-          'approved_at': (DateTime.now()).toIso8601String()
+          'approved_at': DateTime.now().toIso8601String()
         },
       );
 
       if (response.statusCode == 200) {
-        // print(response.data);
-        // Refresh user list after approval
-        fetchUsers();
+        await fetchUsers();
       } else {
-        // print(response.statusMessage);
+        errorMessage.value = 'Failed to disapprove user';
       }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
     } catch (e) {
-      // print(e);
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isDisApproving.value = '';
     }
   }
 
-  Future<void> approveUser(int userId) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var dio = Dio();
+  Future<void> approveUser(int userId, int approvedBy) async {
     try {
-      var response = await dio.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/approve/$userId',
-        options: Options(
-          method: 'POST',
-          headers: headers,
-        ),
+      isApproving.value = userId.toString();
+
+      final response = await _dio.post(
+        '/approve/$userId',
         data: {
           'approval_status': 'approved',
-          'approved_by': int.parse(isApproving.value).toString(),
-          'approved_at': (DateTime.now()).toIso8601String()
+          'approved_by': approvedBy,
+          'approved_at': DateTime.now().toIso8601String()
         },
       );
 
       if (response.statusCode == 200) {
-        // print(response.data);
-        // Refresh user list after approval
-        fetchUsers();
+        await fetchUsers();
       } else {
-        // print(response.statusMessage);
+        errorMessage.value = 'Failed to approve user';
       }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
     } catch (e) {
-      // print(e);
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isApproving.value = '';
+    }
+  }
+
+  String _handleDioError(DioError e) {
+    switch (e.type) {
+      case DioErrorType.connectTimeout:
+        return 'Connection timed out';
+      case DioErrorType.sendTimeout:
+        return 'Send timeout occurred';
+      case DioErrorType.receiveTimeout:
+        return 'Receive timeout occurred';
+      case DioErrorType.response:
+        return 'Server responded with error ${e.response?.statusCode}';
+      case DioErrorType.cancel:
+        return 'Request was cancelled';
+      case DioErrorType.other:
+        if (e.error.toString().contains('XMLHttpRequest error')) {
+          return 'CORS error occurred. Please check server configuration.';
+        }
+        return 'Connection error occurred. Please check your internet connection.';
+      default:
+        return 'An unexpected error occurred';
     }
   }
 }
