@@ -15,8 +15,7 @@ class VpointUpdateController extends GetxController {
   final isSearch = false.obs;
   var page = 0.obs;
   var listsearch = [].obs;
-  final url =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api';
+  final url = 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api';
   @override
   void onInit() {
     super.onInit();

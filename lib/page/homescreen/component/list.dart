@@ -45,6 +45,7 @@ List listTitlesetting = [
   {"title": "Commune"},
   {"title": "Add Point"},
   {"title": "Banner"},
+  {"title": "Pages"},
 ];
 
 //ICons
@@ -93,6 +94,7 @@ List optionIconListsetting = [
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/v.jpg"},
   {"icon": "assets/icons/sponsor.jpg"},
+  {"icon": "assets/icons/pages.png"},
 ];
 // option homepage
 List customeroption = [
@@ -178,6 +180,7 @@ List vpointOption = [
 ];
 List sponsorOption = [
   {"title": "Sponsor List"},
+  {"title": "Promotion Slider"},
 ];
 List registerOption = [
   {"title": "Register New"},
@@ -209,4 +212,9 @@ List drawerIconOption = [
   Icons.person_add_alt_1_outlined,
   Icons.logout,
   // Icon(Icons.de),
+];
+List faqOption = [
+  {"title": "FAQ"},
+  {"title": "Contact Us"},
+  {"title": "About Us"},
 ];

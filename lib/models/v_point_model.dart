@@ -23,16 +23,23 @@ class VpointModel {
       this.createdVerbals});
 
   VpointModel.fromJson(Map<String, dynamic> json) {
-    iDControl = json['ID_control'];
+    iDControl = json['ID_control'] != null
+        ? int.parse(json['ID_control'].toString())
+        : null;
     telNum = json['tel_num'];
     username = json['username'];
     idUserControl = json['id_user_control'];
-    countAutoverbal = json['count_autoverbal'];
+    countAutoverbal = json['count_autoverbal'] != null
+        ? int.parse(json['count_autoverbal'].toString())
+        : null;
     create = json['create'];
     expiry = json['expiry'];
     theirPlans = json['their_plans'];
-    balance = json['balance'];
-    createdVerbals = json['created_verbals'];
+    balance =
+        json['balance'] != null ? int.parse(json['balance'].toString()) : null;
+    createdVerbals = json['created_verbals'] != null
+        ? int.parse(json['created_verbals'].toString())
+        : null;
   }
 
   Map<String, dynamic> toJson() {
