@@ -16,6 +16,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:web_admin/components/property35_search.dart';
+import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
 import '../../../../models/search_model.dart';
 import '../../../Customs/ProgressHUD.dart';
 import '../../../Customs/formTwinN.dart';
@@ -261,6 +262,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
     _panelHeightOpen = (groupValue == 0)
         ? MediaQuery.of(context).size.height * 0.35
         : MediaQuery.of(context).size.height * 0.15;
+
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -837,7 +839,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                               setState(() {
                                 polygons.clear();
                                 listBuilding = [];
-                                checkGoogleMap = false;
+                                checkGoogleMap = true;
                                 // isApiCallProcess = true;
 
                                 typedrawer = false;
@@ -865,7 +867,6 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-              if (checkGoogleMap == true) optionSearch()
             ],
           ),
         ),
@@ -1129,11 +1130,11 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   double avgmin = 0, avgmax = 0;
   double? minSqm, maxSqm, totalMin, totalMax, totalArea;
   String? des;
-
+  bool watingList = false;
   final _formKey = GlobalKey<FormState>();
   Component component = Component();
   List listProperty = [];
-  VerbalAgents verbalAgent = VerbalAgents();
+  VerbalAgents verbalAgent = VerbalAgents(iduser: "");
   VerbalAgentModel verbalAgentModel = VerbalAgentModel();
   TextEditingController provinceController = TextEditingController();
   TextEditingController ditrictController = TextEditingController();
@@ -1146,328 +1147,344 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
               const EdgeInsets.only(right: 5, top: 10, left: 10, bottom: 10),
           child: Row(
             children: [
-              Text("Add Verbal",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: whiteColor,
-                      fontSize: 17))
+              Text("Verbal", style: TextStyle(color: whiteColor, fontSize: 15)),
+              const Spacer(),
+              Text("Verbal List",
+                  style: TextStyle(color: whiteColor, fontSize: 15)),
+              watingList
+                  ? const Center(child: CircularProgressIndicator())
+                  : IconButton(
+                      onPressed: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  VerbalList(listUser: widget.listUser),
+                            ));
+                      },
+                      icon: const Icon(
+                        Icons.change_circle,
+                        color: Color.fromARGB(255, 77, 230, 82),
+                        size: 30,
+                      ))
             ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(width: 1, color: whiteColor),
-                borderRadius: BorderRadius.circular(5)),
-            height: 302,
-            width: 500,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Land / Building',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: whiteColor),
-                        ),
-                        !checkmap
-                            ? const Text(
-                                '   Please Find Price on Map',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 240, 24, 9)),
-                              )
-                            : const SizedBox(),
-                        const Spacer(),
-                        ElevatedButton(
-                            onPressed: () async {
-                              // await Show(requestModel);
-                              setState(() {
-                                try {
-                                  if (validateAndSave() &&
-                                      controllerDS.text != "") {
-                                    if (checkHlandbuilding == false) {
-                                      hscreen = hscreen + 320;
-                                    }
+        if (checkGoogleMap == true)
+          Padding(
+            padding: const EdgeInsets.all(5),
+            child: Container(
+              decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: whiteColor),
+                  borderRadius: BorderRadius.circular(5)),
+              height: 302,
+              width: 500,
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            'Land / Building',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: whiteColor),
+                          ),
+                          !checkmap
+                              ? const Text(
+                                  '   Please Find Price on Map',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 240, 24, 9)),
+                                )
+                              : const SizedBox(),
+                          const Spacer(),
+                          ElevatedButton(
+                              onPressed: () async {
+                                // await Show(requestModel);
+                                setState(() {
+                                  try {
+                                    if (validateAndSave() &&
+                                        controllerDS.text != "") {
+                                      if (checkHlandbuilding == false) {
+                                        hscreen = hscreen + 320;
+                                      }
 
-                                    addItemToList(area);
-                                    checkHlandbuilding = true;
+                                      addItemToList(area);
+                                      checkHlandbuilding = true;
+                                    }
+                                  } catch (e) {
+                                    // print("Please");
                                   }
-                                } catch (e) {
-                                  // print("Please");
-                                }
-                              });
-                            },
-                            child: const Text("Calculator price",
-                                style: TextStyle(fontSize: 12))),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 35,
-                            width: double.infinity,
-                            child: ApprovebyAndVerifybySearch(
-                              listback: (value) {
-                                setState(() {
-                                  var list = value;
-                                  if (int.parse(list['autoverbal_id']
-                                              .toString()) !=
-                                          100 &&
-                                      list['autoverbal_id'] != 9) {
-                                    minSqm =
-                                        double.parse(list['min'].toString());
-                                    maxSqm =
-                                        double.parse(list['max'].toString());
-                                  }
-                                  // print("=====> type : ${list['type']}");
                                 });
                               },
-                              name: (value) {
-                                setState(() {
-                                  controllerDS.text = value;
-                                });
-                              },
-                              id: (value) {
-                                setState(() {
-                                  autoverbalTypeValue = value;
-                                });
-                              },
-                              defaultValue: const {
-                                'type': 'LS',
-                                'autoverbal_id': '100'
-                              },
+                              child: const Text("Calculator price",
+                                  style: TextStyle(fontSize: 12))),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(
+                              height: 35,
+                              width: double.infinity,
+                              child: ApprovebyAndVerifybySearch(
+                                listback: (value) {
+                                  setState(() {
+                                    var list = value;
+                                    if (int.parse(list['autoverbal_id']
+                                                .toString()) !=
+                                            100 &&
+                                        list['autoverbal_id'] != 9) {
+                                      minSqm =
+                                          double.parse(list['min'].toString());
+                                      maxSqm =
+                                          double.parse(list['max'].toString());
+                                    }
+                                    // print("=====> type : ${list['type']}");
+                                  });
+                                },
+                                name: (value) {
+                                  setState(() {
+                                    controllerDS.text = value;
+                                  });
+                                },
+                                id: (value) {
+                                  setState(() {
+                                    autoverbalTypeValue = value;
+                                  });
+                                },
+                                defaultValue: const {
+                                  'type': 'LS',
+                                  'autoverbal_id': '100'
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        if (autoverbalTypeValue != "100")
-                          const SizedBox(width: 10),
-                        if (autoverbalTypeValue != "100")
+                          if (autoverbalTypeValue != "100")
+                            const SizedBox(width: 10),
+                          if (autoverbalTypeValue != "100")
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                height: 35,
+                                child: FormN(
+                                  label: "Floors",
+                                  iconname: const Icon(
+                                      Icons.calendar_month_outlined,
+                                      color: kImageColor),
+                                  onSaved: (newValue) {
+                                    setState(() {
+                                      dep = newValue!;
+
+                                      if (totalArea != null) {
+                                        totalArea =
+                                            totalArea! * double.parse(dep);
+                                      }
+                                      totalArea;
+                                      areas = totalArea!;
+                                    });
+                                  },
+                                ),
+                              ),
+                            )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
                           Expanded(
                             flex: 1,
                             child: SizedBox(
                               height: 35,
                               child: FormN(
-                                label: "Floors",
+                                label: "Min",
                                 iconname: const Icon(
-                                    Icons.calendar_month_outlined,
+                                    Icons.h_plus_mobiledata_outlined,
                                     color: kImageColor),
                                 onSaved: (newValue) {
                                   setState(() {
-                                    dep = newValue!;
-
-                                    if (totalArea != null) {
-                                      totalArea =
-                                          totalArea! * double.parse(dep);
-                                    }
-                                    totalArea;
-                                    areas = totalArea!;
+                                    minSqm = double.parse(newValue!);
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(
+                              height: 35,
+                              child: FormN(
+                                label: "Max",
+                                iconname: const Icon(Icons.blur_linear_outlined,
+                                    color: kImageColor),
+                                onSaved: (newValue) {
+                                  setState(() {
+                                    maxSqm = double.parse(newValue!);
                                   });
                                 },
                               ),
                             ),
                           )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 35,
-                            child: FormN(
-                              label: "Min",
-                              iconname: const Icon(
-                                  Icons.h_plus_mobiledata_outlined,
-                                  color: kImageColor),
-                              onSaved: (newValue) {
-                                setState(() {
-                                  minSqm = double.parse(newValue!);
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 35,
-                            child: FormN(
-                              label: "Max",
-                              iconname: const Icon(Icons.blur_linear_outlined,
-                                  color: kImageColor),
-                              onSaved: (newValue) {
-                                setState(() {
-                                  maxSqm = double.parse(newValue!);
-                                });
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 35,
-                            child: FormN(
-                              label: "Head",
-                              iconname: const Icon(
-                                  Icons.h_plus_mobiledata_outlined,
-                                  color: kImageColor),
-                              onSaved: (newValue) {
-                                setState(() {
-                                  h = double.parse(newValue!);
-                                  // if (lL != 0) {
-                                  //   totalArea = h * lL;
-                                  //   areas = totalArea!;
-                                  // } else {
-                                  //   totalArea = h;
-                                  // }
-                                  // controllerArea.text = areas.toString();
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          flex: 1,
-                          child: SizedBox(
-                            height: 35,
-                            child: FormN(
-                              label: "Length",
-                              iconname: const Icon(Icons.blur_linear_outlined,
-                                  color: kImageColor),
-                              onSaved: (newValue) {
-                                setState(() {
-                                  if (newValue == "") {
-                                    controllerArea.clear();
-                                  }
-                                  lL = double.parse(newValue!);
-
-                                  // if (h != 0) {
-                                  //   totalArea = h * lL;
-                                  //   areas = totalArea!;
-                                  // } else {
-                                  //   totalArea = lL;
-                                  // }
-                                });
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                        height: 35,
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: TextFormField(
-                              controller: controllerArea,
-                              onChanged: (value) {
-                                setState(() {
-                                  areas = double.parse(
-                                      double.parse(value).toStringAsFixed(2));
-                                });
-                              },
-                              decoration: InputDecoration(
-                                fillColor:
-                                    const Color.fromARGB(255, 255, 255, 255),
-                                filled: true,
-                                labelText: "Area (m\u00B2)",
-                                prefixIcon: const Icon(Icons.layers,
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(
+                              height: 35,
+                              child: FormN(
+                                label: "Head",
+                                iconname: const Icon(
+                                    Icons.h_plus_mobiledata_outlined,
                                     color: kImageColor),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color.fromRGBO(0, 126, 250, 1),
-                                      width: 2.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                      width: 1,
-                                      color: Color.fromRGBO(0, 126, 250, 1)),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 249, 0, 0),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    width: 1,
-                                    color: Color.fromARGB(255, 249, 0, 0),
-                                  ),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                errorStyle: const TextStyle(
-                                    height: 0), // Hide error text
+                                onSaved: (newValue) {
+                                  setState(() {
+                                    h = double.parse(newValue!);
+                                    // if (lL != 0) {
+                                    //   totalArea = h * lL;
+                                    //   areas = totalArea!;
+                                    // } else {
+                                    //   totalArea = h;
+                                    // }
+                                    // controllerArea.text = areas.toString();
+                                  });
+                                },
                               ),
-                              validator: (input) {
-                                if (input == null || input.isEmpty) {
-                                  return ''; // Return empty string to trigger error state
-                                }
-                                return null;
-                              },
-                            )),
-                          ],
-                        )),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      height: 35,
-                      child: TextFormField(
-                        readOnly: true,
-                        controller: controllerDS,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          fillColor: kwhite,
-                          filled: true,
-                          labelText: "Description",
-                          labelStyle: const TextStyle(fontSize: 14),
-                          prefixIcon: const Icon(
-                            Icons.description,
-                            color: kImageColor,
+                            ),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: kPrimaryColor, width: 2.0),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                width: 1, color: kPrimaryColor),
-                            borderRadius: BorderRadius.circular(5),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            flex: 1,
+                            child: SizedBox(
+                              height: 35,
+                              child: FormN(
+                                label: "Length",
+                                iconname: const Icon(Icons.blur_linear_outlined,
+                                    color: kImageColor),
+                                onSaved: (newValue) {
+                                  setState(() {
+                                    if (newValue == "") {
+                                      controllerArea.clear();
+                                    }
+                                    lL = double.parse(newValue!);
+
+                                    // if (h != 0) {
+                                    //   totalArea = h * lL;
+                                    //   areas = totalArea!;
+                                    // } else {
+                                    //   totalArea = lL;
+                                    // }
+                                  });
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                          height: 35,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                  child: TextFormField(
+                                controller: controllerArea,
+                                onChanged: (value) {
+                                  setState(() {
+                                    areas = double.parse(
+                                        double.parse(value).toStringAsFixed(2));
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  fillColor:
+                                      const Color.fromARGB(255, 255, 255, 255),
+                                  filled: true,
+                                  labelText: "Area (m\u00B2)",
+                                  prefixIcon: const Icon(Icons.layers,
+                                      color: kImageColor),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                        color: Color.fromRGBO(0, 126, 250, 1),
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(5)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        width: 1,
+                                        color: Color.fromRGBO(0, 126, 250, 1)),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 2,
+                                      color: Color.fromARGB(255, 249, 0, 0),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 249, 0, 0),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  errorStyle: const TextStyle(
+                                      height: 0), // Hide error text
+                                ),
+                                validator: (input) {
+                                  if (input == null || input.isEmpty) {
+                                    return ''; // Return empty string to trigger error state
+                                  }
+                                  return null;
+                                },
+                              )),
+                            ],
+                          )),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 35,
+                        child: TextFormField(
+                          readOnly: true,
+                          controller: controllerDS,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            fillColor: kwhite,
+                            filled: true,
+                            labelText: "Description",
+                            labelStyle: const TextStyle(fontSize: 14),
+                            prefixIcon: const Icon(
+                              Icons.description,
+                              color: kImageColor,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: kPrimaryColor, width: 2.0),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  width: 1, color: kPrimaryColor),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
         if (listBuilding.isNotEmpty && checkHlandbuilding == true)
           Padding(
             padding:
@@ -1535,30 +1552,35 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                     if (verbalAgent.varListVerbal.isNotEmpty) {
                                       setState(() {
                                         checkHlandbuilding = false;
+                                        checkGoogleMap = false;
 
-                                        Future.delayed(
-                                            const Duration(seconds: 1), () {
-                                          verbalAgentModel.clear();
-                                          verbalAgentModel.verbalCode =
-                                              "${widget.listUser[0]['agency']}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(100)}";
-                                          verbalAgentModel.verbalImage = 'No';
-                                          _byesData = null;
-                                          get_bytes = null;
-                                          areas = 0;
-                                          route = null;
-                                          pty = null;
-                                          referrenceNController.clear();
-                                          provinceController.clear();
-                                          ditrictController.clear();
-                                          communeController.clear();
-                                          controllerArea.clear();
-                                          controllerDS.clear();
-                                          controllerDrop.clear();
-                                          priceController.clear();
-                                          titleDeedNController.clear();
-                                          underPropertyRightController.clear();
-                                          listBuilding = [];
-                                        });
+                                        // Future.delayed(
+                                        //     const Duration(seconds: 1), () {
+                                        verbalAgentModel.clear();
+                                        verbalAgentModel.verbalCode =
+                                            "${widget.listUser[0]['agency']}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(100)}";
+                                        verbalAgentModel.verbalImage = 'No';
+                                        _byesData = null;
+                                        get_bytes = null;
+                                        areas = 0;
+                                        route = null;
+                                        pty = null;
+
+                                        provinceController.clear();
+                                        ditrictController.clear();
+                                        communeController.clear();
+                                        controllerArea.clear();
+                                        controllerDS.clear();
+                                        controllerDrop.clear();
+                                        priceController.clear();
+                                        titleDeedNController.clear();
+                                        underPropertyRightController.clear();
+                                        listBuilding = [];
+                                        verbalAgentModel
+                                            .referrenceN = referrenceNController
+                                                .text =
+                                            "ARF${DateFormat('yy').format(now)} - ";
+                                        // });
                                       });
                                     }
                                   } else {
@@ -1679,9 +1701,9 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                   fontSize: 12,
                                   color: blackColor,
                                   fontWeight: FontWeight.bold),
-                              onChanged: (value) {
+                              onSaved: (value) {
                                 setState(() {
-                                  underPropertyRightController.text = value;
+                                  underPropertyRightController.text = value!;
                                 });
                               },
                               decoration: InputDecoration(
@@ -2198,46 +2220,6 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   int i = 0;
   double? askingPrice;
   int idkhan = 0;
-
-  Widget optionSearch() {
-    return Column(
-      children: [
-        const SizedBox(height: 50),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 30, right: 10, bottom: 10, top: 10),
-          child: Container(
-              decoration: BoxDecoration(
-                  color: whiteColor,
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 1)),
-              height: 450,
-              width: 400,
-              child: SizedBox(
-                  height: 35,
-                  width: 150,
-                  child: GoogleMap(
-                    onTap: (argument) async {
-                      setState(() {
-                        isApiCallProcess = false;
-                        polygons.clear();
-
-                        checkGoogleMap = false;
-                        typedrawer = false;
-                      });
-                    },
-                    markers: listMarkerIds,
-                    initialCameraPosition: CameraPosition(
-                      target: latLng,
-                      zoom: 19,
-                    ),
-                    polygons: polygons,
-                    // onMapCreated: (GoogleMapController controller) {},
-                  ))),
-        ),
-      ],
-    );
-  }
 
   bool validateAndSave() {
     final form = formKey.currentState;

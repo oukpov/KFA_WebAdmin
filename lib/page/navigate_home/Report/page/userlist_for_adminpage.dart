@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
 import 'package:web_admin/page/navigate_home/Report/page/reportverbal_all_user_for_admin_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/reportverbal_user_for_admin.dart';
 import '../../../../models/user_model.dart';
 
 class UserListForAdmin extends StatelessWidget {
@@ -114,11 +113,11 @@ class UserListForAdmin extends StatelessWidget {
                             horizontal: 8, vertical: 4),
                         child: ListTile(
                           onTap: () {
-                            Get.to(() => ReportVerbalUserForAdmin(
-                                  id: user['userId'].toString(),
-                                  tel_num: user['tel_num'],
-                                  agency: approved_name,
-                                ));
+                            // Get.to(() => ReportVerbalUserForAdmin(
+                            //       id: user['userId'].toString(),
+                            //       tel_num: user['tel_num'],
+                            //       agency: approved_name,
+                            //     ));
                           },
                           contentPadding: const EdgeInsets.all(16),
                           leading: CircleAvatar(

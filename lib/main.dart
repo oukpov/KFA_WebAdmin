@@ -4,20 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
-<<<<<<< HEAD
-import 'package:web_admin/page/navigate_home/verbal/slideUp.dart';
-import 'package:web_admin/page/navigate_home/verbal/test.dart';
-=======
-import 'package:web_admin/page/navigate_home/Report/page/reportverbal_user_for_admin.dart';
->>>>>>> 3a66bd7780c678914d80be6784a76c464f360a55
-import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
+
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
-
 import 'Auth/login.dart';
+import 'page/navigate_home/verbal/slideUp.dart';
 
 List list = [];
 // String? district_id;
@@ -131,16 +123,7 @@ class _MyAppState extends State<MyApp> {
         //         "password": "333802e987dfce42e28b749a20dc257f",
         //         "user_status": 0
         //       }
-<<<<<<< HEAD
-        //     ]
-=======
         //     ]),
-        // home: ReportVerbalUserForAdmin(
-        //   id: '344',
-        //   tel_num: '010406807',
-        //   agency: 'Test',
->>>>>>> 3a66bd7780c678914d80be6784a76c464f360a55
-        // ),
       ),
     );
   }
