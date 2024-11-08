@@ -20,6 +20,7 @@ class BannerController extends GetxController {
   bool cropORopen = false;
   String base64string = '';
   List? onedata;
+  String url = 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api';
   @override
   void onInit() {
     getonedata(onedata![0]['id']);
@@ -33,7 +34,7 @@ class BannerController extends GetxController {
     try {
       isLoading(true);
       var response = await dioInstance.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/banners',
+        '$url/banners',
         options: dio.Options(
           method: 'GET',
         ),
@@ -61,7 +62,7 @@ class BannerController extends GetxController {
     };
     var dio = Dio();
     var response = await dio.request(
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/getonedata/$id',
+      '$url/getonedata/$id',
       options: Options(
         method: 'GET',
         headers: headers,
@@ -132,7 +133,7 @@ class BannerController extends GetxController {
       });
 
       var response = await dioInstance.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/insertbanners',
+        '$url/insertbanners',
         options: dio.Options(
           method: 'POST',
           headers: headers,
@@ -170,7 +171,7 @@ class BannerController extends GetxController {
 
       var dioInstance = dio.Dio();
       var response = await dioInstance.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/banners/$id/update-image',
+        '$url/banners/$id/update-image',
         options: dio.Options(
           method: 'POST',
           headers: headers,
@@ -194,7 +195,7 @@ class BannerController extends GetxController {
     };
     var dioInstance = dio.Dio();
     var response = await dioInstance.request(
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/deletebanners/$id',
+      '$url/deletebanners/$id',
       options: dio.Options(
         method: 'DELETE',
         headers: headers,

@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/slider_model.dart';
+import '../models/promotion_model.dart';
 
-class SliderController extends GetxController {
+class PromotionController extends GetxController {
   var listPromotionWeb = [].obs;
   var isPromotion = true.obs;
   List<String> localPromotionWebData = [];

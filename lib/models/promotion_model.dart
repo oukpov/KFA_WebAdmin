@@ -1,3 +1,4 @@
+
 class PromotionModel {
   String? id;
   String? title;

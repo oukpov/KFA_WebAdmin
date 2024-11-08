@@ -7,8 +7,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/page/navigate_home/Report/page/upload_promotion_image.dart';
-import '../../../../controller/slider_controller.dart';
-import '../../../../models/slider_model.dart';
+import '../../../../controller/promotion_controller.dart';
+import '../../../../models/promotion_model.dart';
 
 class SliderPage extends StatefulWidget {
   const SliderPage({super.key});
@@ -18,7 +18,7 @@ class SliderPage extends StatefulWidget {
 }
 
 class _SliderPageState extends State<SliderPage> {
-  final SliderController _sliderController = Get.put(SliderController());
+  final PromotionController _sliderController = Get.put(PromotionController());
   final PageController _pageController = PageController();
   Uint8List? _selectedFile;
   String? _selectedFileName;

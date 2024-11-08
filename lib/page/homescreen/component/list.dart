@@ -45,7 +45,7 @@ List listTitlesetting = [
   {"title": "Commune"},
   {"title": "Add Point"},
   {"title": "Banner"},
-  {"title": "FAQ"},
+  {"title": "Pages"},
 ];
 
 //ICons
@@ -94,7 +94,7 @@ List optionIconListsetting = [
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/v.jpg"},
   {"icon": "assets/icons/sponsor.jpg"},
-  {"icon": "assets/icons/faq.jpg"},
+  {"icon": "assets/icons/pages.png"},
 ];
 // option homepage
 List customeroption = [
@@ -215,4 +215,6 @@ List drawerIconOption = [
 ];
 List faqOption = [
   {"title": "FAQ"},
+  {"title": "Contact Us"},
+  {"title": "About Us"},
 ];

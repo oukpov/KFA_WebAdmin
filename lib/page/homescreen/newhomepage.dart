@@ -39,6 +39,7 @@ import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
 import '../navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../navigate_home/Report/page/comparable_case_page.dart';
+import '../navigate_home/Report/page/faq_page.dart';
 import '../navigate_home/Report/page/slider_page.dart';
 import '../navigate_home/Report/page/userlist_for_adminpage.dart';
 import '../navigate_home/Report/page/userlist_page.dart';
@@ -1124,7 +1125,17 @@ class _homescreenState extends State<homescreen> {
                   for (int i = 0; i < faqOption.length; i++)
                     PopupMenuItem(
                         child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              if (i == 0) {
+                                Get.to(() => FaqPage());
+                              }
+                              if (i == 1) {
+                                //Get.to(() => const AboutUsPage());
+                              }
+                              if (i == 2) {
+                                // Get.to(() => const ContactUsPage());
+                              }
+                            },
                             child: textfield(faqOption[i]['title'].toString())))
               ];
             },

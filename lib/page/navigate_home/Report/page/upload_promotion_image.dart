@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../../../../controller/slider_controller.dart';
-import '../../../../models/slider_model.dart';
+import '../../../../controller/promotion_controller.dart';
+import '../../../../models/promotion_model.dart';
 import 'slider_page.dart';
 
 class UploadPromotionPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class UploadPromotionPage extends StatefulWidget {
 }
 
 class _UploadPromotionPageState extends State<UploadPromotionPage> {
-  final SliderController _sliderController = Get.put(SliderController());
+  final PromotionController _sliderController = Get.put(PromotionController());
   Uint8List? _selectedFile;
   String? _selectedFileName;
   bool _isUploading = false;

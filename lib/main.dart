@@ -6,16 +6,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import 'package:web_admin/page/navigate_home/verbal/slideUp.dart';
 import 'package:web_admin/page/navigate_home/verbal/test.dart';
-=======
-=======
 import 'package:web_admin/page/navigate_home/Report/page/faq_page.dart';
->>>>>>> b72a96d (add promotion and faq feature)
 import 'package:web_admin/page/navigate_home/Report/page/reportverbal_user_for_admin.dart';
->>>>>>> 3a66bd7780c678914d80be6784a76c464f360a55
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/page/navigate_home/Report/page/slider_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
@@ -104,29 +98,23 @@ class _MyAppState extends State<MyApp> {
         //   },
         // ]),
         // home: MapScreen(),
-<<<<<<< HEAD
-=======
-        home: FaqPage(),
-        // home: SliderPage(),
-        // home: AutoList(),
->>>>>>> b72a96d (add promotion and faq feature)
-        // home: LoginPage(),
+        home: LoginPage(),
 
         // home: MyFormTTTT(),
-        home: VerbalAgent(
-          type: (value) {},
-          listUser: const [
-            {
-              "id": 52,
-              "user_role_id": 59,
-              "agency": 70,
-              "username": "Test",
-              "password": "333802e987dfce42e28b749a20dc257f",
-              "user_status": 0
-            }
-          ],
-          addNew: (value) {},
-        ),
+        // home: VerbalAgent(
+        //   type: (value) {},
+        //   listUser: const [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        //   addNew: (value) {},
+        // ),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
@@ -142,15 +130,6 @@ class _MyAppState extends State<MyApp> {
         //         "password": "333802e987dfce42e28b749a20dc257f",
         //         "user_status": 0
         //       }
-<<<<<<< HEAD
-        //     ]
-=======
-        //     ]),
-        // home: ReportVerbalUserForAdmin(
-        //   id: '344',
-        //   tel_num: '010406807',
-        //   agency: 'Test',
->>>>>>> 3a66bd7780c678914d80be6784a76c464f360a55
         // ),
       ),
     );
