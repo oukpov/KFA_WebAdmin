@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
 import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:web_admin/components/colors.dart';
 import '../../../Profile/components/Drop_down.dart';
 import '../../../components/waiting.dart';
+import '../../../getx/component/logo.dart';
 
 class SaveImageVerbalAgent extends StatefulWidget {
   final List listVerbal;
@@ -86,6 +88,7 @@ class _SaveImageVerbalAgentState extends State<SaveImageVerbalAgent> {
   double fontsizes = 10;
   @override
   Widget build(BuildContext context) {
+    final logoImageKFA = Get.put(LogoImageKFA());
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: waitvalue
@@ -104,13 +107,17 @@ class _SaveImageVerbalAgentState extends State<SaveImageVerbalAgent> {
                           padding: const EdgeInsets.all(30),
                           width: 595.276,
                           height: 841.890,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/p2.png'),
-                            ),
-                          ),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: MemoryImage(base64Decode(
+                                      logoImageKFA.imagePDFKFA.value)))
+                              // image: DecorationImage(
+                              //   fit: BoxFit.cover,
+                              //   image: AssetImage('assets/images/p2.png'),
+                              // ),
+                              ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

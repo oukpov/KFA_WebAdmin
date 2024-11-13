@@ -46,7 +46,7 @@ class Authentication extends GetxController {
         if (response.statusCode == 200) {
           listlocalhost = jsonDecode(json.encode(response.data))['user'];
           List<dynamic> responseData = response.data['user'];
-          print(responseData.toString());
+          // print(responseData.toString());
           listLocalhostData =
               responseData.map((item) => json.encode(item)).toList();
           localhostList(listLocalhostData);

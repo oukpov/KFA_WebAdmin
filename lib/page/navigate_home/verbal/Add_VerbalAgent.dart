@@ -32,7 +32,9 @@ import '../../../components/colors.dart';
 import '../../../components/colors/colors.dart';
 import '../../../components/date.dart';
 import '../../../components/property35.dart';
+import '../../../components/waiting.dart';
 import '../../../getx/component/getx._snack.dart';
+import '../../../getx/component/logo.dart';
 import '../../../getx/verbal/verbal_agent.dart';
 import '../../../models/verbalAgentMode.dart';
 import '../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
@@ -201,7 +203,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
         "${widget.listUser[0]['agency']}${Random().nextInt(10)}${Random().nextInt(10)}${Random().nextInt(100)}";
     verbalAgentModel.verbalImage = "No";
     _handleLocationPermission();
-    pdfimage();
+
     acontroller = AnimationController(
       duration: const Duration(milliseconds: 645),
       vsync: this,
@@ -234,22 +236,39 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
     super.initState();
   }
 
-  var imagelogo;
-  List listPDF = [];
-  Future<void> pdfimage() async {
-    var rs = await http.get(Uri.parse(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/pdf/20'));
+  // var imagelogo;
+  // List listPDF = [];
+  // Future<void> pdfimage() async {
+  //   var rs = await http.get(Uri.parse(
+  //       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/pdf/20'));
 
-    if (rs.statusCode == 200) {
-      setState(() {
-        listPDF = jsonDecode(rs.body);
+  //   if (rs.statusCode == 200) {
+  //     setState(() {
+  //       listPDF = jsonDecode(rs.body);
 
-        if (listPDF.isNotEmpty) {
-          imagelogo = listPDF[0]['image'].toString();
-        }
-      });
-    }
-  }
+  //       if (listPDF.isNotEmpty) {
+  //         imagelogo = listPDF[0]['image'].toString();
+  //       }
+  //     });
+  //   }
+  // }
+
+  // List listkfaPDF = [];
+  // var imagesKFA;
+  // Future<void> imageKFA() async {
+  //   var rs = await http.get(Uri.parse(
+  //       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/pdf/21'));
+
+  //   if (rs.statusCode == 200) {
+  //     setState(() {
+  //       listkfaPDF = jsonDecode(rs.body);
+
+  //       if (listkfaPDF.isNotEmpty) {
+  //         imagesKFA = listPDF[0]['image'].toString();
+  //       }
+  //     });
+  //   }
+  // }
 
   bool checkImage = false;
   int countwaiting = 0;
@@ -314,7 +333,27 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                         const Spacer(),
                                         InkWell(
                                           onTap: () async {
-                                            searchComparable();
+                                            // searchComparable();
+                                            var headers = {
+                                              'Content-Type': 'application/json'
+                                            };
+                                            var data = json.encode({
+                                              "image":
+                                                  verbalAgentModel.verbalImage
+                                            });
+                                            var dio = Dio();
+                                            var response = await dio.request(
+                                              'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/image/pdf',
+                                              options: Options(
+                                                method: 'POST',
+                                                headers: headers,
+                                              ),
+                                              data: data,
+                                            );
+
+                                            if (response.statusCode == 200) {
+                                              print(json.encode(response.data));
+                                            }
                                           },
                                           child: Container(
                                             height: 40,
@@ -954,6 +993,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   TextEditingController ditrictController = TextEditingController();
   TextEditingController communeController = TextEditingController();
   Widget addLandBuilding() {
+    final logoImageKFA = Get.put(LogoImageKFA());
     return Column(
       children: [
         Padding(
@@ -1336,46 +1376,57 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                                                 'assets/images/save_image.png',
                                                                 height: 25,
                                                               )),
-                                                          if (imagelogo != null)
-                                                            PDFVerbal(
-                                                                verbalCode: "",
-                                                                imageLogo:
-                                                                    imagelogo,
-                                                                listVerbal:
-                                                                    verbalAgent
-                                                                        .varListVerbal,
-                                                                listLandbuilding:
-                                                                    verbalAgent
-                                                                        .varListLandBuilding,
-                                                                i: i,
-                                                                type: (value) {
-                                                                  if (value ==
-                                                                      true) {
-                                                                    setState(
-                                                                        () {
-                                                                      verbalAgent
-                                                                          .isVerbal
-                                                                          .value = true;
-                                                                    });
-                                                                    Future.delayed(
-                                                                        const Duration(
-                                                                            seconds:
-                                                                                1),
-                                                                        () {
-                                                                      setState(
-                                                                          () {
+                                                          // if (logoImageKFA != null)
+                                                          Obx(
+                                                            () {
+                                                              if (logoImageKFA
+                                                                  .isImageLogoKFA
+                                                                  .value) {
+                                                                return const WaitingFunction();
+                                                              } else {
+                                                                return PDFVerbal(
+                                                                    verbalCode:
+                                                                        "",
+                                                                    imageLogo: logoImageKFA
+                                                                        .imageLogoKFA
+                                                                        .value,
+                                                                    listVerbal:
                                                                         verbalAgent
-                                                                            .isVerbal
-                                                                            .value = false;
-                                                                      });
-                                                                      Navigator.pop(
-                                                                          context);
-                                                                    });
-                                                                  }
-                                                                },
-                                                                listUser: widget
-                                                                    .listUser,
-                                                                check: false),
+                                                                            .varListVerbal,
+                                                                    listLandbuilding:
+                                                                        verbalAgent
+                                                                            .varListLandBuilding,
+                                                                    i: i,
+                                                                    type:
+                                                                        (value) {
+                                                                      if (value ==
+                                                                          true) {
+                                                                        setState(
+                                                                            () {
+                                                                          verbalAgent
+                                                                              .isVerbal
+                                                                              .value = true;
+                                                                        });
+                                                                        Future.delayed(
+                                                                            const Duration(seconds: 1),
+                                                                            () {
+                                                                          setState(
+                                                                              () {
+                                                                            verbalAgent.isVerbal.value =
+                                                                                false;
+                                                                          });
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        });
+                                                                      }
+                                                                    },
+                                                                    listUser: widget
+                                                                        .listUser,
+                                                                    check:
+                                                                        false);
+                                                              }
+                                                            },
+                                                          ),
                                                         ],
                                                       ),
                                                       const SizedBox(height: 20)

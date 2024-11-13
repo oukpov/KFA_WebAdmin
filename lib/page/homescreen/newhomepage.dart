@@ -22,6 +22,7 @@ import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../getx/Auth/Auth_agent.dart';
 import '../../getx/checkUpdate/updateCheck.dart';
+import '../../getx/component/logo.dart';
 import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
 import '../navigate_home/Approvel/classSubmit.dart';
 import '../navigate_home/AutoVerbal/Zone/add_zone.dart';
@@ -212,6 +213,7 @@ class _homescreenState extends State<homescreen> {
     }
   }
 
+  LogoImageKFA logoImageKFA = LogoImageKFA();
   int type = 0;
   @override
   Widget build(BuildContext context) {
