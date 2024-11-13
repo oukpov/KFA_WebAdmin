@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import '../../../Profile/components/Drop_down.dart';
+import '../../../getx/component/logo.dart';
 import '../../../getx/verbal/verbal_agent.dart';
 import 'package:http/http.dart' as http;
 
@@ -83,11 +85,12 @@ class _PDFVerbalState extends State<PDFVerbal> {
   }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
+    final logoImageKFA = Get.put(LogoImageKFA());
     final pdf = pw.Document(version: PdfVersion.pdf_1_4, compress: true);
     try {
-      final image = pw.MemoryImage(
-        (await rootBundle.load('assets/images/p2.png')).buffer.asUint8List(),
-      );
+      // final image = pw.MemoryImage(
+      //   (await rootBundle.load('assets/images/p2.png')).buffer.asUint8List(),
+      // );
 
       pdf.addPage(
         pw.Page(
@@ -99,7 +102,9 @@ class _PDFVerbalState extends State<PDFVerbal> {
                 decoration: pw.BoxDecoration(
                   image: pw.DecorationImage(
                     fit: pw.BoxFit.fitWidth,
-                    image: image,
+                    image: pw.MemoryImage(
+                      base64Decode(logoImageKFA.imagePDFKFA.value),
+                    ),
                   ),
                 ),
                 child: pw.Padding(

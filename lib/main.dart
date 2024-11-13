@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: const GetMaterialApp(
+      child: GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> {
         //   },
         // ]),
         // home: MapScreen(),
-        home: LoginPage(),
+        // home: LoginPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
         //   check: false,
@@ -160,20 +160,20 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
-        // home: VerbalAgent(
-        //   type: (value) {},
-        //   listUser: const [
-        //     {
-        //       "id": 52,
-        //       "user_role_id": 59,
-        //       "agency": 70,
-        //       "username": "Test",
-        //       "password": "333802e987dfce42e28b749a20dc257f",
-        //       "user_status": 0
-        //     }
-        //   ],
-        //   addNew: (value) {},
-        // ),
+        home: VerbalAgent(
+          type: (value) {},
+          listUser: const [
+            {
+              "id": 52,
+              "user_role_id": 59,
+              "agency": 70,
+              "username": "Test",
+              "password": "333802e987dfce42e28b749a20dc257f",
+              "user_status": 0
+            }
+          ],
+          addNew: (value) {},
+        ),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
