@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class Component extends GetxController {
   var isTapAllowed = true.obs;
 
-  Future<void> handleTap(title, subtitle) async {
+  Future<void> handleTap(title, subtitle, int second) async {
     if (isTapAllowed.value) {
       isTapAllowed.value = false;
 
@@ -17,6 +17,7 @@ class Component extends GetxController {
         borderColor: const Color.fromARGB(255, 48, 47, 47),
         borderWidth: 1.0,
         borderRadius: 5,
+        duration: Duration(seconds: second),
         backgroundColor: const Color.fromARGB(255, 235, 242, 246),
         icon: const Icon(Icons.add_alert),
       );

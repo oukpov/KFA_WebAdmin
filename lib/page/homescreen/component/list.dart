@@ -123,9 +123,9 @@ List autoOptionAdmin = [
   {"title": "Add Zone Specail"},
 ];
 List verbalOption = [
-  {"title": "Cross Check Price"},
-  {"title": "List Auto Verbal"},
-  {"title": "Search Map"},
+  {"title": "Add Verbal"},
+  // {"title": "List Auto Verbal"},
+  // {"title": "Search Map"},
 ];
 List approvelList = [
   {"title": "List Approvel"},

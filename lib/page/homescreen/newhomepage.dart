@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
-import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -28,8 +27,7 @@ import '../navigate_home/Approvel/classSubmit.dart';
 import '../navigate_home/AutoVerbal/Zone/add_zone.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
-import '../navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
-import '../navigate_home/Comparable/newComparable/responsivenewcomparableadd.dart';
+import '../navigate_home/Comparable/add_comparable_new_page.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
@@ -47,9 +45,7 @@ import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/list_notivigation.dart';
 import '../navigate_home/User/use_vpoint.dart';
-import '../navigate_home/Valuation/class/Executive_approvel.dart';
-import '../navigate_home/Valuation/class/New_Executive.dart';
-import '../navigate_home/Valuation/class/list_Executive.dart';
+import '../navigate_home/verbal/Add_VerbalAgent.dart';
 import '../navigate_setting/Accompany_by/Acompany_List.dart';
 import '../navigate_setting/Accompany_by/Acompany_new.dart';
 import '../navigate_setting/Appraiser/Appraiser_list.dart';
@@ -69,8 +65,6 @@ import '../navigate_setting/bank/bank/bank_list.dart';
 import '../navigate_setting/bank/bank/new_bank.dart';
 import '../navigate_setting/bank/brand/brand_list.dart';
 import '../navigate_setting/bank/brand/new_brand.dart';
-import '../navigate_home/Comparable/comparable3/search_screen.dart/comparable_search.dart';
-import '../navigate_home/Comparable/comparable4/list_comparable_filter.dart';
 import '../../Widgets/drawerMenu.dart';
 import '../../Widgets/drawer.dart';
 import '../../Widgets/widgets.dart';
@@ -80,8 +74,6 @@ import '../sponsor_list_page.dart';
 import 'component/list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
-
-import 'newUsers/notifications.dart';
 
 class homescreen extends StatefulWidget {
   const homescreen(
@@ -149,7 +141,6 @@ class _homescreenState extends State<homescreen> {
         listControllerTitle = listTitle;
         listControllerIcons = optionIconList;
         listReportOption = reportOption;
-
         listAdminOption = autoOption;
       }
       // print("Zone_Allow => ${authentication.listAdminUser[0]['zone_Allow']}");
@@ -360,26 +351,26 @@ class _homescreenState extends State<homescreen> {
                             onTap: () {
                               switch (i) {
                                 case 0:
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return const New_Executive();
-                                    },
-                                  ));
+                                  // Navigator.push(context, MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return const New_Executive();
+                                  //   },
+                                  // ));
                                   break;
                                 case 1:
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return Executive_List();
-                                    },
-                                  ));
+                                  // Navigator.push(context, MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return Executive_List();
+                                  //   },
+                                  // ));
                                   break;
 
                                 default:
-                                  Navigator.push(context, MaterialPageRoute(
-                                    builder: (context) {
-                                      return Executive_approvals();
-                                    },
-                                  ));
+                                // Navigator.push(context, MaterialPageRoute(
+                                //   builder: (context) {
+                                //     return Executive_approvals();
+                                //   },
+                                // ));
                               }
                             },
                             child: textfield(
@@ -482,46 +473,14 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
-                              switch (i) {
-                                case 0:
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) => const Add(
-                                  //         id_control_user: 'sdf96',
-                                  //         id: '12',
-                                  //       ),
-                                  //     ));
-                                  break;
-                                case 1:
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //       builder: (context) => const ListAuto(
-                                  //         id_control_user: 'sasdkf',
-                                  //         verbal_id: '0123',
-                                  //       ),
-                                  //     ));
-                                  break;
-                                default:
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            Map_List_search_auto_verbal(
-                                          get_commune: (value) {},
-                                          get_district: (value) {},
-                                          get_lat: (value) {},
-                                          get_log: (value) {},
-                                          get_max1: (value) {},
-                                          get_max2: (value) {},
-                                          get_min1: (value) {},
-                                          get_min2: (value) {},
-                                          get_province: (value) {},
-                                        ),
-                                      ));
-                                  break;
-                              }
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerbalAgent(
+                                            type: (value) {},
+                                            listUser: widget.listUser,
+                                            addNew: (value) {},
+                                          )));
                             },
                             child:
                                 textfield(verbalOption[i]['title'].toString())))

@@ -61,7 +61,7 @@ class ControllerUpdate extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      component.handleTap("Done!", "Notification to Agent Update New");
+      component.handleTap("Done!", "Notification to Agent Update New", 3);
       Navigator.pop(context);
     } else {
       print(response.statusMessage);
@@ -78,7 +78,7 @@ class ControllerUpdate extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      component.handleTap("Done!", "Notification to Client Update New");
+      component.handleTap("Done!", "Notification to Client Update New", 3);
       Navigator.pop(context);
     } else {
       print(response.statusMessage);
@@ -100,7 +100,7 @@ class ControllerUpdate extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      component.handleTap("Done!", "Update Successfuly");
+      component.handleTap("Done!", "Update Successfuly", 3);
       Navigator.pop(context);
     } else {
       print(response.statusMessage);

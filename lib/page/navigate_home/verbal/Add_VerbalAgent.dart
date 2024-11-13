@@ -10,12 +10,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:getwidget/components/button/gf_button.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:web_admin/components/property35_search.dart';
+import 'package:web_admin/page/navigate_home/verbal/pdfVerbal.dart';
 import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
 import '../../../../models/search_model.dart';
 import '../../../Customs/ProgressHUD.dart';
@@ -27,12 +29,14 @@ import 'package:universal_html/html.dart' as html;
 import '../../../components/Dateform.dart';
 import '../../../components/autoVerbalType_search.dart';
 import '../../../components/colors.dart';
+import '../../../components/colors/colors.dart';
 import '../../../components/date.dart';
 import '../../../components/property35.dart';
 import '../../../getx/component/getx._snack.dart';
 import '../../../getx/verbal/verbal_agent.dart';
 import '../../../models/verbalAgentMode.dart';
 import '../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
+import 'ImageVerbal.dart';
 
 class VerbalAgent extends StatefulWidget {
   const VerbalAgent(
@@ -234,7 +238,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   List listPDF = [];
   Future<void> pdfimage() async {
     var rs = await http.get(Uri.parse(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/pdf/15'));
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/get/pdf/20'));
 
     if (rs.statusCode == 200) {
       setState(() {
@@ -247,12 +251,13 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
     }
   }
 
+  bool checkImage = false;
   int countwaiting = 0;
   @override
   Widget build(BuildContext context) {
     return ProgressHUD(
-      color: const Color.fromARGB(255, 0, 49, 212),
-      inAsyncCall: isApiCallProcess,
+      color: Colors.transparent,
+      inAsyncCall: verbalAgent.isVerbal.value,
       opacity: 0.3,
       child: _uiSteup(context),
     );
@@ -290,7 +295,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                   const SizedBox(height: 10),
                                   IconButton(
                                     onPressed: () {
-                                      widget.type(100);
+                                      Navigator.pop(context);
                                     },
                                     icon: Icon(
                                       Icons.arrow_back,
@@ -308,7 +313,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                       children: [
                                         const Spacer(),
                                         InkWell(
-                                          onTap: () {
+                                          onTap: () async {
                                             searchComparable();
                                           },
                                           child: Container(
@@ -342,13 +347,11 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                       ],
                                     ),
                                   ),
-
                                   Text(
                                     "Search by Latitude and Longitude",
                                     style: TextStyle(
                                         color: whiteColor, fontSize: 15),
                                   ),
-
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
@@ -473,7 +476,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
-                                    "Search Map",
+                                    "Search Map ${verbalAgent.changeImage.value}",
                                     style: TextStyle(
                                         color: whiteColor, fontSize: 15),
                                   ),
@@ -545,213 +548,6 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                     Text('Specail Option',
                                         style: TextStyle(
                                             color: whiteColor, fontSize: 12)),
-                                  if (comparedropdown2 != "")
-                                    const SizedBox(height: 10),
-                                  // Row(
-                                  //   children: [
-                                  //     if (comparedropdown2 != "")
-                                  //       Expanded(
-                                  //         flex: 1,
-                                  //         child: Padding(
-                                  //           padding: const EdgeInsets.only(
-                                  //               right: 10),
-                                  //           child: SizedBox(
-                                  //             height: 35,
-                                  //             child: DropdownButtonFormField<
-                                  //                 String>(
-                                  //               //value: genderValue,
-
-                                  //               value:
-                                  //                   searchlatlog.text.isNotEmpty
-                                  //                       ? searchlatlog.text
-                                  //                       : null,
-                                  //               isExpanded: true,
-                                  //               onChanged: (newValue) {
-                                  //                 setState(() {
-                                  //                   clearmarker = true;
-                                  //                   searchlatlog.text =
-                                  //                       newValue ?? "";
-                                  //                   if (newValue == 'N') {
-                                  //                     comparedropdown = '';
-                                  //                   } else {
-                                  //                     comparedropdown =
-                                  //                         newValue!;
-                                  //                     comparedropdown2 = 'P';
-                                  //                   }
-                                  //                   checkdropdown =
-                                  //                       comparedropdown;
-
-                                  //                   print(
-                                  //                       '==> $comparedropdown');
-                                  //                 });
-                                  //               },
-
-                                  //               items: controller.listdropdown
-                                  //                   .map<
-                                  //                       DropdownMenuItem<
-                                  //                           String>>(
-                                  //                     (value) =>
-                                  //                         DropdownMenuItem<
-                                  //                             String>(
-                                  //                       value: value["type"]
-                                  //                           .toString(),
-                                  //                       child: Padding(
-                                  //                         padding:
-                                  //                             const EdgeInsets
-                                  //                                     .only(
-                                  //                                 bottom: 7),
-                                  //                         child: Row(
-                                  //                           children: [
-                                  //                             Expanded(
-                                  //                                 flex: 1,
-                                  //                                 child:
-                                  //                                     Padding(
-                                  //                                   padding: const EdgeInsets
-                                  //                                           .only(
-                                  //                                       right:
-                                  //                                           5),
-                                  //                                   child: SizedBox(
-                                  //                                       height: 70,
-                                  //                                       // radius: 15,
-                                  //                                       // backgroundColor: Colors.white,
-                                  //                                       child: (value['id'] == 1)
-                                  //                                           ? Image.asset(
-                                  //                                               listassetImage[0]['image'].toString(),
-                                  //                                             )
-                                  //                                           : (value['id'] == 2)
-                                  //                                               ? Image.asset(listassetImage[1]['image'].toString())
-                                  //                                               : (value['id'] == 3)
-                                  //                                                   ? Image.asset(listassetImage[2]['image'].toString())
-                                  //                                                   : (value['id'] == 4)
-                                  //                                                       ? Image.asset(listassetImage[3]['image'].toString())
-                                  //                                                       : (value['id'] == 5)
-                                  //                                                           ? Image.asset(listassetImage[4]['image'].toString())
-                                  //                                                           : (value['id'] == 6)
-                                  //                                                               ? Image.asset(listassetImage[5]['image'].toString())
-                                  //                                                               : (value['id'] == 7)
-                                  //                                                                   ? Image.asset(listassetImage[6]['image'].toString())
-                                  //                                                                   : Image.asset(listassetImage[7]['image'].toString())),
-                                  //                                 )),
-                                  //                             Expanded(
-                                  //                               flex: 2,
-                                  //                               child: Text(
-                                  //                                   value["title"]
-                                  //                                       .toString(),
-                                  //                                   style: const TextStyle(
-                                  //                                       fontWeight:
-                                  //                                           FontWeight
-                                  //                                               .bold,
-                                  //                                       fontSize:
-                                  //                                           14)),
-                                  //                             ),
-                                  //                             Expanded(
-                                  //                                 flex: 4,
-                                  //                                 child: Text(
-                                  //                                     value[
-                                  //                                         "name"],
-                                  //                                     style: const TextStyle(
-                                  //                                         fontSize:
-                                  //                                             12))),
-                                  //                           ],
-                                  //                         ),
-                                  //                       ),
-                                  //                     ),
-                                  //                   )
-                                  //                   .toList(),
-                                  //               // add extra sugar..
-                                  //               icon: const Icon(
-                                  //                 Icons.arrow_drop_down,
-                                  //                 color: kImageColor,
-                                  //               ),
-
-                                  //               decoration: InputDecoration(
-                                  //                 contentPadding:
-                                  //                     const EdgeInsets
-                                  //                             .symmetric(
-                                  //                         vertical: 0,
-                                  //                         horizontal: 0),
-                                  //                 fillColor: Colors.white,
-                                  //                 filled: true,
-                                  //                 labelText: 'Special Option',
-                                  //                 hintText: 'Select one',
-                                  //                 prefixIcon: const Icon(
-                                  //                   Icons.home_outlined,
-                                  //                   color: kImageColor,
-                                  //                 ),
-                                  //                 focusedBorder:
-                                  //                     OutlineInputBorder(
-                                  //                   borderSide:
-                                  //                       const BorderSide(
-                                  //                           color:
-                                  //                               kPrimaryColor,
-                                  //                           width: 2.0),
-                                  //                   borderRadius:
-                                  //                       BorderRadius.circular(
-                                  //                           10.0),
-                                  //                 ),
-                                  //                 enabledBorder:
-                                  //                     OutlineInputBorder(
-                                  //                   borderSide:
-                                  //                       const BorderSide(
-                                  //                     width: 1,
-                                  //                     color: kPrimaryColor,
-                                  //                   ),
-                                  //                   borderRadius:
-                                  //                       BorderRadius.circular(
-                                  //                           10.0),
-                                  //                 ),
-                                  //               ),
-                                  //             ),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //   ],
-                                  // ),
-
-                                  const SizedBox(height: 5),
-                                  // Row(
-                                  //   children: [
-                                  //     // Expanded(
-                                  //     //   flex: 1,
-                                  //     //   child: NumDisplay(
-                                  //     //       onSaved: (newValue) => setState(() {
-                                  //     //             requestModel.num = newValue!;
-                                  //     //           })),
-                                  //     // ),
-                                  //     // const SizedBox(width: 10),
-                                  //     //DDDDDDDD
-                                  //     if (groupValue == 0)
-                                  //       Expanded(
-                                  //         flex: 1,
-                                  //         child: SizedBox(
-                                  //           child: searchType
-                                  //               ? const SizedBox()
-                                  //               : PropertySearch(
-                                  //                   height: 35,
-                                  //                   name: (value) {},
-                                  //                   checkOnclick: (value) {
-                                  //                     setState(() {
-                                  //                       isChecked = value;
-                                  //                       isChecked_all = false;
-                                  //                     });
-                                  //                   },
-                                  //                   id: (value) {
-                                  //                     setState(() {
-                                  //                       if (value == '37') {
-                                  //                         pty = null;
-                                  //                         showAll = true;
-                                  //                       } else {
-                                  //                         pty = value;
-                                  //                         showAll = true;
-                                  //                       }
-                                  //                     });
-                                  //                   },
-                                  //                 ),
-                                  //         ),
-                                  //       ),
-                                  //   ],
-                                  // ),
-                                  const SizedBox(height: 10),
                                   addLandBuilding()
                                 ],
                               ),
@@ -815,54 +611,73 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                       ),
                       Expanded(
                         flex: 6,
-                        child: SizedBox(
+                        child: Container(
+                          color: const Color.fromARGB(255, 154, 154, 154),
                           height: MediaQuery.of(context).size.height,
-                          child: GoogleMap(
-                            markers: listMarkerIds.map((e) => e).toSet(),
-                            initialCameraPosition: CameraPosition(
-                              target: latLng,
-                              zoom: 12.0,
-                            ),
-                            // polygons: Set<Polygon>.of(polygons),
-                            // polygons: polygons,
-                            polygons: Set<Polygon>.of(polygons),
-                            myLocationButtonEnabled: true,
-                            myLocationEnabled: true,
-                            mapType: MapType.hybrid,
-                            onMapCreated: (controller) {
-                              setState(() {
-                                mapController = controller;
-                              });
-                            },
+                          child: (!verbalAgent.changeImage.value)
+                              ? GoogleMap(
+                                  markers: listMarkerIds.map((e) => e).toSet(),
+                                  initialCameraPosition: CameraPosition(
+                                    target: latLng,
+                                    zoom: 12.0,
+                                  ),
+                                  // polygons: Set<Polygon>.of(polygons),
+                                  // polygons: polygons,
+                                  polygons: Set<Polygon>.of(polygons),
+                                  myLocationButtonEnabled: true,
+                                  myLocationEnabled: true,
+                                  mapType: MapType.hybrid,
+                                  onMapCreated: (controller) {
+                                    setState(() {
+                                      mapController = controller;
+                                    });
+                                  },
 
-                            onTap: (argument) {
-                              setState(() {
-                                polygons.clear();
-                                listBuilding = [];
-                                checkGoogleMap = true;
-                                // isApiCallProcess = true;
+                                  onTap: (argument) {
+                                    setState(() {
+                                      polygons.clear();
+                                      listBuilding = [];
+                                      checkGoogleMap = true;
+                                      // isApiCallProcess = true;
 
-                                typedrawer = false;
-                                latLng = argument;
-                                requestModel.lat = latLng.latitude.toString();
-                                requestModel.lng = latLng.longitude.toString();
-                                findByPiont(double.parse(requestModel.lat),
-                                    double.parse(requestModel.lng));
-                                if (groupValue == 0) {
-                                  addMarkers(argument);
-                                } else {
-                                  addMarkers(argument);
-                                  findByPiont(double.parse(requestModel.lat),
-                                      double.parse(requestModel.lng));
-                                }
-                              });
-                            },
-                            onCameraMove: (CameraPosition cameraPositiona) {
-                              cameraPosition = cameraPositiona;
-                            },
-                          ),
+                                      typedrawer = false;
+                                      latLng = argument;
+                                      requestModel.lat =
+                                          latLng.latitude.toString();
+                                      requestModel.lng =
+                                          latLng.longitude.toString();
+                                      findByPiont(
+                                          double.parse(requestModel.lat),
+                                          double.parse(requestModel.lng));
+                                      if (groupValue == 0) {
+                                        addMarkers(argument);
+                                      } else {
+                                        addMarkers(argument);
+                                        findByPiont(
+                                            double.parse(requestModel.lat),
+                                            double.parse(requestModel.lng));
+                                      }
+                                    });
+                                  },
+                                  onCameraMove:
+                                      (CameraPosition cameraPositiona) {
+                                    cameraPosition = cameraPositiona;
+                                  },
+                                )
+                              : SaveImageVerbalAgent(
+                                  listLandbuilding:
+                                      verbalAgent.varListLandBuilding,
+                                  type: (value) {
+                                    setState(() {
+                                      verbalAgent.changeImage.value = value;
+                                    });
+                                  },
+                                  listUser: widget.listUser,
+                                  listVerbal: verbalAgent.varListVerbal,
+                                  i: i,
+                                  check: false),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ],
@@ -879,9 +694,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   String comparedropdown2 = '';
   int groupValue = 0;
   bool isChecked = false;
-  bool isChecked_all = false;
   // var id_route;
-
   double h = 0;
   List listMap = [];
   TextEditingController searchMap = TextEditingController();
@@ -1118,7 +931,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   List listBuilding = [];
 
   bool checkHlandbuilding = false;
-  bool checkImage = false;
+
   String testback = '';
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool checkmap = true;
@@ -1128,7 +941,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   String dep = "0";
   double hL = 0, lL = 0;
   double avgmin = 0, avgmax = 0;
-  double? minSqm, maxSqm, totalMin, totalMax, totalArea;
+  double? usdSQMs, sizeSQMs;
   String? des;
   bool watingList = false;
   final _formKey = GlobalKey<FormState>();
@@ -1136,6 +949,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
   List listProperty = [];
   VerbalAgents verbalAgent = VerbalAgents(iduser: "");
   VerbalAgentModel verbalAgentModel = VerbalAgentModel();
+  TextEditingController roadController = TextEditingController();
   TextEditingController provinceController = TextEditingController();
   TextEditingController ditrictController = TextEditingController();
   TextEditingController communeController = TextEditingController();
@@ -1177,7 +991,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
               decoration: BoxDecoration(
                   border: Border.all(width: 1, color: whiteColor),
                   borderRadius: BorderRadius.circular(5)),
-              height: 302,
+              height: (autoverbalTypeValue != "100") ? 240 : 200,
               width: 500,
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -1204,7 +1018,6 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                           const Spacer(),
                           ElevatedButton(
                               onPressed: () async {
-                                // await Show(requestModel);
                                 setState(() {
                                   try {
                                     if (validateAndSave() &&
@@ -1240,13 +1053,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                     if (int.parse(list['autoverbal_id']
                                                 .toString()) !=
                                             100 &&
-                                        list['autoverbal_id'] != 9) {
-                                      minSqm =
-                                          double.parse(list['min'].toString());
-                                      maxSqm =
-                                          double.parse(list['max'].toString());
-                                    }
-                                    // print("=====> type : ${list['type']}");
+                                        list['autoverbal_id'] != 9) {}
                                   });
                                 },
                                 name: (value) {
@@ -1266,33 +1073,6 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                          if (autoverbalTypeValue != "100")
-                            const SizedBox(width: 10),
-                          if (autoverbalTypeValue != "100")
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                height: 35,
-                                child: FormN(
-                                  label: "Floors",
-                                  iconname: const Icon(
-                                      Icons.calendar_month_outlined,
-                                      color: kImageColor),
-                                  onSaved: (newValue) {
-                                    setState(() {
-                                      dep = newValue!;
-
-                                      if (totalArea != null) {
-                                        totalArea =
-                                            totalArea! * double.parse(dep);
-                                      }
-                                      totalArea;
-                                      areas = totalArea!;
-                                    });
-                                  },
-                                ),
-                              ),
-                            )
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -1303,13 +1083,13 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             child: SizedBox(
                               height: 35,
                               child: FormN(
-                                label: "Min",
+                                label: "Size/m\u00B2",
                                 iconname: const Icon(
                                     Icons.h_plus_mobiledata_outlined,
                                     color: kImageColor),
                                 onSaved: (newValue) {
                                   setState(() {
-                                    minSqm = double.parse(newValue!);
+                                    sizeSQMs = double.parse("${newValue ?? 0}");
                                   });
                                 },
                               ),
@@ -1321,12 +1101,12 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             child: SizedBox(
                               height: 35,
                               child: FormN(
-                                label: "Max",
+                                label: "USD/SQMs",
                                 iconname: const Icon(Icons.blur_linear_outlined,
                                     color: kImageColor),
                                 onSaved: (newValue) {
                                   setState(() {
-                                    maxSqm = double.parse(newValue!);
+                                    usdSQMs = double.parse("${newValue ?? 0}");
                                   });
                                 },
                               ),
@@ -1334,121 +1114,32 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                           )
                         ],
                       ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 35,
-                              child: FormN(
-                                label: "Head",
-                                iconname: const Icon(
-                                    Icons.h_plus_mobiledata_outlined,
-                                    color: kImageColor),
-                                onSaved: (newValue) {
-                                  setState(() {
-                                    h = double.parse(newValue!);
-                                    // if (lL != 0) {
-                                    //   totalArea = h * lL;
-                                    //   areas = totalArea!;
-                                    // } else {
-                                    //   totalArea = h;
-                                    // }
-                                    // controllerArea.text = areas.toString();
-                                  });
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              height: 35,
-                              child: FormN(
-                                label: "Length",
-                                iconname: const Icon(Icons.blur_linear_outlined,
-                                    color: kImageColor),
-                                onSaved: (newValue) {
-                                  setState(() {
-                                    if (newValue == "") {
-                                      controllerArea.clear();
-                                    }
-                                    lL = double.parse(newValue!);
-
-                                    // if (h != 0) {
-                                    //   totalArea = h * lL;
-                                    //   areas = totalArea!;
-                                    // } else {
-                                    //   totalArea = lL;
-                                    // }
-                                  });
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                          height: 35,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: TextFormField(
-                                controller: controllerArea,
-                                onChanged: (value) {
-                                  setState(() {
-                                    areas = double.parse(
-                                        double.parse(value).toStringAsFixed(2));
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                  fillColor:
-                                      const Color.fromARGB(255, 255, 255, 255),
-                                  filled: true,
-                                  labelText: "Area (m\u00B2)",
-                                  prefixIcon: const Icon(Icons.layers,
-                                      color: kImageColor),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color.fromRGBO(0, 126, 250, 1),
-                                        width: 2.0,
-                                      ),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        width: 1,
-                                        color: Color.fromRGBO(0, 126, 250, 1)),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 2,
-                                      color: Color.fromARGB(255, 249, 0, 0),
+                      if (autoverbalTypeValue != "100")
+                        const SizedBox(height: 10),
+                      if (autoverbalTypeValue != "100")
+                        SizedBox(
+                            height: 35,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: SizedBox(
+                                    height: 35,
+                                    child: FormN(
+                                      label: "Floor",
+                                      iconname: const Icon(
+                                          Icons.blur_linear_outlined,
+                                          color: kImageColor),
+                                      onSaved: (newValue) {
+                                        setState(() {
+                                          floor = int.parse(newValue!);
+                                        });
+                                      },
                                     ),
-                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 1,
-                                      color: Color.fromARGB(255, 249, 0, 0),
-                                    ),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  errorStyle: const TextStyle(
-                                      height: 0), // Hide error text
-                                ),
-                                validator: (input) {
-                                  if (input == null || input.isEmpty) {
-                                    return ''; // Return empty string to trigger error state
-                                  }
-                                  return null;
-                                },
-                              )),
-                            ],
-                          )),
+                                )
+                              ],
+                            )),
                       const SizedBox(height: 10),
                       SizedBox(
                         height: 35,
@@ -1522,6 +1213,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             InkWell(
                               //PPPPPPPP
                               onTap: () async {
+                                // if (_byesData != null || get_bytes != null) {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
                                   setState(() {
@@ -1540,7 +1232,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                     verbalAgentModel.latlongLog =
                                         requestModel.lng;
                                     verbalAgentModel.verbalAddress =
-                                        "${provinceController.text}, ${ditrictController.text}, ${communeController.text}";
+                                        "${roadController.text}, ${provinceController.text}, ${ditrictController.text}, ${communeController.text}";
                                   });
 
                                   if (listBuilding.isNotEmpty) {
@@ -1548,6 +1240,153 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                       verbalAgentModel,
                                       context,
                                       listBuilding,
+                                    );
+                                    showModalBottomSheet(
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      isScrollControlled: true,
+                                      builder: (BuildContext context) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 130, top: 100),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color: whileColors,
+                                                    border:
+                                                        Border.all(width: 1),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                height: 270,
+                                                width: 250,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const Spacer(),
+                                                          IconButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              icon: const Icon(Icons
+                                                                  .remove_circle_outline)),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.asset(
+                                                            "assets/images/New_KFA_Logo.png",
+                                                            height: 70,
+                                                            fit:
+                                                                BoxFit.fitWidth,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 30),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          GFButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                setState(() {
+                                                                  verbalAgent
+                                                                      .changeImage
+                                                                      .value = true;
+                                                                  verbalAgent
+                                                                      .isVerbal
+                                                                      .value = true;
+                                                                });
+                                                                Future.delayed(
+                                                                    const Duration(
+                                                                        seconds:
+                                                                            1),
+                                                                    () {
+                                                                  setState(() {
+                                                                    verbalAgent
+                                                                        .isVerbal
+                                                                        .value = false;
+                                                                  });
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                });
+                                                              },
+                                                              text:
+                                                                  "Save Image",
+                                                              color:
+                                                                  Colors.green,
+                                                              icon: Image.asset(
+                                                                'assets/images/save_image.png',
+                                                                height: 25,
+                                                              )),
+                                                          if (imagelogo != null)
+                                                            PDFVerbal(
+                                                                verbalCode: "",
+                                                                imageLogo:
+                                                                    imagelogo,
+                                                                listVerbal:
+                                                                    verbalAgent
+                                                                        .varListVerbal,
+                                                                listLandbuilding:
+                                                                    verbalAgent
+                                                                        .varListLandBuilding,
+                                                                i: i,
+                                                                type: (value) {
+                                                                  if (value ==
+                                                                      true) {
+                                                                    setState(
+                                                                        () {
+                                                                      verbalAgent
+                                                                          .isVerbal
+                                                                          .value = true;
+                                                                    });
+                                                                    Future.delayed(
+                                                                        const Duration(
+                                                                            seconds:
+                                                                                1),
+                                                                        () {
+                                                                      setState(
+                                                                          () {
+                                                                        verbalAgent
+                                                                            .isVerbal
+                                                                            .value = false;
+                                                                      });
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    });
+                                                                  }
+                                                                },
+                                                                listUser: widget
+                                                                    .listUser,
+                                                                check: false),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 20)
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     );
                                     if (verbalAgent.varListVerbal.isNotEmpty) {
                                       setState(() {
@@ -1569,6 +1408,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                         provinceController.clear();
                                         ditrictController.clear();
                                         communeController.clear();
+                                        roadController.clear();
                                         controllerArea.clear();
                                         controllerDS.clear();
                                         controllerDrop.clear();
@@ -1585,9 +1425,13 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                     }
                                   } else {
                                     component.handleTap(
-                                        "Please Check Land/Building", "");
+                                        "Please Check Land/Building", "", 5);
                                   }
                                 }
+                                // }
+                                // else {
+                                //   component.handleTap("Please Check Image", "");
+                                // }
                               },
                               child: Container(
                                 height: 30,
@@ -1619,6 +1463,11 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             height: sizeh,
                             width: double.infinity,
                             child: TextFormField(
+                              // validator: (value) {
+                              //   component.handleTap(
+                              //       "Please Check Reference N", "");
+                              //   return null;
+                              // },
                               controller: referrenceNController,
                               style: TextStyle(
                                   fontSize: 12,
@@ -1718,6 +1567,30 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 10.0),
+                        FormTwinN(
+                          h: 40,
+                          Label1: 'Size Land',
+                          Label2: 'Size Building',
+                          onSaved1: (input) {
+                            setState(() {
+                              verbalAgentModel.landSize = input;
+                            });
+                          },
+                          onSaved2: (input) {
+                            setState(() {
+                              verbalAgentModel.buildingSize = input!;
+                            });
+                          },
+                          icon1: const Icon(
+                            Icons.home,
+                            color: kImageColor,
+                          ),
+                          icon2: const Icon(
+                            Icons.landslide,
+                            color: kImageColor,
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               right: 30, left: 30, top: 10),
@@ -1805,8 +1678,38 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: 30, left: 30, top: 10),
+                          child: SizedBox(
+                            height: sizeh,
+                            width: double.infinity,
+                            child: TextFormField(
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: blackColor,
+                                  fontWeight: FontWeight.bold),
+                              controller: roadController,
+                              onSaved: (value) {
+                                setState(() {
+                                  roadController.text = value!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5),
+                                    borderSide: BorderSide(
+                                        width: 1.5, color: blueColor)),
+                                label: Text('Road',
+                                    style: TextStyle(
+                                        color: greyColor, fontSize: 12)),
+                              ),
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         DateComponents(
+                          values: "",
                           title: "Issued Date",
                           value: (value) {
                             setState(() {
@@ -1901,12 +1804,12 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "Depreciation",
+                                                        "Description",
                                                         style: Label(),
                                                       ),
                                                       const SizedBox(height: 3),
                                                       if (listBuilding[i][
-                                                              'verbal_land_des'] !=
+                                                              'verbal_land_type'] !=
                                                           "LS")
                                                         Text(
                                                           "Floor",
@@ -1914,27 +1817,17 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                                         ),
                                                       const SizedBox(height: 3),
                                                       Text(
-                                                        "Area",
+                                                        "Size/sqms",
                                                         style: Label(),
                                                       ),
                                                       const SizedBox(height: 3),
                                                       Text(
-                                                        'Min Value/Sqm',
+                                                        'USD/sqms',
                                                         style: Label(),
                                                       ),
                                                       const SizedBox(height: 3),
                                                       Text(
-                                                        'Max Value/Sqm',
-                                                        style: Label(),
-                                                      ),
-                                                      const SizedBox(height: 3),
-                                                      Text(
-                                                        'Min Value',
-                                                        style: Label(),
-                                                      ),
-                                                      const SizedBox(height: 3),
-                                                      Text(
-                                                        'Max Value',
+                                                        'Total(USD)',
                                                         style: Label(),
                                                       ),
                                                     ],
@@ -1949,44 +1842,32 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                                     children: [
                                                       const SizedBox(height: 4),
                                                       Text(
-                                                        ' : ${listBuilding[i]['verbal_land_des'] ?? ""}',
+                                                        ' : ${listBuilding[i]['verbal_land_type'] ?? ""}',
                                                         style: Name(),
                                                       ),
                                                       const SizedBox(height: 2),
                                                       if (listBuilding[i][
-                                                              'verbal_land_des'] !=
+                                                              'verbal_land_type'] !=
                                                           "LS")
                                                         Text(
-                                                          ' : ${listBuilding[i]['verbal_land_dp'] ?? ""}',
+                                                          ' : ${listBuilding[i]['floor'] ?? ""}',
                                                           style: Name(),
                                                         ),
                                                       const SizedBox(height: 2),
                                                       Text(
-                                                        ' : ${listBuilding[i]['verbal_land_area'] ?? ""} m\u00B2',
+                                                        ' : ${listBuilding[i]['size_sqms'] ?? ""} m\u00B2',
                                                         style: Name(),
                                                       ),
                                                       const SizedBox(height: 2),
                                                       Text(
                                                         // ' : ${formatNumber(double.parse("${widget.listLandBuilding[i]['verbal_land_minsqm'] ?? 0}"))}\$',
-                                                        ' : ${listBuilding[i]['verbal_land_minsqm'] ?? ""} \$',
+                                                        ' : ${listBuilding[i]['usd_sqms'] ?? ""} \$',
                                                         style: Name(),
                                                       ),
                                                       const SizedBox(height: 2),
                                                       Text(
-                                                        ' : ${listBuilding[i]['verbal_land_maxsqm'] ?? ""} \$',
-                                                        // ' : ${formatNumber(double.parse("${widget.listLandBuilding[i]['verbal_land_maxsqm'] ?? 0}"))}\$',
-                                                        style: Name(),
-                                                      ),
-                                                      const SizedBox(height: 2),
-                                                      Text(
-                                                        ' : ${listBuilding[i]['verbal_land_minvalue'] ?? ""} \$',
-                                                        // ' : ${formatNumber(double.parse("${widget.listLandBuilding[i]['verbal_land_minvalue'] ?? 0}"))}\$',
-                                                        style: Name(),
-                                                      ),
-                                                      const SizedBox(height: 2),
-                                                      Text(
-                                                        ' : ${listBuilding[i]['verbal_land_maxvalue'] ?? ""} \$',
-                                                        // ' : ${formatNumber(double.parse("${widget.listLandBuilding[i]['verbal_land_maxvalue'] ?? 0}"))}\$',
+                                                        // ' : ${formatNumber(double.parse("${widget.listLandBuilding[i]['verbal_land_minsqm'] ?? 0}"))}\$',
+                                                        ' : ${double.parse(listBuilding[i]['size_sqms'].toString()) * double.parse(listBuilding[i]['usd_sqms'].toString())} \$',
                                                         style: Name(),
                                                       ),
                                                     ],
@@ -2080,6 +1961,7 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                                   // width: double.infinity,
 
                                   child: PropertySearch(
+                                    value: "",
                                     h: sizeh,
                                     // pro: "Land",
                                     name: (value) {
@@ -2150,25 +2032,21 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
 
   int count = 0;
   bool checkMap = false;
-  double hscreen = 890;
+  double hscreen = 950;
   bool checkVC = false;
+  int? floor;
   int buildingID = 0;
   void addItemToList(area) {
     setState(() {
-      buildingID = Random().nextInt(1000) + 1;
-      totalMin = minSqm! * areas;
-      totalMax = maxSqm! * areas;
+      buildingID = Random().nextInt(10000) + 1;
     });
     listBuilding.add({
       "id": buildingID,
-      "verbal_land_type": autoverbalTypeValue,
-      "verbal_land_des": controllerDS.text,
-      "verbal_land_dp": dep,
-      "verbal_land_area": areas,
-      "verbal_land_minsqm": minSqm!.toStringAsFixed(0),
-      "verbal_land_maxsqm": maxSqm!.toStringAsFixed(0),
-      "verbal_land_minvalue": totalMin!.toStringAsFixed(0),
-      "verbal_land_maxvalue": totalMax!.toStringAsFixed(0),
+      "verbal_land_type": controllerDS.text,
+      "floor": floor ?? 0,
+      // "verbal_land_des": controllerDS.text,
+      "usd_sqms": usdSQMs ?? 0,
+      "size_sqms": sizeSQMs ?? 0,
       "address": verbalAgentModel.verbalAddress,
       "verbal_landid": verbalAgentModel.verbalCode
     });
@@ -2387,11 +2265,25 @@ class _HomePageState extends State<VerbalAgent> with TickerProviderStateMixin {
                       ['address_components'][i]['short_name'] ??
                   "");
             }
+            if (jsonResponse['results'][j]['types'][0] == "route") {
+              List r = jsonResponse['results'][j]['address_components'];
+              for (int i = 0; i < r.length; i++) {
+                if (jsonResponse['results'][j]['address_components'][i]['types']
+                        [0] ==
+                    "route") {
+                  setState(() {
+                    roadController.text = route = (jsonResponse['results'][j]
+                            ['address_components'][i]['short_name'] ??
+                        "");
+                  });
+                }
+              }
+            }
           }
         }
       }
       verbalAgentModel.verbalAddress =
-          "${(province == null) ? "" : province}, ${(district == null) ? "" : district}, ${(commune == null) ? "" : commune}";
+          "${(route == null) ? "" : route}, ${(province == null) ? "" : province}, ${(district == null) ? "" : district}, ${(commune == null) ? "" : commune}";
     }
   }
 

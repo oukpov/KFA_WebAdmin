@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web_admin/components/colors.dart';
-import 'package:web_admin/page/navigate_home/Comparable/newComparable/clone_newcomparable.dart';
 import 'package:web_admin/screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../Customs/ProgressHUD.dart';
 import '../../../../getx/add_zone/add_zone.dart';

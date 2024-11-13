@@ -27,7 +27,7 @@ import '../../../../components/raod_type.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../screen/Property/Map/streetview_map.dart';
-import '../../Customer/component/date_customer.dart';
+import '../Customer/component/date_customer.dart';
 import 'edit_comparable_new_page.dart';
 
 class AddComparable extends StatefulWidget {

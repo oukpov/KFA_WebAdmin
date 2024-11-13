@@ -1488,6 +1488,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
+  nuts_activity_indicator:
+    dependency: "direct main"
+    description:
+      name: nuts_activity_indicator
+      sha256: "16ab8b26e7fb8d5d73277d2c22afaa7df8a1f070016ee1a14f04415798d9a55f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   octo_image:
     dependency: transitive
     description:

@@ -23,7 +23,7 @@ class AddZone extends GetxController {
     if (response.statusCode == 200) {
       print(json.encode(response.data));
       // print(listZone.toString());
-      component.handleTap("Done!", "Add Successfuly!");
+      component.handleTap("Done!", "Add Successfuly!", 1);
     } else {
       print(response.statusMessage);
     }
@@ -88,7 +88,7 @@ class AddZone extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      component.handleTap("Done!", "Deleted Successfuly!");
+      component.handleTap("Done!", "Deleted Successfuly!", 1);
     } else {
       print(response.statusMessage);
     }

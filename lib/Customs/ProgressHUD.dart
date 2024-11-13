@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../components/waiting.dart';
+
 class ProgressHUD extends StatelessWidget {
   final Widget child;
   final bool inAsyncCall;
@@ -32,7 +34,7 @@ class ProgressHUD extends StatelessWidget {
             ),
           ),
           Center(
-            child: CircularProgressIndicator(),
+            child: WaitingFunction(),
           ),
         ],
       );

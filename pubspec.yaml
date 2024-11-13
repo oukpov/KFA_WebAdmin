@@ -159,6 +159,8 @@ dependencies:
   firebase_database: ^10.4.0
   connectivity_plus: ^5.0.2
   location: ^5.0.3
+  nuts_activity_indicator: ^1.0.0
+
 
 
 dev_dependencies:

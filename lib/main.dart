@@ -4,23 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
-
-=======
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
-import 'package:web_admin/page/navigate_home/verbal/slideUp.dart';
-import 'package:web_admin/page/navigate_home/verbal/test.dart';
-import 'package:web_admin/page/navigate_home/Report/page/faq_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/reportverbal_user_for_admin.dart';
-import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
-import 'package:web_admin/page/navigate_home/Report/page/slider_page.dart';
->>>>>>> 0c3b629d2bbef0adf1d39cf779c0cc5383f60c21
+import 'package:web_admin/page/navigate_home/Auto_verbal/companen/saveImage.dart';
+import 'package:web_admin/page/navigate_home/verbal/ImageVerbal.dart';
+import 'package:web_admin/page/navigate_home/verbal/Add_VerbalAgent.dart';
+import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
+// import 'package:web_admin/page/navigate_home/verbal/save_image_for_Autoverbal.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
+
 import 'Auth/login.dart';
-import 'page/navigate_home/verbal/slideUp.dart';
+// import 'Auth/login.dart';
 
 List list = [];
 // String? district_id;
@@ -75,7 +69,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
@@ -105,6 +99,62 @@ class _MyAppState extends State<MyApp> {
         home: LoginPage(),
 
         // home: MyFormTTTT(),
+        // home: SaveImageVerbalAgent(
+        //   check: false,
+        //   listUser: const [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        //   type: (value) {
+        //     setState(() {
+        //       // widget.type(value);
+        //     });
+        //   },
+        //   list: const [
+        //     {
+        //       "verbal_id": "20328575",
+        //       "verbal_code": "708291",
+        //       "title_deedN": "1801030101-1460",
+        //       "under_property_right": null,
+        //       "referrenceN": "ARF24 - 123123",
+        //       "land_size": "1123132",
+        //       "building_size": "100",
+        //       "issued_date": "2024-1-1",
+        //       "verbal_property_id": "15",
+        //       "verbal_owner": null,
+        //       "verbal_contact": null,
+        //       "verbal_date": null,
+        //       "receivedate": null,
+        //       "verbal_address":
+        //           "Phnom Penh, Khan Chamkar Mon, Sangkat Tonle Basak",
+        //       "verbal_comment": null,
+        //       "latlong_log": "104.9348164",
+        //       "latlong_la": "11.5433880",
+        //       "verbal_user": "70",
+        //       "verbal_created_date": "2024-11-07 00:38:45"
+        //     },
+        //   ],
+        //   i: 0,
+        //   verbalId: "1111",
+        // ),
+        // home: VerbalList(
+        //   listUser: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
         // home: VerbalAgent(
         //   type: (value) {},
         //   listUser: const [
@@ -134,11 +184,10 @@ class _MyAppState extends State<MyApp> {
         //         "password": "333802e987dfce42e28b749a20dc257f",
         //         "user_status": 0
         //       }
-<<<<<<< HEAD
+
         //     ]),
-=======
+
         // ),
->>>>>>> 0c3b629d2bbef0adf1d39cf779c0cc5383f60c21
       ),
     );
   }

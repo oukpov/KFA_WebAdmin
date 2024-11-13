@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/Auth/auth.dart';
 import '../../page/homescreen/responsive_layout.dart';
-import '../../page/navigate_home/Comparable/comparable_new/add_comparable_new_page.dart';
 import '../component/getx._snack.dart';
 
 class Authentication extends GetxController {

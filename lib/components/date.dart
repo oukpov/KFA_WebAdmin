@@ -7,10 +7,15 @@ import '../Profile/components/Drop_down.dart';
 import 'colors.dart';
 
 class DateComponents extends StatefulWidget {
-  const DateComponents({Key? key, required this.value, required this.title})
+  const DateComponents(
+      {Key? key,
+      required this.value,
+      required this.title,
+      required this.values})
       : super(key: key);
   final OnChangeCallback value;
   final String title;
+  final String values;
   @override
   State<DateComponents> createState() => _DateComponentsState();
 }
@@ -18,6 +23,9 @@ class DateComponents extends StatefulWidget {
 class _DateComponentsState extends State<DateComponents> {
   @override
   void initState() {
+    if (widget.values != "") {
+      controllerDate.text = widget.values;
+    }
     super.initState();
   }
 

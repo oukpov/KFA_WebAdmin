@@ -11,13 +11,15 @@ class PropertySearch extends StatefulWidget {
   final OnChangeCallback checkOnclick;
   final double h;
   final String? pro;
+  final String value;
   const PropertySearch(
       {Key? key,
       required this.name,
       required this.id,
       this.pro,
       required this.checkOnclick,
-      required this.h})
+      required this.h,
+      required this.value})
       : super(key: key);
 
   @override
@@ -116,7 +118,9 @@ class _PropertySearchState extends State<PropertySearch> {
                       .contains(filter.toLowerCase()) ??
                   false;
             },
-            itemAsString: (item) => item['property_type_name'] ?? '',
+            itemAsString: (item) =>
+                item['property_type_name'] ??
+                ((widget.value != "") ? widget.value : ""),
           ),
         ),
       ],
@@ -140,8 +144,6 @@ class _PropertySearchState extends State<PropertySearch> {
           listProperty.add(list[i]);
         }
       });
-    } else {
-      print(response.statusMessage);
     }
   }
 }

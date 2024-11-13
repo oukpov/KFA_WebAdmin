@@ -14,7 +14,6 @@ import '../../../component/Header.dart';
 import '../../../component/Model/EmailSave/EmailSave.dart';
 import '../../../component/fonttext/fontText.dart';
 import '../../DetailScreen/DetailAll.dart';
-import '../../Map/Maplatlog.dart';
 import 'EmailSave/Responsive.dart';
 
 class MyListings extends StatefulWidget {
@@ -655,8 +654,8 @@ class _MyListingsState extends State<MyListings> {
                 optionPropertyDekTop()
               else if (opTionBack == 2)
                 tableView()
-              else if (opTionBack == 3)
-                mapView()
+              // else if (opTionBack == 3)
+              // mapView()
             ],
           ),
         ),
@@ -1746,27 +1745,27 @@ class _MyListingsState extends State<MyListings> {
     );
   }
 
-  Widget mapView() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
-            width: double.infinity,
-            child: MapLatLog(
-              myIdcontroller: widget.myIdcontroller,
-              get_commune: (value) {},
-              get_district: (value) {},
-              get_lat: (value) {},
-              get_log: (value) {},
-              get_province: (value) {},
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  // Widget mapView() {
+  //   return Column(
+  //     children: [
+  //       Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Container(
+  //           height: MediaQuery.of(context).size.height * 0.6,
+  //           width: double.infinity,
+  //           child: MapLatLog(
+  //             myIdcontroller: widget.myIdcontroller,
+  //             get_commune: (value) {},
+  //             get_district: (value) {},
+  //             get_lat: (value) {},
+  //             get_log: (value) {},
+  //             get_province: (value) {},
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 }
 
 

@@ -1499,6 +1499,7 @@ class _HomePageState extends State<EditVerbalAdmin> {
                                         child: SizedBox(
                                           // width: double.infinity,
                                           child: PropertySearch(
+                                          value: "",
                                             h: 45,
                                             // pro: "Land",
                                             name: (value) {
