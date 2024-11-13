@@ -83,7 +83,7 @@ class _PDFVerbalState extends State<PDFVerbal> {
   }
 
   Future<Uint8List> _generatePdf(PdfPageFormat format) async {
-    final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
+    final pdf = pw.Document(version: PdfVersion.pdf_1_4, compress: true);
     try {
       final image = pw.MemoryImage(
         (await rootBundle.load('assets/images/p2.png')).buffer.asUint8List(),
