@@ -37,6 +37,7 @@ import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
 import '../navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../navigate_home/Report/page/comparable_case_page.dart';
+import '../navigate_home/Report/page/contact_us_page.dart';
 import '../navigate_home/Report/page/faq_page.dart';
 import '../navigate_home/Report/page/slider_page.dart';
 import '../navigate_home/Report/page/userlist_for_adminpage.dart';
@@ -70,7 +71,7 @@ import '../../Widgets/drawer.dart';
 import '../../Widgets/widgets.dart';
 import '../navigate_setting/online/add_agent.dart';
 import '../navigate_setting/online/isonline.dart';
-import '../sponsor_list_page.dart';
+import '../navigate_home/Report/page/sponsor_list_page.dart';
 import 'component/list.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
@@ -1086,10 +1087,12 @@ class _homescreenState extends State<homescreen> {
                         child: InkWell(
                             onTap: () {
                               if (i == 0) {
-                                Get.to(() => FaqPage());
+                                Get.to(() => FaqPage(),
+                                    preventDuplicates: false);
                               }
                               if (i == 1) {
-                                //Get.to(() => const AboutUsPage());
+                                Get.to(() => const ContactUsPage(),
+                                    preventDuplicates: false);
                               }
                               if (i == 2) {
                                 // Get.to(() => const ContactUsPage());

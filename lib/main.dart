@@ -4,11 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 import 'package:web_admin/page/navigate_home/Auto_verbal/companen/saveImage.dart';
 import 'package:web_admin/page/navigate_home/verbal/ImageVerbal.dart';
 import 'package:web_admin/page/navigate_home/verbal/Add_VerbalAgent.dart';
 import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
 // import 'package:web_admin/page/navigate_home/verbal/save_image_for_Autoverbal.dart';
+=======
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
+import 'package:web_admin/page/navigate_home/Report/page/contact_us_page.dart';
+import 'package:web_admin/page/navigate_home/verbal/slideUp.dart';
+import 'package:web_admin/page/navigate_home/Report/page/faq_page.dart';
+import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
+import 'package:web_admin/page/navigate_home/Report/page/slider_page.dart';
+>>>>>>> 97c3641c157542b0a03976ce171f3e0b4f9f0531
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -97,7 +107,6 @@ class _MyAppState extends State<MyApp> {
         // ]),
         // home: MapScreen(),
         home: LoginPage(),
-
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
         //   check: false,
@@ -184,10 +193,13 @@ class _MyAppState extends State<MyApp> {
         //         "password": "333802e987dfce42e28b749a20dc257f",
         //         "user_status": 0
         //       }
+<<<<<<< HEAD
 
         //     ]),
 
         // ),
+=======
+>>>>>>> 97c3641c157542b0a03976ce171f3e0b4f9f0531
       ),
     );
   }

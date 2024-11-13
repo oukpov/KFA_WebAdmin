@@ -2,22 +2,23 @@ import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:typed_data';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
+import '../../../../controller/social_media_controller.dart';
+import 'social_media_edition_page.dart';
 
-import 'sponsor_list_page.dart';
-
-class UploadImagePage extends StatefulWidget {
-  const UploadImagePage({Key? key}) : super(key: key);
+class UploadSocialMediaPage extends StatefulWidget {
+  const UploadSocialMediaPage({Key? key}) : super(key: key);
 
   @override
-  _UploadImagePageState createState() => _UploadImagePageState();
+  _UploadSocialMediaPageState createState() => _UploadSocialMediaPageState();
 }
 
-class _UploadImagePageState extends State<UploadImagePage> {
+class _UploadSocialMediaPageState extends State<UploadSocialMediaPage> {
+  final SocialMediaController _socialMediaController =
+      Get.put(SocialMediaController());
   Uint8List? _selectedFile;
   String? _selectedFileName;
   bool _isUploading = false;
@@ -33,15 +34,29 @@ class _UploadImagePageState extends State<UploadImagePage> {
     });
 
     try {
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse(
-              'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/insertbanners'));
-      request.files.add(http.MultipartFile.fromBytes(
-          'bannerimage', _selectedFile!,
-          filename: _selectedFileName));
-      var res = await request.send();
-      if (res.statusCode == 200) {
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      var formData = dio.FormData.fromMap({
+        'icon_name': [
+          dio.MultipartFile.fromBytes(_selectedFile!,
+              filename: _selectedFileName)
+        ],
+      });
+
+      var dioClient = dio.Dio();
+      var response = await dioClient.request(
+        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/social_media/add',
+        options: dio.Options(
+          method: 'POST',
+          headers: headers,
+        ),
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
         // ignore: use_build_context_synchronously
         AwesomeDialog(
             context: context,
@@ -50,26 +65,29 @@ class _UploadImagePageState extends State<UploadImagePage> {
             dialogType: DialogType.success,
             showCloseIcon: false,
             title: 'Save Successfully',
-            desc: 'Your image has been uploaded!',
+            desc: 'Your social media image has been uploaded!',
             btnOkOnPress: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const SponsorListPage()),
+                    builder: (context) => const SocialMediaEditionPage()),
               );
             },
             btnOkIcon: Icons.check_circle,
             onDismissCallback: (type) {
               Get.back();
             }).show();
+
+        await _socialMediaController.getSocialMedia();
       } else {
-        Get.snackbar('Error', 'Failed to upload image',
+        Get.snackbar(
+            'Error', 'Failed to upload image: ${response.statusMessage}',
             backgroundColor: Colors.red,
             colorText: Colors.white,
-            icon: Icon(Icons.error, color: Colors.white));
+            icon: const Icon(Icons.error, color: Colors.white));
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred while uploading',
+      Get.snackbar('Error', 'An error occurred while uploading: $e',
           backgroundColor: Colors.red,
           colorText: Colors.white,
           icon: const Icon(Icons.error, color: Colors.white));
@@ -106,7 +124,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Upload Image",
+          title: const Text("Upload Social Media Image",
               style: TextStyle(fontWeight: FontWeight.bold)),
           automaticallyImplyLeading: false,
           actions: [
@@ -130,7 +148,6 @@ class _UploadImagePageState extends State<UploadImagePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 16),
               if (_selectedFile != null)
                 Container(
                   width: MediaQuery.of(context).size.width,

@@ -8,8 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:web_admin/page/navigate_home/Report/page/upload_image_page.dart';
 
-import '../controller/banner_controller.dart';
-import '../models/banner_model.dart';
+import '../../../../controller/banner_controller.dart';
+import '../../../../models/banner_model.dart';
 
 class SponsorListPage extends StatefulWidget {
   const SponsorListPage({super.key});
