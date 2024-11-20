@@ -5,6 +5,12 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/Auto_verbal/companen/saveImage.dart';
+import 'package:web_admin/page/navigate_home/Report/page/about_us_image_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/about_us_image_slide_edit_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/about_us_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/about_us_text_update_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/upload_about_us_image_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/upload_about_us_image_slide_page.dart';
 import 'package:web_admin/page/navigate_home/verbal/ImageVerbal.dart';
 import 'package:web_admin/page/navigate_home/verbal/Add_VerbalAgent.dart';
 import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
@@ -103,6 +109,8 @@ class _MyAppState extends State<MyApp> {
         // ]),
         // home: MapScreen(),
         home: LoginPage(),
+        //home: AboutUsPage(),
+        //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
         //   check: false,
@@ -174,6 +182,7 @@ class _MyAppState extends State<MyApp> {
         //   ],
         //   addNew: (value) {},
         // ),
+        // home: LoginPage(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
