@@ -21,6 +21,7 @@ import '../page/navigate_home/Report/Transetoin/history.dart';
 import '../page/homescreen/component/list.dart';
 import '../page/homescreen/responsive_layout.dart';
 import '../page/navigate_home/Report/customer/menu.dart';
+import '../page/navigate_home/Report/page/about_us_page.dart';
 import '../page/navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../page/navigate_home/Report/page/comparable_case_page.dart';
 import '../page/navigate_home/Report/page/contact_us_page.dart';
@@ -950,7 +951,7 @@ class _DrawerOptionState extends State<DrawerOption> {
                                       preventDuplicates: false);
                                 }
                                 if (i == 2) {
-                                  // Get.to(() => const ContactUsPage());
+                                  Get.to(() => const AboutUsPage());
                                 }
                               },
                               child:

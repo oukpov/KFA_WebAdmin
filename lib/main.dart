@@ -109,7 +109,6 @@ class _MyAppState extends State<MyApp> {
         // ]),
         // home: MapScreen(),
         home: LoginPage(),
-        //home: AboutUsPage(),
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
