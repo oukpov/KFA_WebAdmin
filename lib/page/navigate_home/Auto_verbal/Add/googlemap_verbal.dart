@@ -223,7 +223,8 @@ class _HomePageState extends State<VerbalAdmin> {
       toDate: "",
     );
     // creditAgent.creditAgent(widget.listUser[0]['agency']);
-    creditAgent.creditAgentV(widget.listUser[0]['agency']);
+    creditAgent
+        .creditAgentV(int.parse(widget.listUser[0]['agency'].toString()));
 
     autoverbalType = "";
     super.initState();

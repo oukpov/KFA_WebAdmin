@@ -24,7 +24,7 @@ List listTitleAdmin = [
   {"title": "Admin"},
 ];
 List listTitlesetting = [
-  {"title": "Biulding Type"},
+  {"title": "Building Type"},
   {"title": "Register"},
   {"title": "Auto"},
   {"title": "Road"},
