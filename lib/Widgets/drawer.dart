@@ -128,7 +128,7 @@ class _DrawerOptionState extends State<DrawerOption> {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.asset(
-                      'assets/k.png',
+                      'assets/KFA_CRM.png',
                       fit: BoxFit.fitWidth,
                       height: 80,
                       width: (widget.device == 't')
