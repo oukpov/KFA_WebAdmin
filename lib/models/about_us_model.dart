@@ -4,13 +4,14 @@ class AboutUsModel {
   String? visionMission;
   String? ourPeople;
   String? companyProfile;
-
+  String? aboutCaption;
   AboutUsModel(
       {this.dearValueCustomer,
       this.companyOverview,
       this.visionMission,
       this.ourPeople,
-      this.companyProfile});
+      this.companyProfile,
+      this.aboutCaption});
 
   AboutUsModel.fromJson(Map<String, dynamic> json) {
     dearValueCustomer = json['dear_value_customer'];
@@ -18,6 +19,7 @@ class AboutUsModel {
     visionMission = json['vision_mission'];
     ourPeople = json['our_people'];
     companyProfile = json['company_profile'];
+    aboutCaption = json['about_caption'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +29,7 @@ class AboutUsModel {
     data['vision_mission'] = this.visionMission;
     data['our_people'] = this.ourPeople;
     data['company_profile'] = this.companyProfile;
+    data['about_caption'] = this.aboutCaption;
     return data;
   }
 }

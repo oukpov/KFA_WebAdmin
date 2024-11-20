@@ -36,6 +36,7 @@ import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
 import '../navigate_home/Report/customer/menu.dart';
+import '../navigate_home/Report/page/about_us_page.dart';
 import '../navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../navigate_home/Report/page/comparable_case_page.dart';
 import '../navigate_home/Report/page/contact_us_page.dart';
@@ -1097,7 +1098,8 @@ class _homescreenState extends State<homescreen> {
                                     preventDuplicates: false);
                               }
                               if (i == 2) {
-                                // Get.to(() => const ContactUsPage());
+                                Get.to(() => const AboutUsPage(),
+                                    preventDuplicates: false);
                               }
                             },
                             child: textfield(faqOption[i]['title'].toString())))
