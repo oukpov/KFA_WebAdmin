@@ -35,11 +35,7 @@ import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/Comparable/add_comparable_new_page.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
-<<<<<<< HEAD
-
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
-=======
->>>>>>> 17bc9c54471f21a1878127e5e53835ecf173aec8
 import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
@@ -540,10 +536,6 @@ class _homescreenState extends State<homescreen> {
 
   List listControllerTitle = [];
   List listControllerIcons = [];
-<<<<<<< HEAD
-
-=======
->>>>>>> 17bc9c54471f21a1878127e5e53835ecf173aec8
   Widget homeOptioWrap() {
     return Wrap(
       alignment:
