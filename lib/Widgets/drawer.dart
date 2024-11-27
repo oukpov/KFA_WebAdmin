@@ -979,35 +979,20 @@ class _DrawerOptionState extends State<DrawerOption> {
                       ),
                 ),
               ),
-            const SizedBox(height: 30)
-            // InkWell(
-            //   onTap: () {},
-            //   onHover: (value) {
-            //     setState(() {
-            //       selectindex = (selectindex == i) ? -1 : i;
-            //     });
-            //   },
-            //   child: ListTile(
-            //     leading: Image.asset(
-            //       optionIconListsetting[i]['icon'].toString(),
-            //       fit: BoxFit.cover,
-            //       height: 75,
-            //     ),
-            //     title: Text(
-            //       listTitlesetting[i]['title'].toString(),
-            //       style: (selectindex == i)
-            //           ? TextStyle(
-            //               fontSize: 13,
-            //               fontWeight: FontWeight.bold,
-            //               decoration: TextDecoration.underline,
-            //               color: (selectindex == i) ? blueColor : greenColors)
-            //           : TextStyle(
-            //               color: greyColorNolot,
-            //               fontSize: 13,
-            //             ),
-            //     ),
-            //   ),
-            // ),
+            const SizedBox(height: 30),
+            InkWell(
+              onTap: () {
+                logOut();
+              },
+              child: ListTile(
+                leading: const Icon(Icons.logout),
+                title: Text("LogOut",
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: greyColorNolot)),
+              ),
+            ),
           ],
         ),
       ),

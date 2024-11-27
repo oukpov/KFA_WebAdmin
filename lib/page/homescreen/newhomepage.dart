@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 // import 'package:fl_animated_linechart/chart/line_chart.dart';
@@ -19,15 +20,22 @@ import 'package:web_admin/page/homescreen/ToalData.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';
+import '../../Widgets/widgets.dart';
 import '../../components/colors.dart';
 import '../../components/colors/colors.dart';
 import '../../getx/Auth/Auth_agent.dart';
 import '../../getx/checkUpdate/updateCheck.dart';
 import '../../getx/component/logo.dart';
 import '../../getx/option/option.dart';
+import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dart';
+import '../navigate_home/Approvel/classSubmit.dart';
+import '../navigate_home/AutoVerbal/AutoVerbal.dart';
+import '../navigate_home/AutoVerbal/Zone/add_zone.dart';
+import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
+import '../navigate_home/Comparable/add_comparable_new_page.dart';
+import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
-<<<<<<< HEAD
-=======
+
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
 import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
@@ -39,8 +47,10 @@ import '../navigate_home/Report/page/comparable_case_page.dart';
 import '../navigate_home/Report/page/contact_us_page.dart';
 import '../navigate_home/Report/page/faq_page.dart';
 import '../navigate_home/Report/page/slider_page.dart';
+import '../navigate_home/Report/page/sponsor_list_page.dart';
 import '../navigate_home/Report/page/userlist_for_adminpage.dart';
 import '../navigate_home/Report/page/userlist_page.dart';
+import '../navigate_home/Report/page/v_point_page.dart';
 import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/list_notivigation.dart';
@@ -65,11 +75,14 @@ import '../navigate_setting/bank/bank/bank_list.dart';
 import '../navigate_setting/bank/bank/new_bank.dart';
 import '../navigate_setting/bank/brand/brand_list.dart';
 import '../navigate_setting/bank/brand/new_brand.dart';
->>>>>>> 25f0ba11b6b3866ff9a41ce44e48806a28231967
 import '../../Widgets/drawerMenu.dart';
 import '../../Widgets/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
+
+import '../navigate_setting/online/add_agent.dart';
+import '../navigate_setting/online/isonline.dart';
+import 'component/list.dart';
 
 class homescreen extends StatefulWidget {
   const homescreen(
@@ -524,8 +537,7 @@ class _homescreenState extends State<homescreen> {
 
   List listControllerTitle = [];
   List listControllerIcons = [];
-<<<<<<< HEAD
-=======
+
   Widget homeOptioWrap() {
     return Wrap(
       alignment:
@@ -1359,7 +1371,6 @@ class _homescreenState extends State<homescreen> {
       ],
     );
   }
->>>>>>> 25f0ba11b6b3866ff9a41ce44e48806a28231967
 
   ControllerUpdate controllerUpdate = ControllerUpdate();
   int onrow = 10;

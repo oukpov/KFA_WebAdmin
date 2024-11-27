@@ -5299,8 +5299,9 @@ class _DataSource extends DataTableSource {
           Row(
             children: [
               PrinterCom(item: item),
-              ((item['comparabl_user'] == listlocalhosts[0]['agency']) ||
-                      (listlocalhosts[0]['agency'] == 28))
+              ((item['comparabl_user'].toString() ==
+                          listlocalhosts[0]['agency'].toString()) ||
+                      (listlocalhosts[0]['agency'].toString() == "28"))
                   ? EditDetail(item: item)
                   : const SizedBox(),
               Padding(
@@ -5324,7 +5325,7 @@ class _DataSource extends DataTableSource {
                 ),
               ),
               //listBlock[0]['delete_agent']
-              ((listlocalhosts[0]['agency'] == 28))
+              ((listlocalhosts[0]['agency'].toString() == "28"))
                   ? Padding(
                       padding: const EdgeInsets.only(right: 0),
                       child: InkWell(
