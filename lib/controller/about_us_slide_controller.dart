@@ -19,7 +19,7 @@ class AboutUsSlideController extends GetxController {
   }
 
   String url =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/aboutusSliser';
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/aboutusSliser';
   Future<void> fetchAboutUsSlideData() async {
     try {
       isLoading(true);
@@ -48,12 +48,12 @@ class AboutUsSlideController extends GetxController {
         } else {
           aboutUsSlideData.value = AboutUsSlideModel.fromJson(response.data);
         }
-        print(json.encode(response.data));
+        //    print(json.encode(response.data));
       } else {
-        print(response.statusMessage);
+        //  print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while getting data: $e');
+      // print('Error while getting data: $e');
     } finally {
       isLoading(false);
     }
