@@ -4,23 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:web_admin/page/navigate_home/Auto_verbal/companen/saveImage.dart';
-import 'package:web_admin/page/navigate_home/Report/page/about_us_image_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/about_us_image_slide_edit_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/about_us_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/about_us_text_update_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/upload_about_us_image_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/upload_about_us_image_slide_page.dart';
-import 'package:web_admin/page/navigate_home/verbal/ImageVerbal.dart';
-import 'package:web_admin/page/navigate_home/verbal/Add_VerbalAgent.dart';
-import 'package:web_admin/page/navigate_home/verbal/verbal_list.dart';
-// import 'package:web_admin/page/navigate_home/verbal/save_image_for_Autoverbal.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
-import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/googleMapTest.dart';
-import 'package:web_admin/page/navigate_home/Report/page/contact_us_page.dart';
-import 'package:web_admin/page/navigate_home/Report/page/faq_page.dart';
-import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
-import 'package:web_admin/page/navigate_home/Report/page/slider_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -109,7 +92,6 @@ class _MyAppState extends State<MyApp> {
         // ]),
         // home: MapScreen(),
         home: LoginPage(),
-        //home: AboutUsPage(),
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
