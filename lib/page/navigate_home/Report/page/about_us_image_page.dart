@@ -178,49 +178,49 @@ class _AboutUsImagePageState extends State<AboutUsImagePage> {
                                             },
                                           ),
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.2),
-                                                spreadRadius: 1,
-                                                blurRadius: 3,
-                                                offset: const Offset(0, 1),
-                                              ),
-                                            ],
-                                          ),
-                                          child: IconButton(
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                              size: 24,
-                                            ),
-                                            onPressed: () {
-                                              AwesomeDialog(
-                                                context: context,
-                                                animType: AnimType.scale,
-                                                dialogType: DialogType.warning,
-                                                title: 'Delete Image',
-                                                desc:
-                                                    'Are you sure you want to delete this image?',
-                                                btnOkText: 'Delete',
-                                                btnCancelText: 'Cancel',
-                                                btnOkColor: Colors.red,
-                                                btnOkIcon: Icons.delete_forever,
-                                                btnCancelIcon: Icons.cancel,
-                                                btnCancelOnPress: () {},
-                                                btnOkOnPress: () async {
-                                                  await _imageController
-                                                      .deleteAboutUsImage(
-                                                          int.parse(image.id!));
-                                                },
-                                              ).show();
-                                            },
-                                          ),
-                                        ),
+                                        // Container(
+                                        //   decoration: BoxDecoration(
+                                        //     shape: BoxShape.circle,
+                                        //     color: Colors.white,
+                                        //     boxShadow: [
+                                        //       BoxShadow(
+                                        //         color: Colors.black
+                                        //             .withOpacity(0.2),
+                                        //         spreadRadius: 1,
+                                        //         blurRadius: 3,
+                                        //         offset: const Offset(0, 1),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        //   child: IconButton(
+                                        //     icon: const Icon(
+                                        //       Icons.delete,
+                                        //       color: Colors.red,
+                                        //       size: 24,
+                                        //     ),
+                                        //     onPressed: () {
+                                        //       AwesomeDialog(
+                                        //         context: context,
+                                        //         animType: AnimType.scale,
+                                        //         dialogType: DialogType.warning,
+                                        //         title: 'Delete Image',
+                                        //         desc:
+                                        //             'Are you sure you want to delete this image?',
+                                        //         btnOkText: 'Delete',
+                                        //         btnCancelText: 'Cancel',
+                                        //         btnOkColor: Colors.red,
+                                        //         btnOkIcon: Icons.delete_forever,
+                                        //         btnCancelIcon: Icons.cancel,
+                                        //         btnCancelOnPress: () {},
+                                        //         btnOkOnPress: () async {
+                                        //           await _imageController
+                                        //               .deleteAboutUsImage(
+                                        //                   int.parse(image.id!));
+                                        //         },
+                                        //       ).show();
+                                        //     },
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),
