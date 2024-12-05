@@ -122,7 +122,10 @@ class _homescreenState extends State<homescreen> {
   void initState() {
     super.initState();
     updateUserStatus();
-
+    getWingData();
+    getAbabankData();
+    getUpayData();
+    getOtherData();
     DateTime now = DateTime.now();
     DateTime onewday = DateTime(now.year, now.month, now.day);
     DateTime twowday = DateTime(now.year, now.month, now.day + 1);
@@ -203,6 +206,109 @@ class _homescreenState extends State<homescreen> {
     }
   }
 
+  var wingData, ababankData, upayData, otherData;
+  Future<void> getWingData() async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    try {
+      print('Making request to Wing API...');
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/wingbank-data',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          wingData =
+              double.parse(json.decode(response.data.toString()).toString())
+                  .toStringAsFixed(2);
+        });
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Exception occurred during API call: ${e.toString()}');
+    }
+  }
+
+  Future<void> getAbabankData() async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/ababank-data',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        ababankData =
+            double.parse(json.decode(response.data.toString()).toString())
+                .toStringAsFixed(2);
+      });
+    } else {
+      // print(response.statusMessage);
+    }
+  }
+
+  Future<void> getUpayData() async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/upaybank-data',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        upayData =
+            double.parse(json.decode(response.data.toString()).toString())
+                .toStringAsFixed(2);
+      });
+    } else {
+      // print(response.statusMessage);
+    }
+  }
+
+  Future<void> getOtherData() async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/otherbank-data',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        otherData =
+            double.parse(json.decode(response.data.toString()).toString())
+                .toStringAsFixed(2);
+      });
+    } else {
+      // print(response.statusMessage);
+    }
+  }
+
   // ImageLogoAdmin imageLogoAdmin = ImageLogoAdmin();
   OptionHome optionHome = OptionHome();
   LogoImageKFA logoImageKFA = LogoImageKFA();
@@ -215,6 +321,10 @@ class _homescreenState extends State<homescreen> {
     Colors.grey,
     Colors.pink,
     const Color.fromARGB(255, 161, 22, 231),
+    Colors.purple,
+    Colors.orange,
+    Colors.teal,
+    Colors.cyan,
   ];
 
   int type = 0;
@@ -307,21 +417,61 @@ class _homescreenState extends State<homescreen> {
                                             Icons.verified, false, ""),
                                       ],
                                     ),
-                                    const SizedBox(height: 20),
-                                    Row(
-                                      children: [
-                                        optionTxt("VPoint Used", "N/A",
-                                            Icons.person, true, "images/v.png"),
-                                        const SizedBox(width: 10),
-                                        optionTxt("Client Top Up", "N/A",
-                                            Icons.verified, false, ""),
-                                        const SizedBox(width: 10),
-                                        optionTxt("VPoint Client Used", "N/A",
-                                            Icons.verified, false, ""),
-                                        const SizedBox(width: 10),
-                                        optionTxt("All Partner", "N/A",
-                                            Icons.verified, false, ""),
-                                      ],
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      child: Row(
+                                        children: [
+                                          optionTxt(
+                                              "VPoint Used",
+                                              "N/A",
+                                              Icons.person,
+                                              true,
+                                              "images/v.png"),
+                                          const SizedBox(width: 10),
+                                          optionTxt("Client Top Up", "N/A",
+                                              Icons.verified, false, ""),
+                                          const SizedBox(width: 10),
+                                          optionTxt("VPoint Client Used", "N/A",
+                                              Icons.verified, false, ""),
+                                          const SizedBox(width: 10),
+                                          optionTxt("All Partner", "N/A",
+                                              Icons.verified, false, ""),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      child: Row(
+                                        children: [
+                                          optionTxt(
+                                              "ABA Bank",
+                                              "${ababankData ?? '0'} USD",
+                                              Icons.person,
+                                              true,
+                                              "images/aba.jpeg"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "Wing Bank",
+                                              "${wingData ?? '0'} USD",
+                                              Icons.verified,
+                                              true,
+                                              "images/wing.png"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "U Pay",
+                                              "${upayData ?? '0'} USD",
+                                              Icons.verified,
+                                              true,
+                                              "images/UPAY-logo.png"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "Other",
+                                              "${otherData ?? '0'} USD",
+                                              Icons.verified,
+                                              false,
+                                              ""),
+                                        ],
+                                      ),
                                     ),
                                     const SizedBox(height: 10),
                                     Obx(
