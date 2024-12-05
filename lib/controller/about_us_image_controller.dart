@@ -15,7 +15,7 @@ class AboutUsImageController extends GetxController {
   }
 
   String url =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/aboutusImage';
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/aboutusImage';
   Future<void> fetchAboutUsImageData() async {
     try {
       isLoading(true);
@@ -44,12 +44,12 @@ class AboutUsImageController extends GetxController {
         } else {
           aboutUsImageData.value = AboutUsImageModel.fromJson(response.data);
         }
-        print(json.encode(response.data));
+        // print(json.encode(response.data));
       } else {
-        print(response.statusMessage);
+        // print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while getting data: $e');
+      //print('Error while getting data: $e');
     } finally {
       isLoading(false);
     }
@@ -67,14 +67,14 @@ class AboutUsImageController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
+        //  print(json.encode(response.data));
         imageIdList = json.decode(response.data);
       } else {
-        print(response.statusMessage);
+        // print(response.statusMessage);
         return AboutUsImageModel(); // Return empty model on error
       }
     } catch (e) {
-      print('Error while getting data by ID: $e');
+      // print('Error while getting data by ID: $e');
       return AboutUsImageModel(); // Return empty model on error
     } finally {
       isLoading(false);
@@ -93,14 +93,14 @@ class AboutUsImageController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
+        // print(json.encode(response.data));
         // Refresh the image list after successful deletion
         await fetchAboutUsImageData();
       } else {
-        print(response.statusMessage);
+        //  print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while deleting image: $e');
+      // print('Error while deleting image: $e');
     } finally {
       isLoading(false);
     }
@@ -132,7 +132,7 @@ class AboutUsImageController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
+        // print(json.encode(response.data));
         // Refresh the image list after successful upload
         await fetchAboutUsImageData();
       } else {

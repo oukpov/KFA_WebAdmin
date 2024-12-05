@@ -8,7 +8,7 @@ class AboutUsController extends GetxController {
   var aboutUsData = AboutUsModel().obs;
   List<AboutUsModel> aboutUsList = [];
   String url =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/aboutus';
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/aboutus';
   @override
   void onInit() {
     fetchAboutUsData();
@@ -44,10 +44,10 @@ class AboutUsController extends GetxController {
           aboutUsData.value = AboutUsModel.fromJson(response.data);
         }
       } else {
-        print(response.statusMessage);
+        // print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while getting data: $e');
+      // print('Error while getting data: $e');
     } finally {
       isLoading(false);
     }
@@ -90,14 +90,14 @@ class AboutUsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
+        //print(json.encode(response.data));
         // Refresh data after update
         await fetchAboutUsData();
       } else {
-        print(response.statusMessage);
+        //  print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while updating data: $e');
+      // print('Error while updating data: $e');
     } finally {
       isLoading(false);
     }
@@ -123,14 +123,14 @@ class AboutUsController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
+        // print(json.encode(response.data));
         // Refresh data after deletion
         await fetchAboutUsData();
       } else {
-        print(response.statusMessage);
+        // print(response.statusMessage);
       }
     } catch (e) {
-      print('Error while deleting data: $e');
+      //  print('Error while deleting data: $e');
     } finally {
       isLoading(false);
     }

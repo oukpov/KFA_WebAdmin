@@ -5,8 +5,7 @@ import '../models/contact_us_model.dart';
 class ContactUsController extends GetxController {
   var isLoading = false.obs;
   var contactUsData = ContactUsModel().obs;
-  String url =
-      'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api';
+  String url = 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api';
 
   @override
   void onInit() {
