@@ -85,7 +85,7 @@ class _DrawerOptionState extends State<DrawerOption> {
 
   void main() {
     setState(() {
-      if (widget.listUser[0]['agency'].toString() == "28" | ) {
+      if (widget.listUser[0]['agency'].toString() == "28") {
         listControllerTitle = listTitleAdmin;
         listControllerIcons = optionIconListAdmin;
         listReportOption = reportOptionS;
@@ -94,7 +94,11 @@ class _DrawerOptionState extends State<DrawerOption> {
         listControllerTitle = listTitle;
         listControllerIcons = optionIconList;
         listReportOption = reportOption;
-        listAdminOption = autoOption;
+        if (widget.listUser[0]['zone_Allow'].toString() == "1") {
+          listAdminOption = autoOptionAdmin;
+        } else {
+          listAdminOption = autoOption;
+        }
       }
     });
   }

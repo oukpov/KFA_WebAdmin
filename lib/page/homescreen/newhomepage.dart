@@ -36,10 +36,7 @@ import '../navigate_home/Comparable/add_comparable_new_page.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
 import '../navigate_home/Customer/component/Web/editText/dropdowntxt.dart';
 import '../navigate_home/Customer/map_in_list_search _autoverbal.dart';
-<<<<<<< HEAD
 
-=======
->>>>>>> 6ccc94b61c79ced3dd06cb0b6e0a0ed954bf6b53
 import '../navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../navigate_home/Report/Total_amount.dart';
 import '../navigate_home/Report/Transetoin/history.dart';
@@ -690,10 +687,7 @@ class _homescreenState extends State<homescreen> {
 
   List listControllerTitle = [];
   List listControllerIcons = [];
-<<<<<<< HEAD
 
-=======
->>>>>>> 6ccc94b61c79ced3dd06cb0b6e0a0ed954bf6b53
   Widget homeOptioWrap() {
     return Wrap(
       alignment:
