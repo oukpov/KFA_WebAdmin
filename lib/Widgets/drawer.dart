@@ -303,8 +303,7 @@ class _DrawerOptionState extends State<DrawerOption> {
                                           .push(MaterialPageRoute(
                                               builder: (context) => ZoneMap(
                                                     listLocalHost:
-                                                        authentication
-                                                            .listAdminUser,
+                                                        widget.listUser,
                                                   )));
                                       break;
                                   }

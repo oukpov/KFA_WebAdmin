@@ -841,8 +841,7 @@ class _homescreenState extends State<homescreen> {
                                 default:
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => ZoneMap(
-                                            listLocalHost:
-                                                authentication.listAdminUser,
+                                            listLocalHost: widget.listUser,
                                           )));
                                   break;
                               }

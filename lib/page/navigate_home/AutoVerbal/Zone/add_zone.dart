@@ -107,6 +107,7 @@ class _ZoneMapState extends State<ZoneMap> {
         "log": latLng.longitude,
         "type_zone": typeZone,
         "agency": "${widget.listLocalHost[0]['agency'] ?? 0}",
+        // "agency": "11",
         "name_road": ""
       });
     });
