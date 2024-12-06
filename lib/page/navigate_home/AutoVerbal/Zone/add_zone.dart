@@ -154,7 +154,7 @@ class _ZoneMapState extends State<ZoneMap> {
       if (noZone >= 1 && noZone <= maxZoneNumber) {
         zonePoints[noZone]!.add({
           "point": point,
-          "no_zone": item['no_zone'],
+          "no_zone": item['no_zone'].toString(),
           // "name_road": item['name_road']
         });
       }

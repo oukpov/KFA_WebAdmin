@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -64,7 +65,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
@@ -92,6 +93,16 @@ class _MyAppState extends State<MyApp> {
         // ]),
         // home: MapScreen(),
         home: LoginPage(),
+        // home: ZoneMap(listLocalHost: [
+        //   {
+        //     "id": 52,
+        //     "user_role_id": 59,
+        //     "agency": 70,
+        //     "username": "Test",
+        //     "password": "333802e987dfce42e28b749a20dc257f",
+        //     "user_status": 0
+        //   }
+        // ]),
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
