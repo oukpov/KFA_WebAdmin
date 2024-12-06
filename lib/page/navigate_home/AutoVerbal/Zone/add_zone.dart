@@ -73,8 +73,8 @@ class _ZoneMapState extends State<ZoneMap> {
               listMarkerIds
                   .removeWhere((marker) => marker.markerId == markerId);
               listLatlong.removeWhere((element) =>
-                  element['lat'] == latLng.latitude &&
-                  element['log'] == latLng.longitude);
+                  double.parse(element['lat'].toString()) == latLng.latitude &&
+                  double.parse(element['log'].toString()) == latLng.longitude);
             });
           },
           btnCancelOnPress: () {},
@@ -106,7 +106,7 @@ class _ZoneMapState extends State<ZoneMap> {
         "lat": latLng.latitude,
         "log": latLng.longitude,
         "type_zone": typeZone,
-        "agency": widget.listLocalHost[0]['agency'] ?? 0,
+        "agency": "${widget.listLocalHost[0]['agency'] ?? 0}",
         "name_road": ""
       });
     });
@@ -155,7 +155,6 @@ class _ZoneMapState extends State<ZoneMap> {
         zonePoints[noZone]!.add({
           "point": point,
           "no_zone": item['no_zone'].toString(),
-          // "name_road": item['name_road']
         });
       }
     }
@@ -228,13 +227,6 @@ class _ZoneMapState extends State<ZoneMap> {
   bool checkMarker = false;
   int typeZoneRN = -1;
   final Set<Polygon> _polygons = {};
-  // final List<LatLng> polygonCoordinates = [
-  //   LatLng(11.525069724444075, 104.91717817131298),
-  //   LatLng(11.518768869134183, 104.91577470242815),
-  //   LatLng(11.517368659885603, 104.92016373239524),
-  //   LatLng(11.526369883353812, 104.92973283842808),
-  //   LatLng(11.52997029200921, 104.92325136394182), // Close the polygon
-  // ];
 
   List listTypeZone = [
     {
