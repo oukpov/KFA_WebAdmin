@@ -12,6 +12,7 @@ class UserModel {
   String? approvalStatus;
   int? approvedBy;
   String? approvedAt;
+  bool isBlocked = false; // Added initializer here
 
   UserModel(
       {this.adminId,
@@ -26,7 +27,8 @@ class UserModel {
       this.email,
       this.approvalStatus,
       this.approvedBy,
-      this.approvedAt});
+      this.approvedAt,
+      this.isBlocked = false});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     // Safer parsing for adminId
@@ -61,6 +63,7 @@ class UserModel {
         : null;
 
     approvedAt = json['approved_at']?.toString();
+    isBlocked = json['is_blocked']?.toString() == '1'; // Fixed bool parsing
   }
 
   Map<String, dynamic> toJson() {
@@ -78,6 +81,7 @@ class UserModel {
     data['approval_status'] = approvalStatus;
     data['approved_by'] = approvedBy;
     data['approved_at'] = approvedAt;
+    data['is_blocked'] = isBlocked;
     return data;
   }
 }

@@ -15,12 +15,17 @@ class _UserListPageState extends State<UserListPage> {
   final UserController userController = Get.put(UserController());
 
   @override
+  void initState() {
+    super.initState();
+    userController.fetchUsers(); // Fetch users when page loads
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: Text('User List ${widget.id}',
-            style: TextStyle(color: Colors.white)),
+        title: Text('User List', style: TextStyle(color: Colors.white)),
         elevation: 0,
       ),
       body: Obx(() {
@@ -107,55 +112,232 @@ class _UserListPageState extends State<UserListPage> {
                         ),
                       ],
                     ),
-                    trailing: InkWell(
-                      onTap: () async {
-                        if (user.approvalStatus != 'approved') {
-                          await userController.approveUser(
-                              user.userId!, int.parse(widget.id));
-                          print(
-                              "tessssssssssss: ${userController.isApproving.value}");
-                          print("tessssssssssss: ${user.userId!}");
-                          // ignore: use_build_context_synchronously
-                          AwesomeDialog(
-                            padding: const EdgeInsets.only(
-                                right: 30, left: 30, bottom: 10, top: 10),
-                            alignment: Alignment.center,
-                            width: 350,
-                            context: context,
-                            dialogType: DialogType.success,
-                            animType: AnimType.rightSlide,
-                            headerAnimationLoop: false,
-                            title: "Success",
-                            desc: "User has been approved successfully",
-                            btnOkOnPress: () {
-                              Navigator.of(context).pop();
-                            },
-                            btnOkText: "OK",
-                            btnOkColor: Colors.green,
-                          ).show();
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
-                        decoration: BoxDecoration(
-                          color: user.approvalStatus == 'approved'
-                              ? Colors.green[100]
-                              : Colors.orange[100],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          user.approvalStatus == 'approved'
-                              ? 'APPROVED'
-                              : 'PENDING',
-                          style: TextStyle(
-                            color: user.approvalStatus == 'approved'
-                                ? Colors.green[900]
-                                : Colors.orange[900],
-                            fontWeight: FontWeight.bold,
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            if (user.approvalStatus != 'approved') {
+                              await userController.approveUser(
+                                  user.userId!, int.parse(widget.id));
+                              // ignore: use_build_context_synchronously
+                              AwesomeDialog(
+                                padding: const EdgeInsets.only(
+                                    right: 30, left: 30, bottom: 10, top: 10),
+                                alignment: Alignment.center,
+                                width: 350,
+                                context: context,
+                                dialogType: DialogType.success,
+                                animType: AnimType.rightSlide,
+                                headerAnimationLoop: false,
+                                title: "Success",
+                                desc: "User has been approved successfully",
+                                btnOkOnPress: () {
+                                  Navigator.of(context).pop();
+                                },
+                                btnOkText: "OK",
+                                btnOkColor: Colors.green,
+                              ).show();
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: user.approvalStatus == 'approved'
+                                  ? Colors.green[100]
+                                  : Colors.orange[100],
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              user.approvalStatus == 'approved'
+                                  ? 'APPROVED'
+                                  : 'PENDING',
+                              style: TextStyle(
+                                color: user.approvalStatus == 'approved'
+                                    ? Colors.green[900]
+                                    : Colors.orange[900],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () async {
+                            try {
+                              // Show confirmation dialog first
+                              AwesomeDialog(
+                                padding: const EdgeInsets.only(
+                                    right: 30, left: 30, bottom: 10, top: 10),
+                                alignment: Alignment.center,
+                                width: 350,
+                                context: context,
+                                dialogType: DialogType.question,
+                                animType: AnimType.rightSlide,
+                                headerAnimationLoop: false,
+                                title: "Confirm",
+                                desc:
+                                    "Are you sure you want to block this user?",
+                                btnOkOnPress: () async {
+                                  // Block user after confirmation
+                                  await userController
+                                      .blockUser(user.controlUser ?? '');
+
+                                  // Show success message
+                                  // ignore: use_build_context_synchronously
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 350,
+                                    context: context,
+                                    dialogType: DialogType.success,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Success",
+                                    desc: "User has been blocked successfully",
+                                    btnOkOnPress: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {}); // Refresh UI
+                                    },
+                                    btnOkText: "OK",
+                                    btnOkColor: Colors.green,
+                                  ).show();
+                                },
+                                btnOkText: "Yes",
+                                btnOkColor: Colors.green,
+                                btnCancelText: "No",
+                                btnCancelColor: Colors.red,
+                                btnCancelOnPress: () {},
+                              ).show();
+                            } catch (e) {
+                              print('Error blocking user: $e');
+                              // Show error message
+                              AwesomeDialog(
+                                padding: const EdgeInsets.only(
+                                    right: 30, left: 30, bottom: 10, top: 10),
+                                alignment: Alignment.center,
+                                width: 350,
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.rightSlide,
+                                headerAnimationLoop: false,
+                                title: "Error",
+                                desc: "Failed to block user",
+                                btnOkOnPress: () {
+                                  Navigator.of(context).pop();
+                                },
+                                btnOkText: "OK",
+                                btnOkColor: Colors.red,
+                              ).show();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                          ),
+                          child: const Text(
+                            'BLOCK',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () async {
+                            try {
+                              // Show confirmation dialog first
+                              AwesomeDialog(
+                                padding: const EdgeInsets.only(
+                                    right: 30, left: 30, bottom: 10, top: 10),
+                                alignment: Alignment.center,
+                                width: 350,
+                                context: context,
+                                dialogType: DialogType.question,
+                                animType: AnimType.rightSlide,
+                                headerAnimationLoop: false,
+                                title: "Confirm",
+                                desc:
+                                    "Are you sure you want to unblock this user?",
+                                btnOkOnPress: () async {
+                                  // Unblock user after confirmation
+                                  await userController
+                                      .unblockUser(user.controlUser ?? '');
+
+                                  // Show success message
+                                  // ignore: use_build_context_synchronously
+                                  AwesomeDialog(
+                                    padding: const EdgeInsets.only(
+                                        right: 30,
+                                        left: 30,
+                                        bottom: 10,
+                                        top: 10),
+                                    alignment: Alignment.center,
+                                    width: 350,
+                                    context: context,
+                                    dialogType: DialogType.success,
+                                    animType: AnimType.rightSlide,
+                                    headerAnimationLoop: false,
+                                    title: "Success",
+                                    desc:
+                                        "User has been unblocked successfully",
+                                    btnOkOnPress: () {
+                                      Navigator.of(context).pop();
+                                      setState(() {}); // Refresh UI
+                                    },
+                                    btnOkText: "OK",
+                                    btnOkColor: Colors.green,
+                                  ).show();
+                                },
+                                btnOkText: "Yes",
+                                btnOkColor: Colors.green,
+                                btnCancelText: "No",
+                                btnCancelColor: Colors.red,
+                                btnCancelOnPress: () {},
+                              ).show();
+                            } catch (e) {
+                              print('Error unblocking user: $e');
+                              // Show error message
+                              AwesomeDialog(
+                                padding: const EdgeInsets.only(
+                                    right: 30, left: 30, bottom: 10, top: 10),
+                                alignment: Alignment.center,
+                                width: 350,
+                                context: context,
+                                dialogType: DialogType.error,
+                                animType: AnimType.rightSlide,
+                                headerAnimationLoop: false,
+                                title: "Error",
+                                desc: "Failed to unblock user",
+                                btnOkOnPress: () {
+                                  Navigator.of(context).pop();
+                                },
+                                btnOkText: "OK",
+                                btnOkColor: Colors.red,
+                              ).show();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 6),
+                          ),
+                          child: const Text(
+                            'UNBLOCK',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 );

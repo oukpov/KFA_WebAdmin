@@ -9,6 +9,8 @@ class UserController extends GetxController {
   var isLoading = true.obs;
   var isApproving = ''.obs;
   var isDisApproving = ''.obs;
+  var isBlocking = ''.obs;
+  var isUnblocking = ''.obs;
   var adminuser = [].obs;
   var id = ''.obs;
   var errorMessage = ''.obs;
@@ -61,7 +63,6 @@ class UserController extends GetxController {
             .map((user) => UserModel.fromJson(user))
             .toList();
         users.value = userList;
-        print('User List: ${users.value.length}');
       } else {
         errorMessage.value = 'Failed to load users: ${response.statusMessage}';
       }
@@ -143,6 +144,73 @@ class UserController extends GetxController {
       errorMessage.value = 'An unexpected error occurred: $e';
     } finally {
       isApproving.value = '';
+    }
+  }
+
+  Future<void> blockUser(String controlUser) async {
+    try {
+      isBlocking.value = controlUser;
+
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      final dio = Dio();
+      final response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/blockusers/$controlUser',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(json.encode(response.data));
+        await fetchUsers();
+      } else {
+        errorMessage.value = 'Failed to block user: ${response.statusMessage}';
+      }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
+    } catch (e) {
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isBlocking.value = '';
+    }
+  }
+
+  Future<void> unblockUser(String controlUser) async {
+    try {
+      isUnblocking.value = controlUser;
+
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      final dio = Dio();
+      final response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/unblockusers/$controlUser',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(json.encode(response.data));
+        await fetchUsers();
+      } else {
+        errorMessage.value =
+            'Failed to unblock user: ${response.statusMessage}';
+      }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
+    } catch (e) {
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isUnblocking.value = '';
     }
   }
 
