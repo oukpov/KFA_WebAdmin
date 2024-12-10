@@ -26,6 +26,8 @@ class _UserListPageState extends State<UserListPage> {
       'Content-Type': 'application/json'
     };
     var dio = Dio();
+    dio.options.connectTimeout = 5000; // Set timeout to 5 seconds
+    dio.options.receiveTimeout = 5000; // Set timeout to 5 seconds
     try {
       isLoading(true);
       var response = await dio.request(
@@ -37,13 +39,12 @@ class _UserListPageState extends State<UserListPage> {
       );
 
       if (response.statusCode == 200) {
-        setState(() {
-          users.value = response.data;
-        });
-        print(json.encode(response.data));
-      } else {
-        print(response.statusMessage);
-      }
+        if (mounted) {
+          setState(() {
+            users.value = response.data;
+          });
+        }
+      } else {}
     } catch (e) {
       print('Error fetching users: $e');
     } finally {
@@ -55,9 +56,6 @@ class _UserListPageState extends State<UserListPage> {
   void initState() {
     super.initState();
     fetchUsers(); // Fetch users when page loads
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      fetchUsers();
-    });
   }
 
   Future<void> _refreshData() async {
