@@ -36,19 +36,19 @@ class UserController extends GetxController {
 
     // Add interceptor for debugging
     _dio.interceptors.add(InterceptorsWrapper(
-      onError: (error, handler) {
+      onError: (error, handler) async {
         print('Error Status Code: ${error.response?.statusCode}');
         print('Error Message: ${error.message}');
         print('Error Response: ${error.response?.data}');
-        return handler.next(error);
+        handler.next(error);
       },
-      onRequest: (options, handler) {
+      onRequest: (options, handler) async {
         print('Making request to: ${options.uri}');
-        return handler.next(options);
+        handler.next(options);
       },
-      onResponse: (response, handler) {
+      onResponse: (response, handler) async {
         print('Received response: ${response.statusCode}');
-        return handler.next(response);
+        handler.next(response);
       },
     ));
   }
@@ -275,31 +275,34 @@ class UserController extends GetxController {
   }
 
   Future<void> SearchUser(String telNum) async {
-    var headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchuser?search=$telNum',
-      options: Options(
-        method: 'GET',
-        headers: headers,
-      ),
-    );
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchuser?search=$telNum',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
 
-    if (response.statusCode == 200) {
-      var jsonData = jsonDecode(json.encode(response.data))['data'];
-      if (jsonData is List) {
-        listsearch.value =
-            jsonData.map((item) => UserModel.fromJson(item)).toList();
-      } else if (jsonData is Map<String, dynamic>) {
-        listsearch.value = [UserModel.fromJson(jsonData)];
-      } else {
-        listsearch.value = [];
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(json.encode(response.data))['data'];
+        if (jsonData is List) {
+          listsearch.value =
+              jsonData.map((item) => UserModel.fromJson(item)).toList();
+        } else if (jsonData is Map<String, dynamic>) {
+          listsearch.value = [UserModel.fromJson(jsonData)];
+        } else {
+          listsearch.value = [];
+        }
       }
-    } else {
-      print(response.statusMessage);
+    } catch (e) {
+      print('Error in SearchUser: $e');
+      listsearch.value = [];
     }
   }
 }
