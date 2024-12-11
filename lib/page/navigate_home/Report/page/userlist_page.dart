@@ -17,6 +17,7 @@ class UserListPage extends StatefulWidget {
 
 class _UserListPageState extends State<UserListPage> {
   final UserController userController = Get.put(UserController());
+  TextEditingController searchController = TextEditingController();
   var users = [].obs;
   var isLoading = false.obs;
 
@@ -85,312 +86,134 @@ class _UserListPageState extends State<UserListPage> {
                   stops: [0.0, 0.3],
                 ),
               ),
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: users.length,
-                itemBuilder: (context, index) {
-                  final user = users[index];
-                  return Card(
-                    elevation: 4,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(16),
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.blue[900],
-                        child: Text(
-                          (user['first_name']?[0] ?? '?').toUpperCase(),
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      title: Text(
-                        '${user['first_name'] ?? 'N/A'} ${user['last_name'] ?? ''}',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Icon(Icons.person,
-                                  size: 16, color: Colors.black),
-                              const SizedBox(width: 8),
-                              Text(
-                                  "Approved By : ${user['approved_name'] ?? 'No one approved'}",
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black)),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(Icons.phone,
-                                  size: 16, color: Colors.grey),
-                              const SizedBox(width: 8),
-                              Text(user['tel_num'] ?? 'No phone number'),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              const Icon(Icons.email,
-                                  size: 16, color: Colors.grey),
-                              const SizedBox(width: 8),
-                              Text(user['email'] ?? 'No email'),
-                            ],
-                          ),
-                        ],
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          InkWell(
-                            onTap: () async {
-                              if (user['approval_status'] != 'approved') {
-                                await userController.approveUser(
-                                    user['user_id'], int.parse(widget.id));
-                                // ignore: use_build_context_synchronously
-                                AwesomeDialog(
-                                  padding: const EdgeInsets.only(
-                                      right: 30, left: 30, bottom: 10, top: 10),
-                                  alignment: Alignment.center,
-                                  width: 350,
-                                  context: context,
-                                  dialogType: DialogType.success,
-                                  animType: AnimType.rightSlide,
-                                  headerAnimationLoop: false,
-                                  title: "Success",
-                                  desc: "User has been approved successfully",
-                                  btnOkOnPress: () {
-                                    Navigator.of(context).pop();
-                                    _refreshData(); // Refresh after approval
+                          Container(
+                            width: 500,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: searchController,
+                                    decoration: const InputDecoration(
+                                      hintText:
+                                          'Enter Phone Number or Username',
+                                      border: InputBorder.none,
+                                      // prefixIcon:
+                                      //     Icon(Icons.phone, color: Colors.grey[600]),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    if (searchController.text.isNotEmpty) {
+                                      userController
+                                          .searchphone(searchController.text);
+                                    }
                                   },
-                                  btnOkText: "OK",
-                                  btnOkColor: Colors.green,
-                                ).show();
-                              }
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: user['approval_status'] == 'approved'
-                                    ? Colors.green[100]
-                                    : Colors.orange[100],
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                user['approval_status'] == 'approved'
-                                    ? 'APPROVED'
-                                    : 'PENDING',
-                                style: TextStyle(
-                                  color: user['approval_status'] == 'approved'
-                                      ? Colors.green[900]
-                                      : Colors.orange[900],
-                                  fontWeight: FontWeight.bold,
+                                  icon: const Icon(Icons.search),
+                                  label: const Text('Search'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blue,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          if (user['is_blocked'] ==
-                              '0') // Show block button if not blocked
-                            ElevatedButton(
-                              onPressed: () async {
-                                try {
-                                  // Show confirmation dialog first
-                                  AwesomeDialog(
-                                    padding: const EdgeInsets.only(
-                                        right: 30,
-                                        left: 30,
-                                        bottom: 10,
-                                        top: 10),
-                                    alignment: Alignment.center,
-                                    width: 350,
-                                    context: context,
-                                    dialogType: DialogType.question,
-                                    animType: AnimType.rightSlide,
-                                    headerAnimationLoop: false,
-                                    title: "Confirm",
-                                    desc:
-                                        "Are you sure you want to block this user?",
-                                    btnOkOnPress: () async {
-                                      // Block user after confirmation
-                                      await userController.blockUser(
-                                          user['control_user'] ?? '');
-
-                                      // Show success message
-                                      // ignore: use_build_context_synchronously
-                                      AwesomeDialog(
-                                        padding: const EdgeInsets.only(
-                                            right: 30,
-                                            left: 30,
-                                            bottom: 10,
-                                            top: 10),
-                                        alignment: Alignment.center,
-                                        width: 350,
-                                        context: context,
-                                        dialogType: DialogType.success,
-                                        animType: AnimType.rightSlide,
-                                        headerAnimationLoop: false,
-                                        title: "Success",
-                                        desc:
-                                            "User has been blocked successfully",
-                                        btnOkOnPress: () {
-                                          Navigator.of(context).pop();
-                                          _refreshData(); // Refresh after blocking
-                                        },
-                                        btnOkText: "OK",
-                                        btnOkColor: Colors.green,
-                                      ).show();
-                                    },
-                                    btnOkText: "Yes",
-                                    btnOkColor: Colors.green,
-                                    btnCancelText: "No",
-                                    btnCancelColor: Colors.red,
-                                    btnCancelOnPress: () {},
-                                  ).show();
-                                } catch (e) {
-                                  print('Error blocking user: $e');
-                                  // Show error message
-                                  AwesomeDialog(
-                                    padding: const EdgeInsets.only(
-                                        right: 30,
-                                        left: 30,
-                                        bottom: 10,
-                                        top: 10),
-                                    alignment: Alignment.center,
-                                    width: 350,
-                                    context: context,
-                                    dialogType: DialogType.error,
-                                    animType: AnimType.rightSlide,
-                                    headerAnimationLoop: false,
-                                    title: "Error",
-                                    desc: "Failed to block user",
-                                    btnOkOnPress: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    btnOkText: "OK",
-                                    btnOkColor: Colors.red,
-                                  ).show();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                              ),
-                              child: const Text(
-                                'BLOCK',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          if (user['is_blocked'] ==
-                              '1') // Show unblock button if blocked
-                            ElevatedButton(
-                              onPressed: () async {
-                                try {
-                                  // Show confirmation dialog first
-                                  AwesomeDialog(
-                                    padding: const EdgeInsets.only(
-                                        right: 30,
-                                        left: 30,
-                                        bottom: 10,
-                                        top: 10),
-                                    alignment: Alignment.center,
-                                    width: 350,
-                                    context: context,
-                                    dialogType: DialogType.question,
-                                    animType: AnimType.rightSlide,
-                                    headerAnimationLoop: false,
-                                    title: "Confirm",
-                                    desc:
-                                        "Are you sure you want to unblock this user?",
-                                    btnOkOnPress: () async {
-                                      // Unblock user after confirmation
-                                      await userController.unblockUser(
-                                          user['control_user'] ?? '');
-
-                                      // Show success message
-                                      // ignore: use_build_context_synchronously
-                                      AwesomeDialog(
-                                        padding: const EdgeInsets.only(
-                                            right: 30,
-                                            left: 30,
-                                            bottom: 10,
-                                            top: 10),
-                                        alignment: Alignment.center,
-                                        width: 350,
-                                        context: context,
-                                        dialogType: DialogType.success,
-                                        animType: AnimType.rightSlide,
-                                        headerAnimationLoop: false,
-                                        title: "Success",
-                                        desc:
-                                            "User has been unblocked successfully",
-                                        btnOkOnPress: () {
-                                          Navigator.of(context).pop();
-                                          _refreshData(); // Refresh after unblocking
-                                        },
-                                        btnOkText: "OK",
-                                        btnOkColor: Colors.green,
-                                      ).show();
-                                    },
-                                    btnOkText: "Yes",
-                                    btnOkColor: Colors.green,
-                                    btnCancelText: "No",
-                                    btnCancelColor: Colors.red,
-                                    btnCancelOnPress: () {},
-                                  ).show();
-                                } catch (e) {
-                                  print('Error unblocking user: $e');
-                                  // Show error message
-                                  AwesomeDialog(
-                                    padding: const EdgeInsets.only(
-                                        right: 30,
-                                        left: 30,
-                                        bottom: 10,
-                                        top: 10),
-                                    alignment: Alignment.center,
-                                    width: 350,
-                                    context: context,
-                                    dialogType: DialogType.error,
-                                    animType: AnimType.rightSlide,
-                                    headerAnimationLoop: false,
-                                    title: "Error",
-                                    desc: "Failed to unblock user",
-                                    btnOkOnPress: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    btnOkText: "OK",
-                                    btnOkColor: Colors.red,
-                                  ).show();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 12, vertical: 6),
-                              ),
-                              child: const Text(
-                                'UNBLOCK',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
                         ],
                       ),
                     ),
-                  );
-                },
+                  ),
+                  if (userController.listsearch.isEmpty)
+                    Expanded(
+                      // Add Expanded to give ListView a constrained height
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ListView.builder(
+                          itemCount: users.length,
+                          itemBuilder: (context, index) {
+                            final user = users[index];
+                            return Card(
+                              elevation: 4,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(16),
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.blue[900],
+                                  child: Text(
+                                    (user['first_name']?[0] ?? '?')
+                                        .toUpperCase(),
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                                title: Text(
+                                  '${user['first_name'] ?? 'N/A'} ${user['last_name'] ?? ''}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.person,
+                                            size: 16, color: Colors.black),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                            "Approved By : ${user['approved_name'] ?? 'No one approved'}",
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.phone,
+                                            size: 16, color: Colors.grey),
+                                        const SizedBox(width: 8),
+                                        Text(user['tel_num'] ??
+                                            'No phone number'),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.email,
+                                            size: 16, color: Colors.grey),
+                                        const SizedBox(width: 8),
+                                        Text(user['email'] ?? 'No email'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                ],
               ),
             );
           }

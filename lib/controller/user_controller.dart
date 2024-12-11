@@ -14,6 +14,8 @@ class UserController extends GetxController {
   var adminuser = [].obs;
   var id = ''.obs;
   var errorMessage = ''.obs;
+  final isSearch = false.obs;
+  var listsearch = [].obs;
 
   @override
   void onInit() {
@@ -233,6 +235,71 @@ class UserController extends GetxController {
         return 'Connection error occurred. Please check your internet connection.';
       default:
         return 'An unexpected error occurred';
+    }
+  }
+
+  Future<void> searchphone(String telNum) async {
+    try {
+      isSearch.value = true;
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/searchphone?search=$telNum',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(json.encode(response.data))['data'];
+        if (jsonData is List) {
+          listsearch.value =
+              jsonData.map((item) => UserModel.fromJson(item)).toList();
+        } else if (jsonData is Map<String, dynamic>) {
+          listsearch.value = [UserModel.fromJson(jsonData)];
+        } else {
+          listsearch.value = [];
+        }
+      }
+    } catch (e) {
+      print('Error in searchphone: $e');
+      listsearch.value = [];
+    } finally {
+      isSearch.value = false;
+    }
+  }
+
+  Future<void> SearchUser(String telNum) async {
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchuser?search=$telNum',
+      options: Options(
+        method: 'GET',
+        headers: headers,
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(json.encode(response.data))['data'];
+      if (jsonData is List) {
+        listsearch.value =
+            jsonData.map((item) => UserModel.fromJson(item)).toList();
+      } else if (jsonData is Map<String, dynamic>) {
+        listsearch.value = [UserModel.fromJson(jsonData)];
+      } else {
+        listsearch.value = [];
+      }
+    } else {
+      print(response.statusMessage);
     }
   }
 }
