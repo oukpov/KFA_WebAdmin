@@ -2,8 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
-import 'package:web_admin/page/navigate_home/Report/page/reportverbal_all_user_for_admin_page.dart';
-import '../../../../models/user_model.dart';
 
 class UserListForAdmin extends StatelessWidget {
   String id;

@@ -45,22 +45,23 @@ class VpointUpdateController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: $e');
+      print(e);
     } finally {
       isLoading(false);
     }
   }
 
   Future<void> handleUpdate(VpointModel updatedVpoint) async {
-    isLoading(true);
     try {
+      isLoading(true);
       var headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       };
-      var request = http.Request('POST', Uri.parse('$url/updatevpoint'));
-      request.body = json.encode({
+      var data = json.encode({
         "ID_control": updatedVpoint.iDControl,
         "id_user_control": updatedVpoint.idUserControl,
+        "id_user": updatedVpoint.iDControl,
         "count_autoverbal": updatedVpoint.countAutoverbal,
         "create": updatedVpoint.create,
         "expiry": updatedVpoint.expiry,
@@ -68,21 +69,25 @@ class VpointUpdateController extends GetxController {
         "balance": updatedVpoint.balance,
         "created_verbals": updatedVpoint.createdVerbals
       });
-      request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+      final response = await http.post(
+        Uri.parse('$url/updatevpoint'),
+        headers: headers,
+        body: data,
+      );
 
       if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        print(responseBody);
+        print(response.body);
         Get.snackbar('Success', 'VPoint updated successfully');
-        await fetchVpoint(); // Refresh the data after update
+        await fetchVpoint(); // Refresh data after update
       } else {
-        print(response.reasonPhrase);
-        Get.snackbar('Error', 'Failed to update VPoint');
+        print(response.body);
+        Get.snackbar(
+            'Error', 'Failed to update VPoint: ${response.statusCode}');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: $e');
+      print(e);
     } finally {
       isLoading(false);
     }
@@ -186,6 +191,45 @@ class VpointUpdateController extends GetxController {
       Get.snackbar('Error', 'An error occurred: $e');
     } finally {
       isLoading(false);
+    }
+  }
+
+  var historyList = [].obs;
+  var isLoadingHistory = false.obs;
+
+  Future<void> fetchHistory() async {
+    isLoadingHistory(true);
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/v-point-historyall',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        // Check if response.data is a Map and contains a data field
+        if (response.data is Map && response.data['data'] != null) {
+          // Extract the list from the data field
+          historyList.value = response.data['data'] as List;
+        } else {
+          print('Invalid response format: expected Map with data field');
+          historyList.value = [];
+        }
+      } else {
+        print('Error fetching history: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error in fetchHistory: $e');
+      historyList.value = [];
+    } finally {
+      isLoadingHistory(false);
     }
   }
 }
