@@ -15,13 +15,36 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
   @override
   void initState() {
     super.initState();
-    controller.fetchHistory().then((_) {
-      print("History fetched");
-      print("History list length: ${controller.historyList.length}");
-      print("History list content: ${controller.historyList}");
-    }).catchError((error) {
-      print("Error fetching history: $error");
-    });
+    controller.fetchHistory().then((_) {}).catchError((error) {});
+  }
+
+  bool _isMounted = true;
+  var isSearching = false.obs;
+  var searchResults = [].obs;
+  var users = [].obs;
+  var isLoading = false.obs;
+  void searchUsers(String query) {
+    if (!_isMounted) return;
+
+    isSearching(true);
+    if (query.isEmpty) {
+      searchResults.clear();
+      isSearching(false);
+      return;
+    }
+
+    searchResults.value = users.where((user) {
+      final phoneMatch = user['tel_num']
+              ?.toString()
+              .toLowerCase()
+              .contains(query.toLowerCase()) ??
+          false;
+      final nameMatch = '${user['first_name']} ${user['last_name']}'
+          .toLowerCase()
+          .contains(query.toLowerCase());
+      return phoneMatch || nameMatch;
+    }).toList();
+    isSearching(false);
   }
 
   @override
@@ -33,13 +56,6 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
         backgroundColor: Colors.blue[800],
         elevation: 0,
         actions: [
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: () {
-              // Add filter functionality
-              _showFilterDialog(context);
-            },
-          ),
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () => controller.fetchHistory(),
@@ -60,42 +76,50 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
           child: Column(
             children: [
               // Enhanced Search bar with animation
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                width: 500,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.withOpacity(0.1),
-                      spreadRadius: 3,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search by username, ID or phone number',
-                    hintStyle: TextStyle(color: Colors.grey[400]),
-                    border: InputBorder.none,
-                    prefixIcon: Icon(Icons.search, color: Colors.blue[800]),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.clear, color: Colors.grey),
-                      onPressed: () {
-                        searchController.clear();
-                        // Reset search results
-                      },
-                    ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  width: 500,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  onChanged: (value) {
-                    // Implement search with debounce
-                    _onSearchChanged(value);
-                  },
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: searchController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter Phone Number or Username',
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (value) {
+                            searchUsers(value);
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          print('${searchController.text}');
+                          if (searchController.text.isNotEmpty) {
+                            searchUsers(searchController.text);
+                          }
+                        },
+                        icon: const Icon(Icons.search),
+                        label: const Text('Search'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -133,34 +157,52 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
               // Enhanced History list with animations
               Expanded(
                 child: Obx(() {
-                  if (controller.isLoadingHistory.value) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.blue[800]!),
-                          ),
-                          SizedBox(height: 16),
-                          Text('Loading history...',
-                              style: TextStyle(color: Colors.blue[800])),
-                        ],
-                      ),
-                    );
-                  }
+                  final displayList =
+                      searchResults.isEmpty && searchController.text.isEmpty
+                          ? users
+                          : searchResults;
 
-                  if (controller.historyList.isEmpty) {
-                    return _buildEmptyState();
+                  if (displayList.isEmpty && isLoading.value) {
+                    return Center(child: CircularProgressIndicator());
                   }
-
-                  return ListView.builder(
-                    itemCount: controller.historyList.length,
-                    itemBuilder: (context, index) {
-                      final history = controller.historyList[index];
-                      return _buildHistoryCard(history, index);
-                    },
+                  return Container(
+                    child: Text('$searchResults'),
                   );
+                  // return ListView.builder(
+                  //   itemCount: displayList.length,
+                  //   itemBuilder: (context, index) {
+                  //     final history = displayList[index];
+                  //     return _buildHistoryCard(history, index);
+                  //   },
+                  // );
+                  // if (controller.isLoadingHistory.value) {
+                  //   return Center(
+                  //     child: Column(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         CircularProgressIndicator(
+                  //           valueColor: AlwaysStoppedAnimation<Color>(
+                  //               Colors.blue[800]!),
+                  //         ),
+                  //         SizedBox(height: 16),
+                  //         Text('Loading history...',
+                  //             style: TextStyle(color: Colors.blue[800])),
+                  //       ],
+                  //     ),
+                  //   );
+                  // }
+
+                  // if (controller.historyList.isEmpty) {
+                  //   return _buildEmptyState();
+                  // }
+
+                  // return ListView.builder(
+                  //   itemCount: controller.historyList.length,
+                  //   itemBuilder: (context, index) {
+                  //     final history = controller.historyList[index];
+                  //     return _buildHistoryCard(history, index);
+                  //   },
+                  // );
                 }),
               ),
             ],
@@ -255,7 +297,7 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ID: ${history['user_id'] ?? 'N/A'}',
+                        'ID: ${history['id_user_control'] ?? 'N/A'}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

@@ -26,6 +26,7 @@ import '../page/navigate_home/Report/page/comparable_case_bar_chart.dart';
 import '../page/navigate_home/Report/page/comparable_case_page.dart';
 import '../page/navigate_home/Report/page/contact_us_page.dart';
 import '../page/navigate_home/Report/page/faq_page.dart';
+import '../page/navigate_home/Report/page/history_v_point_page.dart';
 import '../page/navigate_home/Report/page/slider_page.dart';
 import '../page/navigate_home/Report/page/sponsor_list_page.dart';
 import '../page/navigate_home/Report/page/userlist_for_adminpage.dart';
@@ -917,8 +918,15 @@ class _DrawerOptionState extends State<DrawerOption> {
                       PopupMenuItem(
                           child: InkWell(
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => VpointListPage()));
+                                if (i == 0) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => VpointListPage()));
+                                }
+                                if (i == 1) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          HistoryVPointPage()));
+                                }
                               },
                               child: textfield(
                                   vpointOption[i]['title'].toString())))
