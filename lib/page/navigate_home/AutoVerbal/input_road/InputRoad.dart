@@ -706,42 +706,47 @@ class _HomePageState extends State<InputRoad> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Min Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .minValueR
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .minValueR.value),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Max Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .maxValueR
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .maxValueR.value),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: 500,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Min Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .minValueR
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .minValueR
+                                                                .value),
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Max Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .maxValueR
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .maxValueR
+                                                                .value),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 20),
                                                 Text(
@@ -752,42 +757,47 @@ class _HomePageState extends State<InputRoad> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Min Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .minValueC
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .minValueC.value),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Max Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .maxValueC
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .maxValueC.value),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: 500,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Min Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .minValueC
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .minValueC
+                                                                .value),
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Max Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .maxValueC
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .maxValueC
+                                                                .value),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 15),
                                                 Container(

@@ -96,10 +96,7 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
-<<<<<<< HEAD
 
-=======
->>>>>>> 0aced4448a4912f04683e3c58259fcfdf98dc89d
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -112,13 +109,10 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
-        // home: LoginPage(),
+        home: LoginPage(),
 
         // home: AutoList()
-<<<<<<< HEAD
 
-=======
->>>>>>> 0aced4448a4912f04683e3c58259fcfdf98dc89d
         // home: MapScreen(),
         // home: HistoryVPointPage(),
         //home: UserListPage(id: '61'),
@@ -132,10 +126,7 @@ class _MyAppState extends State<MyApp> {
         //     "user_status": 0
         //   }
         // ]),
-<<<<<<< HEAD
 
-=======
->>>>>>> 0aced4448a4912f04683e3c58259fcfdf98dc89d
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
