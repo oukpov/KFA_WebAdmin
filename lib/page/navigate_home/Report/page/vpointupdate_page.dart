@@ -55,6 +55,7 @@ class _VpointUpdatePageState extends State<VpointUpdatePage> {
               onPressed: () async {
                 // Create a new VpointModel with updated values
                 VpointModel updatedVpoint = VpointModel(
+                  historyuserid: widget.vpoint.historyuserid,
                   iDControl: widget.vpoint.iDControl,
                   telNum: telNumController.text,
                   username: usernameController.text,

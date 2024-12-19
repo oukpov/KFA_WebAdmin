@@ -9,9 +9,13 @@ class UserController extends GetxController {
   var isLoading = true.obs;
   var isApproving = ''.obs;
   var isDisApproving = ''.obs;
+  var isBlocking = ''.obs;
+  var isUnblocking = ''.obs;
   var adminuser = [].obs;
   var id = ''.obs;
   var errorMessage = ''.obs;
+  final isSearch = false.obs;
+  var listsearch = [].obs;
 
   @override
   void onInit() {
@@ -32,19 +36,19 @@ class UserController extends GetxController {
 
     // Add interceptor for debugging
     _dio.interceptors.add(InterceptorsWrapper(
-      onError: (error, handler) {
+      onError: (error, handler) async {
         print('Error Status Code: ${error.response?.statusCode}');
         print('Error Message: ${error.message}');
         print('Error Response: ${error.response?.data}');
-        return handler.next(error);
+        handler.next(error);
       },
-      onRequest: (options, handler) {
+      onRequest: (options, handler) async {
         print('Making request to: ${options.uri}');
-        return handler.next(options);
+        handler.next(options);
       },
-      onResponse: (response, handler) {
+      onResponse: (response, handler) async {
         print('Received response: ${response.statusCode}');
-        return handler.next(response);
+        handler.next(response);
       },
     ));
   }
@@ -61,7 +65,6 @@ class UserController extends GetxController {
             .map((user) => UserModel.fromJson(user))
             .toList();
         users.value = userList;
-        print('User List: ${users.value.length}');
       } else {
         errorMessage.value = 'Failed to load users: ${response.statusMessage}';
       }
@@ -146,6 +149,73 @@ class UserController extends GetxController {
     }
   }
 
+  Future<void> blockUser(String controlUser) async {
+    try {
+      isBlocking.value = controlUser;
+
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      final dio = Dio();
+      final response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/blockusers/$controlUser',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(json.encode(response.data));
+        await fetchUsers();
+      } else {
+        errorMessage.value = 'Failed to block user: ${response.statusMessage}';
+      }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
+    } catch (e) {
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isBlocking.value = '';
+    }
+  }
+
+  Future<void> unblockUser(String controlUser) async {
+    try {
+      isUnblocking.value = controlUser;
+
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      final dio = Dio();
+      final response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/unblockusers/$controlUser',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(json.encode(response.data));
+        await fetchUsers();
+      } else {
+        errorMessage.value =
+            'Failed to unblock user: ${response.statusMessage}';
+      }
+    } on DioError catch (e) {
+      errorMessage.value = _handleDioError(e);
+    } catch (e) {
+      errorMessage.value = 'An unexpected error occurred: $e';
+    } finally {
+      isUnblocking.value = '';
+    }
+  }
+
   String _handleDioError(DioError e) {
     switch (e.type) {
       case DioErrorType.connectTimeout:
@@ -165,6 +235,74 @@ class UserController extends GetxController {
         return 'Connection error occurred. Please check your internet connection.';
       default:
         return 'An unexpected error occurred';
+    }
+  }
+
+  Future<void> searchphone(String telNum) async {
+    try {
+      isSearch.value = true;
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/searchphone?search=$telNum',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(json.encode(response.data))['data'];
+        if (jsonData is List) {
+          listsearch.value =
+              jsonData.map((item) => UserModel.fromJson(item)).toList();
+        } else if (jsonData is Map<String, dynamic>) {
+          listsearch.value = [UserModel.fromJson(jsonData)];
+        } else {
+          listsearch.value = [];
+        }
+      }
+    } catch (e) {
+      print('Error in searchphone: $e');
+      listsearch.value = [];
+    } finally {
+      isSearch.value = false;
+    }
+  }
+
+  Future<void> SearchUser(String telNum) async {
+    try {
+      var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchuser?search=$telNum',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(json.encode(response.data))['data'];
+        if (jsonData is List) {
+          listsearch.value =
+              jsonData.map((item) => UserModel.fromJson(item)).toList();
+        } else if (jsonData is Map<String, dynamic>) {
+          listsearch.value = [UserModel.fromJson(jsonData)];
+        } else {
+          listsearch.value = [];
+        }
+      }
+    } catch (e) {
+      print('Error in SearchUser: $e');
+      listsearch.value = [];
     }
   }
 }

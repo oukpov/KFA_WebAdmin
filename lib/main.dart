@@ -5,8 +5,14 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
+<<<<<<< HEAD
 import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
+=======
+import 'package:web_admin/page/navigate_home/Report/page/history_v_point_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/userlist_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/v_point_page.dart';
+>>>>>>> 29e91abf07d3301ad914ae7248e6f6157ce35666
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -67,7 +73,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: const GetMaterialApp(
+      child: GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
@@ -93,6 +99,7 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
+<<<<<<< HEAD
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -108,6 +115,21 @@ class _MyAppState extends State<MyApp> {
         home: LoginPage(),
 
         // home: AutoList()
+=======
+        // home: MapScreen(),
+        home: HistoryVPointPage(),
+        //home: UserListPage(id: '61'),
+        // home: ZoneMap(listLocalHost: [
+        //   {
+        //     "id": 52,
+        //     "user_role_id": 59,
+        //     "agency": 70,
+        //     "username": "Test",
+        //     "password": "333802e987dfce42e28b749a20dc257f",
+        //     "user_status": 0
+        //   }
+        // ]),
+>>>>>>> 29e91abf07d3301ad914ae7248e6f6157ce35666
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(

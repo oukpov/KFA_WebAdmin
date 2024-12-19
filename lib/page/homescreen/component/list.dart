@@ -179,6 +179,7 @@ List approvedOption = [
 ];
 List vpointOption = [
   {"title": "Vpoint List"},
+  {"title": "Vpoint History"},
 ];
 List sponsorOption = [
   {"title": "Sponsor List"},
