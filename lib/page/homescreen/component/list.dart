@@ -121,6 +121,8 @@ List autoOptionAdmin = [
   {"title": "New Auto Verbal"},
   {"title": "Auto Verbal List"},
   {"title": "Add Zone Specail"},
+  {"title": "Main Road"},
+  {"title": "Market Price"},
 ];
 List verbalOption = [
   {"title": "Add Verbal"},

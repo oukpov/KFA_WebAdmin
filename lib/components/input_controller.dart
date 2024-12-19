@@ -9,7 +9,9 @@ class InputController extends StatefulWidget {
     super.key,
     required this.controllerback,
     required this.value,
+    required this.title,
   });
+  final String title;
   final String value;
   final OnChangeCallback controllerback;
 
@@ -33,32 +35,33 @@ class _InputControllerState extends State<InputController> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
-      child: SizedBox(
-        height: 25,
-        width: 130,
-        child: TextFormField(
-          controller: controller,
-          onChanged: (value) {
-            setState(() {
-              widget.controllerback(controller.text);
-            });
-          },
-          decoration: InputDecoration(
-            fillColor: kwhite,
-            filled: true,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            labelStyle: const TextStyle(color: kPrimaryColor),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 1, color: kPrimaryColor),
-              borderRadius: BorderRadius.circular(5.0),
-            ),
+    return SizedBox(
+      height: 35,
+      child: TextFormField(
+        controller: controller,
+        onChanged: (value) {
+          setState(() {
+            widget.controllerback(controller.text);
+          });
+        },
+        decoration: InputDecoration(
+          // helperText: widget.title,
+          label: Text(
+            widget.title,
+            style: TextStyle(fontSize: 12, color: greyColor),
+          ),
+          fillColor: kwhite,
+          filled: true,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          labelStyle: const TextStyle(color: kPrimaryColor),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: kPrimaryColor, width: 1.0),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1, color: kPrimaryColor),
+            borderRadius: BorderRadius.circular(5.0),
           ),
         ),
       ),

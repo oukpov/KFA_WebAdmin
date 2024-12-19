@@ -753,197 +753,197 @@ class _Add_with_propertyState extends State<Add> {
                                                           ),
                                                           const SizedBox(
                                                               width: 15),
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandDes =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandDes ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandDes ?? ""}",
-                                                                ),
-                                                              if (widget
-                                                                      .listLandBuilding[
-                                                                          i]
-                                                                      .verbalLandDes !=
-                                                                  "LS")
-                                                                if (indexselect ==
-                                                                    i)
-                                                                  InputController(
-                                                                      controllerback:
-                                                                          (value) {
-                                                                        setState(
-                                                                            () {
-                                                                          if (value != "" ||
-                                                                              value != null) {
-                                                                            landbuildingModel.verbalLandDp =
-                                                                                value;
-                                                                          }
-                                                                        });
-                                                                      },
-                                                                      value: widget
-                                                                              .listLandBuilding[i]
-                                                                              .verbalLandDp ??
-                                                                          "")
-                                                                else
-                                                                  textName(
-                                                                    " : ${widget.listLandBuilding[i].verbalLandDp ?? ""}",
-                                                                  ),
-                                                              const SizedBox(
-                                                                  height: 2),
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandArea =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandArea ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandArea ?? ""}m\u00B2",
-                                                                ),
-                                                              const SizedBox(
-                                                                  height: 2),
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandMinsqm =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandMinsqm ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}",
-                                                                ),
-                                                              const SizedBox(
-                                                                  height: 2),
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandMaxsqm =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandMaxsqm ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandMaxsqm ?? ""}",
-                                                                ),
-                                                              const SizedBox(
-                                                                  height: 2),
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandMinsqm =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandMinvalue ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}\$",
-                                                                ),
-                                                              const SizedBox(
-                                                                  height: 2),
-                                                              if (indexselect ==
-                                                                  i)
-                                                                InputController(
-                                                                    controllerback:
-                                                                        (value) {
-                                                                      setState(
-                                                                          () {
-                                                                        if (value !=
-                                                                                "" ||
-                                                                            value !=
-                                                                                null) {
-                                                                          landbuildingModel.verbalLandMaxvalue =
-                                                                              value;
-                                                                        }
-                                                                      });
-                                                                    },
-                                                                    value: widget
-                                                                            .listLandBuilding[i]
-                                                                            .verbalLandMaxvalue ??
-                                                                        "")
-                                                              else
-                                                                textName(
-                                                                  " : ${widget.listLandBuilding[i].verbalLandMaxvalue ?? ""}\$",
-                                                                ),
-                                                            ],
-                                                          ),
+                                                          // Column(
+                                                          //   mainAxisAlignment:
+                                                          //       MainAxisAlignment
+                                                          //           .start,
+                                                          //   crossAxisAlignment:
+                                                          //       CrossAxisAlignment
+                                                          //           .start,
+                                                          //   children: [
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandDes =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandDes ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandDes ?? ""}",
+                                                          //       ),
+                                                          //     if (widget
+                                                          //             .listLandBuilding[
+                                                          //                 i]
+                                                          //             .verbalLandDes !=
+                                                          //         "LS")
+                                                          //       if (indexselect ==
+                                                          //           i)
+                                                          //         InputController(
+                                                          //             controllerback:
+                                                          //                 (value) {
+                                                          //               setState(
+                                                          //                   () {
+                                                          //                 if (value != "" ||
+                                                          //                     value != null) {
+                                                          //                   landbuildingModel.verbalLandDp =
+                                                          //                       value;
+                                                          //                 }
+                                                          //               });
+                                                          //             },
+                                                          //             value: widget
+                                                          //                     .listLandBuilding[i]
+                                                          //                     .verbalLandDp ??
+                                                          //                 "")
+                                                          //       else
+                                                          //         textName(
+                                                          //           " : ${widget.listLandBuilding[i].verbalLandDp ?? ""}",
+                                                          //         ),
+                                                          //     const SizedBox(
+                                                          //         height: 2),
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandArea =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandArea ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandArea ?? ""}m\u00B2",
+                                                          //       ),
+                                                          //     const SizedBox(
+                                                          //         height: 2),
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandMinsqm =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandMinsqm ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}",
+                                                          //       ),
+                                                          //     const SizedBox(
+                                                          //         height: 2),
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandMaxsqm =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandMaxsqm ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandMaxsqm ?? ""}",
+                                                          //       ),
+                                                          //     const SizedBox(
+                                                          //         height: 2),
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandMinsqm =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandMinvalue ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandMinsqm ?? ""}\$",
+                                                          //       ),
+                                                          //     const SizedBox(
+                                                          //         height: 2),
+                                                          //     if (indexselect ==
+                                                          //         i)
+                                                          //       InputController(
+                                                          //           controllerback:
+                                                          //               (value) {
+                                                          //             setState(
+                                                          //                 () {
+                                                          //               if (value !=
+                                                          //                       "" ||
+                                                          //                   value !=
+                                                          //                       null) {
+                                                          //                 landbuildingModel.verbalLandMaxvalue =
+                                                          //                     value;
+                                                          //               }
+                                                          //             });
+                                                          //           },
+                                                          //           value: widget
+                                                          //                   .listLandBuilding[i]
+                                                          //                   .verbalLandMaxvalue ??
+                                                          //               "")
+                                                          //     else
+                                                          //       textName(
+                                                          //         " : ${widget.listLandBuilding[i].verbalLandMaxvalue ?? ""}\$",
+                                                          //       ),
+                                                          //   ],
+                                                          // ),
                                                         ],
                                                       ),
                                                     ],

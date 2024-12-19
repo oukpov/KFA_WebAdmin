@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
+import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
+import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -91,18 +93,21 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
-        // home: MapScreen(),
+        // home: InputRoad(
+        //   listUsers: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
         home: LoginPage(),
-        // home: ZoneMap(listLocalHost: [
-        //   {
-        //     "id": 52,
-        //     "user_role_id": 59,
-        //     "agency": 70,
-        //     "username": "Test",
-        //     "password": "333802e987dfce42e28b749a20dc257f",
-        //     "user_status": 0
-        //   }
-        // ]),
+
+        // home: AutoList()
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(

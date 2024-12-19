@@ -838,11 +838,24 @@ class _homescreenState extends State<homescreen> {
                                       builder: (context) =>
                                           const Show_autoVerbals()));
                                   break;
-                                default:
+                                case 2:
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => ZoneMap(
                                             listLocalHost: widget.listUser,
                                           )));
+                                  break;
+                                case 3:
+
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ZoneMap(
+                                  //           listLocalHost: widget.listUser,
+                                  //         )));
+                                  break;
+                                default:
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ZoneMap(
+                                  //           listLocalHost: widget.listUser,
+                                  //         )));
                                   break;
                               }
                             },
