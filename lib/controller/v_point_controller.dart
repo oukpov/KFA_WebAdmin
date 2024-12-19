@@ -119,40 +119,34 @@ class VpointUpdateController extends GetxController {
   //     isSearch.value = false;
   //   }
   // }
-
+  var isSearchHistory = false.obs;
   Future<void> searchphone(String telNum) async {
     try {
-      isSearch.value = true;
+      isSearchHistory.value = true;
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
-
+      var data = '''''';
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/Demo_BackOneClickOnedollar/public/api/searchphone?search=$telNum',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchphone?search=$telNum',
         options: Options(
           method: 'GET',
           headers: headers,
         ),
+        data: data,
       );
 
       if (response.statusCode == 200) {
-        var jsonData = jsonDecode(json.encode(response.data))['data'];
-        if (jsonData is List) {
-          listsearch.value =
-              jsonData.map((item) => VpointModel.fromJson(item)).toList();
-        } else if (jsonData is Map<String, dynamic>) {
-          listsearch.value = [VpointModel.fromJson(jsonData)];
-        } else {
-          listsearch.value = [];
-        }
+        listsearch.value = jsonDecode(json.encode(response.data))['data'];
+      } else {
+        print("Test:${json.encode(response.data)}");
       }
     } catch (e) {
-      print('Error in searchphone: $e');
-      listsearch.value = [];
+      // print(e);
     } finally {
-      isSearch.value = false;
+      isSearchHistory.value = false;
     }
   }
 
