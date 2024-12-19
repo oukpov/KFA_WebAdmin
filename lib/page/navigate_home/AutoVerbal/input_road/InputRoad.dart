@@ -306,796 +306,842 @@ class _HomePageState extends State<InputRoad> {
                           height: MediaQuery.of(context).size.height,
                           width: 500,
                           color: appback,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 30, left: 30),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 30),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        markertPrice.listPiganation(10, 1);
-                                        setState(() {
-                                          checkBool = !checkBool;
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor: whiteColor,
-                                        child: const Icon(
-                                          Icons.refresh,
-                                          size: 30,
-                                          color: Color.fromARGB(255, 3, 133, 7),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 20),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    ElevatedButton(
-                                        child: const Text('Add Main Road',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 13)),
-                                        onPressed: () {
-                                          AwesomeDialog(
-                                                  width: 400,
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  context: context,
-                                                  title:
-                                                      "Do you want to Add Road?",
-                                                  titleTextStyle: TextStyle(
-                                                      fontSize: 14,
-                                                      color: greyColor),
-                                                  animType: AnimType.leftSlide,
-                                                  headerAnimationLoop: false,
-                                                  dialogType:
-                                                      DialogType.question,
-                                                  showCloseIcon: false,
-                                                  btnOkOnPress: () async {
-                                                    await addraod(shortName);
-                                                  },
-                                                  btnCancelOnPress: () {},
-                                                  onDismissCallback: (type) {})
-                                              .show();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 10),
-                                            textStyle: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold))),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  height: 150,
-                                  alignment: Alignment.center,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(
-                                          width: 2, color: Colors.black)),
-                                  child: Row(
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 30, left: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 30),
+                                  Row(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '- Long Name',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: fontSize,
-                                                    color: greyColorNolots),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '- Short Name',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: fontSize,
-                                                    color: greyColorNolots),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '- Province',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: fontSize,
-                                                    color: greyColorNolots),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '- District',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: fontSize,
-                                                    color: greyColorNolots),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '- Commune',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: fontSize,
-                                                    color: greyColorNolots),
-                                              ),
-                                            ],
+                                      const Spacer(),
+                                      InkWell(
+                                        onTap: () {
+                                          markertPrice.listPiganation(10, 1);
+                                          setState(() {
+                                            checkBool = !checkBool;
+                                          });
+                                        },
+                                        child: CircleAvatar(
+                                          backgroundColor: whiteColor,
+                                          child: const Icon(
+                                            Icons.refresh,
+                                            size: 30,
+                                            color:
+                                                Color.fromARGB(255, 3, 133, 7),
                                           ),
-                                          const SizedBox(width: 10),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '\t\t\t:\t\t\t$longName',
-                                                style: TextStyle(
-                                                  fontSize: fontSize,
-                                                  color: blackColor,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '\t\t\t:\t\t\t$shortName',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: fontSize,
-                                                  color: Colors.red,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '\t\t\t:\t\t\t${province ?? ""}',
-                                                style: TextStyle(
-                                                  fontSize: fontSize,
-                                                  color: blackColor,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '\t\t\t:\t\t\t${district ?? ""}',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: fontSize,
-                                                  color: blackColor,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                '\t\t\t:\t\t\t${commune ?? ""}',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: fontSize,
-                                                  color: blackColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      )
                                     ],
                                   ),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  height: 40,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: whiteColor,
-                                      border: Border.all(
-                                          width: 0.5, color: blackColor)),
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.text,
-                                    controller: searchMap,
-                                    onFieldSubmitted: (value) {
-                                      setState(() {
-                                        onSearchChanged();
-                                      });
-                                    },
-                                    textInputAction: TextInputAction.search,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                    decoration: InputDecoration(
-                                      suffixIcon: ElevatedButton(
+                                  const SizedBox(height: 20),
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      ElevatedButton(
+                                          child: const Text('Add Main Road',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13)),
                                           onPressed: () {
-                                            setState(() {
-                                              onSearchChanged();
-                                              h = 0;
-                                            });
+                                            AwesomeDialog(
+                                                    width: 400,
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    context: context,
+                                                    title:
+                                                        "Do you want to Add Road?",
+                                                    titleTextStyle: TextStyle(
+                                                        fontSize: 14,
+                                                        color: greyColor),
+                                                    animType:
+                                                        AnimType.leftSlide,
+                                                    headerAnimationLoop: false,
+                                                    dialogType:
+                                                        DialogType.question,
+                                                    showCloseIcon: false,
+                                                    btnOkOnPress: () async {
+                                                      await addraod(shortName);
+                                                    },
+                                                    btnCancelOnPress: () {},
+                                                    onDismissCallback:
+                                                        (type) {})
+                                                .show();
                                           },
-                                          child: Icon(
-                                            Icons.search,
-                                            color: whiteColor,
-                                            size: 20,
-                                          )),
-                                      fillColor: Colors.white,
-                                      hintText: "  Search",
-                                      border: InputBorder.none,
-                                      contentPadding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 10),
-                                      hintStyle: const TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 118, 116, 116),
-                                        fontSize: 14,
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.white,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 10),
+                                              textStyle: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.bold))),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    height: 150,
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            width: 2, color: Colors.black)),
+                                    child: Row(
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '- Long Name',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: fontSize,
+                                                      color: greyColorNolots),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '- Short Name',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: fontSize,
+                                                      color: greyColorNolots),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '- Province',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: fontSize,
+                                                      color: greyColorNolots),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '- District',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: fontSize,
+                                                      color: greyColorNolots),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '- Commune',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: fontSize,
+                                                      color: greyColorNolots),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '\t\t\t:\t\t\t$longName',
+                                                  style: TextStyle(
+                                                    fontSize: fontSize,
+                                                    color: blackColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '\t\t\t:\t\t\t$shortName',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: fontSize,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '\t\t\t:\t\t\t${province ?? ""}',
+                                                  style: TextStyle(
+                                                    fontSize: fontSize,
+                                                    color: blackColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '\t\t\t:\t\t\t${district ?? ""}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: fontSize,
+                                                    color: blackColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  '\t\t\t:\t\t\t${commune ?? ""}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: fontSize,
+                                                    color: blackColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Container(
+                                    height: 40,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: whiteColor,
+                                        border: Border.all(
+                                            width: 0.5, color: blackColor)),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.text,
+                                      controller: searchMap,
+                                      onFieldSubmitted: (value) {
+                                        setState(() {
+                                          onSearchChanged();
+                                        });
+                                      },
+                                      textInputAction: TextInputAction.search,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      decoration: InputDecoration(
+                                        suffixIcon: ElevatedButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                onSearchChanged();
+                                                h = 0;
+                                              });
+                                            },
+                                            child: Icon(
+                                              Icons.search,
+                                              color: whiteColor,
+                                              size: 20,
+                                            )),
+                                        fillColor: Colors.white,
+                                        hintText: "  Search",
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 0, vertical: 10),
+                                        hintStyle: const TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 118, 116, 116),
+                                          fontSize: 14,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 15),
-                                Divider(
-                                  height: 1,
-                                  color: whiteColor,
-                                ),
-                                const SizedBox(height: 15),
-                                Text(
-                                  'Market Price',
-                                  style: TextStyle(
+                                  const SizedBox(height: 15),
+                                  Divider(
+                                    height: 1,
                                     color: whiteColor,
-                                    fontSize: 17,
                                   ),
-                                ),
-                                const SizedBox(height: 15),
-                                Container(
-                                  height: 520,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border:
-                                        Border.all(width: 1, color: whiteColor),
+                                  const SizedBox(height: 15),
+                                  Text(
+                                    'Market Price',
+                                    style: TextStyle(
+                                      color: whiteColor,
+                                      fontSize: 17,
+                                    ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Obx(
-                                      () {
-                                        if (markertPrice.isMarkert.value) {
-                                          return const WaitingFunction();
-                                        } else
-                                        // if (markertPrice
-                                        //     .listMarkertR.isEmpty)
-                                        {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  const Spacer(),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      // print("Road : $shortName");
-                                                      AwesomeDialog(
-                                                        alignment: Alignment
-                                                            .centerLeft,
-                                                        width: 400,
-                                                        context: context,
-                                                        dialogType:
-                                                            DialogType.success,
-                                                        animType:
-                                                            AnimType.rightSlide,
-                                                        headerAnimationLoop:
-                                                            false,
-                                                        title: 'Done',
-                                                        desc:
-                                                            "Do you want to Save",
-                                                        btnOkOnPress: () async {
-                                                          markertPrice
-                                                              .markertPrice(
-                                                            district!,
-                                                            commune!,
-                                                            province!,
-                                                            markertPrice
-                                                                .minValueR
-                                                                .value,
-                                                            markertPrice
-                                                                .maxValueR
-                                                                .value,
-                                                            markertPrice
-                                                                .minValueC
-                                                                .value,
-                                                            markertPrice
-                                                                .maxValueC
-                                                                .value,
-                                                            /////// Markert Price Old
-                                                            markertPrice
-                                                                .minOldValueR
-                                                                .value,
-                                                            markertPrice
-                                                                .maxOldValueR
-                                                                .value,
-                                                            markertPrice
-                                                                .minOldValueC
-                                                                .value,
-                                                            markertPrice
-                                                                .maxOldValueC
-                                                                .value,
-                                                            shortName,
-                                                            markertPrice
-                                                                .roadName.value,
-                                                            latLng.latitude
-                                                                .toString(),
-                                                            latLng.longitude
-                                                                .toString(),
-                                                            widget.listUsers[0]
-                                                                    ['agency']
-                                                                .toString(),
-                                                            markertPrice
-                                                                .khanID.value,
-                                                            markertPrice
-                                                                .sangkatID
-                                                                .value,
-                                                          );
-                                                        },
-                                                        btnCancelOnPress: () {},
-                                                      ).show();
-                                                    },
-                                                    child: Container(
-                                                      height: 30,
-                                                      width: 80,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(
-                                                              width: 1,
-                                                              color: greyColor),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          color: whiteColor),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text('Save  ',
-                                                              style: TextStyle(
-                                                                  color:
-                                                                      greyColor,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                          Icon(Icons.save_alt,
-                                                              color: greyColor)
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                'Residential Markert Price',
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: fontSize,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: InputController(
-                                                        title: "Min Value",
-                                                        controllerback:
-                                                            (value) {
-                                                          setState(() {
-                                                            markertPrice
-                                                                .minValueR
-                                                                .value = value;
-                                                          });
-                                                        },
-                                                        value: markertPrice
-                                                            .minValueR.value),
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: InputController(
-                                                        title: "Max Value",
-                                                        controllerback:
-                                                            (value) {
-                                                          setState(() {
-                                                            markertPrice
-                                                                .maxValueR
-                                                                .value = value;
-                                                          });
-                                                        },
-                                                        value: markertPrice
-                                                            .maxValueR.value),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 20),
-                                              Text(
-                                                'Commercial Markert Price',
-                                                style: TextStyle(
-                                                  color: whiteColor,
-                                                  fontSize: fontSize,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: InputController(
-                                                        title: "Min Value",
-                                                        controllerback:
-                                                            (value) {
-                                                          setState(() {
-                                                            markertPrice
-                                                                .minValueC
-                                                                .value = value;
-                                                          });
-                                                        },
-                                                        value: markertPrice
-                                                            .minValueC.value),
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  Expanded(
-                                                    flex: 1,
-                                                    child: InputController(
-                                                        title: "Max Value",
-                                                        controllerback:
-                                                            (value) {
-                                                          setState(() {
-                                                            markertPrice
-                                                                .maxValueC
-                                                                .value = value;
-                                                          });
-                                                        },
-                                                        value: markertPrice
-                                                            .maxValueC.value),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 15),
-                                              Container(
-                                                height: 180,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    width: 1,
-                                                    color: whiteColor,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: whiteColor,
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                  const SizedBox(height: 15),
+                                  Container(
+                                    height: 520,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          width: 1, color: whiteColor),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Obx(
+                                        () {
+                                          if (markertPrice.isMarkert.value) {
+                                            return const WaitingFunction();
+                                          } else
+                                          // if (markertPrice
+                                          //     .listMarkertR.isEmpty)
+                                          {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const SizedBox(height: 10),
+                                                Row(
                                                   children: [
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          '- Residential Markert Price',
-                                                          style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: blackColor,
-                                                            fontSize: fontSize,
-                                                          ),
-                                                        ),
-                                                        const Spacer(),
-                                                        Obx(
-                                                          () {
-                                                            if (markertPrice
-                                                                .isMarkert
-                                                                .value) {
-                                                              return const SizedBox();
-                                                            } else if (markertPrice
-                                                                .listMarkertC
-                                                                .isEmpty) {
-                                                              return const SizedBox();
-                                                            } else {
-                                                              return IconButton(
-                                                                  onPressed:
-                                                                      () {
-                                                                    AwesomeDialog(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .centerLeft,
-                                                                      width:
-                                                                          400,
-                                                                      context:
-                                                                          context,
-                                                                      dialogType:
-                                                                          DialogType
-                                                                              .question,
-                                                                      animType:
-                                                                          AnimType
-                                                                              .rightSlide,
-                                                                      headerAnimationLoop:
-                                                                          false,
-                                                                      title:
-                                                                          'Done',
-                                                                      desc:
-                                                                          "Do you want to deleted!",
-                                                                      btnOkOnPress:
-                                                                          () async {
-                                                                        markertPrice.deleteMarkert(
-                                                                            markertPrice.sangkatID.value,
-                                                                            markertPrice.khanID.value);
-                                                                      },
-                                                                      btnCancelOnPress:
-                                                                          () {},
-                                                                    ).show();
-                                                                  },
-                                                                  icon:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .delete,
-                                                                    color: Colors
-                                                                        .red,
-                                                                  ));
-                                                            }
+                                                    const Spacer(),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        // print("Road : $shortName");
+                                                        AwesomeDialog(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          width: 400,
+                                                          context: context,
+                                                          dialogType: DialogType
+                                                              .success,
+                                                          animType: AnimType
+                                                              .rightSlide,
+                                                          headerAnimationLoop:
+                                                              false,
+                                                          title: 'Done',
+                                                          desc:
+                                                              "Do you want to Save",
+                                                          btnOkOnPress:
+                                                              () async {
+                                                            markertPrice
+                                                                .markertPrice(
+                                                              district!,
+                                                              commune!,
+                                                              province!,
+                                                              markertPrice
+                                                                  .minValueR
+                                                                  .value,
+                                                              markertPrice
+                                                                  .maxValueR
+                                                                  .value,
+                                                              markertPrice
+                                                                  .minValueC
+                                                                  .value,
+                                                              markertPrice
+                                                                  .maxValueC
+                                                                  .value,
+                                                              /////// Markert Price Old
+                                                              markertPrice
+                                                                  .minOldValueR
+                                                                  .value,
+                                                              markertPrice
+                                                                  .maxOldValueR
+                                                                  .value,
+                                                              markertPrice
+                                                                  .minOldValueC
+                                                                  .value,
+                                                              markertPrice
+                                                                  .maxOldValueC
+                                                                  .value,
+                                                              shortName,
+                                                              markertPrice
+                                                                  .roadName
+                                                                  .value,
+                                                              latLng.latitude
+                                                                  .toString(),
+                                                              latLng.longitude
+                                                                  .toString(),
+                                                              widget
+                                                                  .listUsers[0]
+                                                                      ['agency']
+                                                                  .toString(),
+                                                              markertPrice
+                                                                  .khanID.value,
+                                                              markertPrice
+                                                                  .sangkatID
+                                                                  .value,
+                                                            );
                                                           },
-                                                        )
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          border: Border.all(
-                                                            width: 1,
-                                                            color:
-                                                                greyColorNolot,
-                                                          )),
-                                                      child: Row(
-                                                        children: [
-                                                          textWhile(
-                                                            "Min Value :",
-                                                            markertPrice
-                                                                .minOldValueR
-                                                                .value
-                                                                .toString(),
-                                                          ),
-                                                          textWhile(
-                                                            "Max Value :",
-                                                            markertPrice
-                                                                .maxOldValueR
-                                                                .value
-                                                                .toString(),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Text(
-                                                      '- Commercial Markert Price',
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: blackColor,
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10),
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                          border: Border.all(
-                                                            width: 1,
-                                                            color:
-                                                                greyColorNolot,
-                                                          )),
-                                                      child: Row(
-                                                        children: [
-                                                          textWhile(
-                                                            "Min Value :",
-                                                            markertPrice
-                                                                .minOldValueC
-                                                                .value
-                                                                .toString(),
-                                                          ),
-                                                          textWhile(
-                                                            "Max Value :",
-                                                            markertPrice
-                                                                .maxOldValueC
-                                                                .value
-                                                                .toString(),
-                                                          ),
-                                                        ],
+                                                          btnCancelOnPress:
+                                                              () {},
+                                                        ).show();
+                                                      },
+                                                      child: Container(
+                                                        height: 30,
+                                                        width: 80,
+                                                        decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                                width: 1,
+                                                                color:
+                                                                    greyColor),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            color: whiteColor),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text('Save  ',
+                                                                style: TextStyle(
+                                                                    color:
+                                                                        greyColor,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Icon(Icons.save_alt,
+                                                                color:
+                                                                    greyColor)
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                height: 40,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    width: 1,
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  'Residential Markert Price',
+                                                  style: TextStyle(
+                                                    color: whiteColor,
+                                                    fontSize: fontSize,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: InputController(
+                                                          title: "Min Value",
+                                                          controllerback:
+                                                              (value) {
+                                                            setState(() {
+                                                              markertPrice
+                                                                      .minValueR
+                                                                      .value =
+                                                                  value;
+                                                            });
+                                                          },
+                                                          value: markertPrice
+                                                              .minValueR.value),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: InputController(
+                                                          title: "Max Value",
+                                                          controllerback:
+                                                              (value) {
+                                                            setState(() {
+                                                              markertPrice
+                                                                      .maxValueR
+                                                                      .value =
+                                                                  value;
+                                                            });
+                                                          },
+                                                          value: markertPrice
+                                                              .maxValueR.value),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 20),
+                                                Text(
+                                                  'Commercial Markert Price',
+                                                  style: TextStyle(
+                                                    color: whiteColor,
+                                                    fontSize: fontSize,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: InputController(
+                                                          title: "Min Value",
+                                                          controllerback:
+                                                              (value) {
+                                                            setState(() {
+                                                              markertPrice
+                                                                      .minValueC
+                                                                      .value =
+                                                                  value;
+                                                            });
+                                                          },
+                                                          value: markertPrice
+                                                              .minValueC.value),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: InputController(
+                                                          title: "Max Value",
+                                                          controllerback:
+                                                              (value) {
+                                                            setState(() {
+                                                              markertPrice
+                                                                      .maxValueC
+                                                                      .value =
+                                                                  value;
+                                                            });
+                                                          },
+                                                          value: markertPrice
+                                                              .maxValueC.value),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 15),
+                                                Container(
+                                                  height: 180,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color: whiteColor,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
                                                     color: whiteColor,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: whiteColor,
-                                                ),
-                                                child: Padding(
                                                   padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10, right: 10),
-                                                  child: Row(
+                                                      const EdgeInsets.all(10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
-                                                      Text(
-                                                        "Main Road From Map : ",
-                                                        style: TextStyle(
-                                                            color: greyColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: fontSize),
-                                                      ),
-                                                      Text(
-                                                        shortName,
-                                                        style: TextStyle(
-                                                            color: Colors.red,
-                                                            fontSize: fontSize),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Container(
-                                                alignment: Alignment.center,
-                                                height: 40,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                    width: 1,
-                                                    color: whiteColor,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: whiteColor,
-                                                ),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 10, right: 10),
-                                                  child: Row(
-                                                    children: [
-                                                      Text(
-                                                        "Main Road: ",
-                                                        style: TextStyle(
-                                                            color: greyColor,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: fontSize),
-                                                      ),
-                                                      Text(
-                                                        markertPrice
-                                                            .roadName.value,
-                                                        style: TextStyle(
-                                                            color: Colors.red,
-                                                            fontSize: fontSize),
-                                                      ),
-                                                      const Spacer(),
-                                                      if (shortName !=
-                                                              'Unnamed Road' &&
-                                                          shortName != '')
-                                                        IconButton(
-                                                            onPressed: () {
-                                                              AwesomeDialog(
-                                                                alignment: Alignment
-                                                                    .centerLeft,
-                                                                width: 400,
-                                                                context:
-                                                                    context,
-                                                                dialogType:
-                                                                    DialogType
-                                                                        .question,
-                                                                animType: AnimType
-                                                                    .rightSlide,
-                                                                headerAnimationLoop:
-                                                                    false,
-                                                                title: 'Done',
-                                                                desc:
-                                                                    "Do you want to Deleted!?",
-                                                                btnOkOnPress:
-                                                                    () async {
-                                                                  markertPrice
-                                                                      .deletetedMainRoad(
-                                                                    shortName,
-                                                                    /////// Markert Price Old
-                                                                    markertPrice
-                                                                        .minOldValueR
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .maxOldValueR
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .minOldValueC
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .maxOldValueC
-                                                                        .value,
-                                                                    /////// Markert Price New
-                                                                    markertPrice
-                                                                        .minValueR
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .maxValueR
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .minValueC
-                                                                        .value,
-                                                                    markertPrice
-                                                                        .maxValueC
-                                                                        .value,
-                                                                    ////////
-                                                                    shortName,
-                                                                    markertPrice
-                                                                        .roadName
-                                                                        .value,
-                                                                    latLng
-                                                                        .latitude
-                                                                        .toString(),
-                                                                    latLng
-                                                                        .longitude
-                                                                        .toString(),
-                                                                    widget
-                                                                        .listUsers[
-                                                                            0][
-                                                                            'agency']
-                                                                        .toString(),
-                                                                  );
-                                                                },
-                                                                btnCancelOnPress:
-                                                                    () {},
-                                                              ).show();
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            '- Residential Markert Price',
+                                                            style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color: blackColor,
+                                                              fontSize:
+                                                                  fontSize,
+                                                            ),
+                                                          ),
+                                                          const Spacer(),
+                                                          Obx(
+                                                            () {
+                                                              if (markertPrice
+                                                                  .isMarkert
+                                                                  .value) {
+                                                                return const SizedBox();
+                                                              } else if (markertPrice
+                                                                  .listMarkertC
+                                                                  .isEmpty) {
+                                                                return const SizedBox();
+                                                              } else {
+                                                                return IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      AwesomeDialog(
+                                                                        alignment:
+                                                                            Alignment.centerLeft,
+                                                                        width:
+                                                                            400,
+                                                                        context:
+                                                                            context,
+                                                                        dialogType:
+                                                                            DialogType.question,
+                                                                        animType:
+                                                                            AnimType.rightSlide,
+                                                                        headerAnimationLoop:
+                                                                            false,
+                                                                        title:
+                                                                            'Done',
+                                                                        desc:
+                                                                            "Do you want to deleted!",
+                                                                        btnOkOnPress:
+                                                                            () async {
+                                                                          markertPrice.deleteMarkert(
+                                                                              markertPrice.sangkatID.value,
+                                                                              markertPrice.khanID.value);
+                                                                        },
+                                                                        btnCancelOnPress:
+                                                                            () {},
+                                                                      ).show();
+                                                                    },
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .delete,
+                                                                      color: Colors
+                                                                          .red,
+                                                                    ));
+                                                              }
                                                             },
-                                                            icon: const Icon(
-                                                              Icons.delete,
-                                                              color: Colors.red,
-                                                            ))
+                                                          )
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                border:
+                                                                    Border.all(
+                                                                  width: 1,
+                                                                  color:
+                                                                      greyColorNolot,
+                                                                )),
+                                                        child: Row(
+                                                          children: [
+                                                            textWhile(
+                                                              "Min Value :",
+                                                              markertPrice
+                                                                  .minOldValueR
+                                                                  .value
+                                                                  .toString(),
+                                                            ),
+                                                            textWhile(
+                                                              "Max Value :",
+                                                              markertPrice
+                                                                  .maxOldValueR
+                                                                  .value
+                                                                  .toString(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Text(
+                                                        '- Commercial Markert Price',
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: blackColor,
+                                                          fontSize: 14,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(10),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5),
+                                                                border:
+                                                                    Border.all(
+                                                                  width: 1,
+                                                                  color:
+                                                                      greyColorNolot,
+                                                                )),
+                                                        child: Row(
+                                                          children: [
+                                                            textWhile(
+                                                              "Min Value :",
+                                                              markertPrice
+                                                                  .minOldValueC
+                                                                  .value
+                                                                  .toString(),
+                                                            ),
+                                                            textWhile(
+                                                              "Max Value :",
+                                                              markertPrice
+                                                                  .maxOldValueC
+                                                                  .value
+                                                                  .toString(),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          );
-                                        }
-                                      },
+                                                const SizedBox(height: 10),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  height: 40,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color: whiteColor,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: whiteColor,
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Main Road From Map : ",
+                                                          style: TextStyle(
+                                                              color: greyColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize:
+                                                                  fontSize),
+                                                        ),
+                                                        Text(
+                                                          shortName,
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontSize:
+                                                                  fontSize),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  height: 40,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color: whiteColor,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: whiteColor,
+                                                  ),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          "Main Road: ",
+                                                          style: TextStyle(
+                                                              color: greyColor,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize:
+                                                                  fontSize),
+                                                        ),
+                                                        Text(
+                                                          markertPrice
+                                                              .roadName.value,
+                                                          style: TextStyle(
+                                                              color: Colors.red,
+                                                              fontSize:
+                                                                  fontSize),
+                                                        ),
+                                                        const Spacer(),
+                                                        if (shortName !=
+                                                                'Unnamed Road' &&
+                                                            shortName != '')
+                                                          IconButton(
+                                                              onPressed: () {
+                                                                AwesomeDialog(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  width: 400,
+                                                                  context:
+                                                                      context,
+                                                                  dialogType:
+                                                                      DialogType
+                                                                          .question,
+                                                                  animType: AnimType
+                                                                      .rightSlide,
+                                                                  headerAnimationLoop:
+                                                                      false,
+                                                                  title: 'Done',
+                                                                  desc:
+                                                                      "Do you want to Deleted!?",
+                                                                  btnOkOnPress:
+                                                                      () async {
+                                                                    markertPrice
+                                                                        .deletetedMainRoad(
+                                                                      shortName,
+                                                                      /////// Markert Price Old
+                                                                      markertPrice
+                                                                          .minOldValueR
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .maxOldValueR
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .minOldValueC
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .maxOldValueC
+                                                                          .value,
+                                                                      /////// Markert Price New
+                                                                      markertPrice
+                                                                          .minValueR
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .maxValueR
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .minValueC
+                                                                          .value,
+                                                                      markertPrice
+                                                                          .maxValueC
+                                                                          .value,
+                                                                      ////////
+                                                                      shortName,
+                                                                      markertPrice
+                                                                          .roadName
+                                                                          .value,
+                                                                      latLng
+                                                                          .latitude
+                                                                          .toString(),
+                                                                      latLng
+                                                                          .longitude
+                                                                          .toString(),
+                                                                      widget
+                                                                          .listUsers[
+                                                                              0]
+                                                                              [
+                                                                              'agency']
+                                                                          .toString(),
+                                                                    );
+                                                                  },
+                                                                  btnCancelOnPress:
+                                                                      () {},
+                                                                ).show();
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                              ))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          }
+                                        },
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         )
@@ -1104,214 +1150,235 @@ class _HomePageState extends State<InputRoad> {
                           height: MediaQuery.of(context).size.height,
                           width: 500,
                           color: appback,
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 30, left: 30),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 30),
-                                Row(
-                                  children: [
-                                    const Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          checkBool = !checkBool;
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        backgroundColor: whiteColor,
-                                        child: const Icon(
-                                          Icons.refresh,
-                                          size: 30,
-                                          color: Color.fromARGB(255, 3, 133, 7),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 30, left: 30),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 30),
+                                  Row(
+                                    children: [
+                                      const Spacer(),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            checkBool = !checkBool;
+                                          });
+                                        },
+                                        child: CircleAvatar(
+                                          backgroundColor: whiteColor,
+                                          child: const Icon(
+                                            Icons.refresh,
+                                            size: 30,
+                                            color:
+                                                Color.fromARGB(255, 3, 133, 7),
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 20),
-                                Obx(
-                                  () {
-                                    if (markertPrice.isData.value) {
-                                      return const WaitingFunction();
-                                    } else if (markertPrice.listData.isEmpty) {
-                                      return const SizedBox();
-                                    } else {
-                                      return Container(
-                                        padding: const EdgeInsets.all(10),
-                                        decoration: BoxDecoration(
-                                            color: whiteColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                width: 1, color: whiteColor)),
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.85,
-                                        width: double.infinity,
-                                        child: ListView.builder(
-                                          itemCount:
-                                              markertPrice.listData.length,
-                                          itemBuilder: (context, index) =>
-                                              Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: blackColor)),
-                                              width: double.infinity,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(20),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        textblack(
-                                                          "No.${index + 1}",
-                                                        ),
-                                                        const Spacer(),
-                                                        textblack(
-                                                          "Name : ${markertPrice.listData[index]['username'] ?? ""},",
-                                                        ),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textblack(
-                                                          "Date : ${markertPrice.listData[index]['create_date'] ?? ""}",
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    textblackB(
-                                                      "- New Residential",
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        textDet("Min Value : ",
-                                                            "${markertPrice.listData[index]['min_valueR'] ?? ""}\$"),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textDet("Max Value : ",
-                                                            "${markertPrice.listData[index]['max_valueR'] ?? ""}\$"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    textblackB(
-                                                      "- New Commercial",
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        textDet("Min Value : ",
-                                                            "${markertPrice.listData[index]['min_valueC'] ?? ""}\$"),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textDet("Max Value : ",
-                                                            "${markertPrice.listData[index]['max_valueC'] ?? ""}\$"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    textblackB(
-                                                      "- Old Residential",
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        textDet("Min Value : ",
-                                                            "${markertPrice.listData[index]['min_old_valueR'] ?? ""}\$"),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textDet("Max Value : ",
-                                                            "${markertPrice.listData[index]['max_old_valueR'] ?? ""}\$"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    textblackB(
-                                                      "- Old Commercial",
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        textDet("Min Value : ",
-                                                            "${markertPrice.listData[index]['min_old_valueC'] ?? ""}\$"),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textDet("Max Value : ",
-                                                            "${markertPrice.listData[index]['max_old_valueC'] ?? ""}\$"),
-                                                      ],
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Divider(
-                                                      thickness: 2,
-                                                      color: greyColor,
-                                                    ),
-                                                    const SizedBox(height: 5),
-                                                    Row(
-                                                      children: [
-                                                        textDet("Road New : ",
-                                                            "${markertPrice.listData[index]['main_road'] ?? ""}\$"),
-                                                        const SizedBox(
-                                                            width: 10),
-                                                        textDet("Old Road : ",
-                                                            "${markertPrice.listData[index]['main_road_old'] ?? ""}\$"),
-                                                      ],
-                                                    ),
-                                                  ],
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Obx(
+                                    () {
+                                      if (markertPrice.isData.value) {
+                                        return const WaitingFunction();
+                                      } else if (markertPrice
+                                          .listData.isEmpty) {
+                                        return const SizedBox();
+                                      } else {
+                                        return Container(
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: whiteColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  width: 1, color: whiteColor)),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.85,
+                                          width: double.infinity,
+                                          child: ListView.builder(
+                                            itemCount:
+                                                markertPrice.listData.length,
+                                            itemBuilder: (context, index) =>
+                                                Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    border: Border.all(
+                                                        width: 1,
+                                                        color: blackColor)),
+                                                width: double.infinity,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(20),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          textblack(
+                                                            "No.${index + 1}",
+                                                          ),
+                                                          const Spacer(),
+                                                          textblack(
+                                                            "Name : ${markertPrice.listData[index]['username'] ?? ""},",
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textblack(
+                                                            "Date : ${markertPrice.listData[index]['create_date'] ?? ""}",
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      textblackB(
+                                                        "- New Residential",
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          textDet(
+                                                              "Min Value : ",
+                                                              "${markertPrice.listData[index]['min_valueR'] ?? ""}\$"),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textDet(
+                                                              "Max Value : ",
+                                                              "${markertPrice.listData[index]['max_valueR'] ?? ""}\$"),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      textblackB(
+                                                        "- New Commercial",
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          textDet(
+                                                              "Min Value : ",
+                                                              "${markertPrice.listData[index]['min_valueC'] ?? ""}\$"),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textDet(
+                                                              "Max Value : ",
+                                                              "${markertPrice.listData[index]['max_valueC'] ?? ""}\$"),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      textblackB(
+                                                        "- Old Residential",
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          textDet(
+                                                              "Min Value : ",
+                                                              "${markertPrice.listData[index]['min_old_valueR'] ?? ""}\$"),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textDet(
+                                                              "Max Value : ",
+                                                              "${markertPrice.listData[index]['max_old_valueR'] ?? ""}\$"),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      textblackB(
+                                                        "- Old Commercial",
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          textDet(
+                                                              "Min Value : ",
+                                                              "${markertPrice.listData[index]['min_old_valueC'] ?? ""}\$"),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textDet(
+                                                              "Max Value : ",
+                                                              "${markertPrice.listData[index]['max_old_valueC'] ?? ""}\$"),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Divider(
+                                                        thickness: 2,
+                                                        color: greyColor,
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          textDet("Road New : ",
+                                                              "${markertPrice.listData[index]['main_road'] ?? ""}\$"),
+                                                          const SizedBox(
+                                                              width: 10),
+                                                          textDet("Old Road : ",
+                                                              "${markertPrice.listData[index]['main_road_old'] ?? ""}\$"),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                                Obx(
-                                  () {
-                                    if (markertPrice.listData.isEmpty) {
-                                      return const SizedBox();
-                                    } else {
-                                      return SizedBox(
-                                        height: 45,
-                                        child: NumberPaginator(
-                                          controller: _inputController,
-                                          numberPages:
-                                              markertPrice.lastPage.value,
-                                          onPageChange: (int index) async {
-                                            setState(() {
-                                              page = index + 1;
-                                            });
-                                            markertPrice.listPiganation(
-                                                10, page);
-                                          },
-                                          initialPage: 0,
-                                          config: NumberPaginatorUIConfig(
-                                            buttonShape: BeveledRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(1),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                  Obx(
+                                    () {
+                                      if (markertPrice.listData.isEmpty) {
+                                        return const SizedBox();
+                                      } else {
+                                        return SizedBox(
+                                          height: 45,
+                                          child: NumberPaginator(
+                                            controller: _inputController,
+                                            numberPages:
+                                                markertPrice.lastPage.value,
+                                            onPageChange: (int index) async {
+                                              setState(() {
+                                                page = index + 1;
+                                              });
+                                              markertPrice.listPiganation(
+                                                  10, page);
+                                            },
+                                            initialPage: 0,
+                                            config: NumberPaginatorUIConfig(
+                                              buttonShape:
+                                                  BeveledRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(1),
+                                              ),
+                                              buttonUnselectedForegroundColor:
+                                                  blackColor,
+                                              buttonUnselectedBackgroundColor:
+                                                  whiteNotFullColor,
+                                              buttonSelectedForegroundColor:
+                                                  whiteColor,
+                                              buttonSelectedBackgroundColor:
+                                                  blueColor,
                                             ),
-                                            buttonUnselectedForegroundColor:
-                                                blackColor,
-                                            buttonUnselectedBackgroundColor:
-                                                whiteNotFullColor,
-                                            buttonSelectedForegroundColor:
-                                                whiteColor,
-                                            buttonSelectedBackgroundColor:
-                                                blueColor,
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ],
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -12,6 +12,7 @@ import '../getx/checkUpdate/updateCheck.dart';
 import '../page/navigate_home/Approvel/classSubmit.dart';
 import '../page/navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../page/navigate_home/AutoVerbal/Zone/add_zone.dart';
+import '../page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import '../page/navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../page/navigate_home/Comparable/add_comparable_new_page.dart';
 import '../page/navigate_home/Customer/List/customer_list.dart';
@@ -299,7 +300,7 @@ class _DrawerOptionState extends State<DrawerOption> {
                                               builder: (context) =>
                                                   const Show_autoVerbals()));
                                       break;
-                                    default:
+                                    case 2:
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(
                                               builder: (context) => ZoneMap(
@@ -307,7 +308,40 @@ class _DrawerOptionState extends State<DrawerOption> {
                                                         widget.listUser,
                                                   )));
                                       break;
+
+                                    default:
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => InputRoad(
+                                                    listUsers: widget.listUser,
+                                                  )));
+                                      break;
                                   }
+                                  // switch (i) {
+                                  //   case 0:
+                                  //     Navigator.of(context)
+                                  //         .push(MaterialPageRoute(
+                                  //             builder: (context) => VerbalAdmin(
+                                  //                   addNew: (value) {},
+                                  //                   listUser: widget.listUser,
+                                  //                   type: (value) {},
+                                  //                 )));
+                                  //     break;
+                                  //   case 1:
+                                  //     Navigator.of(context).push(
+                                  //         MaterialPageRoute(
+                                  //             builder: (context) =>
+                                  //                 const Show_autoVerbals()));
+                                  //     break;
+                                  //   default:
+                                  //     Navigator.of(context)
+                                  //         .push(MaterialPageRoute(
+                                  //             builder: (context) => ZoneMap(
+                                  //                   listLocalHost:
+                                  //                       widget.listUser,
+                                  //                 )));
+                                  //     break;
+                                  // }
                                 },
                                 child: textfield(
                                     listAdminOption[i]['title'].toString())))

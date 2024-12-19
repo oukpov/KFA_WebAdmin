@@ -31,6 +31,7 @@ import '../../screen/Property/FirstProperty/ResponseDevice/responsive_layout.dar
 import '../navigate_home/Approvel/classSubmit.dart';
 import '../navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../navigate_home/AutoVerbal/Zone/add_zone.dart';
+import '../navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import '../navigate_home/Auto_verbal/Add/googlemap_verbal.dart';
 import '../navigate_home/Comparable/add_comparable_new_page.dart';
 import '../navigate_home/Customer/List/customer_list.dart';
@@ -844,18 +845,12 @@ class _homescreenState extends State<homescreen> {
                                             listLocalHost: widget.listUser,
                                           )));
                                   break;
-                                case 3:
 
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => ZoneMap(
-                                  //           listLocalHost: widget.listUser,
-                                  //         )));
-                                  break;
                                 default:
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: (context) => ZoneMap(
-                                  //           listLocalHost: widget.listUser,
-                                  //         )));
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => InputRoad(
+                                            listUsers: widget.listUser,
+                                          )));
                                   break;
                               }
                             },
