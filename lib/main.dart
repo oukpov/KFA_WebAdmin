@@ -97,6 +97,25 @@ class _MyAppState extends State<MyApp> {
         //   },
         // ]),
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        home: InputRoad(
+          listUsers: [
+            {
+              "id": 52,
+              "user_role_id": 59,
+              "agency": 70,
+              "username": "Test",
+              "password": "333802e987dfce42e28b749a20dc257f",
+              "user_status": 0
+            }
+          ],
+        ),
+        // home: LoginPage(),
+=======
+>>>>>>> 9ea0ee7ea793c9273120e814ec90f0df2cdefafb
+>>>>>>> 465e9547494140f028e8cf67216ba7b9365f23a9
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -109,7 +128,12 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
+<<<<<<< HEAD
         // home: LoginPage(),
+=======
+        home: LoginPage(),
+>>>>>>> a87e51f4db2716d262a6466bd9e77cdddc883df8
+>>>>>>> 465e9547494140f028e8cf67216ba7b9365f23a9
 
         // home: AutoList()
 
