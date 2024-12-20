@@ -575,7 +575,7 @@ class _HomePageState extends State<InputRoad> {
                                   const SizedBox(height: 15),
                                   Container(
                                     height: 520,
-                                    width: double.infinity,
+                                    width: 500,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
@@ -840,77 +840,79 @@ class _HomePageState extends State<InputRoad> {
                                                               height: 5),
                                                           Row(
                                                             children: [
-                                                              Text(
-                                                                '- Residential Markert Price',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color:
-                                                                      blackColor,
-                                                                  fontSize:
-                                                                      fontSize,
+                                                              if (markertPrice
+                                                                  .listMarkertR
+                                                                  .isNotEmpty)
+                                                                Text(
+                                                                  '- Residential Markert Price',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color:
+                                                                        blackColor,
+                                                                    fontSize:
+                                                                        fontSize,
+                                                                  ),
                                                                 ),
-                                                              ),
                                                               const Spacer(),
-                                                              // Obx(
-                                                              //   () {
-                                                              //     if (markertPrice
-                                                              //         .isMarkert
-                                                              //         .value) {
-                                                              //       return const SizedBox();
-                                                              //     } else if (markertPrice
-                                                              //         .listMarkertC
-                                                              //         .isEmpty) {
-                                                              //       return const SizedBox();
-                                                              //     } else {
-                                                              //       return IconButton(
-                                                              //           onPressed:
-                                                              //               () {
-                                                              //             AwesomeDialog(
-                                                              //               alignment:
-                                                              //                   Alignment.centerLeft,
-                                                              //               width:
-                                                              //                   400,
-                                                              //               context:
-                                                              //                   context,
-                                                              //               dialogType:
-                                                              //                   DialogType.question,
-                                                              //               animType:
-                                                              //                   AnimType.rightSlide,
-                                                              //               headerAnimationLoop:
-                                                              //                   false,
-                                                              //               title:
-                                                              //                   'Done',
-                                                              //               desc:
-                                                              //                   "Do you want to deleted!",
-                                                              //               btnOkOnPress:
-                                                              //                   () async {
-                                                              //                 markertPrice.deleteMarkert(markertPrice.sangkatID.value, markertPrice.khanID.value);
-                                                              //               },
-                                                              //               btnCancelOnPress:
-                                                              //                   () {},
-                                                              //             ).show();
-                                                              //           },
-                                                              //           icon:
-                                                              //               const Icon(
-                                                              //             Icons
-                                                              //                 .delete,
-                                                              //             color:
-                                                              //                 Colors.red,
-                                                              //           ));
-                                                              //     }
-                                                              //   },
-                                                              // )
+                                                              Obx(
+                                                                () {
+                                                                  if (markertPrice
+                                                                      .isMarkert
+                                                                      .value) {
+                                                                    return const SizedBox();
+                                                                  } else if (markertPrice
+                                                                      .listMarkertC
+                                                                      .isEmpty) {
+                                                                    return const SizedBox();
+                                                                  } else {
+                                                                    return IconButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          AwesomeDialog(
+                                                                            alignment:
+                                                                                Alignment.centerLeft,
+                                                                            width:
+                                                                                400,
+                                                                            context:
+                                                                                context,
+                                                                            dialogType:
+                                                                                DialogType.question,
+                                                                            animType:
+                                                                                AnimType.rightSlide,
+                                                                            headerAnimationLoop:
+                                                                                false,
+                                                                            title:
+                                                                                'Done',
+                                                                            desc:
+                                                                                "Do you want to deleted!",
+                                                                            btnOkOnPress:
+                                                                                () async {
+                                                                              markertPrice.deleteMarkert(markertPrice.sangkatID.value, markertPrice.khanID.value);
+                                                                            },
+                                                                            btnCancelOnPress:
+                                                                                () {},
+                                                                          ).show();
+                                                                        },
+                                                                        icon:
+                                                                            const Icon(
+                                                                          Icons
+                                                                              .delete,
+                                                                          color:
+                                                                              Colors.red,
+                                                                        ));
+                                                                  }
+                                                                },
+                                                              )
                                                             ],
                                                           ),
                                                           const SizedBox(
                                                               height: 5),
 
                                                           Container(
-                                                            width:
-                                                                double.infinity,
+                                                            width: 500,
                                                             padding:
                                                                 const EdgeInsets
                                                                     .all(10),
