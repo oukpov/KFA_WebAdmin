@@ -841,63 +841,45 @@ class _HomePageState extends State<InputRoad> {
                                                                   fontSize,
                                                             ),
                                                           ),
-                                                          if (markertPrice
-                                                                  .listMarkertR
-                                                                  .isNotEmpty &&
-                                                              markertPrice
-                                                                  .listMarkertC
-                                                                  .isNotEmpty)
-                                                            const Spacer(),
-                                                          if (markertPrice
-                                                                  .listMarkertR
-                                                                  .isNotEmpty &&
-                                                              markertPrice
-                                                                  .listMarkertC
-                                                                  .isNotEmpty)
-                                                            IconButton(
-                                                                onPressed: () {
-                                                                  AwesomeDialog(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .centerLeft,
-                                                                    width: 400,
-                                                                    context:
-                                                                        context,
-                                                                    dialogType:
-                                                                        DialogType
-                                                                            .question,
-                                                                    animType:
-                                                                        AnimType
-                                                                            .rightSlide,
-                                                                    headerAnimationLoop:
-                                                                        false,
-                                                                    title:
-                                                                        'Done',
-                                                                    desc:
-                                                                        "Do you want to deleted!",
-                                                                    btnOkOnPress:
-                                                                        () async {
-                                                                      markertPrice.deleteMarkert(
-                                                                          markertPrice
-                                                                              .sangkatID
-                                                                              .value,
-                                                                          markertPrice
-                                                                              .khanID
-                                                                              .value);
-                                                                    },
-                                                                    btnCancelOnPress:
-                                                                        () {},
-                                                                  ).show();
-                                                                },
-                                                                icon:
-                                                                    const Icon(
-                                                                  Icons.delete,
-                                                                  color: Colors
-                                                                      .red,
-                                                                  size: 25,
-                                                                ))
-                                                          else
-                                                            const SizedBox()
+                                                          const Spacer(),
+                                                          InkWell(
+                                                              onTap: () {
+                                                                AwesomeDialog(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  width: 400,
+                                                                  context:
+                                                                      context,
+                                                                  dialogType:
+                                                                      DialogType
+                                                                          .question,
+                                                                  animType: AnimType
+                                                                      .rightSlide,
+                                                                  headerAnimationLoop:
+                                                                      false,
+                                                                  title: 'Done',
+                                                                  desc:
+                                                                      "Do you want to deleted!",
+                                                                  btnOkOnPress:
+                                                                      () async {
+                                                                    markertPrice.deleteMarkert(
+                                                                        markertPrice
+                                                                            .sangkatID
+                                                                            .value,
+                                                                        markertPrice
+                                                                            .khanID
+                                                                            .value);
+                                                                  },
+                                                                  btnCancelOnPress:
+                                                                      () {},
+                                                                ).show();
+                                                              },
+                                                              child: const Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                              ))
                                                         ],
                                                       ),
                                                       const SizedBox(height: 5),
