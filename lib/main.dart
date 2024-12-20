@@ -97,6 +97,12 @@ class _MyAppState extends State<MyApp> {
         //   },
         // ]),
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e5c09ed09d370bf89c0dc7210b76c1bdf10ca7b6
         home: InputRoad(
           listUsers: [
             {
@@ -110,7 +116,13 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         // home: LoginPage(),
+<<<<<<< HEAD
 
+=======
+=======
+>>>>>>> 9ea0ee7ea793c9273120e814ec90f0df2cdefafb
+>>>>>>> 465e9547494140f028e8cf67216ba7b9365f23a9
+>>>>>>> e5c09ed09d370bf89c0dc7210b76c1bdf10ca7b6
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -123,7 +135,16 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
+<<<<<<< HEAD
         // home: LoginPage(),
+=======
+<<<<<<< HEAD
+        // home: LoginPage(),
+=======
+        home: LoginPage(),
+>>>>>>> a87e51f4db2716d262a6466bd9e77cdddc883df8
+>>>>>>> 465e9547494140f028e8cf67216ba7b9365f23a9
+>>>>>>> e5c09ed09d370bf89c0dc7210b76c1bdf10ca7b6
 
         // home: AutoList()
 
