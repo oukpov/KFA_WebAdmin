@@ -37,6 +37,7 @@ class _InputControllerState extends State<InputController> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 35,
+      width: double.infinity,
       child: TextFormField(
         controller: controller,
         onChanged: (value) {
