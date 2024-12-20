@@ -316,6 +316,14 @@ class _HomePageState extends State<InputRoad> {
                                   const SizedBox(height: 30),
                                   Row(
                                     children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back,
+                                            color: whiteColor,
+                                          )),
                                       const Spacer(),
                                       InkWell(
                                         onTap: () {
@@ -835,63 +843,53 @@ class _HomePageState extends State<InputRoad> {
                                                             ),
                                                           ),
                                                           const Spacer(),
-                                                          SizedBox(
-                                                            height: 40,
-                                                            width: 60,
-                                                            child: Obx(
-                                                              () {
-                                                                if (markertPrice
-                                                                    .isMarkert
-                                                                    .value) {
-                                                                  return const WaitingFunction();
-                                                                } else if (markertPrice
-                                                                        .listMarkertC
-                                                                        .isEmpty &&
-                                                                    markertPrice
-                                                                        .listMarkertR
-                                                                        .isEmpty) {
-                                                                  return const SizedBox();
-                                                                } else {
-                                                                  return IconButton(
-                                                                      onPressed:
-                                                                          () {
-                                                                        AwesomeDialog(
-                                                                          alignment:
-                                                                              Alignment.centerLeft,
-                                                                          width:
-                                                                              400,
-                                                                          context:
-                                                                              context,
-                                                                          dialogType:
-                                                                              DialogType.question,
-                                                                          animType:
-                                                                              AnimType.rightSlide,
-                                                                          headerAnimationLoop:
-                                                                              false,
-                                                                          title:
-                                                                              'Done',
-                                                                          desc:
-                                                                              "Do you want to deleted!",
-                                                                          btnOkOnPress:
-                                                                              () async {
-                                                                            markertPrice.deleteMarkert(markertPrice.sangkatID.value,
-                                                                                markertPrice.khanID.value);
-                                                                          },
-                                                                          btnCancelOnPress:
-                                                                              () {},
-                                                                        ).show();
-                                                                      },
-                                                                      icon:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .delete,
-                                                                        color: Colors
-                                                                            .red,
-                                                                      ));
-                                                                }
-                                                              },
-                                                            ),
-                                                          )
+                                                          if (markertPrice
+                                                                  .listMarkertC
+                                                                  .isNotEmpty &&
+                                                              markertPrice
+                                                                  .listMarkertR
+                                                                  .isNotEmpty)
+                                                            IconButton(
+                                                                onPressed: () {
+                                                                  AwesomeDialog(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    width: 400,
+                                                                    context:
+                                                                        context,
+                                                                    dialogType:
+                                                                        DialogType
+                                                                            .question,
+                                                                    animType:
+                                                                        AnimType
+                                                                            .rightSlide,
+                                                                    headerAnimationLoop:
+                                                                        false,
+                                                                    title:
+                                                                        'Done',
+                                                                    desc:
+                                                                        "Do you want to deleted!",
+                                                                    btnOkOnPress:
+                                                                        () async {
+                                                                      markertPrice.deleteMarkert(
+                                                                          markertPrice
+                                                                              .sangkatID
+                                                                              .value,
+                                                                          markertPrice
+                                                                              .khanID
+                                                                              .value);
+                                                                    },
+                                                                    btnCancelOnPress:
+                                                                        () {},
+                                                                  ).show();
+                                                                },
+                                                                icon:
+                                                                    const Icon(
+                                                                  Icons.delete,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ))
                                                         ],
                                                       ),
                                                       const SizedBox(height: 5),
@@ -1175,6 +1173,14 @@ class _HomePageState extends State<InputRoad> {
                                   const SizedBox(height: 30),
                                   Row(
                                     children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back,
+                                            color: whiteColor,
+                                          )),
                                       const Spacer(),
                                       InkWell(
                                         onTap: () {
