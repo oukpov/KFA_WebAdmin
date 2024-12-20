@@ -587,6 +587,11 @@ class _HomePageState extends State<InputRoad> {
                                         () {
                                           if (markertPrice.isMarkert.value) {
                                             return const WaitingFunction();
+                                          } else if (markertPrice
+                                                  .listMarkertC.isEmpty &&
+                                              markertPrice
+                                                  .listMarkertR.isEmpty) {
+                                            return const SizedBox();
                                           } else {
                                             return Column(
                                               crossAxisAlignment:
@@ -901,42 +906,46 @@ class _HomePageState extends State<InputRoad> {
                                                       if (markertPrice
                                                           .listMarkertR
                                                           .isNotEmpty)
-                                                        Container(
-                                                          // height: 45,
-                                                          width:
-                                                              double.infinity,
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  border: Border
-                                                                      .all(
-                                                                    width: 1,
-                                                                    color:
-                                                                        greyColorNolot,
-                                                                  )),
-                                                          child: Row(
-                                                            children: [
-                                                              textWhile(
-                                                                "Min Value :",
-                                                                markertPrice
-                                                                    .minOldValueR
-                                                                    .value
-                                                                    .toString(),
-                                                              ),
-                                                              textWhile(
-                                                                "Max Value :",
-                                                                markertPrice
-                                                                    .maxOldValueR
-                                                                    .value
-                                                                    .toString(),
-                                                              ),
-                                                            ],
+                                                        Form(
+                                                          child: Container(
+                                                            width:
+                                                                double.infinity,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                5),
+                                                                    border:
+                                                                        Border
+                                                                            .all(
+                                                                      width: 1,
+                                                                      color:
+                                                                          greyColorNolot,
+                                                                    )),
+                                                            child: Row(
+                                                              children: [
+                                                                textWhile(
+                                                                    "Min Value :",
+                                                                    "100"
+                                                                    // markertPrice
+                                                                    //     .minOldValueR
+                                                                    //     .value
+                                                                    //     .toString(),
+                                                                    ),
+                                                                textWhile(
+                                                                    "Max Value :",
+                                                                    "100"
+                                                                    // markertPrice
+                                                                    //     .maxOldValueR
+                                                                    //     .value
+                                                                    //     .toString(),
+                                                                    ),
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
                                                       const SizedBox(height: 5),
@@ -952,46 +961,46 @@ class _HomePageState extends State<InputRoad> {
                                                             fontSize: 14,
                                                           ),
                                                         ),
-                                                      const SizedBox(
-                                                          height: 10),
-                                                      if (markertPrice
-                                                          .listMarkertC
-                                                          .isNotEmpty)
-                                                        Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  border: Border
-                                                                      .all(
-                                                                    width: 1,
-                                                                    color:
-                                                                        greyColorNolot,
-                                                                  )),
-                                                          child: Row(
-                                                            children: [
-                                                              textWhile(
-                                                                "Min Value :",
-                                                                markertPrice
-                                                                    .minOldValueC
-                                                                    .value
-                                                                    .toString(),
-                                                              ),
-                                                              textWhile(
-                                                                "Max Value :",
-                                                                markertPrice
-                                                                    .maxOldValueC
-                                                                    .value
-                                                                    .toString(),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
+                                                      // const SizedBox(
+                                                      //     height: 10),
+                                                      // if (markertPrice
+                                                      //     .listMarkertC
+                                                      //     .isNotEmpty)
+                                                      //   Container(
+                                                      //     padding:
+                                                      //         const EdgeInsets
+                                                      //             .all(10),
+                                                      //     decoration:
+                                                      //         BoxDecoration(
+                                                      //             borderRadius:
+                                                      //                 BorderRadius
+                                                      //                     .circular(
+                                                      //                         5),
+                                                      //             border: Border
+                                                      //                 .all(
+                                                      //               width: 1,
+                                                      //               color:
+                                                      //                   greyColorNolot,
+                                                      //             )),
+                                                      //     child: Row(
+                                                      //       children: [
+                                                      //         textWhile(
+                                                      //           "Min Value :",
+                                                      //           markertPrice
+                                                      //               .minOldValueC
+                                                      //               .value
+                                                      //               .toString(),
+                                                      //         ),
+                                                      //         textWhile(
+                                                      //           "Max Value :",
+                                                      //           markertPrice
+                                                      //               .maxOldValueC
+                                                      //               .value
+                                                      //               .toString(),
+                                                      //         ),
+                                                      //       ],
+                                                      //     ),
+                                                      //   ),
                                                     ],
                                                   ),
                                                 ),
@@ -1757,7 +1766,6 @@ class _HomePageState extends State<InputRoad> {
     return Expanded(
       flex: 1,
       child: SizedBox(
-        width: double.infinity,
         child: Row(
           children: [
             Text(
