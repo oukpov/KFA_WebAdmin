@@ -316,6 +316,14 @@ class _HomePageState extends State<InputRoad> {
                                   const SizedBox(height: 30),
                                   Row(
                                     children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back,
+                                            color: whiteColor,
+                                          )),
                                       const Spacer(),
                                       InkWell(
                                         onTap: () {
@@ -706,42 +714,47 @@ class _HomePageState extends State<InputRoad> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Min Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .minValueR
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .minValueR.value),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Max Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .maxValueR
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .maxValueR.value),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: 500,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Min Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .minValueR
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .minValueR
+                                                                .value),
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Max Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .maxValueR
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .maxValueR
+                                                                .value),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 20),
                                                 Text(
@@ -752,42 +765,47 @@ class _HomePageState extends State<InputRoad> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
-                                                Row(
-                                                  children: [
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Min Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .minValueC
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .minValueC.value),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Expanded(
-                                                      flex: 1,
-                                                      child: InputController(
-                                                          title: "Max Value",
-                                                          controllerback:
-                                                              (value) {
-                                                            setState(() {
-                                                              markertPrice
-                                                                      .maxValueC
-                                                                      .value =
-                                                                  value;
-                                                            });
-                                                          },
-                                                          value: markertPrice
-                                                              .maxValueC.value),
-                                                    ),
-                                                  ],
+                                                SizedBox(
+                                                  width: 500,
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Min Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .minValueC
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .minValueC
+                                                                .value),
+                                                      ),
+                                                      const SizedBox(width: 10),
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: InputController(
+                                                            title: "Max Value",
+                                                            controllerback:
+                                                                (value) {
+                                                              setState(() {
+                                                                markertPrice
+                                                                        .maxValueC
+                                                                        .value =
+                                                                    value;
+                                                              });
+                                                            },
+                                                            value: markertPrice
+                                                                .maxValueC
+                                                                .value),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                                 const SizedBox(height: 15),
                                                 Container(
@@ -813,17 +831,21 @@ class _HomePageState extends State<InputRoad> {
                                                       const SizedBox(height: 5),
                                                       Row(
                                                         children: [
-                                                          Text(
-                                                            '- Residential Markert Price',
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: blackColor,
-                                                              fontSize:
-                                                                  fontSize,
+                                                          if (markertPrice
+                                                              .listMarkertR
+                                                              .isNotEmpty)
+                                                            Text(
+                                                              '- Residential Markert Price',
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color:
+                                                                    blackColor,
+                                                                fontSize:
+                                                                    fontSize,
+                                                              ),
                                                             ),
-                                                          ),
                                                           const Spacer(),
                                                           Obx(
                                                             () {
@@ -879,88 +901,97 @@ class _HomePageState extends State<InputRoad> {
                                                         ],
                                                       ),
                                                       const SizedBox(height: 5),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border:
-                                                                    Border.all(
-                                                                  width: 1,
-                                                                  color:
-                                                                      greyColorNolot,
-                                                                )),
-                                                        child: Row(
-                                                          children: [
-                                                            textWhile(
-                                                              "Min Value :",
-                                                              markertPrice
-                                                                  .minOldValueR
-                                                                  .value
-                                                                  .toString(),
-                                                            ),
-                                                            textWhile(
-                                                              "Max Value :",
-                                                              markertPrice
-                                                                  .maxOldValueR
-                                                                  .value
-                                                                  .toString(),
-                                                            ),
-                                                          ],
+                                                      if (markertPrice
+                                                          .listMarkertR
+                                                          .isNotEmpty)
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        greyColorNolot,
+                                                                  )),
+                                                          child: Row(
+                                                            children: [
+                                                              textWhile(
+                                                                "Min Value :",
+                                                                markertPrice
+                                                                    .minOldValueR
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                              textWhile(
+                                                                "Max Value :",
+                                                                markertPrice
+                                                                    .maxOldValueR
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
                                                       const SizedBox(height: 5),
-                                                      Text(
-                                                        '- Commercial Markert Price',
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: blackColor,
-                                                          fontSize: 14,
+                                                      if (markertPrice
+                                                          .listMarkertC
+                                                          .isNotEmpty)
+                                                        Text(
+                                                          '- Commercial Markert Price',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: blackColor,
+                                                            fontSize: 14,
+                                                          ),
                                                         ),
-                                                      ),
                                                       const SizedBox(
                                                           height: 10),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(10),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                border:
-                                                                    Border.all(
-                                                                  width: 1,
-                                                                  color:
-                                                                      greyColorNolot,
-                                                                )),
-                                                        child: Row(
-                                                          children: [
-                                                            textWhile(
-                                                              "Min Value :",
-                                                              markertPrice
-                                                                  .minOldValueC
-                                                                  .value
-                                                                  .toString(),
-                                                            ),
-                                                            textWhile(
-                                                              "Max Value :",
-                                                              markertPrice
-                                                                  .maxOldValueC
-                                                                  .value
-                                                                  .toString(),
-                                                            ),
-                                                          ],
+                                                      if (markertPrice
+                                                          .listMarkertC
+                                                          .isNotEmpty)
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        greyColorNolot,
+                                                                  )),
+                                                          child: Row(
+                                                            children: [
+                                                              textWhile(
+                                                                "Min Value :",
+                                                                markertPrice
+                                                                    .minOldValueC
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                              textWhile(
+                                                                "Max Value :",
+                                                                markertPrice
+                                                                    .maxOldValueC
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -1159,6 +1190,14 @@ class _HomePageState extends State<InputRoad> {
                                   const SizedBox(height: 30),
                                   Row(
                                     children: [
+                                      IconButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          icon: Icon(
+                                            Icons.arrow_back,
+                                            color: whiteColor,
+                                          )),
                                       const Spacer(),
                                       InkWell(
                                         onTap: () {
