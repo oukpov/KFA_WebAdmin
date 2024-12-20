@@ -804,194 +804,197 @@ class _HomePageState extends State<InputRoad> {
                                                 //     ],
                                                 //   ),
                                                 // ),
-                                                // const SizedBox(height: 15),
-                                                // Container(
-                                                //   height: 180,
-                                                //   width: double.infinity,
-                                                //   decoration: BoxDecoration(
-                                                //     border: Border.all(
-                                                //       width: 1,
-                                                //       color: whiteColor,
-                                                //     ),
-                                                //     borderRadius:
-                                                //         BorderRadius.circular(
-                                                //             5),
-                                                //     color: whiteColor,
-                                                //   ),
-                                                //   padding:
-                                                //       const EdgeInsets.all(10),
-                                                //   child: Column(
-                                                //     crossAxisAlignment:
-                                                //         CrossAxisAlignment
-                                                //             .start,
-                                                //     children: [
-                                                //       const SizedBox(height: 5),
-                                                //       Row(
-                                                //         children: [
-                                                //           if (markertPrice
-                                                //               .listMarkertR
-                                                //               .isNotEmpty)
-                                                //             Text(
-                                                //               '- Residential Markert Price',
-                                                //               style: TextStyle(
-                                                //                 fontWeight:
-                                                //                     FontWeight
-                                                //                         .bold,
-                                                //                 color:
-                                                //                     blackColor,
-                                                //                 fontSize:
-                                                //                     fontSize,
-                                                //               ),
-                                                //             ),
-                                                //           const Spacer(),
-                                                //           Obx(
-                                                //             () {
-                                                //               if (markertPrice
-                                                //                   .isMarkert
-                                                //                   .value) {
-                                                //                 return const SizedBox();
-                                                //               } else if (markertPrice
-                                                //                   .listMarkertC
-                                                //                   .isEmpty) {
-                                                //                 return const SizedBox();
-                                                //               } else {
-                                                //                 return IconButton(
-                                                //                     onPressed:
-                                                //                         () {
-                                                //                       AwesomeDialog(
-                                                //                         alignment:
-                                                //                             Alignment.centerLeft,
-                                                //                         width:
-                                                //                             400,
-                                                //                         context:
-                                                //                             context,
-                                                //                         dialogType:
-                                                //                             DialogType.question,
-                                                //                         animType:
-                                                //                             AnimType.rightSlide,
-                                                //                         headerAnimationLoop:
-                                                //                             false,
-                                                //                         title:
-                                                //                             'Done',
-                                                //                         desc:
-                                                //                             "Do you want to deleted!",
-                                                //                         btnOkOnPress:
-                                                //                             () async {
-                                                //                           markertPrice.deleteMarkert(
-                                                //                               markertPrice.sangkatID.value,
-                                                //                               markertPrice.khanID.value);
-                                                //                         },
-                                                //                         btnCancelOnPress:
-                                                //                             () {},
-                                                //                       ).show();
-                                                //                     },
-                                                //                     icon:
-                                                //                         const Icon(
-                                                //                       Icons
-                                                //                           .delete,
-                                                //                       color: Colors
-                                                //                           .red,
-                                                //                     ));
-                                                //               }
-                                                //             },
-                                                //           )
-                                                //         ],
-                                                //       ),
-                                                //       const SizedBox(height: 5),
-                                                //       if (markertPrice
-                                                //           .listMarkertR
-                                                //           .isNotEmpty)
-                                                //         Container(
-                                                //           padding:
-                                                //               const EdgeInsets
-                                                //                   .all(10),
-                                                //           decoration:
-                                                //               BoxDecoration(
-                                                //                   borderRadius:
-                                                //                       BorderRadius
-                                                //                           .circular(
-                                                //                               5),
-                                                //                   border: Border
-                                                //                       .all(
-                                                //                     width: 1,
-                                                //                     color:
-                                                //                         greyColorNolot,
-                                                //                   )),
-                                                //           child: Row(
-                                                //             children: [
-                                                //               textWhile(
-                                                //                 "Min Value :",
-                                                //                 markertPrice
-                                                //                     .minOldValueR
-                                                //                     .value
-                                                //                     .toString(),
-                                                //               ),
-                                                //               textWhile(
-                                                //                 "Max Value :",
-                                                //                 markertPrice
-                                                //                     .maxOldValueR
-                                                //                     .value
-                                                //                     .toString(),
-                                                //               ),
-                                                //             ],
-                                                //           ),
-                                                //         ),
-                                                //       const SizedBox(height: 5),
-                                                //       if (markertPrice
-                                                //           .listMarkertC
-                                                //           .isNotEmpty)
-                                                //         Text(
-                                                //           '- Commercial Markert Price',
-                                                //           style: TextStyle(
-                                                //             fontWeight:
-                                                //                 FontWeight.bold,
-                                                //             color: blackColor,
-                                                //             fontSize: 14,
-                                                //           ),
-                                                //         ),
-                                                //       const SizedBox(
-                                                //           height: 10),
-                                                //       if (markertPrice
-                                                //           .listMarkertC
-                                                //           .isNotEmpty)
-                                                //         Container(
-                                                //           padding:
-                                                //               const EdgeInsets
-                                                //                   .all(10),
-                                                //           decoration:
-                                                //               BoxDecoration(
-                                                //                   borderRadius:
-                                                //                       BorderRadius
-                                                //                           .circular(
-                                                //                               5),
-                                                //                   border: Border
-                                                //                       .all(
-                                                //                     width: 1,
-                                                //                     color:
-                                                //                         greyColorNolot,
-                                                //                   )),
-                                                //           child: Row(
-                                                //             children: [
-                                                //               textWhile(
-                                                //                 "Min Value :",
-                                                //                 markertPrice
-                                                //                     .minOldValueC
-                                                //                     .value
-                                                //                     .toString(),
-                                                //               ),
-                                                //               textWhile(
-                                                //                 "Max Value :",
-                                                //                 markertPrice
-                                                //                     .maxOldValueC
-                                                //                     .value
-                                                //                     .toString(),
-                                                //               ),
-                                                //             ],
-                                                //           ),
-                                                //         ),
-                                                //     ],
-                                                //   ),
-                                                // ),
+                                                const SizedBox(height: 15),
+                                                Container(
+                                                  height: 180,
+                                                  width: 500,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width: 1,
+                                                      color: whiteColor,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    color: whiteColor,
+                                                  ),
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const SizedBox(height: 5),
+                                                      Row(
+                                                        children: [
+                                                          if (markertPrice
+                                                              .listMarkertR
+                                                              .isNotEmpty)
+                                                            Text(
+                                                              '- Residential Markert Price',
+                                                              style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color:
+                                                                    blackColor,
+                                                                fontSize:
+                                                                    fontSize,
+                                                              ),
+                                                            ),
+                                                          const Spacer(),
+                                                          Obx(
+                                                            () {
+                                                              if (markertPrice
+                                                                  .isMarkert
+                                                                  .value) {
+                                                                return const SizedBox();
+                                                              } else if (markertPrice
+                                                                  .listMarkertC
+                                                                  .isEmpty) {
+                                                                return const SizedBox();
+                                                              } else {
+                                                                return IconButton(
+                                                                    onPressed:
+                                                                        () {
+                                                                      AwesomeDialog(
+                                                                        alignment:
+                                                                            Alignment.centerLeft,
+                                                                        width:
+                                                                            400,
+                                                                        context:
+                                                                            context,
+                                                                        dialogType:
+                                                                            DialogType.question,
+                                                                        animType:
+                                                                            AnimType.rightSlide,
+                                                                        headerAnimationLoop:
+                                                                            false,
+                                                                        title:
+                                                                            'Done',
+                                                                        desc:
+                                                                            "Do you want to deleted!",
+                                                                        btnOkOnPress:
+                                                                            () async {
+                                                                          markertPrice.deleteMarkert(
+                                                                              markertPrice.sangkatID.value,
+                                                                              markertPrice.khanID.value);
+                                                                        },
+                                                                        btnCancelOnPress:
+                                                                            () {},
+                                                                      ).show();
+                                                                    },
+                                                                    icon:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .delete,
+                                                                      color: Colors
+                                                                          .red,
+                                                                    ));
+                                                              }
+                                                            },
+                                                          )
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      if (markertPrice
+                                                          .listMarkertR
+                                                          .isNotEmpty)
+                                                        Container(
+                                                          // height: 45,
+                                                          width:
+                                                              double.infinity,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        greyColorNolot,
+                                                                  )),
+                                                          child: Row(
+                                                            children: [
+                                                              textWhile(
+                                                                "Min Value :",
+                                                                markertPrice
+                                                                    .minOldValueR
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                              textWhile(
+                                                                "Max Value :",
+                                                                markertPrice
+                                                                    .maxOldValueR
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      const SizedBox(height: 5),
+                                                      if (markertPrice
+                                                          .listMarkertC
+                                                          .isNotEmpty)
+                                                        Text(
+                                                          '- Commercial Markert Price',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: blackColor,
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      if (markertPrice
+                                                          .listMarkertC
+                                                          .isNotEmpty)
+                                                        Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border
+                                                                      .all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        greyColorNolot,
+                                                                  )),
+                                                          child: Row(
+                                                            children: [
+                                                              textWhile(
+                                                                "Min Value :",
+                                                                markertPrice
+                                                                    .minOldValueC
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                              textWhile(
+                                                                "Max Value :",
+                                                                markertPrice
+                                                                    .maxOldValueC
+                                                                    .value
+                                                                    .toString(),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                ),
                                                 const SizedBox(height: 10),
                                                 Container(
                                                   alignment: Alignment.center,
@@ -1753,17 +1756,20 @@ class _HomePageState extends State<InputRoad> {
   Widget textWhile(String title, String value) {
     return Expanded(
       flex: 1,
-      child: Row(
-        children: [
-          Text(
-            "$title ",
-            style: TextStyle(color: Colors.red, fontSize: fontSize),
-          ),
-          Text(
-            value,
-            style: TextStyle(color: greyColor, fontSize: fontSize),
-          ),
-        ],
+      child: SizedBox(
+        width: double.infinity,
+        child: Row(
+          children: [
+            Text(
+              "$title ",
+              style: TextStyle(color: Colors.red, fontSize: fontSize),
+            ),
+            Text(
+              value,
+              style: TextStyle(color: greyColor, fontSize: fontSize),
+            ),
+          ],
+        ),
       ),
     );
   }

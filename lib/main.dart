@@ -96,10 +96,7 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
         home: InputRoad(
           listUsers: [
             {
@@ -113,8 +110,7 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         // home: LoginPage(),
-=======
->>>>>>> 9ea0ee7ea793c9273120e814ec90f0df2cdefafb
+
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -127,14 +123,10 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
-        home: LoginPage(),
->>>>>>> a87e51f4db2716d262a6466bd9e77cdddc883df8
+        // home: LoginPage(),
 
         // home: AutoList()
-<<<<<<< HEAD
-=======
 
->>>>>>> 9ea0ee7ea793c9273120e814ec90f0df2cdefafb
         // home: MapScreen(),
         // home: HistoryVPointPage(),
         //home: UserListPage(id: '61'),
@@ -148,10 +140,7 @@ class _MyAppState extends State<MyApp> {
         //     "user_status": 0
         //   }
         // ]),
-<<<<<<< HEAD
-=======
 
->>>>>>> 9ea0ee7ea793c9273120e814ec90f0df2cdefafb
         //home: AboutUsImageEditPage(),
         // home: MyFormTTTT(),
         // home: SaveImageVerbalAgent(
@@ -224,7 +213,7 @@ class _MyAppState extends State<MyApp> {
         //   ],
         //   addNew: (value) {},
         // ),
-        home: LoginPage(),
+        // home: LoginPage(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),
