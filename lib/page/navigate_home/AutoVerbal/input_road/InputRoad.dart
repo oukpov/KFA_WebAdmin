@@ -836,16 +836,20 @@ class _HomePageState extends State<InputRoad> {
                                                           ),
                                                           const Spacer(),
                                                           SizedBox(
+                                                            height: 40,
                                                             width: 60,
                                                             child: Obx(
                                                               () {
                                                                 if (markertPrice
                                                                     .isMarkert
                                                                     .value) {
-                                                                  return const SizedBox();
+                                                                  return const WaitingFunction();
                                                                 } else if (markertPrice
-                                                                    .listMarkertC
-                                                                    .isEmpty) {
+                                                                        .listMarkertC
+                                                                        .isEmpty &&
+                                                                    markertPrice
+                                                                        .listMarkertR
+                                                                        .isEmpty) {
                                                                   return const SizedBox();
                                                                 } else {
                                                                   return IconButton(
