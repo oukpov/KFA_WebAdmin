@@ -124,8 +124,6 @@ class _MyAppState extends State<MyApp> {
         //   ],
         // ),
 
-        // home: LoginPage(),
-
         // home: AutoList()
 
         // home: MapScreen(),
