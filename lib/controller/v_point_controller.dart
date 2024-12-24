@@ -11,6 +11,7 @@ class VpointUpdateController extends GetxController {
   final vpoint = VpointModel().obs;
   final vpointList = <VpointModel>[].obs;
   final isLoading = false.obs;
+  final dateSearchResults = [].obs;
   final searchResults = <VpointModel>[].obs;
   final isSearch = false.obs;
   var page = 0.obs;
@@ -77,11 +78,11 @@ class VpointUpdateController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
+        // print(response.body);
         Get.snackbar('Success', 'VPoint updated successfully');
         await fetchVpoint(); // Refresh data after update
       } else {
-        print(response.body);
+        // print(response.body);
         Get.snackbar(
             'Error', 'Failed to update VPoint: ${response.statusCode}');
       }
@@ -120,7 +121,7 @@ class VpointUpdateController extends GetxController {
   //   }
   // }
   var isSearchHistory = false.obs;
-  Future<void> searchphone(String telNum) async {
+  Future<void> searchname(String name) async {
     try {
       isSearchHistory.value = true;
       var headers = {
@@ -130,7 +131,7 @@ class VpointUpdateController extends GetxController {
       var data = '''''';
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchphone?search=$telNum',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/searchphone?search=$name',
         options: Options(
           method: 'GET',
           headers: headers,
@@ -141,7 +142,7 @@ class VpointUpdateController extends GetxController {
       if (response.statusCode == 200) {
         listsearch.value = jsonDecode(json.encode(response.data))['data'];
       } else {
-        print("Test:${json.encode(response.data)}");
+        // print("Test:${json.encode(response.data)}");
       }
     } catch (e) {
       // print(e);
@@ -174,11 +175,11 @@ class VpointUpdateController extends GetxController {
 
       if (response.statusCode == 200) {
         String responseBody = await response.stream.bytesToString();
-        print(responseBody);
+        // print(responseBody);
         Get.snackbar('Success', 'Test update successful');
         await fetchVpoint(); // Refresh the data after update
       } else {
-        print(response.reasonPhrase);
+        // print(response.reasonPhrase);
         Get.snackbar('Error', 'Test update failed');
       }
     } catch (e) {
@@ -213,17 +214,50 @@ class VpointUpdateController extends GetxController {
           // Extract the list from the data field
           historyList.value = response.data['data'] as List;
         } else {
-          print('Invalid response format: expected Map with data field');
+          // print('Invalid response format: expected Map with data field');
           historyList.value = [];
         }
       } else {
-        print('Error fetching history: ${response.statusMessage}');
+        // print('Error fetching history: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error in fetchHistory: $e');
       historyList.value = [];
     } finally {
       isLoadingHistory(false);
+    }
+  }
+
+  Future<void> fetchVpointdate(String startDate, String endDate) async {
+    isLoading(true);
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+      var data = '''''';
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/search-vpointhistory?start_date=$startDate&end_date=$endDate',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        // print(json.encode(response.data));
+        dateSearchResults.value =
+            jsonDecode(json.encode(response.data))['data'];
+      } else {
+        // print(response.statusMessage);
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: $e');
+      // print(e);
+    } finally {
+      isLoading(false);
     }
   }
 }

@@ -4,13 +4,41 @@ import 'package:web_admin/controller/v_point_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:web_admin/models/commercial_model.dart';
 
+import '../../../../Widgets/date_range.dart';
+
 class HistoryVPointPage extends StatefulWidget {
+  const HistoryVPointPage({super.key});
+
   @override
   State<HistoryVPointPage> createState() => _HistoryVPointPageState();
 }
 
 class _HistoryVPointPageState extends State<HistoryVPointPage> {
   final VpointUpdateController controller = Get.put(VpointUpdateController());
+  DateTime? startDate;
+  DateTime? endDate;
+  final DateFormat dateFormat = DateFormat('dd MMM yyyy');
+
+  void _onDateRangeSelected(DateTime? start, DateTime? end) {
+    setState(() {
+      startDate = start;
+      endDate = end;
+    });
+
+    // Now you can use these dates however you need
+    if (start != null && end != null) {
+      // print(
+      //     'Selected date range: ${dateFormat.format(start)} to ${dateFormat.format(end)}');
+
+      // Calculate date difference
+      final difference = end.difference(start).inDays;
+      // print('Number of days selected: $difference');
+
+      // You can also pass these dates to your API calls or other functions
+      // _fetchDataForDateRange(start, end);
+    }
+  }
+
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -23,19 +51,12 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'VPoint Transaction History',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blue[800],
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () => controller.fetchHistory(),
-          ),
-          const SizedBox(width: 10),
-        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -55,9 +76,7 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 500,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 8),
+                      width: 300,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(8),
@@ -73,7 +92,7 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                               ),
                               onSubmitted: (value) {
                                 if (value.isNotEmpty) {
-                                  controller.searchphone(value);
+                                  controller.searchname(value);
                                 }
                               },
                             ),
@@ -81,14 +100,15 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                           const SizedBox(width: 8),
                           ElevatedButton.icon(
                             onPressed: () {
+                              controller.fetchVpointdate;
                               if (searchController.text.isNotEmpty) {
-                                controller.searchphone(searchController.text);
+                                controller.searchname(searchController.text);
                               } else {
                                 controller.fetchHistory();
                               }
                             },
                             icon: const Icon(Icons.search),
-                            label: const Text('Search'),
+                            label: const Text('Search Username'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
                               foregroundColor: Colors.white,
@@ -101,46 +121,79 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                       ),
                     ),
                     const SizedBox(width: 16),
+                    SizedBox(
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            width: 400,
+                            height: 150,
+                            child: SimpleDateRangePicker(
+                              onDateRangeSelected: _onDateRangeSelected,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              controller.fetchVpointdate(
+                                startDate.toString(),
+                                endDate.toString(),
+                              );
+                            },
+                            icon: const Icon(Icons.search),
+                            label: const Text('Search Date'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
 
               // Summary Cards
-              Container(
-                height: 100,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildSummaryCard(
-                      'Total Transactions',
-                      '${controller.historyList.length}',
-                      Icons.receipt_long,
-                      Colors.blue[800]!,
-                    ),
-                    _buildSummaryCard(
-                      'Total VPoints',
-                      _calculateTotalVPoints(),
-                      Icons.stars,
-                      Colors.orange[800]!,
-                    ),
-                    _buildSummaryCard(
-                      'Last Updated',
-                      _getLastUpdateTime(),
-                      Icons.update,
-                      Colors.green[800]!,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+              // Container(
+              //   height: 100,
+              //   child: ListView(
+              //     scrollDirection: Axis.horizontal,
+              //     children: [
+              //       _buildSummaryCard(
+              //         'Total Transactions',
+              //         '${controller.historyList.length}',
+              //         Icons.receipt_long,
+              //         Colors.blue[800]!,
+              //       ),
+              //       _buildSummaryCard(
+              //         'Total VPoints',
+              //         _calculateTotalVPoints(),
+              //         Icons.stars,
+              //         Colors.orange[800]!,
+              //       ),
+              //       _buildSummaryCard(
+              //         'Last Updated',
+              //         _getLastUpdateTime(),
+              //         Icons.update,
+              //         Colors.green[800]!,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
 
               // Main Content
               Expanded(
                 child: Obx(() {
                   // Show loading indicator
                   if (controller.isLoadingHistory.value ||
-                      controller.isSearchHistory.value) {
+                      controller.isSearchHistory.value ||
+                      controller.isLoading.value) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -163,15 +216,30 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
                   if ((searchController.text.isEmpty &&
                           controller.historyList.isEmpty) ||
                       (searchController.text.isNotEmpty &&
-                          controller.listsearch.isEmpty)) {
+                          controller.listsearch.isEmpty &&
+                          controller.dateSearchResults.isEmpty)) {
                     return _buildEmptyState();
                   }
 
                   // Show search results or main history
-                  final displayList = searchController.text.isEmpty
-                      ? controller.historyList
-                      : controller.listsearch;
+                  List<dynamic> getDisplayList() {
+                    // Case 1: Date search is active (both dates are selected)
+                    if (startDate != null && endDate != null) {
+                      return controller.dateSearchResults;
+                    }
 
+                    // Case 2: Text search is active
+                    if (searchController.text.isNotEmpty) {
+                      return controller.listsearch.isNotEmpty
+                          ? controller.listsearch
+                          : []; // Return empty list if no search results
+                    }
+
+                    // Case 3: Default - show full history
+                    return controller.historyList;
+                  }
+
+                  final displayList = getDisplayList();
                   return ListView.builder(
                     itemCount: displayList.length,
                     itemBuilder: (context, index) {
@@ -298,15 +366,22 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
-            onPressed: () => controller.fetchHistory(),
-            icon: Icon(Icons.refresh),
-            label: Text('Refresh'),
+            onPressed: () {
+              controller.fetchVpointdate;
+              if (searchController.text.isNotEmpty) {
+                controller.searchname(searchController.text);
+              } else {
+                controller.fetchHistory();
+              }
+            },
+            icon: const Icon(Icons.search),
+            label: const Text('Search'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[800],
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
           ),
         ],
@@ -358,7 +433,7 @@ class _HistoryVPointPageState extends State<HistoryVPointPage> {
   String _formatDateTime(String? dateStr) {
     if (dateStr == null) return 'N/A';
     final date = DateTime.parse(dateStr);
-    return DateFormat('MMM d, y HH:mm:ss').format(date);
+    return DateFormat('MMM d, y').format(date);
   }
 
   String _getTransactionType(Map<String, dynamic> history) {
