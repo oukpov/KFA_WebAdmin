@@ -46,7 +46,8 @@ class VpointListPage extends StatelessWidget {
                         ElevatedButton.icon(
                           onPressed: () {
                             if (searchController.text.isNotEmpty) {
-                              controller.searchname(searchController.text);
+                              controller
+                                  .searchphoneandname(searchController.text);
                             }
                           },
                           icon: const Icon(Icons.search),
