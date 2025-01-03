@@ -16,7 +16,7 @@ class UserController extends GetxController {
   var errorMessage = ''.obs;
   final isSearch = false.obs;
   var listsearch = [].obs;
-
+  String url = 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api';
   @override
   void onInit() {
     super.onInit();
@@ -304,5 +304,36 @@ class UserController extends GetxController {
       print('Error in SearchUser: $e');
       listsearch.value = [];
     }
+  }
+
+  Future<void> updateUser(String user_identifier, String new_email,
+      String new_password, String new_password_confirmation) async {
+    try {
+      var headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      };
+      var data = json.encode({
+        "user_identifier": user_identifier,
+        "new_email": new_email,
+        "new_password": new_password,
+        "new_password_confirmation": new_password_confirmation
+      });
+      var dio = Dio();
+      var response = await dio.request(
+        '$url/createpassword',
+        options: Options(
+          method: 'POST',
+          headers: headers,
+        ),
+        data: data,
+      );
+
+      if (response.statusCode == 200) {
+        print(json.encode(response.data));
+      } else {
+        print(response.statusMessage);
+      }
+    } catch (e) {}
   }
 }

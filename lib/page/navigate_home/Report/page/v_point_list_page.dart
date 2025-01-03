@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 class VpointListPage extends StatelessWidget {
   final VpointUpdateController controller = Get.put(VpointUpdateController());
   final TextEditingController searchController = TextEditingController();
+
+  VpointListPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

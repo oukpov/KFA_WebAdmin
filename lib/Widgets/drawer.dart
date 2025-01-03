@@ -32,7 +32,7 @@ import '../page/navigate_home/Report/page/slider_page.dart';
 import '../page/navigate_home/Report/page/sponsor_list_page.dart';
 import '../page/navigate_home/Report/page/userlist_for_adminpage.dart';
 import '../page/navigate_home/Report/page/userlist_page.dart';
-import '../page/navigate_home/Report/page/v_point_page.dart';
+import '../page/navigate_home/Report/page/v_point_list_page.dart';
 import '../page/navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../page/navigate_home/User/control_user.dart';
 import '../page/navigate_home/User/list_notivigation.dart';

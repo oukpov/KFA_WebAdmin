@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
 import 'package:dio/dio.dart';
+
+import '../../../../models/user_model.dart';
 
 class UserListPage extends StatefulWidget {
   final String id;
@@ -16,8 +19,14 @@ class UserListPage extends StatefulWidget {
 
 class _UserListPageState extends State<UserListPage> {
   final UserController userController = Get.put(UserController());
+  final UserModel userModel = UserModel();
   final TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _newEmailController = TextEditingController();
+  bool _obscureNewPassword = true;
+  bool _obscureConfirmPassword = true;
   var users = [].obs;
   var searchResults = [].obs;
   var isLoading = false.obs;
@@ -606,6 +615,16 @@ class _UserListPageState extends State<UserListPage> {
                                                           ),
                                                         ),
                                                 )),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.red,
+                                            ),
+                                            onPressed: () async {
+                                              _showUpdatePasswordDialog(
+                                                  user, index);
+                                            },
+                                          )
                                         ],
                                       ),
                                     ),
@@ -644,6 +663,128 @@ class _UserListPageState extends State<UserListPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showUpdatePasswordDialog(Map<String, dynamic> user, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Update Password & Email',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              backgroundColor: Colors.blueGrey[900],
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: _newEmailController,
+                      decoration: InputDecoration(
+                        labelText: 'New Email',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      controller: _newPasswordController,
+                      obscureText: _obscureNewPassword,
+                      decoration: InputDecoration(
+                        labelText: 'New Password',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureNewPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureNewPassword = !_obscureNewPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      controller: _confirmPasswordController,
+                      obscureText: _obscureConfirmPassword,
+                      decoration: InputDecoration(
+                        labelText: 'Confirm New Password',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () async {
+                    userController.updateUser(
+                      user['user_id'].toString(),
+                      _newEmailController.text,
+                      _newPasswordController.text,
+                      _confirmPasswordController.text,
+                    );
+                  },
+                  child: Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
