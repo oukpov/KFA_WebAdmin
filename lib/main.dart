@@ -4,19 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
 import 'package:web_admin/page/homescreen/UI_APP/app_UI.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
-=======
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
 import 'package:web_admin/page/navigate_home/Report/page/history_v_point_page.dart';
-<<<<<<< HEAD
 import 'package:web_admin/page/navigate_home/Report/page/userlist_page.dart';
 import 'package:web_admin/page/navigate_home/Report/page/v_point_list_page.dart';
-=======
->>>>>>> 5a369e6cb85ffbd4cc00b0f6a28ed2613a354be1
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -104,14 +98,6 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
-<<<<<<< HEAD
-        home: UIAPP(),
-=======
-
-<<<<<<< HEAD
-=======
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
->>>>>>> 5a369e6cb85ffbd4cc00b0f6a28ed2613a354be1
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -124,15 +110,7 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 5a369e6cb85ffbd4cc00b0f6a28ed2613a354be1
-        // home: LoginPage(),
-=======
         home: LoginPage(),
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
-
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -234,7 +212,6 @@ class _MyAppState extends State<MyApp> {
         //   ],
         //   addNew: (value) {},
         // ),
-        home: Login(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),

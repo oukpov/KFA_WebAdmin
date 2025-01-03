@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:web_admin/models/user_model.dart';
@@ -306,19 +308,47 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> updateUser(String user_identifier, String new_email,
-      String new_password, String new_password_confirmation) async {
+  Future<void> updateUser(
+    String user_identifier, {
+    String new_email = '',
+    String new_password = '',
+    String new_password_confirmation = '',
+    String first_name = '',
+    String last_name = '',
+    String tel_num = '',
+  }) async {
     try {
       var headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       };
-      var data = json.encode({
+
+      // Only include non-empty values in the request
+      Map<String, String> requestData = {
         "user_identifier": user_identifier,
-        "new_email": new_email,
-        "new_password": new_password,
-        "new_password_confirmation": new_password_confirmation
-      });
+      };
+
+      if (new_email.isNotEmpty) {
+        requestData["new_email"] = new_email;
+      }
+
+      if (new_password.isNotEmpty) {
+        requestData["new_password"] = new_password;
+        requestData["new_password_confirmation"] = new_password_confirmation;
+      }
+
+      if (first_name.isNotEmpty) {
+        requestData["first_name"] = first_name;
+      }
+
+      if (last_name.isNotEmpty) {
+        requestData["last_name"] = last_name;
+      }
+
+      if (tel_num.isNotEmpty) {
+        requestData["tel_num"] = tel_num;
+      }
+
       var dio = Dio();
       var response = await dio.request(
         '$url/createpassword',
@@ -326,14 +356,82 @@ class UserController extends GetxController {
           method: 'POST',
           headers: headers,
         ),
-        data: data,
+        data: json.encode(requestData),
       );
 
       if (response.statusCode == 200) {
-        print(json.encode(response.data));
-      } else {
-        print(response.statusMessage);
+        // Get the navigation context
+        var context = Get.context!;
+
+        // Close the current dialog if it's open
+        Navigator.of(context).pop();
+
+        // Show success dialog
+        AwesomeDialog(
+          padding:
+              const EdgeInsets.only(right: 30, left: 30, bottom: 10, top: 10),
+          alignment: Alignment.center,
+          width: 350,
+          context: context,
+          dialogType: DialogType.success,
+          animType: AnimType.rightSlide,
+          headerAnimationLoop: false,
+          title: "Success",
+          desc: "User information updated successfully!",
+          btnOkOnPress: () {
+            // Clear the text controller
+
+            // Refresh the user list
+            fetchUsers();
+          },
+          btnOkText: "OK",
+          btnOkColor: Colors.green,
+        ).show();
+
+        print('Update successful: ${json.encode(response.data)}');
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error during update: $e');
+
+      // Handle different types of errors
+      String errorMessage =
+          'An error occurred while updating user information.';
+
+      if (e is DioError) {
+        if (e.response != null) {
+          // Get error message from response if available
+          var responseData = e.response?.data;
+          if (responseData != null && responseData['message'] != null) {
+            errorMessage = responseData['message'];
+          }
+
+          // Handle validation errors
+          if (responseData != null && responseData['errors'] != null) {
+            var errors = responseData['errors'];
+            if (errors is Map) {
+              errorMessage = errors.values.first.first.toString();
+            }
+          }
+        }
+
+        // Show error dialog
+        var context = Get.context!;
+        AwesomeDialog(
+          padding:
+              const EdgeInsets.only(right: 30, left: 30, bottom: 10, top: 10),
+          alignment: Alignment.center,
+          width: 350,
+          context: context,
+          dialogType: DialogType.error,
+          animType: AnimType.rightSlide,
+          headerAnimationLoop: false,
+          title: "Error",
+          desc: errorMessage,
+          btnOkOnPress: () {},
+          btnOkText: "OK",
+          btnOkColor: Colors.red,
+        ).show();
+      }
+    }
   }
 }
