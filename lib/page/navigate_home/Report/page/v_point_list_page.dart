@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 class VpointListPage extends StatelessWidget {
   final VpointUpdateController controller = Get.put(VpointUpdateController());
   final TextEditingController searchController = TextEditingController();
+
+  VpointListPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +48,8 @@ class VpointListPage extends StatelessWidget {
                         ElevatedButton.icon(
                           onPressed: () {
                             if (searchController.text.isNotEmpty) {
-                              controller.searchname(searchController.text);
+                              controller
+                                  .searchphoneandname(searchController.text);
                             }
                           },
                           icon: const Icon(Icons.search),

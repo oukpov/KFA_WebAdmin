@@ -4,13 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 import 'package:web_admin/page/homescreen/newhomepage.dart';
 import 'package:web_admin/page/homescreen/responsive_layout.dart';
 import 'package:web_admin/page/navigate_home/UI_APP/app_UI.dart';
+=======
+import 'package:web_admin/page/homescreen/UI_APP/app_UI.dart';
+>>>>>>> 1b6784fff1289e9abe5e4f08e1ed87abcbd0ab32
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/page/navigate_home/Report/page/history_v_point_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/userlist_page.dart';
+import 'package:web_admin/page/navigate_home/Report/page/v_point_list_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
@@ -72,7 +78,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: const GetMaterialApp(
+      child: GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),
@@ -98,6 +104,7 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
+<<<<<<< HEAD
 
         // home: ResponsiveHomePage(
         //     // device: "d",
@@ -114,6 +121,8 @@ class _MyAppState extends State<MyApp> {
         //     ],
         //     url: ""),
         home: LoginPage(),
+=======
+>>>>>>> 1b6784fff1289e9abe5e4f08e1ed87abcbd0ab32
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -126,10 +135,14 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
+<<<<<<< HEAD
 
         // home: LoginPage(),
         // home: UIAPP(device: "m"),
 
+=======
+        home: LoginPage(),
+>>>>>>> 1b6784fff1289e9abe5e4f08e1ed87abcbd0ab32
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -231,7 +244,6 @@ class _MyAppState extends State<MyApp> {
         //   ],
         //   addNew: (value) {},
         // ),
-        // home: LoginPage(),
         // home: BannerUpdateExample(bannerId: '31'),
         //home: GetOneDataPage(id: '31'),
         // home: UploadImagePage(),

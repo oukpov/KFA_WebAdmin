@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
 import 'package:dio/dio.dart';
+
+import '../../../../models/user_model.dart';
 
 class UserListPage extends StatefulWidget {
   final String id;
@@ -16,8 +19,17 @@ class UserListPage extends StatefulWidget {
 
 class _UserListPageState extends State<UserListPage> {
   final UserController userController = Get.put(UserController());
+  final UserModel userModel = UserModel();
   final TextEditingController searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _telNumController = TextEditingController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _newEmailController = TextEditingController();
+  bool _obscureNewPassword = true;
+  bool _obscureConfirmPassword = true;
   var users = [].obs;
   var searchResults = [].obs;
   var isLoading = false.obs;
@@ -152,6 +164,13 @@ class _UserListPageState extends State<UserListPage> {
     _timer?.cancel();
     _scrollController.dispose();
     searchController.dispose();
+    _newEmailController.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _telNumController.dispose();
+
     if (!_refreshCompleter.isCompleted) {
       _refreshCompleter.complete();
     }
@@ -606,6 +625,16 @@ class _UserListPageState extends State<UserListPage> {
                                                           ),
                                                         ),
                                                 )),
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Colors.red,
+                                            ),
+                                            onPressed: () async {
+                                              _showUpdatePasswordDialog(
+                                                  user, index);
+                                            },
+                                          )
                                         ],
                                       ),
                                     ),
@@ -644,6 +673,228 @@ class _UserListPageState extends State<UserListPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showUpdatePasswordDialog(Map<String, dynamic> user, int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(
+                'Update User Information',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              backgroundColor: Colors.blueGrey[900],
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // New Email Field
+                    TextField(
+                      controller: _newEmailController,
+                      decoration: InputDecoration(
+                        labelText: 'New Email',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      controller: _newPasswordController,
+                      obscureText: _obscureNewPassword,
+                      decoration: InputDecoration(
+                        labelText: 'New Password',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureNewPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureNewPassword = !_obscureNewPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+                    TextField(
+                      controller: _confirmPasswordController,
+                      obscureText: _obscureConfirmPassword,
+                      decoration: InputDecoration(
+                        labelText: 'Confirm New Password',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
+                            });
+                          },
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+
+                    // First Name Field
+                    TextField(
+                      controller: _firstNameController,
+                      decoration: InputDecoration(
+                        labelText: 'First Name',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+
+                    // Last Name Field
+                    TextField(
+                      controller: _lastNameController,
+                      decoration: InputDecoration(
+                        labelText: 'Last Name',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(height: 16),
+
+                    // Telephone Number Field
+                    TextField(
+                      controller: _telNumController,
+                      decoration: InputDecoration(
+                        labelText: 'Telephone Number',
+                        labelStyle: TextStyle(color: Colors.white),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                // Cancel Button
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+
+                // Update Button
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () async {
+                    // Perform validation
+                    if (_newEmailController.text.isEmpty &&
+                        _newPasswordController.text.isEmpty &&
+                        _confirmPasswordController.text.isEmpty &&
+                        _firstNameController.text.isEmpty &&
+                        _lastNameController.text.isEmpty &&
+                        _telNumController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Please fill in at least one field.'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    if (_newPasswordController.text.isNotEmpty &&
+                        _newPasswordController.text !=
+                            _confirmPasswordController.text) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Passwords do not match.'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                      return;
+                    }
+
+                    // Call the update function
+                    try {
+                      await userController.updateUser(
+                        user['userId'].toString(),
+                        new_email: _newEmailController.text,
+                        new_password: _newPasswordController.text,
+                        new_password_confirmation:
+                            _confirmPasswordController.text,
+                        first_name: _firstNameController.text,
+                        last_name: _lastNameController.text,
+                        tel_num: _telNumController.text,
+                      );
+
+                      // Close the dialog
+                      Navigator.of(context).pop();
+
+                      // Show success message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('User updated successfully!'),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } catch (e) {
+                      // Show error message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Failed to update user: $e'),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    'Update',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }
