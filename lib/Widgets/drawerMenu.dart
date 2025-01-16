@@ -118,15 +118,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           return const Trastoin_Payment();
                         },
                       ));
-                    }
-                    // else {
-                    //   Navigator.push(context, MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return const Notivigation_day();
-                    //     },
-                    //   ));
-                    // }
-                    else if (i == 3) {
+                    } else if (i == 3) {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return const Login();

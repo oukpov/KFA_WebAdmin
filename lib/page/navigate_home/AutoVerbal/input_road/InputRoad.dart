@@ -84,6 +84,17 @@ class _HomePageState extends State<InputRoad> {
     return true;
   }
 
+  List listUrl = [
+    {
+      "title": "R & C All",
+      "url": "insert/market/price",
+    },
+    {
+      "title": "Resident Only",
+      "url": "insert/market/price/onlyR",
+    }
+  ];
+  int selectIndex = 0;
   Future<void> googleMap(LatLng latLng) async {
     await findByPiont(latLng.latitude, latLng.longitude);
   }
@@ -139,11 +150,11 @@ class _HomePageState extends State<InputRoad> {
             }
           }
         }
-        // print("province: $province");
-        // print("Khan: $district");
-        // print("SangKat: $commune");
-        // print("longName: $longName");
-        // print("shortName: $shortName");
+        print("province: $province");
+        print("Khan: $district");
+        print("SangKat: $commune");
+        print("longName: $longName");
+        print("shortName: $shortName");
         // Example: Call another function with the results
         await markertPrice.markertList(
             district ?? '', commune ?? '', shortName);
@@ -253,6 +264,8 @@ class _HomePageState extends State<InputRoad> {
     super.initState();
   }
 
+  String url = "insert/market/price";
+
   double h = 0;
   List listMap = [];
   Future<void> mainSearch() async {
@@ -272,6 +285,7 @@ class _HomePageState extends State<InputRoad> {
     }
   }
 
+  bool checkBox = false;
   Timer? _debounce;
   void onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
@@ -565,12 +579,45 @@ class _HomePageState extends State<InputRoad> {
                                     color: whiteColor,
                                   ),
                                   const SizedBox(height: 15),
-                                  Text(
-                                    'Market Price',
-                                    style: TextStyle(
-                                      color: whiteColor,
-                                      fontSize: 17,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'Market Price',
+                                        // url,
+                                        style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      for (int i = 0; i < listUrl.length; i++)
+                                        SizedBox(
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                listUrl[i]['title'],
+                                                style: TextStyle(
+                                                    color: whiteColor,
+                                                    fontSize: 13),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    selectIndex = i;
+                                                    url = listUrl[i]['url'];
+                                                    if (i == 0) {}
+                                                  });
+                                                },
+                                                icon: Icon((selectIndex == i)
+                                                    ? Icons.check_box_outlined
+                                                    : Icons
+                                                        .check_box_outline_blank_outlined),
+                                                color: whiteColor,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                    ],
                                   ),
                                   const SizedBox(height: 15),
                                   Container(
@@ -620,52 +667,57 @@ class _HomePageState extends State<InputRoad> {
                                                               () async {
                                                             markertPrice
                                                                 .markertPrice(
-                                                              district!,
-                                                              commune!,
-                                                              province!,
-                                                              markertPrice
-                                                                  .minValueR
-                                                                  .value,
-                                                              markertPrice
-                                                                  .maxValueR
-                                                                  .value,
-                                                              markertPrice
-                                                                  .minValueC
-                                                                  .value,
-                                                              markertPrice
-                                                                  .maxValueC
-                                                                  .value,
-                                                              /////// Markert Price Old
-                                                              markertPrice
-                                                                  .minOldValueR
-                                                                  .value,
-                                                              markertPrice
-                                                                  .maxOldValueR
-                                                                  .value,
-                                                              markertPrice
-                                                                  .minOldValueC
-                                                                  .value,
-                                                              markertPrice
-                                                                  .maxOldValueC
-                                                                  .value,
-                                                              shortName,
-                                                              markertPrice
-                                                                  .roadName
-                                                                  .value,
-                                                              latLng.latitude
-                                                                  .toString(),
-                                                              latLng.longitude
-                                                                  .toString(),
-                                                              widget
-                                                                  .listUsers[0]
-                                                                      ['agency']
-                                                                  .toString(),
-                                                              markertPrice
-                                                                  .khanID.value,
-                                                              markertPrice
-                                                                  .sangkatID
-                                                                  .value,
-                                                            );
+                                                                    district!,
+                                                                    commune!,
+                                                                    province!,
+                                                                    markertPrice
+                                                                        .minValueR
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .maxValueR
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .minValueC
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .maxValueC
+                                                                        .value,
+                                                                    /////// Markert Price Old
+                                                                    markertPrice
+                                                                        .minOldValueR
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .maxOldValueR
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .minOldValueC
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .maxOldValueC
+                                                                        .value,
+                                                                    shortName,
+                                                                    markertPrice
+                                                                        .roadName
+                                                                        .value,
+                                                                    latLng
+                                                                        .latitude
+                                                                        .toString(),
+                                                                    latLng
+                                                                        .longitude
+                                                                        .toString(),
+                                                                    widget
+                                                                        .listUsers[
+                                                                            0]
+                                                                            [
+                                                                            'agency']
+                                                                        .toString(),
+                                                                    markertPrice
+                                                                        .khanID
+                                                                        .value,
+                                                                    markertPrice
+                                                                        .sangkatID
+                                                                        .value,
+                                                                    url);
                                                           },
                                                           btnCancelOnPress:
                                                               () {},

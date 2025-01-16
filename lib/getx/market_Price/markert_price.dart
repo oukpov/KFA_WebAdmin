@@ -81,7 +81,7 @@ class MarkertPrice extends GetxController {
       minOldValueC.value = "";
       maxOldValueC.value = "";
       khanID.value = "";
-      khanID.value = "";
+      sangkatID.value = "";
       roadName.value = "N/A";
       listMarkertR.value = [].obs;
       listMarkertC.value = [].obs;
@@ -121,8 +121,8 @@ class MarkertPrice extends GetxController {
         // print("roadName : $roadName");
         // print("khanName : $khanName");
         // print("sangKatName : $sangKatName");
-        // print("khanID : $khanID");
-        // print("sangkatID : $sangkatID");
+        print("khanID : $khanID");
+        print("sangkatID : $sangkatID");
       }
     } catch (e) {
       // print(e);
@@ -232,25 +232,25 @@ class MarkertPrice extends GetxController {
   }
 
   Future<void> markertPrice(
-    String khanName,
-    String sangkatName,
-    String province,
-    String minValuesR,
-    String maxValuesR,
-    String minValuesC,
-    String maxValuesC,
-    String minOldValuesR,
-    String maxOldValuesR,
-    String minOldValuesC,
-    String maxOldValuesC,
-    String mainRoad,
-    String oldRoadName,
-    String latlonglat,
-    String latlonglog,
-    String updateby,
-    String khansID,
-    String sangKatsID,
-  ) async {
+      String khanName,
+      String sangkatName,
+      String province,
+      String minValuesR,
+      String maxValuesR,
+      String minValuesC,
+      String maxValuesC,
+      String minOldValuesR,
+      String maxOldValuesR,
+      String minOldValuesC,
+      String maxOldValuesC,
+      String mainRoad,
+      String oldRoadName,
+      String latlonglat,
+      String latlonglog,
+      String updateby,
+      String khansID,
+      String sangKatsID,
+      String typeURL) async {
     try {
       minValueR.value = "";
       maxValueR.value = "";
@@ -269,6 +269,7 @@ class MarkertPrice extends GetxController {
         "Khan_Name": khanName,
         "Sangkat_Name": sangkatName,
         "province": province,
+
         "name_road": mainRoad,
         ////////
         "khan_ID": khansID,
@@ -287,9 +288,10 @@ class MarkertPrice extends GetxController {
         "latlong_log": latlonglog,
         "update_by": updateby,
       });
+
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/insert/market/price',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/$typeURL',
         options: Options(
           method: 'POST',
           headers: headers,
@@ -301,7 +303,7 @@ class MarkertPrice extends GetxController {
         component.handleTap("Done!", json.encode(response.data), 1);
       }
     } catch (e) {
-      // print(e);
+      print(e);
     } finally {
       isMarkert.value = false;
     }

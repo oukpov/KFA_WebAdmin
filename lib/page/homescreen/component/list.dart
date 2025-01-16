@@ -22,6 +22,7 @@ List listTitleAdmin = [
   {"title": "User"},
   {"title": "Report"},
   {"title": "Admin"},
+  {"title": "UI App"},
 ];
 List listTitlesetting = [
   {"title": "Building Type"},
@@ -68,9 +69,12 @@ List optionIconListAdmin = [
   {"icon": "assets/icons/AutoVerbal.png"},
   {"icon": "assets/icons/Verbal.png"},
   {"icon": "assets/icons/Inspector.png"},
+  //
+
   {"icon": "assets/icons/User.png"},
   {"icon": "assets/icons/Report.png"},
   {"icon": "assets/icons/Admin.png"},
+  {"icon": "assets/icons/ui_app.png"},
 ];
 List optionIconListsetting = [
   {"icon": "assets/icons/apartment.png"},

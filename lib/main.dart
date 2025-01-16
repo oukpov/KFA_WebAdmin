@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-<<<<<<< HEAD
-import 'package:web_admin/page/homescreen/UI_APP/app_UI.dart';
+import 'package:web_admin/page/homescreen/newhomepage.dart';
+import 'package:web_admin/page/homescreen/responsive_layout.dart';
+import 'package:web_admin/page/navigate_home/UI_APP/app_UI.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
-=======
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
 import 'package:web_admin/page/navigate_home/Report/page/history_v_point_page.dart';
 import 'package:web_admin/screen/Property/Chat/provider/firebase_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -99,11 +98,22 @@ class _MyAppState extends State<MyApp> {
         //     "Image": null
         //   },
         // ]),
-<<<<<<< HEAD
-        home: UIAPP(),
-=======
 
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
+        // home: ResponsiveHomePage(
+        //     // device: "d",
+        //     id: "52",
+        //     listUser: [
+        //       {
+        //         "id": 52,
+        //         "user_role_id": 59,
+        //         "agency": 70,
+        //         "username": "Test",
+        //         "password": "333802e987dfce42e28b749a20dc257f",
+        //         "user_status": 0
+        //       }
+        //     ],
+        //     url: ""),
+        home: LoginPage(),
         // home: InputRoad(
         //   listUsers: [
         //     {
@@ -116,11 +126,9 @@ class _MyAppState extends State<MyApp> {
         //     }
         //   ],
         // ),
-<<<<<<< HEAD
+
         // home: LoginPage(),
-=======
-        home: LoginPage(),
->>>>>>> bb142a4db118e619a69e4d6fe7801b765c2252c8
+        // home: UIAPP(device: "m"),
 
         // home: InputRoad(
         //   listUsers: [

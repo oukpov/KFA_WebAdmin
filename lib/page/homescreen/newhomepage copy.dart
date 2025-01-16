@@ -353,258 +353,249 @@ class _homescreenState extends State<homescreen> {
                   listUser: widget.listUser,
                 )
               : const SizedBox(),
-          Expanded(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: (widget.device == 't' || widget.device == 'd')
-                      ? const EdgeInsets.only(
-                          right: 30, left: 30, top: 10, bottom: 10)
-                      : const EdgeInsets.only(
-                          right: 10, left: 10, top: 10, bottom: 10),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      profile(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 10),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(20),
-                            // margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: whileColors),
-                            child: Obx(
-                              () {
-                                if (optionHome.isVerbal.value) {
-                                  return const WaitingFunction();
-                                } else {
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: (widget.device == 't')
+                ? MediaQuery.of(context).size.width * 0.8
+                : (widget.device == 'd')
+                    ? MediaQuery.of(context).size.width * 0.65
+                    : MediaQuery.of(context).size.width,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: (widget.device == 't' || widget.device == 'd')
+                    ? const EdgeInsets.only(
+                        right: 30, left: 30, top: 10, bottom: 10)
+                    : const EdgeInsets.only(
+                        right: 10, left: 10, top: 10, bottom: 10),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    profile(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(20),
+                          // margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: whileColors),
+                          child: Obx(
+                            () {
+                              if (optionHome.isVerbal.value) {
+                                return const WaitingFunction();
+                              } else {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        optionTxt(
+                                            "All Clients",
+                                            optionHome.countAllUsers.value,
+                                            Icons.person,
+                                            true,
+                                            "images/User.png"),
+                                        const SizedBox(width: 10),
+                                        optionTxt(
+                                            "All Verbals",
+                                            optionHome.countVerbals.value
+                                                .toString(),
+                                            Icons.verified,
+                                            true,
+                                            "icons/Verbal1.png"),
+                                        const SizedBox(width: 10),
+                                        optionTxt(
+                                            "All Auto Verbals",
+                                            optionHome.countAutoVs.value
+                                                .toString(),
+                                            Icons.verified,
+                                            false,
+                                            ""),
+                                        const SizedBox(width: 10),
+                                        optionTxt("All Agents", "N/A",
+                                            Icons.verified, false, ""),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      child: Row(
                                         children: [
                                           optionTxt(
-                                              "All Clients",
-                                              optionHome.countAllUsers.value,
+                                              "VPoint Used",
+                                              "N/A",
                                               Icons.person,
                                               true,
-                                              "images/User.png"),
+                                              "images/v.png"),
                                           const SizedBox(width: 10),
-                                          optionTxt(
-                                              "All Verbals",
-                                              optionHome.countVerbals.value
-                                                  .toString(),
-                                              Icons.verified,
-                                              true,
-                                              "icons/Verbal1.png"),
+                                          optionTxt("Client Top Up", "N/A",
+                                              Icons.verified, false, ""),
                                           const SizedBox(width: 10),
-                                          optionTxt(
-                                              "All Auto Verbals",
-                                              optionHome.countAutoVs.value
-                                                  .toString(),
-                                              Icons.verified,
-                                              false,
-                                              ""),
+                                          optionTxt("VPoint Client Used", "N/A",
+                                              Icons.verified, false, ""),
                                           const SizedBox(width: 10),
-                                          optionTxt("All Agents", "N/A",
+                                          optionTxt("All Partner", "N/A",
                                               Icons.verified, false, ""),
                                         ],
                                       ),
-                                      const SizedBox(height: 10),
-                                      SizedBox(
-                                        child: Row(
-                                          children: [
-                                            optionTxt(
-                                                "VPoint Used",
-                                                "N/A",
-                                                Icons.person,
-                                                true,
-                                                "images/v.png"),
-                                            const SizedBox(width: 10),
-                                            optionTxt("Client Top Up", "N/A",
-                                                Icons.verified, false, ""),
-                                            const SizedBox(width: 10),
-                                            optionTxt(
-                                                "VPoint Client Used",
-                                                "N/A",
-                                                Icons.verified,
-                                                false,
-                                                ""),
-                                            const SizedBox(width: 10),
-                                            optionTxt("All Partner", "N/A",
-                                                Icons.verified, false, ""),
-                                          ],
-                                        ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    SizedBox(
+                                      child: Row(
+                                        children: [
+                                          optionTxt(
+                                              "ABA Bank",
+                                              "${ababankData ?? '0'} USD",
+                                              Icons.person,
+                                              true,
+                                              "images/aba.jpeg"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "Wing Bank",
+                                              "${wingData ?? '0'} USD",
+                                              Icons.verified,
+                                              true,
+                                              "images/wing.png"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "U Pay",
+                                              "${upayData ?? '0'} USD",
+                                              Icons.verified,
+                                              true,
+                                              "images/UPAY-logo.png"),
+                                          const SizedBox(width: 10),
+                                          optionTxt(
+                                              "Other",
+                                              "${otherData ?? '0'} USD",
+                                              Icons.verified,
+                                              false,
+                                              ""),
+                                        ],
                                       ),
-                                      const SizedBox(height: 10),
-                                      SizedBox(
-                                        child: Row(
-                                          children: [
-                                            optionTxt(
-                                                "ABA Bank",
-                                                "${ababankData ?? '0'} USD",
-                                                Icons.person,
-                                                true,
-                                                "images/aba.jpeg"),
-                                            const SizedBox(width: 10),
-                                            optionTxt(
-                                                "Wing Bank",
-                                                "${wingData ?? '0'} USD",
-                                                Icons.verified,
-                                                true,
-                                                "images/wing.png"),
-                                            const SizedBox(width: 10),
-                                            optionTxt(
-                                                "U Pay",
-                                                "${upayData ?? '0'} USD",
-                                                Icons.verified,
-                                                true,
-                                                "images/UPAY-logo.png"),
-                                            const SizedBox(width: 10),
-                                            optionTxt(
-                                                "Other",
-                                                "${otherData ?? '0'} USD",
-                                                Icons.verified,
-                                                false,
-                                                ""),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Obx(
-                                        () {
-                                          if (optionHome.isVerbal.value) {
-                                            return const WaitingFunction();
-                                          } else if (optionHome
-                                              .dataMap.isEmpty) {
-                                            return const SizedBox(
-                                              child: SizedBox(),
-                                            );
-                                          } else {
-                                            return Stack(
-                                              children: [
-                                                Container(
-                                                  height: 200,
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: greyColor),
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(15),
-                                                        child: PieChart(
-                                                          dataMap: optionHome
-                                                              .dataMap,
-                                                          animationDuration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      800),
-                                                          chartLegendSpacing:
-                                                              32,
-                                                          chartRadius:
-                                                              MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  3.2,
-                                                          colorList: colorList,
-                                                          initialAngleInDegree:
-                                                              0,
-                                                          chartType:
-                                                              ChartType.ring,
-                                                          ringStrokeWidth: 32,
-                                                          centerText: "Data",
-                                                          legendOptions:
-                                                              const LegendOptions(
-                                                            showLegendsInRow:
-                                                                false,
-                                                            legendPosition:
-                                                                LegendPosition
-                                                                    .right,
-                                                            showLegends: true,
-                                                            legendShape:
-                                                                BoxShape.circle,
-                                                            legendTextStyle:
-                                                                TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                            ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Obx(
+                                      () {
+                                        if (optionHome.isVerbal.value) {
+                                          return const WaitingFunction();
+                                        } else if (optionHome.dataMap.isEmpty) {
+                                          return const SizedBox(
+                                            child: SizedBox(),
+                                          );
+                                        } else {
+                                          return Stack(
+                                            children: [
+                                              Container(
+                                                height: 200,
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: greyColor),
+                                                ),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              15),
+                                                      child: PieChart(
+                                                        dataMap:
+                                                            optionHome.dataMap,
+                                                        animationDuration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    800),
+                                                        chartLegendSpacing: 32,
+                                                        chartRadius:
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                3.2,
+                                                        colorList: colorList,
+                                                        initialAngleInDegree: 0,
+                                                        chartType:
+                                                            ChartType.ring,
+                                                        ringStrokeWidth: 32,
+                                                        centerText: "Data",
+                                                        legendOptions:
+                                                            const LegendOptions(
+                                                          showLegendsInRow:
+                                                              false,
+                                                          legendPosition:
+                                                              LegendPosition
+                                                                  .right,
+                                                          showLegends: true,
+                                                          legendShape:
+                                                              BoxShape.circle,
+                                                          legendTextStyle:
+                                                              TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
-                                                          chartValuesOptions:
-                                                              const ChartValuesOptions(
-                                                            showChartValueBackground:
-                                                                true,
-                                                            showChartValues:
-                                                                true,
-                                                            showChartValuesInPercentage:
-                                                                false,
-                                                            showChartValuesOutside:
-                                                                false,
-                                                            decimalPlaces: 1,
-                                                          ),
+                                                        ),
+                                                        chartValuesOptions:
+                                                            const ChartValuesOptions(
+                                                          showChartValueBackground:
+                                                              true,
+                                                          showChartValues: true,
+                                                          showChartValuesInPercentage:
+                                                              false,
+                                                          showChartValuesOutside:
+                                                              false,
+                                                          decimalPlaces: 1,
                                                         ),
                                                       ),
-                                                    ],
-                                                  ),
+                                                    ),
+                                                  ],
                                                 ),
-                                                Positioned(
-                                                    left: 200,
-                                                    child: Row(
-                                                      children: [
-                                                        IconButton(
-                                                            onPressed: () {},
-                                                            icon: Icon(
-                                                                Icons.refresh,
-                                                                color:
-                                                                    greenColors,
-                                                                size: 25)),
-                                                        Text(
-                                                          "  Refrech",
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              color: greyColor,
-                                                              fontSize: 13),
-                                                        ),
-                                                      ],
-                                                    ))
-                                              ],
-                                            );
-                                          }
-                                        },
-                                      ),
-                                      const SizedBox(height: 10),
-                                      AnimatedLineChartExample()
-                                    ],
-                                  );
-                                }
-                              },
-                            ),
+                                              ),
+                                              Positioned(
+                                                  left: 200,
+                                                  child: Row(
+                                                    children: [
+                                                      IconButton(
+                                                          onPressed: () {},
+                                                          icon: Icon(
+                                                              Icons.refresh,
+                                                              color:
+                                                                  greenColors,
+                                                              size: 25)),
+                                                      Text(
+                                                        "  Refrech",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: greyColor,
+                                                            fontSize: 13),
+                                                      ),
+                                                    ],
+                                                  ))
+                                            ],
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 10),
+                                    AnimatedLineChartExample()
+                                  ],
+                                );
+                              }
+                            },
                           ),
-                          const SizedBox(height: 50),
-                        ],
-                      )
-                    ],
-                  ),
+                        ),
+                        const SizedBox(height: 50),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ),
