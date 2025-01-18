@@ -55,6 +55,7 @@ import '../navigate_home/Report/page/v_point_list_page.dart';
 import '../navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../navigate_home/User/control_user.dart';
 import '../navigate_home/User/list_notivigation.dart';
+import '../navigate_home/User/setAdmin.dart';
 import '../navigate_home/User/use_vpoint.dart';
 import '../navigate_home/verbal/Add_VerbalAgent.dart';
 import '../navigate_setting/Accompany_by/Acompany_List.dart';
@@ -609,28 +610,6 @@ class _homescreenState extends State<homescreen> {
               ),
             ),
           ),
-          // (widget.device == 'd')
-          //     ? Container(
-          //         height: MediaQuery.of(context).size.height,
-          //         color: whiteColor,
-          //         width: MediaQuery.of(context).size.width * 0.2,
-          //         child: SingleChildScrollView(
-          //           child: Column(
-          //             children: [
-          //               for (int i = 0; i < 5; i++)
-          //                 Padding(
-          //                   padding: const EdgeInsets.all(8.0),
-          //                   child: Container(
-          //                     height: 300,
-          //                     width: double.infinity,
-          //                     color: redColors,
-          //                   ),
-          //                 )
-          //             ],
-          //           ),
-          //         ),
-          //       )
-          //     : const SizedBox()
         ],
       ),
     );
@@ -1052,6 +1031,7 @@ class _homescreenState extends State<homescreen> {
                     PopupMenuItem(
                         child: InkWell(
                             onTap: () {
+                              print("====> $i");
                               switch (i) {
                                 case 0:
                                   AwesomeDialog(
@@ -1188,9 +1168,14 @@ class _homescreenState extends State<homescreen> {
                                     btnCancelOnPress: () {},
                                   ).show();
                                   break;
-                                case 6:
+                                case 8:
+                                  print("OKOKOK");
+                                  Get.to(const SetAdminClass());
+
                                   break;
                                 default:
+                                  print("NONONO");
+                                  break;
                               }
                             },
                             child: textfield(

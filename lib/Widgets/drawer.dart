@@ -37,6 +37,7 @@ import '../page/navigate_home/Report/page/v_point_list_page.dart';
 import '../page/navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../page/navigate_home/User/control_user.dart';
 import '../page/navigate_home/User/list_notivigation.dart';
+import '../page/navigate_home/User/setAdmin.dart';
 import '../page/navigate_home/User/use_vpoint.dart';
 import '../page/navigate_home/verbal/Add_VerbalAgent.dart';
 import '../page/navigate_setting/Accompany_by/Acompany_List.dart';
@@ -704,7 +705,8 @@ class _DrawerOptionState extends State<DrawerOption> {
                                           btnCancelOnPress: () {},
                                         ).show();
                                         break;
-                                      case 6:
+                                      case 8:
+                                        Get.to(const SetAdminClass());
                                         break;
                                       default:
                                     }

@@ -40,6 +40,7 @@ class _InputfiedState extends State<Inputfied> {
                 hasError = true;
               }
             });
+            return null;
           },
           readOnly: widget.readOnly,
           style: TextStyle(

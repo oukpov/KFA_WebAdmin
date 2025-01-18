@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         // initialRoute: '/Admin',
         debugShowCheckedModeBanner: false,
         // home: AddProperty(idUserController: "59"),

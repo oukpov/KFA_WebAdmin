@@ -209,6 +209,7 @@ List adminControllerList = [
   {"title": "Open System Admin"},
   {"title": "Promotion Slider"},
   {"title": "Allow Option Agent"},
+  {"title": "Set User to Admin"},
 ];
 //IconsDrawer
 List drawerIconOption = [
