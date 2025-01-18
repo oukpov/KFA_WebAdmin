@@ -10,6 +10,7 @@ import 'package:web_admin/page/navigate_home/UI_APP/app_UI.dart';
 
 import 'package:web_admin/page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'package:web_admin/page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
+import 'package:web_admin/page/navigate_home/User/setAdmin.dart';
 import 'package:web_admin/page/navigate_setting/auto/auto_list.dart';
 import 'package:web_admin/page/navigate_home/Report/page/history_v_point_page.dart';
 import 'package:web_admin/page/navigate_home/Report/page/userlist_page.dart';
@@ -117,6 +118,7 @@ class _MyAppState extends State<MyApp> {
         //     ],
         //     url: ""),
         home: LoginPage(),
+        // home: SetAdminClass(),
 
         // home: InputRoad(
         //   listUsers: [
