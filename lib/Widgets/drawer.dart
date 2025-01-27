@@ -84,39 +84,15 @@ class _DrawerOptionState extends State<DrawerOption> {
     super.initState();
   }
 
-  String type = '';
+  // String type = '';
   void main() {
     setState(() {
-<<<<<<< HEAD
-      // if (widget.listUser[0]['agency'].toString() == "28") {
-      //   listReportOption = reportOptionS;
-      // }
-      //  else {
-      // listReportOption = reportOption;
       if (widget.listUser[0]['add_zone'].toString() == "1") {
-        // listAdminOption = autoOptionAdmin;
         autoOption.add(
           {"title": "Add Zone Specail", "click": 3},
         );
-=======
-      if (widget.listUser[0]['agency'].toString() == "28") {
-        listControllerTitle = listTitleAdmin;
-        listControllerIcons = optionIconListAdmin;
-        listReportOption = reportOptionS;
-        listAdminOption = autoOptionAdmin;
-      } else {
-        listControllerTitle = listTitle;
-        listControllerIcons = optionIconList;
-        listReportOption = reportOption;
-        if (widget.listUser[0]['zone_Allow'].toString() == "1") {
-          listAdminOption = autoOptionAdmin;
-        } else {
-          listAdminOption = autoOption;
-        }
->>>>>>> 5ab956b9e52a0ad6fd7aaa9b337d6bc3bedc18c7
       }
       if (widget.listUser[0]['comparable'].toString() == "1") {
-        // listAdminOption = autoOptionAdmin;
         listTitle.add(
           {"title": "Comparable", "click": 3},
         );
@@ -124,8 +100,7 @@ class _DrawerOptionState extends State<DrawerOption> {
           {"icon": "assets/icons/Comparable.png"},
         );
       }
-      if (widget.listUser[0]['comparable'].toString() == "1") {
-        // listAdminOption = autoOptionAdmin;
+      if (widget.listUser[0]['property'].toString() == "1") {
         listTitle.add(
           {"title": "property", "click": 4},
         );
@@ -138,6 +113,7 @@ class _DrawerOptionState extends State<DrawerOption> {
           {"title": "Main Road & Market Price", "click": 4},
         );
       }
+      // print("autoOption : $autoOption");
       if (widget.listUser[0]['approver'].toString() == "1") {
         listTitle.add(
           {"title": "Approval AutoVerbal", "click": 7},
@@ -182,7 +158,6 @@ class _DrawerOptionState extends State<DrawerOption> {
         listTitlesetting.add({"title": "Add Point", "click": 22});
         optionIconListsetting.add({"icon": "assets/icons/v.jpg"});
       }
-      // print("listTitle : $listTitle");
       // }
     });
   }
