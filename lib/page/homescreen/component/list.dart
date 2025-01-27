@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 List listTitle = [
-  {"title": "Customer"},
-  {"title": "Valuation"},
-  {"title": "Comparable"},
-  {"title": "Property"},
-  {"title": "Auto Verbal"},
-  {"title": "Verbal"},
-  {"title": "Approval AutoVerbal"},
-  {"title": "User"},
-  {"title": "Report"},
+  {"title": "Customer", "click": 1},
+  {"title": "Valuation", "click": 2},
+  // {"title": "Comparable", "click": 3},
+  // {"title": "Property", "click": 4},
+  {"title": "Auto Verbal", "click": 5},
+  {"title": "Verbal", "click": 6},
+  // {"title": "User"},
+  // {"title": "Report"},
 ];
 List listTitleAdmin = [
   {"title": "Customer"},
@@ -18,48 +17,23 @@ List listTitleAdmin = [
   {"title": "Property"},
   {"title": "Auto Verbal"},
   {"title": "Verbal"},
-  {"title": "Approval AutoVerbal"},
   {"title": "User"},
-  {"title": "Report"},
-  {"title": "Admin"},
-  {"title": "UI App"},
+  {"title": "Approval AutoVerbal"},
+  // {"title": "Report"},
+  // {"title": "Admin"},
+  // {"title": "UI App"},
 ];
-List listTitlesetting = [
-  {"title": "Building Type"},
-  {"title": "Register"},
-  {"title": "Auto"},
-  {"title": "Road"},
-  {"title": "Bank"},
-  {"title": "Brand"},
-  {"title": "Agency"},
-  {"title": "Option"},
-  {"title": "Land"},
-  {"title": "Assign To"},
-  {"title": "Inspector Name"},
-  {"title": "Inspectors Name"},
-  {"title": "Register Name"},
-  {"title": "Accomnpany Name"},
-  {"title": "Approved Name"},
-  {"title": "Appraiser Name"},
-  {"title": "Province"},
-  {"title": "District"},
-  {"title": "Commune"},
-  {"title": "Add Point"},
-  {"title": "Banner"},
-  {"title": "Pages"},
-];
-
 //ICons
 List optionIconList = [
   {"icon": "assets/icons/Costomer.png"},
   {"icon": "assets/icons/Valuation.png"},
-  {"icon": "assets/icons/Comparable.png"},
-  {"icon": "assets/icons/Property.png"},
+  // {"icon": "assets/icons/Comparable.png"},
+  // {"icon": "assets/icons/Property.png"},
   {"icon": "assets/icons/AutoVerbal.png"},
   {"icon": "assets/icons/Verbal.png"},
-  {"icon": "assets/icons/Inspector.png"},
-  {"icon": "assets/icons/User.png"},
-  {"icon": "assets/icons/Report.png"},
+  // {"icon": "assets/icons/Inspector.png"},
+  // {"icon": "assets/icons/User.png"},
+  // {"icon": "assets/icons/Report.png"},
 ];
 List optionIconListAdmin = [
   {"icon": "assets/icons/Costomer.png"},
@@ -76,6 +50,31 @@ List optionIconListAdmin = [
   {"icon": "assets/icons/Admin.png"},
   {"icon": "assets/icons/ui_app.png"},
 ];
+List listTitlesetting = [
+  {"title": "Building Type", "click": 1},
+  {"title": "Register", "click": 2},
+  {"title": "Auto", "click": 3},
+  {"title": "Road", "click": 4},
+  {"title": "Bank", "click": 5},
+  {"title": "Brand", "click": 6},
+  {"title": "Agency", "click": 7},
+  {"title": "Option", "click": 8},
+  {"title": "Land", "click": 9},
+  {"title": "Assign To", "click": 10},
+  {"title": "Inspector Name", "click": 11},
+  {"title": "Inspectors Name", "click": 12},
+  {"title": "Register Name", "click": 13},
+  {"title": "Accomnpany Name", "click": 14},
+  {"title": "Approved Name", "click": 15},
+  {"title": "Appraiser Name", "click": 16},
+  {"title": "Province", "click": 17},
+  {"title": "District", "click": 18},
+  {"title": "Commune", "click": 19},
+  // {"title": "Add Point"},
+  {"title": "Banner", "click": 20},
+  {"title": "Pages", "click": 21},
+];
+
 List optionIconListsetting = [
   {"icon": "assets/icons/apartment.png"},
   {"icon": "assets/icons/Register.png"},
@@ -96,7 +95,7 @@ List optionIconListsetting = [
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/locations.png"},
   {"icon": "assets/icons/locations.png"},
-  {"icon": "assets/icons/v.jpg"},
+  // {"icon": "assets/icons/v.jpg"},
   {"icon": "assets/icons/sponsor.jpg"},
   {"icon": "assets/icons/pages.png"},
 ];
@@ -118,8 +117,8 @@ List comparableotion = [
 //   {"title": "Comparable Map List"},
 ];
 List autoOption = [
-  {"title": "New Auto Verbal"},
-  {"title": "Auto Verbal List"},
+  {"title": "New Auto Verbal", "click": 1},
+  {"title": "Auto Verbal List", "click": 2},
 ];
 List autoOptionAdmin = [
   {"title": "New Auto Verbal"},

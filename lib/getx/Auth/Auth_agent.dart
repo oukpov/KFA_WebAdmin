@@ -1,14 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/Auth/auth.dart';
 import '../../page/homescreen/responsive_layout.dart';
-import '../component/getx._snack.dart';
 
 class Authentication extends GetxController {
   var isLocalhost = true.obs;
@@ -31,12 +29,15 @@ class Authentication extends GetxController {
       try {
         var headers = {'Content-Type': 'application/json'};
         var data = json.encode({
+          // "username": "chantha.rath",
+          // "password": "ChanthaCRM@2025"
           "username": authenModel.user![0].username,
           "password": authenModel.user![0].password
         });
         var dio = Dio();
         var response = await dio.request(
-          'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/login/KFA',
+          // 'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/login/KFA',
+          'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/login/Test/KFA',
           options: Options(
             method: 'POST',
             headers: headers,
@@ -44,9 +45,9 @@ class Authentication extends GetxController {
           data: data,
         );
         if (response.statusCode == 200) {
-          listlocalhost = jsonDecode(json.encode(response.data))['user'];
+          listlocalhost = response.data['user'];
           List<dynamic> responseData = response.data['user'];
-          // print(responseData.toString());
+          // print("====> $listlocalhost");
           listLocalhostData =
               responseData.map((item) => json.encode(item)).toList();
           localhostList(listLocalhostData);
@@ -63,23 +64,13 @@ class Authentication extends GetxController {
             icon: const Icon(Icons.add_alert),
           );
 
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    //For research
-                    // AddComparable(
-                    //       type: (value) {},
-                    //       addNew: (value) {},
-                    //       listlocalhosts: listlocalhost,
-                    //     )
-                    //Config Admin
-                    ResponsiveHomePage(
-                  listUser: listlocalhost,
-                  url: "",
-                  id: "",
-                ),
-              ));
+          Get.to(
+            ResponsiveHomePage(
+              listUser: listlocalhost,
+              url: "",
+              id: "",
+            ),
+          );
         }
       } catch (e) {
         // print('Error occurred: $e');
@@ -103,24 +94,44 @@ class Authentication extends GetxController {
     } else {
       isLocalhost.value = false;
       if (listlocalhost.isNotEmpty) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  //Dmin
-                  // AddComparable(
-                  //       type: (value) {},
-                  //       addNew: (value) {},
-                  //       listlocalhosts: listlocalhost,
-                  //     )
-                  //Config Admin
-                  ResponsiveHomePage(
-                listUser: listlocalhost,
-                url: "",
-                id: "",
-              ),
-            ));
+        Get.to(
+          ResponsiveHomePage(
+            listUser: listlocalhost,
+            url: "",
+            id: "",
+          ),
+        );
       }
+    }
+  }
+
+  Future<void> fetchData(int agency) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/allow/agentID/$agency',
+      options: Options(
+        method: 'POST',
+      ),
+    );
+    if (response.statusCode == 200) {
+      listlocalhost = response.data;
+      int userIndex = listlocalhost
+          .indexWhere((item) => int.parse(item['agency'].toString()) == agency);
+
+      if (userIndex != -1) {
+        // Remove the entire user data
+        listlocalhost.removeAt(userIndex);
+      }
+      List<String> updatedList =
+          listlocalhost.map((item) => json.encode(item)).toList();
+      await prefs.setStringList('localhost', updatedList);
+      // List<dynamic> responseData = response.data;
+      // listLocalhostData =
+      //     responseData.map((item) => json.encode(item)).toList();
+      // localhostList(listLocalhostData);
+    } else {
+      // print(response.statusMessage);
     }
   }
 
@@ -148,7 +159,7 @@ class Authentication extends GetxController {
 
         // print(listblock.toString());
       } else {
-        print(response.statusMessage);
+        // print(response.statusMessage);
       }
     } catch (e) {
       // print(e);
@@ -169,7 +180,7 @@ class Authentication extends GetxController {
 
       if (response.statusCode == 200) {
         listAdminUser.value = jsonDecode(json.encode(response.data));
-        print(listAdminUser.toString());
+        // print(listAdminUser.toString());
       }
     } catch (e) {
       // print(e);
