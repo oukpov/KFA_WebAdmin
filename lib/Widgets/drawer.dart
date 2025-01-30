@@ -12,6 +12,7 @@ import '../components/colors.dart';
 import '../getx/Auth/Auth_agent.dart';
 import '../getx/checkUpdate/updateCheck.dart';
 import '../models/Auth/auth.dart';
+import '../page/homescreen/component/list.dart';
 import '../page/navigate_home/AutoVerbal/AutoVerbal.dart';
 import '../page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import '../page/navigate_home/AutoVerbal/input_road/InputRoad.dart';
@@ -21,7 +22,7 @@ import '../page/navigate_home/Customer/List/customer_list.dart';
 import '../page/navigate_home/Customer/responsiveDevice.dart/addnew.dart';
 import '../page/navigate_home/Report/Total_amount.dart';
 import '../page/navigate_home/Report/Transetoin/history.dart';
-import '../page/homescreen/component/list.dart';
+// import '../page/homescreen/component/list.dart';
 import '../page/navigate_home/Report/customer/menu.dart';
 import '../page/navigate_home/Report/page/about_us_page.dart';
 import '../page/navigate_home/Report/page/comparable_case_bar_chart.dart';
@@ -68,9 +69,11 @@ class DrawerOption extends StatefulWidget {
     required this.listUser,
     required this.email,
     required this.onBack,
+    // required this.listTitle,
   });
   final String device;
   final List listUser;
+  // final List listTitle;
   final String email;
   final OnChangeCallback onBack;
   @override
@@ -84,9 +87,88 @@ class _DrawerOptionState extends State<DrawerOption> {
     super.initState();
   }
 
-  // String type = '';
+  List autoOption = [];
+  List listTitle = [];
+  List optionIconList = [];
+  List listTitlesetting = [];
+  List optionIconListsetting = [];
   void main() {
     setState(() {
+      autoOption = [];
+      listTitle = [];
+      optionIconList = [];
+      listTitlesetting = [];
+      optionIconListsetting = [];
+      autoOption = [
+        {"title": "New Auto Verbal", "click": 1},
+        {"title": "Auto Verbal List", "click": 2},
+      ];
+      listTitle = [
+        {"title": "Customer", "click": 1},
+        {"title": "Valuation", "click": 2},
+        {"title": "Auto Verbal", "click": 5},
+        {"title": "Verbal", "click": 6},
+      ];
+      optionIconList = [
+        {"icon": "assets/icons/Costomer.png"},
+        {"icon": "assets/icons/Valuation.png"},
+        {"icon": "assets/icons/AutoVerbal.png"},
+        {"icon": "assets/icons/Verbal.png"},
+      ];
+      listTitlesetting = [
+        {"title": "Building Type", "click": 1},
+        {"title": "Register", "click": 2},
+        {"title": "Auto", "click": 3},
+        {"title": "Road", "click": 4},
+        {"title": "Bank", "click": 5},
+        {"title": "Brand", "click": 6},
+        {"title": "Agency", "click": 7},
+        {"title": "Option", "click": 8},
+        {"title": "Land", "click": 9},
+        {"title": "Assign To", "click": 10},
+        {"title": "Inspector Name", "click": 11},
+        {"title": "Inspectors Name", "click": 12},
+        {"title": "Register Name", "click": 13},
+        {"title": "Accomnpany Name", "click": 14},
+        {"title": "Approved Name", "click": 15},
+        {"title": "Appraiser Name", "click": 16},
+        {"title": "Province", "click": 17},
+        {"title": "District", "click": 18},
+        {"title": "Commune", "click": 19},
+        // {"title": "Add Point"},
+        {"title": "Banner", "click": 20},
+        {"title": "Pages", "click": 21},
+      ];
+      optionIconListsetting = [
+        {"icon": "assets/icons/apartment.png"},
+        {"icon": "assets/icons/Register.png"},
+        {"icon": "assets/icons/locations.png"},
+        {"icon": "assets/icons/road.png"},
+        {"icon": "assets/icons/bank.png"},
+        {"icon": "assets/icons/bank.png"},
+        {"icon": "assets/icons/agency.png"},
+        {"icon": "assets/icons/option.png"},
+        {"icon": "assets/icons/land.png"},
+        {"icon": "assets/icons/assigned.png"},
+        {"icon": "assets/icons/Inspector.png"},
+        {"icon": "assets/icons/Inspector.png"},
+        {"icon": "assets/icons/Register.png"},
+        {"icon": "assets/icons/accompany.png"},
+        {"icon": "assets/icons/Approved.png"},
+        {"icon": "assets/icons/Appraiser.png"},
+        {"icon": "assets/icons/locations.png"},
+        {"icon": "assets/icons/locations.png"},
+        {"icon": "assets/icons/locations.png"},
+        // {"icon": "assets/icons/v.jpg"},
+        {"icon": "assets/icons/sponsor.jpg"},
+        {"icon": "assets/icons/pages.png"},
+      ];
+      //////
+      // autoOption = autoOption;
+      // listTitle = listTitle;
+      // optionIconList = optionIconList;
+      // listTitlesetting = listTitlesetting;
+      // optionIconListsetting = optionIconListsetting;
       if (widget.listUser[0]['add_zone'].toString() == "1") {
         autoOption.add(
           {"title": "Add Zone Specail", "click": 3},
@@ -158,6 +240,7 @@ class _DrawerOptionState extends State<DrawerOption> {
         listTitlesetting.add({"title": "Add Point", "click": 22});
         optionIconListsetting.add({"icon": "assets/icons/v.jpg"});
       }
+      print("===> Done! [$autoOption]");
       // }
     });
   }
@@ -168,6 +251,7 @@ class _DrawerOptionState extends State<DrawerOption> {
   // List listAdminOption = [];
   int selectindex = -1;
   int selectindexs = -1;
+  int menuType5 = 0;
   AuthenModel authenModel = AuthenModel();
   @override
   Widget build(BuildContext context) {
@@ -177,7 +261,6 @@ class _DrawerOptionState extends State<DrawerOption> {
       height: MediaQuery.of(context).size.height,
       width: 280,
       color: whileColors,
-      // color: greyColorNolots,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -317,8 +400,11 @@ class _DrawerOptionState extends State<DrawerOption> {
                             PopupMenuItem(
                                 child: InkWell(
                                     onTap: () {
-                                      int menuType = autoOption[index]['click'];
-                                      switch (menuType) {
+                                      setState(() {
+                                        menuType5 = autoOption[i]['click'];
+                                        print("menuType5 : $menuType5");
+                                      });
+                                      switch (menuType5) {
                                         case 1:
                                           Get.to(VerbalAdmin(
                                             addNew: (value) {},
@@ -806,7 +892,7 @@ class _DrawerOptionState extends State<DrawerOption> {
                                       // }
                                     },
                                     child: textfield(
-                                        autoOptions[i]['title'].toString())))
+                                        autoOption[i]['title'].toString())))
                         ];
                       case 4:
                         return [];
@@ -1007,306 +1093,6 @@ class _DrawerOptionState extends State<DrawerOption> {
                       default:
                         return [];
                     }
-                    // if (index == 1)
-                    //   for (int i = 0; i < registerOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {},
-                    //             child: textfield(
-                    //                 registerOption[i]['title'].toString())))
-                    // else if (index == 2)
-                    //   for (int i = 0; i < autoOptions.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (index == 2) {
-                    //                 for (int i = 0;
-                    //                     i < registerOption.length;
-                    //                     i++)
-                    //                   if (i == 0) {
-                    //                     Navigator.of(context).push(
-                    //                         MaterialPageRoute(
-                    //                             builder: (context) =>
-                    //                                 const NewAuto()));
-                    //                   }
-                    //                 if (i == 1) {
-                    //                   Navigator.of(context).push(
-                    //                       MaterialPageRoute(
-                    //                           builder: (context) =>
-                    //                               AutoList()));
-                    //                 }
-                    //                 if (i == 2) {
-                    //                   Navigator.of(context).push(
-                    //                       MaterialPageRoute(
-                    //                           builder: (context) =>
-                    //                               const District()));
-                    //                 }
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 autoOptions[i]['title'].toString())))
-                    // else if (index == 4)
-                    //   for (int i = 0; i < bankOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const new_Bank()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Bank_list()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 bankOption[i]['title'].toString())))
-                    // else if (index == 5)
-                    //   for (int i = 0; i < brandOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const new_Brand()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Brand_list()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 brandOption[i]['title'].toString())))
-                    // else if (index == 6)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Agency()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Agency_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 9)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Assign()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Assign_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 10)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Inspector()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Assign_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 11)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Inspector()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Assign_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 12)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Register()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Register_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 13)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Acompany()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Acompany_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 14)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Acompany()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Approved_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 15)
-                    //   for (int i = 0; i < approvedOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const New_Appraiser()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const Appraiser_List()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 approvedOption[i]['title'].toString())))
-                    // else if (index == 19)
-                    //   for (int i = 0; i < vpointOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               //VVVVVVVVVVV
-                    //               if (i == 0) {
-                    //                 Get.back();
-                    //                 widget.onBack(220);
-                    //                 // Navigator.of(context).push(
-                    //                 //     MaterialPageRoute(
-                    //                 //         builder: (context) =>
-                    //                 //             VpointListPage()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             HistoryVPointPage()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 vpointOption[i]['title'].toString())))
-                    // else if (index == 20)
-                    //   for (int i = 0; i < sponsorOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const SponsorListPage()));
-                    //               }
-                    //               if (i == 1) {
-                    //                 Navigator.of(context).push(
-                    //                     MaterialPageRoute(
-                    //                         builder: (context) =>
-                    //                             const SliderPage()));
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 sponsorOption[i]['title'].toString())))
-                    // else if (index == 21)
-                    //   for (int i = 0; i < faqOption.length; i++)
-                    //     PopupMenuItem(
-                    //         child: InkWell(
-                    //             onTap: () {
-                    //               if (i == 0) {
-                    //                 Get.to(() => FaqPage(),
-                    //                     preventDuplicates: false);
-                    //               }
-                    //               if (i == 1) {
-                    //                 Get.to(() => const ContactUsPage(),
-                    //                     preventDuplicates: false);
-                    //               }
-                    //               if (i == 2) {
-                    //                 Get.to(() => const AboutUsPage());
-                    //               }
-                    //             },
-                    //             child: textfield(
-                    //                 faqOption[i]['title'].toString())))
                   },
                   child: Container(
                     decoration: BoxDecoration(

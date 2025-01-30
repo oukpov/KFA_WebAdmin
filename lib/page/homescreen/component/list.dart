@@ -116,10 +116,10 @@ List comparableotion = [
 //   {"title": "Comparable Search"},
 //   {"title": "Comparable Map List"},
 ];
-List autoOption = [
-  {"title": "New Auto Verbal", "click": 1},
-  {"title": "Auto Verbal List", "click": 2},
-];
+// List autoOption = [
+//   {"title": "New Auto Verbal", "click": 1},
+//   {"title": "Auto Verbal List", "click": 2},
+// ];
 List autoOptionAdmin = [
   {"title": "New Auto Verbal"},
   {"title": "Auto Verbal List"},

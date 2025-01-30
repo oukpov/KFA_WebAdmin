@@ -5,10 +5,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_admin/page/homescreen/newhomepage.dart';
+import '../../Auth/login.dart';
 import '../../models/Auth/auth.dart';
+import '../../page/homescreen/component/list.dart';
 import '../../page/homescreen/responsive_layout.dart';
 
 class Authentication extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    getData();
+  }
+
   var isLocalhost = true.obs;
   var isblock = true.obs;
   var listblock = [].obs;
@@ -17,6 +26,14 @@ class Authentication extends GetxController {
   var listAdminUser = [].obs;
   var isAdmin = true.obs;
   int countCredit = 0;
+  ////////////////
+  var autoOptions = [].obs;
+  var listTitles = [].obs;
+  var optionIconLists = [].obs;
+  var listTitlesettings = [].obs;
+  var optionIconListsettings = [].obs;
+
+  //////
   Future<void> login(AuthenModel authenModel, BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     listLocalhostData = prefs.getStringList('localhost') ?? [];
@@ -29,8 +46,6 @@ class Authentication extends GetxController {
       try {
         var headers = {'Content-Type': 'application/json'};
         var data = json.encode({
-          // "username": "chantha.rath",
-          // "password": "ChanthaCRM@2025"
           "username": authenModel.user![0].username,
           "password": authenModel.user![0].password
         });
@@ -65,8 +80,8 @@ class Authentication extends GetxController {
           );
 
           Get.to(
-            ResponsiveHomePage(
-              listUser: listlocalhost,
+            const ResponsiveHomePage(
+              // listUser: listlocalhost,
               url: "",
               id: "",
             ),
@@ -95,14 +110,80 @@ class Authentication extends GetxController {
       isLocalhost.value = false;
       if (listlocalhost.isNotEmpty) {
         Get.to(
-          ResponsiveHomePage(
-            listUser: listlocalhost,
+          const ResponsiveHomePage(
+            // listUser: listlocalhost,
             url: "",
             id: "",
           ),
         );
       }
     }
+  }
+
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    listLocalhostData = prefs.getStringList('localhost') ?? [];
+    listlocalhost = listLocalhostData
+        .map((item) => json.decode(item))
+        .cast<Map<String, dynamic>>()
+        .toList();
+    if (listlocalhost.isNotEmpty) {
+      getAgentByID(listlocalhost[0]['agency'].toString());
+    }
+  }
+
+  Future<void> getAgentByID(String agency) async {
+    await refrech(agency);
+    try {
+      isLocalhost.value = true;
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/allow/agentID/$agency',
+        options: Options(
+          method: 'POST',
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = response.data;
+        listLocalhostData =
+            responseData.map((item) => json.encode(item)).toList();
+        await localhostList(listLocalhostData);
+
+        // Get.offAll(() => const LoginPage());
+        // Get.to(
+        //   const ResponsiveHomePage(
+        //     // listUser: responseData,
+        //     url: "",
+        //     id: "",
+        //   ),
+        // );
+      }
+    } catch (e) {
+      // print(e);
+    } finally {
+      isLocalhost.value = false;
+    }
+  }
+
+  Future<void> refrech(String agency) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> listLocalhostData = prefs.getStringList('localhost') ?? [];
+    List<Map<String, dynamic>> listlocalhost = listLocalhostData
+        .map((item) => json.decode(item) as Map<String, dynamic>)
+        .toList();
+    int userIndex =
+        listlocalhost.indexWhere((item) => item['agency'] == agency);
+
+    if (userIndex != -1) {
+      // Remove the entire user data
+      listlocalhost.removeAt(userIndex);
+    }
+
+    // Update the SharedPreferences with the modified list
+    List<String> updatedList =
+        listlocalhost.map((item) => json.encode(item)).toList();
+    await prefs.setStringList('localhost', updatedList);
   }
 
   Future<void> fetchData(int agency) async {
@@ -136,12 +217,92 @@ class Authentication extends GetxController {
   }
 
   localhostList(List<String> list) async {
+    // listTitles.clear();
+    // optionIconLists.clear();
+    // listTitlesettings.clear();
+    // optionIconListsettings.clear();
+    // // ///////////
+    // listTitles.value = listTitle;
+    // optionIconLists.value = optionIconList;
+    // listTitlesettings.value = listTitlesetting;
+    // optionIconListsettings.value = optionIconListsetting;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setStringList('localhost', list);
     listlocalhost = list
         .map((item) => json.decode(item))
         .cast<Map<String, dynamic>>()
         .toList();
+    // if (listlocalhost[0]['add_zone'].toString() == "1") {
+    //   autoOptions.add(
+    //     {"title": "Add Zone Specail", "click": 3},
+    //   );
+    // }
+    // if (listlocalhost[0]['comparable'].toString() == "1") {
+    //   listTitles.add(
+    //     {"title": "Comparable", "click": 3},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/Comparable.png"},
+    //   );
+    // }
+    // if (listlocalhost[0]['property'].toString() == "1") {
+    //   listTitles.add(
+    //     {"title": "property", "click": 4},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/Property.png"},
+    //   );
+    // }
+    // if (listlocalhost[0]['market_price_road'].toString() == "1") {
+    //   autoOptions.add(
+    //     {"title": "Main Road & Market Price", "click": 4},
+    //   );
+    // }
+    // // print("autoOption : $autoOption");
+    // if (listlocalhost[0]['approver'].toString() == "1") {
+    //   listTitles.add(
+    //     {"title": "Approval AutoVerbal", "click": 7},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/Inspector.png"},
+    //   );
+    // }
+    // if (listlocalhost[0]['agency'].toString() == "28") {
+    //   listTitles.add(
+    //     {"title": "Users", "click": 8},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/User.png"},
+    //   );
+    // }
+    // if (listlocalhost[0]['agency'].toString() == "28") {
+    //   listTitles.add(
+    //     {"title": "Report"},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/Report.png", "click": 9},
+    //   );
+    // }
+    // if (listlocalhost[0]['agency'].toString() == "28") {
+    //   listTitles.add(
+    //     {"title": "Admin", "click": 10},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/Admin.png"},
+    //   );
+    // }
+    // if (listlocalhost[0]['agency'].toString() == "28") {
+    //   listTitles.add(
+    //     {"title": "UI App"},
+    //   );
+    //   optionIconLists.add(
+    //     {"icon": "assets/icons/ui_app.png", "click": 11},
+    //   );
+    // }
+    // if (listlocalhost[0]['add_vpoint'].toString() == '1') {
+    //   listTitlesettings.add({"title": "Add Point", "click": 22});
+    //   optionIconListsettings.add({"icon": "assets/icons/v.jpg"});
+    // }
   }
 
   Future<void> blockAgent() async {
@@ -155,7 +316,7 @@ class Authentication extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        listblock.value = jsonDecode(json.encode(response.data));
+        listblock.value = response.data;
 
         // print(listblock.toString());
       } else {

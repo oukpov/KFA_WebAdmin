@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/getx/component/getx._snack.dart';
@@ -9,24 +7,38 @@ import 'package:web_admin/getx/component/getx._snack.dart';
 class AllowAgent extends GetxController {
   @override
   void onInit() {
-    listAgentFunction();
+    listAgentFunction(1, false, "");
     super.onInit();
   }
 
+  var perPage = 0.obs;
+  var lastPage = 0.obs;
+  var to = 0.obs;
+  var total = 0.obs;
   var listAgent = [].obs;
   var isAgent = false.obs;
-  Future<void> listAgentFunction() async {
+  Future<void> listAgentFunction(
+      int page, bool search, String searchText) async {
     try {
       isAgent.value = true;
       var dio = Dio();
+      var data = (search == false)
+          ? json.encode({"page": page, "perPage": 10})
+          : json.encode({"username": searchText});
+
       var response = await dio.request(
         'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/fetch/listAgent',
         options: Options(
           method: 'POST',
         ),
+        data: data,
       );
 
       if (response.statusCode == 200) {
+        perPage.value = response.data['perPage'];
+        lastPage.value = response.data['lastPage'];
+        to.value = response.data['to'];
+        total.value = response.data['total'];
         listAgent.value = response.data['data'];
       } else {
         // print(response.statusMessage);
