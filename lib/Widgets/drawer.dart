@@ -39,6 +39,7 @@ import '../page/navigate_home/Report/responsvie/responsivereportyear.dart';
 import '../page/navigate_home/User/control_user.dart';
 import '../page/navigate_home/User/list_notivigation.dart';
 import '../page/navigate_home/User/use_vpoint.dart';
+import '../page/navigate_home/edit_road/add_comparable_new_page.dart';
 import '../page/navigate_home/verbal/Add_VerbalAgent.dart';
 import '../page/navigate_setting/Accompany_by/Acompany_List.dart';
 import '../page/navigate_setting/Accompany_by/Acompany_new.dart';
@@ -337,6 +338,10 @@ class _DrawerOptionState extends State<DrawerOption> {
                                     onTap: () {
                                       switch (i) {
                                         case 0:
+                                          Get.to(ChangeRaod(
+                                              type: (value) {},
+                                              addNew: (value) {},
+                                              listlocalhosts: widget.listUser));
                                           // Navigator.push(context, MaterialPageRoute(
                                           //   builder: (context) {
                                           //     return const New_Executive();
