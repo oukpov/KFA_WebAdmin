@@ -254,40 +254,56 @@ class _AllowOptionsState extends State<AllowOptions> {
                                                           : false,
                                                       onChanged:
                                                           (bool newValue) {
-                                                        // if (allowAgent.listAgent[index]
-                                                        //         [listTitle[i]['type']] ==
-                                                        //     '0') {
-                                                        //   setState(() {
-                                                        //     allowAgent.listAgent[index][
-                                                        //         listTitle[i]
-                                                        //             ['type']] = '1';
-                                                        //   });
-                                                        //   allowAgent.allowAgent(
-                                                        //       allowAgent.listAgent,
-                                                        //       1,
-                                                        //       listTitle[i]['type'],
-                                                        //       index);
-                                                        // } else {
-                                                        //   setState(() {
-                                                        //     allowAgent.listAgent[index][
-                                                        //         listTitle[i]
-                                                        //             ['type']] = '0';
-                                                        //   });
-                                                        //   allowAgent.allowAgent(
-                                                        //       allowAgent.listAgent,
-                                                        //       0,
-                                                        //       listTitle[i]['type'],
-                                                        //       index);
-                                                        // }
-                                                        // if (listTitle[i]['type'] ==
-                                                        //     "blockOption") {
-                                                        //   setState(() {
-                                                        //     for (var item in listTitle) {
-                                                        //       allowAgent.listAgent[index]
-                                                        //           [item['type']] = '0';
-                                                        //     }
-                                                        //   });
-                                                        // }
+                                                        if (allowAgent.listAgent[
+                                                                    index][
+                                                                listTitle[i]
+                                                                    ['type']] ==
+                                                            '0') {
+                                                          setState(() {
+                                                            allowAgent
+                                                                    .listAgent[
+                                                                index][listTitle[
+                                                                    i]
+                                                                ['type']] = '1';
+                                                          });
+                                                          allowAgent.allowAgent(
+                                                              allowAgent
+                                                                  .listAgent,
+                                                              1,
+                                                              listTitle[i]
+                                                                  ['type'],
+                                                              index);
+                                                        } else {
+                                                          setState(() {
+                                                            allowAgent
+                                                                    .listAgent[
+                                                                index][listTitle[
+                                                                    i]
+                                                                ['type']] = '0';
+                                                          });
+                                                          allowAgent.allowAgent(
+                                                              allowAgent
+                                                                  .listAgent,
+                                                              0,
+                                                              listTitle[i]
+                                                                  ['type'],
+                                                              index);
+                                                        }
+                                                        if (listTitle[i]
+                                                                ['type'] ==
+                                                            "blockOption") {
+                                                          setState(() {
+                                                            for (var item
+                                                                in listTitle) {
+                                                              allowAgent.listAgent[
+                                                                          index]
+                                                                      [
+                                                                      item[
+                                                                          'type']] =
+                                                                  '0';
+                                                            }
+                                                          });
+                                                        }
                                                       },
                                                       activeColor: appback,
                                                       activeTrackColor:
