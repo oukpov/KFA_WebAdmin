@@ -283,7 +283,7 @@ class _homescreenState extends State<homescreen> {
   ];
 
   int type = 0;
-
+  // int type = 7;
   @override
   Widget build(BuildContext context) {
     // imageLogoAdmin = Get.put(ImageLogoAdmin());

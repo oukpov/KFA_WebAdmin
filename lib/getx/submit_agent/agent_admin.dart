@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,21 +32,25 @@ class ListAgent extends GetxController {
       String startDateController,
       String endDateController,
       String search) async {
-    print("OKOKOK : $checkType");
     try {
+      print("perpages : $perpages || pages : $pages || search : $search ||");
       if (checkType == 1) {
+        print("No.1 : $checkType");
         url.value =
-            'get/Pagination?perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
+            'get/Pagination?perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
       } else if (checkType == 2) {
+        //Approvel
+        print("No.2 : $checkType");
         url.value =
-            'get/Pagination?check=1&approvel=100&perPage=$perpages&page=$pages&${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
-      } else if (checkType == 4) {
-        // print("OKOKOK : $checkType");
+            'get/Pagination?check=2&VerifyAgent=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
+      } else if (checkType == 3) {
+        print("No.3: $checkType");
         url.value =
             "search/listAuto?search=$search&page=$pages&perPage=$perpages";
       } else {
+        print("No.4 : $checkType");
         url.value =
-            'get/Pagination?check=2&approvel=100&perPage=$perpages&page=$pages&${(startDateController != '') ? "&start=$startDateController&end=$endDateController" : ""}';
+            'get/Pagination?check=2&approvel=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
       }
       isAgent.value = true;
       var headers = {'Content-Type': 'application/json'};
@@ -60,11 +63,11 @@ class ListAgent extends GetxController {
         ),
       );
       if (response.statusCode == 200) {
-        perpage.value = jsonDecode(json.encode(response.data))['perPage'];
-        lastPage.value = jsonDecode(json.encode(response.data))['lastPage'];
-        to.value = jsonDecode(json.encode(response.data))['to'] ?? 0;
-        total.value = jsonDecode(json.encode(response.data))['total'];
-        listAgentModel.value = jsonDecode(json.encode(response.data))['data'];
+        perpage.value = int.parse(response.data['perPage'].toString());
+        lastPage.value = int.parse(response.data['lastPage'].toString());
+        to.value = int.parse(response.data['to'].toString());
+        total.value = int.parse(response.data['total'].toString());
+        listAgentModel.value = response.data['data'];
       }
     } catch (e) {
       // print('Error occurred: $e');

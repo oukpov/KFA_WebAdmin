@@ -11,9 +11,9 @@ import 'package:image_downloader_web/image_downloader_web.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:screenshot/screenshot.dart';
-
 import '../../../../Profile/components/Drop_down.dart';
 import '../../../../components/colors.dart';
+import '../../../../components/waiting.dart';
 
 // ignore: camel_case_types
 class save_image_after_add_verbal extends StatefulWidget {
@@ -21,13 +21,13 @@ class save_image_after_add_verbal extends StatefulWidget {
   final List list;
   final int i;
   final OnChangeCallback type;
-  // final List listUser;
+  final List listUser;
   final bool check;
-  save_image_after_add_verbal(
+  const save_image_after_add_verbal(
       {super.key,
       required this.verbalId,
       required this.type,
-      // required this.listUser,
+      required this.listUser,
       required this.list,
       required this.i,
       required this.check});
@@ -54,8 +54,7 @@ class _save_image_after_add_verbalState
   Uint8List? get_bytes;
 //postimageqr
 
-  Random random = new Random();
-  Uint8List? _byesData;
+  Random random = Random();
   var image_m;
   bool ch = false;
   double? totalMIN = 0;
@@ -75,31 +74,33 @@ class _save_image_after_add_verbalState
           return -1; // Move 'LS' to the top
         } else if (a['verbal_land_des'] != 'LS' &&
             b['verbal_land_des'] == 'LS') {
-          return 1; // Keep non-'LS' items below
+          return 1;
         } else {
-          return 0; // Maintain original order if types are the same
+          return 0;
         }
       });
+
       if (land.isNotEmpty) {
+        print("No 1 ==========>");
         for (int i = 0; i < land.length; i++) {
           totalMIN = totalMIN! +
-              double.parse(land[i]["verbal_land_minvalue"].toStringAsFixed(2));
+              double.parse(land[i]["verbal_land_minvalue"].toString());
           total_MAX = total_MAX! +
-              double.parse(land[i]["verbal_land_maxvalue"].toStringAsFixed(2));
+              double.parse(land[i]["verbal_land_maxvalue"].toString());
           // address = land[i]["address"];
-          String x1 = land[i]["verbal_land_minsqm"].toStringAsFixed(2);
-          String n1 = land[i]["verbal_land_maxsqm"].toStringAsFixed(2);
+          String x1 = land[i]["verbal_land_minsqm"].toString();
+          String n1 = land[i]["verbal_land_maxsqm"].toString();
           x = x + double.parse(x1);
           n = n + double.parse(n1);
         }
         setState(() {
           fsvM = (total_MAX! *
-                  double.parse(
-                      (widget.list[widget.i]["verbal_con"] ?? 0).toString())) /
+                  double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                      .toString())) /
               100;
           fsvN = (totalMIN! *
-                  double.parse(
-                      (widget.list[widget.i]["verbal_con"] ?? 0).toString())) /
+                  double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                      .toString())) /
               100;
 
           if (land.isEmpty) {
@@ -107,12 +108,12 @@ class _save_image_after_add_verbalState
             total_MAX = 0;
           } else {
             fx = x *
-                (double.parse(
-                        (widget.list[widget.i]["verbal_con"] ?? 0).toString()) /
+                (double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                        .toString()) /
                     100);
             fn = n *
-                (double.parse(
-                        (widget.list[widget.i]["verbal_con"] ?? 0).toString()) /
+                (double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                        .toString()) /
                     100);
           }
           for (int i = 0; i < land.length - 1; i++) {
@@ -125,6 +126,8 @@ class _save_image_after_add_verbalState
             }
           }
         });
+      } else {
+        print("No 2 ==========>");
       }
     }
   }
@@ -134,6 +137,7 @@ class _save_image_after_add_verbalState
   @override
   void initState() {
     item = widget.list[widget.i];
+
     waitiFunction();
     super.initState();
   }
@@ -152,7 +156,7 @@ class _save_image_after_add_verbalState
     if (response.statusCode == 200) {
       listImage = jsonDecode(json.encode(response.data));
       setState(() {
-        if (listImage.isNotEmpty) {
+        if (listImage[0]['verbalImage'].toString() != "No") {
           bytes2 = listImage[0]['verbalImage'].toString();
         } else {
           bytes2 = "No";
@@ -197,9 +201,7 @@ class _save_image_after_add_verbalState
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: waitvalue
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const WaitingFunction()
           : Stack(
               children: [
                 Center(
@@ -254,7 +256,7 @@ class _save_image_after_add_verbalState
                                                   BarcodeQRCorrectionLevel.high,
                                             ),
                                             data:
-                                                'https://www.latlong.net/c/?lat=${(item['latlong_la'] < item['latlong_log']) ? item['latlong_la'] : item['latlong_log']}&long=${(item['latlong_la'] < item['latlong_log']) ? item['latlong_log'] : item['latlong_la']}',
+                                                'https://www.latlong.net/c/?lat=${(double.parse(item['latlong_la'].toString()) < double.parse(item['latlong_log'].toString())) ? item['latlong_la'] : item['latlong_log']}&long=${(double.parse(item['latlong_la'].toString()) < double.parse(item['latlong_log'].toString())) ? item['latlong_log'] : item['latlong_la']}',
                                             width: 50,
                                             height: 50,
                                           ),
@@ -373,7 +375,7 @@ class _save_image_after_add_verbalState
                                   decoration: BoxDecoration(
                                       border: Border.all(width: 0.4)),
                                   child: Text(
-                                      " ${item['verbal_address'] ?? ""}.${item['verbal_khan'] ?? ""}",
+                                      "Address : ${item['verbal_address'] ?? ""}.${item['verbal_khan'] ?? ""}",
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 11,
@@ -383,8 +385,28 @@ class _save_image_after_add_verbalState
                             ],
                           ),
                         ),
-                        const SizedBox(height: 5),
 
+                        SizedBox(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 12,
+                                child: Container(
+                                  padding: const EdgeInsets.all(2),
+                                  alignment: Alignment.center,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(width: 0.4)),
+                                  child: Text("Phume : ${item['phume'] ?? ""}",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                      )),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         SizedBox(
                           height: 240,
                           width: double.infinity,
@@ -396,7 +418,7 @@ class _save_image_after_add_verbalState
                                   width: 240,
                                   height: 150,
                                   child: Image.network(
-                                    "https://maps.googleapis.com/maps/api/staticmap?center=${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&zoom=18&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(item["latlong_log"] > item["latlong_la"]) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
+                                    "https://maps.googleapis.com/maps/api/staticmap?center=${(double.parse(item["latlong_log"].toString()) > double.parse(item["latlong_la"].toString())) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&zoom=18&size=1080x920&maptype=hybrid&markers=color:red%7C%7C${(double.parse(item["latlong_log"].toString()) > double.parse(item["latlong_la"].toString())) ? "${item["latlong_la"]},${item["latlong_log"]}" : "${item["latlong_log"]},${item["latlong_la"]}"}&key=AIzaSyCYY4ONLxyCkQkueOWSlu4TjuyCH3QNkQ8",
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -693,6 +715,48 @@ class _save_image_after_add_verbalState
                             ),
                           ]),
                         ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Spacer(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Owner : ${item["verbal_owner"] ?? "N/A"}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "Owner Phone : ${item["verbal_contact"] ?? "N/A"}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "Auto Verbal by : ${widget.listUser[0]["username"] ?? "N/A"}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  "Phone Number : ${widget.listUser[0]["tel_num"] ?? "N/A"}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -709,12 +773,16 @@ class _save_image_after_add_verbalState
                           FloatingActionButton.small(
                             backgroundColor: kwhite_new,
                             onPressed: () async {
-                              Navigator.pop(context);
                               if (widget.check == true) {
                                 Navigator.pop(context);
+                                Navigator.pop(context);
+                              } else {
+                                setState(() {
+                                  widget.type(false);
+                                });
                               }
                             },
-                            child: const Icon(Icons.exit_to_app),
+                            child: const Icon(Icons.arrow_forward),
                           ),
                           FloatingActionButton.small(
                             backgroundColor: kwhite_new,
@@ -722,7 +790,7 @@ class _save_image_after_add_verbalState
                               await _downloadImage(
                                   _globalKeyScreenShot, context);
                             },
-                            child: const Icon(Icons.screenshot),
+                            child: const Icon(Icons.download),
                           )
                         ],
                       ),

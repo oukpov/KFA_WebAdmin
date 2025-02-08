@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,14 +10,16 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:http/http.dart' as http;
-import 'package:web_admin/page/navigate_home/Approvel/component/save_image_for_Autoverbal.dart';
-import '../../../../Profile/components/Drop_down.dart';
+
+import '../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../components/colors.dart';
+import '../../../../components/waiting.dart';
 import '../../../../getx/notfication/notification.dart';
 import '../../../../getx/submit_agent/agent.dart';
 import '../../../../models/autoVerbal.dart';
 import 'allow_successfuly.dart';
 
+// ignore: must_be_immutable
 class PDfButton extends StatefulWidget {
   PDfButton(
       {super.key,
@@ -62,8 +63,58 @@ class _PDfButtonState extends State<PDfButton> {
 
   NotificatonAPI notificatonAPI = NotificatonAPI(ids: "");
   ListAgent listAgent = ListAgent(ids: 0);
-
   DateTime now = DateTime.now();
+  Future<void> submitAgent() async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    print(
+        "${(widget.list[0]['type_value'] == "T") ? widget.list[0]['protectID'] : widget.list[0]['verbal_id']} || ${widget.list[0]['verbal_id']}");
+    var headers = {'Content-Type': 'application/json'};
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/submit_agents/${(widget.list[0]['type_value'] == "T") ? widget.list[0]['protectID'] : widget.list[0]['verbal_id']}',
+      options: Options(
+        method: 'POST',
+        headers: headers,
+      ),
+    );
+    if (response.statusCode == 200) {
+      // _firestore.collection('submitAgent').add({
+      //   'verbal_id': widget.verbalID,
+      //   'client_Name': widget.listUser[0]['username'].toString(),
+      //   'clientID': widget.listUser[0]['control_user'].toString(),
+      //   'agent_id': "",
+      //   'agent_name': "",
+      //   'create_Date': now.toString(),
+      //   'submit': 3,
+      // });
+      print("====> Successfuly");
+      listAgent.sendMessage(
+        "Client ID : ${widget.listUser[0]['control_user']} 🆔\nName : ${widget.listUser[0]['username'] ?? ""} 👤\nPhone : ${widget.listUser[0]['tel_num'] ?? ""} ☎️\nLatlong : ${widget.list[0]['latlong_la'] ?? "N/A"},${widget.list[0]['latlong_log'] ?? "N/A"} 🗺 \nGoogleMap : https://www.google.com/maps/place/${widget.list[0]['latlong_la'] ?? "0"},${widget.list[0]['latlong_log'] ?? "0"} 📍 \nDate : $formattedDate ⏰\nCode : ${widget.list[0]['protectID']} 🔔\nSubmit Agent : waiting Agent approve! ⏳\nLinkURl : https://oneclickonedollar.com/#/ 🌐\nComment Client : $comment",
+      );
+      Get.snackbar(
+        "Done",
+        "Please wait from agent 1hour/1day",
+        colorText: Colors.black,
+        padding:
+            const EdgeInsets.only(right: 50, left: 50, top: 20, bottom: 20),
+        borderColor: const Color.fromARGB(255, 48, 47, 47),
+        borderWidth: 1.0,
+        borderRadius: 5,
+        backgroundColor: const Color.fromARGB(255, 235, 242, 246),
+        icon: const Icon(Icons.add_alert),
+      );
+      await notificatonAPI.notificationPush(
+          widget.listUser[0]['id'].toString(),
+          "AutoVerbal",
+          "Please waiting Agent to Approvel",
+          widget.list[0]['protectID'].toString());
+      Navigator.pop(context);
+      Navigator.pop(context);
+    } else {
+      // print(response.statusMessage);
+    }
+  }
 
   // var formatter = NumberFormat("##,###,###,###", "en_US");
   double totalMIN = 0;
@@ -83,9 +134,9 @@ class _PDfButtonState extends State<PDfButton> {
           return -1; // Move 'LS' to the top
         } else if (a['verbal_land_des'] != 'LS' &&
             b['verbal_land_des'] == 'LS') {
-          return 1; // Keep non-'LS' items below
+          return 1;
         } else {
-          return 0; // Maintain original order if types are the same
+          return 0;
         }
       });
 
@@ -93,23 +144,23 @@ class _PDfButtonState extends State<PDfButton> {
         print("No 1 ==========>");
         for (int i = 0; i < land.length; i++) {
           totalMIN = totalMIN +
-              double.parse(land[i]["verbal_land_minvalue"].toStringAsFixed(2));
+              double.parse(land[i]["verbal_land_minvalue"].toString());
           totalMAX = totalMAX +
-              double.parse(land[i]["verbal_land_maxvalue"].toStringAsFixed(2));
+              double.parse(land[i]["verbal_land_maxvalue"].toString());
           // address = land[i]["address"];
-          String x1 = land[i]["verbal_land_minsqm"].toStringAsFixed(2);
-          String n1 = land[i]["verbal_land_maxsqm"].toStringAsFixed(2);
+          String x1 = land[i]["verbal_land_minsqm"].toString();
+          String n1 = land[i]["verbal_land_maxsqm"].toString();
           x = x + double.parse(x1);
           n = n + double.parse(n1);
         }
         setState(() {
           fsvM = (totalMAX *
-                  double.parse(
-                      (widget.list[widget.i]["verbal_con"] ?? 0).toString())) /
+                  double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                      .toString())) /
               100;
           fsvN = (totalMIN *
-                  double.parse(
-                      (widget.list[widget.i]["verbal_con"] ?? 0).toString())) /
+                  double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                      .toString())) /
               100;
 
           if (land.isEmpty) {
@@ -117,12 +168,12 @@ class _PDfButtonState extends State<PDfButton> {
             totalMAX = 0;
           } else {
             fx = x *
-                (double.parse(
-                        (widget.list[widget.i]["verbal_con"] ?? 0).toString()) /
+                (double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                        .toString()) /
                     100);
             fn = n *
-                (double.parse(
-                        (widget.list[widget.i]["verbal_con"] ?? 0).toString()) /
+                (double.parse(("${widget.list[widget.i]["verbal_con"] ?? 0}")
+                        .toString()) /
                     100);
           }
           for (int i = 0; i < land.length - 1; i++) {
@@ -174,6 +225,7 @@ class _PDfButtonState extends State<PDfButton> {
     }
   }
 
+  String comment = "";
   Future<void> getimageMap(double lat, double log) async {
     try {
       http.Response response = await http.get(Uri.parse(
@@ -186,52 +238,51 @@ class _PDfButtonState extends State<PDfButton> {
 
   @override
   Widget build(BuildContext context) {
-    return click
-        ? const Center(child: CircularProgressIndicator())
-        : InkWell(
-            onTap: () async {
-              setState(() {
-                click = true;
+    return InkWell(
+        onTap: () async {
+          setState(() {
+            click = true;
 
-                // print((widget.list[widget.i]['type_value'] == "T")
-                //     ? "protectID : ${widget.list[widget.i]['protectID']} || ${widget.list[widget.i]['verbal_id']}"
-                //     : "verbal_id : ${widget.list[widget.i]['verbal_id']}|| ${widget.list[widget.i]['verbal_id']}");
-              });
+            // print((widget.list[widget.i]['type_value'] == "T")
+            //     ? "protectID : ${widget.list[widget.i]['protectID']} || ${widget.list[widget.i]['verbal_id']}"
+            //     : "verbal_id : ${widget.list[widget.i]['verbal_id']}|| ${widget.list[widget.i]['verbal_id']}");
+          });
 
-              if (widget.list[widget.i]['type_value'] == "T") {
-                await getimage();
-              }
-              await getimageMap(widget.list[widget.i]['latlong_la'],
-                  widget.list[widget.i]['latlong_log']);
-              await landBuilding();
-              await mainwaiting((widget.list[widget.i]['type_value'] == "T")
-                  ? widget.list[widget.i]['protectID'].toString()
-                  : widget.list[widget.i]['verbal_id'].toString());
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: const Color.fromARGB(255, 171, 11, 19),
+          if (widget.list[widget.i]['type_value'] == "T") {
+            await getimage();
+          }
+          await getimageMap(
+              double.parse(widget.list[widget.i]['latlong_la'].toString()),
+              double.parse(widget.list[widget.i]['latlong_log'].toString()));
+          await landBuilding();
+          await mainwaiting((widget.list[widget.i]['type_value'] == "T")
+              ? widget.list[widget.i]['protectID'].toString()
+              : widget.list[widget.i]['verbal_id'].toString());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: const Color.fromARGB(255, 171, 11, 19),
+          ),
+          width: 100,
+          height: 35,
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Image.asset('assets/images/icon_pdf.png',
+                    height: 25, fit: BoxFit.fitHeight),
               ),
-              width: 100,
-              height: 35,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Image.asset('assets/images/icon_pdf.png',
-                        height: 25, fit: BoxFit.fitHeight),
-                  ),
-                  const SizedBox(
-                    width: 2,
-                  ),
-                  const Text(
-                    " Get PDF ---",
-                    style: TextStyle(color: Colors.white, fontSize: 13),
-                  ),
-                ],
+              const SizedBox(
+                width: 2,
               ),
-            ));
+              const Text(
+                " Get PDF---",
+                style: TextStyle(color: Colors.white, fontSize: 13),
+              ),
+            ],
+          ),
+        ));
   }
 
   bool click = false;
@@ -251,7 +302,7 @@ class _PDfButtonState extends State<PDfButton> {
                   child: pw.Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.Text("Estimate Property",
+                      pw.Text("Estimate Property ",
                           style: pw.TextStyle(
                             fontWeight: pw.FontWeight.bold,
                             fontSize: 12,
@@ -307,7 +358,7 @@ class _PDfButtonState extends State<PDfButton> {
                                           pw.BarcodeQRCorrectionLevel.high,
                                     ),
                                     data:
-                                        "https://www.latlong.net/c/?lat=${(widget.list[widget.i]['latlong_la'] < widget.list[widget.i]['latlong_log']) ? widget.list[widget.i]['latlong_la'] : widget.list[widget.i]['latlong_log']}&long=${(widget.list[widget.i]['latlong_la'] < widget.list[widget.i]['latlong_log']) ? widget.list[widget.i]['latlong_log'] : widget.list[widget.i]['latlong_la']}",
+                                        "https://www.latlong.net/c/?lat=${(double.parse(widget.list[widget.i]['latlong_la'].toString()) < double.parse(widget.list[widget.i]['latlong_log'].toString())) ? widget.list[widget.i]['latlong_la'] : widget.list[widget.i]['latlong_log']}&long=${(double.parse(widget.list[widget.i]['latlong_la'].toString()) < double.parse(widget.list[widget.i]['latlong_log'].toString())) ? widget.list[widget.i]['latlong_log'] : widget.list[widget.i]['latlong_la']}",
                                     width: 50,
                                     height: 50,
                                   ),
@@ -459,7 +510,29 @@ class _PDfButtonState extends State<PDfButton> {
                           decoration: pw.BoxDecoration(
                               border: pw.Border.all(width: 0.4)),
                           child: pw.Text(
-                              " ${widget.list[widget.i]['verbal_address'] ?? ""}",
+                              "Address : ${widget.list[widget.i]['verbal_address'] ?? ""}",
+                              style: pw.TextStyle(
+                                fontWeight: pw.FontWeight.bold,
+                                fontSize: 11,
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                pw.SizedBox(
+                  child: pw.Row(
+                    children: [
+                      pw.Expanded(
+                        flex: 12,
+                        child: pw.Container(
+                          padding: const pw.EdgeInsets.all(2),
+                          alignment: pw.Alignment.center,
+                          height: 20,
+                          decoration: pw.BoxDecoration(
+                              border: pw.Border.all(width: 0.4)),
+                          child: pw.Text(
+                              "Phume : ${widget.list[widget.i]['phume'] ?? ""}",
                               style: pw.TextStyle(
                                 fontWeight: pw.FontWeight.bold,
                                 fontSize: 11,
@@ -770,6 +843,48 @@ class _PDfButtonState extends State<PDfButton> {
                     ]),
                   ),
                 ])),
+              ],
+            ),
+            pw.SizedBox(height: 10),
+            pw.Row(
+              children: [
+                pw.Spacer(),
+                pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text(
+                      "Owner : ${widget.list[widget.i]["verbal_owner"] ?? ""}",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                    pw.SizedBox(height: 5),
+                    pw.Text(
+                      "Owner Phone : ${widget.list[widget.i]["verbal_contact"] ?? ""}",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                    pw.SizedBox(height: 5),
+                    pw.Text(
+                      "Auto Verbal by : ${widget.listUser[0]["username"] ?? ""}",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                    pw.SizedBox(height: 5),
+                    pw.Text(
+                      "Phone Number : ${widget.listUser[0]["tel_num"] ?? ""}",
+                      style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             pw.SizedBox(height: 30),

@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:web_admin/controller/user_controller.dart';
 import 'package:dio/dio.dart';
-
 import '../../../../models/user_model.dart';
 
 class UserListPage extends StatefulWidget {
@@ -151,7 +148,7 @@ class _UserListPageState extends State<UserListPage> {
     super.initState();
     _isMounted = true;
     fetchUsers();
-    _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
       if (_isMounted && !_isRefreshing) {
         await fetchUsers();
       }
@@ -198,7 +195,7 @@ class _UserListPageState extends State<UserListPage> {
 
       await fetchUsers(); // Fetch users for current page instead of resetting to page 1
     } catch (e) {
-      print('Error ${isBlock ? "blocking" : "unblocking"} user: $e');
+      // print('Error ${isBlock ? "blocking" : "unblocking"} user: $e');
       if (_isMounted) {
         AwesomeDialog(
           padding:
@@ -236,7 +233,7 @@ class _UserListPageState extends State<UserListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: Text('User List', style: TextStyle(color: Colors.white)),
+        title: const Text('User List', style: TextStyle(color: Colors.white)),
         elevation: 0,
       ),
       body: RefreshIndicator(
@@ -296,7 +293,7 @@ class _UserListPageState extends State<UserListPage> {
                         : searchResults;
 
                 if (displayList.isEmpty && isLoading.value) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
 
                 return Container(
@@ -305,7 +302,7 @@ class _UserListPageState extends State<UserListPage> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [Colors.blue[900]!, Colors.white],
-                      stops: [0.0, 0.3],
+                      stops: const [0.0, 0.3],
                     ),
                   ),
                   child: Column(

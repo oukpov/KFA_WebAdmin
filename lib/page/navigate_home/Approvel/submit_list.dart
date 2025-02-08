@@ -108,12 +108,19 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                   width: 300,
                   child: TextFormField(
                     controller: searchController,
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      setState(() {
+                        // searchController.text = value;
+                      });
+                    },
                     onFieldSubmitted: (value) async {
                       setState(() {
+                        if (startDateController.text == "" &&
+                            endDateController.text == "") {
+                          checkType = 3;
+                        }
                         startDateController.clear();
                         endDateController.clear();
-                        checkType = 4;
                       });
                       await listAgent.listAgent(
                           perPage,
@@ -126,12 +133,22 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                     decoration: InputDecoration(
                         // icon: Icon(Icons.search, color: greyColor),
                         suffixIcon: IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               setState(() {
+                                if (startDateController.text == "" &&
+                                    endDateController.text == "") {
+                                  checkType = 3;
+                                }
                                 startDateController.clear();
                                 endDateController.clear();
-                                checkType = 4;
                               });
+                              await listAgent.listAgent(
+                                  perPage,
+                                  page,
+                                  checkType,
+                                  startDateController.text,
+                                  endDateController.text,
+                                  searchController.text);
                             },
                             icon: Icon(
                               Icons.search,
@@ -175,6 +192,9 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                     ),
                     readOnly: true,
                     onTap: () async {
+                      setState(() {
+                        checkType = 4;
+                      });
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
@@ -226,6 +246,9 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                     ),
                     readOnly: true,
                     onTap: () async {
+                      setState(() {
+                        checkType = 4;
+                      });
                       DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
@@ -387,12 +410,12 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: (int.parse(
-                                                  "${listAgent.listAgentModel[index]['verbal_published'] ?? 0}") ==
-                                              3
-                                          ? const Color.fromARGB(
-                                              255, 213, 213, 217)
-                                          : whiteColor),
+                                      color: ((int.parse(
+                                                  "${listAgent.listAgentModel[index]['VerifyAgent'] ?? 0}") ==
+                                              100)
+                                          ? whiteColor
+                                          : const Color.fromARGB(
+                                              255, 213, 213, 217)),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.only(
@@ -466,6 +489,8 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                       builder: (BuildContext
                                                           context) {
                                                         return save_image_after_add_verbal(
+                                                          listUser: listAgent
+                                                              .listAgentModel,
                                                           check: false,
                                                           type: (value) {},
                                                           list: listAgent
@@ -520,9 +545,32 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                       CircularProgressIndicator(),
                                                 ),
                                               const SizedBox(width: 10),
-                                              (int.parse("${listAgent.listAgentModel[index]['verbal_published'] ?? 0}") ==
-                                                      3)
-                                                  ? Container(
+                                              (int.parse("${listAgent.listAgentModel[index]['VerifyAgent'] ?? 0}") ==
+                                                      100)
+                                                  ? SizedBox(
+                                                      width: 100,
+                                                      child: Row(
+                                                        children: [
+                                                          Text(
+                                                            'Approved',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    greyColorNolot,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 14),
+                                                          ),
+                                                          Icon(
+                                                            Icons
+                                                                .check_box_outlined,
+                                                            color: greenColors,
+                                                            size: 30,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container(
                                                       height: 30,
                                                       width: 120,
                                                       alignment:
@@ -563,29 +611,6 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                         ],
                                                       ),
                                                     )
-                                                  : SizedBox(
-                                                      width: 100,
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            'Approved ',
-                                                            style: TextStyle(
-                                                                color:
-                                                                    greyColorNolot,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 14),
-                                                          ),
-                                                          Icon(
-                                                            Icons
-                                                                .check_box_outlined,
-                                                            color: greenColors,
-                                                            size: 30,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
                                             ],
                                           ),
                                         ],
@@ -617,62 +642,61 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [
-                        SizedBox(
-                            height: 50,
-                            width: 70,
-                            child: SizedBox(
-                              height: 40,
-                              child: DropdownButtonFormField<String>(
-                                isExpanded: true,
-                                onChanged: (newValue) async {
-                                  setState(() {
-                                    perPage = int.parse(newValue ?? '0');
-                                  });
-                                  await listAgent.listAgent(
-                                      perPage,
-                                      page,
-                                      checkType,
-                                      startDateController.text,
-                                      endDateController.text,
-                                      "");
-                                },
-                                items: listPage
-                                    .map<DropdownMenuItem<String>>(
-                                      (value) => DropdownMenuItem<String>(
-                                        value: value["page"].toString(),
-                                        child: Text(
-                                          value["page"].toString(),
-                                          style: const TextStyle(fontSize: 12),
-                                        ),
-                                      ),
-                                    )
-                                    .toList(),
-                                icon: const Icon(Icons.arrow_drop_down,
-                                    color: kImageColor),
-                                decoration: InputDecoration(
-                                  fillColor: kwhite,
-                                  filled: true,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 10),
-                                  labelText: "Page",
-                                  hintText: perPage.toString(),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: kPrimaryColor, width: 1),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 1,
-                                      color: kPrimaryColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                ),
-                              ),
-                            )),
+                        // SizedBox(
+                        //     height: 50,
+                        //     width: 70,
+                        //     child: SizedBox(
+                        //       height: 40,
+                        //       child: DropdownButtonFormField<String>(
+                        //         isExpanded: true,
+                        //         onChanged: (newValue) async {
+                        //           setState(() {
+                        //             perPage = int.parse(newValue ?? '0');
+                        //           });
+                        //           await listAgent.listAgent(
+                        //               perPage,
+                        //               page,
+                        //               checkType,
+                        //               startDateController.text,
+                        //               endDateController.text,
+                        //               "");
+                        //         },
+                        //         items: listPage
+                        //             .map<DropdownMenuItem<String>>(
+                        //               (value) => DropdownMenuItem<String>(
+                        //                 value: value["page"].toString(),
+                        //                 child: Text(
+                        //                   value["page"].toString(),
+                        //                   style: const TextStyle(fontSize: 12),
+                        //                 ),
+                        //               ),
+                        //             )
+                        //             .toList(),
+                        //         icon: const Icon(Icons.arrow_drop_down,
+                        //             color: kImageColor),
+                        //         decoration: InputDecoration(
+                        //           fillColor: kwhite,
+                        //           filled: true,
+                        //           contentPadding: const EdgeInsets.symmetric(
+                        //               vertical: 8, horizontal: 10),
+                        //           labelText: "Page",
+                        //           hintText: perPage.toString(),
+                        //           focusedBorder: OutlineInputBorder(
+                        //             borderSide: const BorderSide(
+                        //                 color: kPrimaryColor, width: 1),
+                        //             borderRadius: BorderRadius.circular(5.0),
+                        //           ),
+                        //           enabledBorder: OutlineInputBorder(
+                        //             borderSide: const BorderSide(
+                        //               width: 1,
+                        //               color: kPrimaryColor,
+                        //             ),
+                        //             borderRadius: BorderRadius.circular(5.0),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )),
                         Expanded(
-                          flex: 9,
                           child: NumberPaginator(
                             controller: _inputController,
                             numberPages: lastpage,
