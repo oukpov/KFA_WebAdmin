@@ -28,9 +28,11 @@ class _UserListPageState extends State<UserListPage> {
   bool _obscureNewPassword = true;
   bool _obscureConfirmPassword = true;
   var users = [].obs;
+  var allUsers = [].obs; // Store all users for global search
   var searchResults = [].obs;
   var isLoading = false.obs;
   var isSearching = false.obs;
+  var isLoadingAllUsers = false.obs;
   var isBlockingUser = false.obs;
   var isUnblockingUser = false.obs;
   var blockingUserId = ''.obs;
@@ -46,6 +48,71 @@ class _UserListPageState extends State<UserListPage> {
   var isLoadingMore = false.obs;
   var perPage = 10;
   var totalItems = 0;
+
+  Future<void> fetchAllUsers() async {
+    if (!_isMounted) return;
+
+    var headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    };
+    var dio = Dio();
+    dio.options.connectTimeout = 5000;
+    dio.options.receiveTimeout = 5000;
+
+    try {
+      isLoadingAllUsers(true);
+      var allUsersList = [];
+
+      // Fetch all pages
+      for (int page = 1; page <= lastPage; page++) {
+        var response = await dio.request(
+          'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/getalluser?page=$page&per_page=$perPage',
+          options: Options(
+            method: 'GET',
+            headers: headers,
+          ),
+        );
+
+        if (response.statusCode == 200 && _isMounted) {
+          final data = response.data;
+          allUsersList.addAll(data['data']);
+
+          // Update lastPage on first request
+          if (page == 1) {
+            lastPage = data['last_page'];
+            totalItems = data['total'];
+          }
+        }
+      }
+
+      if (_isMounted) {
+        allUsers.value = allUsersList;
+      }
+    } catch (e) {
+      print('Error fetching all users: $e');
+    } finally {
+      if (_isMounted) {
+        isLoadingAllUsers(false);
+      }
+    }
+  }
+
+  void nextPage() async {
+    if (currentPage < lastPage) {
+      currentPage++;
+      searchResults.clear(); // Clear search results when changing pages
+      await fetchUsers();
+    }
+  }
+
+  void previousPage() async {
+    if (currentPage > 1) {
+      currentPage--;
+      searchResults.clear(); // Clear search results when changing pages
+      await fetchUsers();
+    }
+  }
 
   Future<void> fetchUsers({bool loadMore = false}) async {
     if (!_isMounted || (_isRefreshing && !loadMore)) {
@@ -83,12 +150,11 @@ class _UserListPageState extends State<UserListPage> {
         final data = response.data;
         lastPage = data['last_page'];
         totalItems = data['total'];
-
         users.value = data['data'];
 
-        // Re-apply search filter after fetching new data
-        if (searchController.text.isNotEmpty) {
-          searchUsers(searchController.text);
+        // If this is the first load, fetch all users for search
+        if (currentPage == 1 && allUsers.isEmpty) {
+          fetchAllUsers();
         }
       }
     } catch (e) {
@@ -115,7 +181,8 @@ class _UserListPageState extends State<UserListPage> {
       return;
     }
 
-    searchResults.value = users.where((user) {
+    // Search through all users instead of just current page
+    searchResults.value = allUsers.where((user) {
       final phoneMatch = user['tel_num']
               ?.toString()
               .toLowerCase()
@@ -126,22 +193,11 @@ class _UserListPageState extends State<UserListPage> {
           .contains(query.toLowerCase());
       return phoneMatch || nameMatch;
     }).toList();
+
     isSearching(false);
   }
 
-  void nextPage() {
-    if (currentPage < lastPage) {
-      currentPage++;
-      fetchUsers();
-    }
-  }
-
-  void previousPage() {
-    if (currentPage > 1) {
-      currentPage--;
-      fetchUsers();
-    }
-  }
+  // ... [Rest of the code remains the same] ...
 
   @override
   void initState() {
