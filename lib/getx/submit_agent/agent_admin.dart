@@ -33,24 +33,28 @@ class ListAgent extends GetxController {
       String endDateController,
       String search) async {
     try {
-      print("perpages : $perpages || pages : $pages || search : $search ||");
+      // print("perpages : $perpages || pages : $pages || search : $search ||");
       if (checkType == 1) {
-        print("No.1 : $checkType");
+        // print("No.1 : $checkType");
         url.value =
             'get/Pagination?perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
       } else if (checkType == 2) {
         //Approvel
-        print("No.2 : $checkType");
+        // print("No.2 : $checkType");
         url.value =
             'get/Pagination?check=2&VerifyAgent=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
       } else if (checkType == 3) {
-        print("No.3: $checkType");
+        // print("No.3: $checkType");
+        url.value =
+            'get/Pagination?check=3&approvel=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
+        // url.value =
+        //     "search/listAuto?search=$search&page=$pages&perPage=$perpages";
+      } else {
         url.value =
             "search/listAuto?search=$search&page=$pages&perPage=$perpages";
-      } else {
-        print("No.4 : $checkType");
-        url.value =
-            'get/Pagination?check=2&approvel=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
+        // print("No.4 : $checkType");
+        // url.value =
+        //     'get/Pagination?check=3&approvel=100&perPage=$perpages&page=$pages${(startDateController != '') ? "&start=$startDateController&ends=$endDateController" : ""}';
       }
       isAgent.value = true;
       var headers = {'Content-Type': 'application/json'};

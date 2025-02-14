@@ -318,7 +318,7 @@ class _Edit_Auto_with_propertyState extends State<SubmitAgent>
 
       component.handleTap("Done!", "Update successfuly", 1);
       listAgent.sendMessage(
-        "Client ID : ${listData['control_user'] ?? "N/A"} 🆔\nName : ${listData['username'] ?? "N/A"} 👤\nPhone : ${listData['tel_num'] ?? "N/A"} ☎️ \nLatlong : ${listData['latlong_la'] ?? "N/A"},${listData['latlong_log'] ?? "N/A"} 🗺 \nGoogleMap : https://www.google.com/maps/place/${listData['latlong_la'] ?? "0"},${listData['latlong_log'] ?? "0"} 📍 \nDate : ${listData['verbal_date'] ?? "N/A"} ⏰\n---------------------------\nCode : ${listData['protectID'] ?? "N/A"} 🔔\nSubmit Agent : Done! ✅\nApprove by Agent : ${widget.listUser[0]['username'] ?? "N/A"}! 👨‍💻\nDate Done : $formattedDate ⏰\nComment Agent : $commentAgent\nLinkURl : https://oneclickonedollar.com/webAdmin//#/minified:atO 🌐",
+        "⏰\tDate : ${listData['verbal_date'] ?? "N/A"}\n🆔\tClient ID : ${listData['control_user'] ?? "N/A"}\n👤\tName : ${listData['username'] ?? "N/A"}\n☎️\tPhone : ${listData['tel_num'] ?? "N/A"}\n🗺Latlong : ${listData['latlong_la'] ?? "N/A"},${listData['latlong_log'] ?? "N/A"}\n---------------------------\n🔔\tCode : ${listData['protectID'] ?? "N/A"}\n✅\tSubmit Agent : Done!\n👨‍💻\tApprove by Agent : ${widget.listUser[0]['username'] ?? "N/A"}!\n⏰\tDate Done : $formattedDate\nComment Agent : $commentAgent\n🌐\tLinkURl : https://oneclickonedollar.com/webAdmin//#/minified:atO\n📍\tGoogleMap : https://www.google.com/maps/@${listData['latlong_la']},${listData['latlong_log']},15z?q=${listData['latlong_la']},${listData['latlong_log']}&markers=${listData['latlong_la']},${listData['latlong_log']}",
       );
     }
   }

@@ -272,6 +272,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                   onTap: () async {
                     setState(() {
                       checkType = 3;
+                      page = 1;
                       searchController.clear();
                       // changepage();
                     });
@@ -295,6 +296,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                 InkWell(
                   onTap: () async {
                     setState(() {
+                      page = 1;
                       checkType = 2;
                       searchController.clear();
                       // changepage();
@@ -319,6 +321,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                 InkWell(
                   onTap: () async {
                     setState(() {
+                      page = 1;
                       checkType = 1;
                       searchController.clear();
                       // changepage();
@@ -343,6 +346,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                 InkWell(
                   onTap: () async {
                     setState(() {
+                      page = 1;
                       searchController.clear();
                     });
                     await listAgent.listAgent(perPage, page, checkType,
@@ -545,8 +549,10 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                                                       CircularProgressIndicator(),
                                                 ),
                                               const SizedBox(width: 10),
-                                              (int.parse("${listAgent.listAgentModel[index]['VerifyAgent'] ?? 0}") ==
-                                                      100)
+                                              (listAgent.listAgentModel[index]
+                                                              ['VerifyAgent']
+                                                          .toString() ==
+                                                      "100")
                                                   ? SizedBox(
                                                       width: 100,
                                                       child: Row(
