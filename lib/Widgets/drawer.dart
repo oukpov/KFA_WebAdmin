@@ -241,7 +241,7 @@ class _DrawerOptionState extends State<DrawerOption> {
         listTitlesetting.add({"title": "Add Point", "click": 22});
         optionIconListsetting.add({"icon": "assets/icons/v.jpg"});
       }
-      print("===> Done! [$autoOption]");
+      // print("===> Done! [$autoOption]");
       // }
     });
   }
@@ -747,6 +747,11 @@ class _DrawerOptionState extends State<DrawerOption> {
                                           break;
                                         case 8:
                                           widget.onBack(108);
+                                          Get.back();
+
+                                          break;
+                                        case 9:
+                                          widget.onBack(109);
                                           Get.back();
 
                                           break;

@@ -63,201 +63,201 @@ class _MyAppState extends State<MyApp> {
     // String? bankname;
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: const GetMaterialApp(
-          // initialRoute: '/Admin',
-          debugShowCheckedModeBanner: false,
-          // home: AddProperty(idUserController: "59"),
-          // home: ZoneMap(listLocalHost: [
-          //   {
-          //     "id": 328,
-          //     "control_user": "202492386253",
-          //     "OTP_Code": null,
-          //     "first_name": null,
-          //     "last_name": null,
-          //     "username": null,
-          //     "gender": null,
-          //     "tel_num": "010406807",
-          //     "known_from": null,
-          //     "email": null,
-          //     "email_verified_at": null,
-          //     "password": null,
-          //     "remember_token": null,
-          //     "deleted": 0,
-          //     "created_at": null,
-          //     "updated_at": null,
-          //     "update_new": 0,
-          //     "Image": null
-          //   },
-          // ]),
+      child: GetMaterialApp(
+        // initialRoute: '/Admin',
+        debugShowCheckedModeBanner: false,
+        // home: AddProperty(idUserController: "59"),
+        // home: ZoneMap(listLocalHost: [
+        //   {
+        //     "id": 328,
+        //     "control_user": "202492386253",
+        //     "OTP_Code": null,
+        //     "first_name": null,
+        //     "last_name": null,
+        //     "username": null,
+        //     "gender": null,
+        //     "tel_num": "010406807",
+        //     "known_from": null,
+        //     "email": null,
+        //     "email_verified_at": null,
+        //     "password": null,
+        //     "remember_token": null,
+        //     "deleted": 0,
+        //     "created_at": null,
+        //     "updated_at": null,
+        //     "update_new": 0,
+        //     "Image": null
+        //   },
+        // ]),
+        home: LoginPage(),
+        // home: Testsdart()
+        // home: AllowOptions(
+        //   listUsers: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 22,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
+        // home: SetAdminClass(),
 
-          home: LoginPage()
-          // home: AllowOptions(
-          //   listUsers: [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 22,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          // ),
-          // home: SetAdminClass(),
+        // home: InputRoad(
+        //   listUsers: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
 
-          // home: InputRoad(
-          //   listUsers: [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          // ),
+        // home: UIAPP(device: "m"),
 
-          // home: UIAPP(device: "m"),
+        // home: LoginPage(),
+        // home: UserListPage(id: '52'),
+        // home: ChangeRaod(
+        //   type: (value) {},
+        //   addNew: (value) {},
+        //   listlocalhosts: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
 
-          // home: LoginPage(),
-          // home: UserListPage(id: '52'),
-          // home: ChangeRaod(
-          //   type: (value) {},
-          //   addNew: (value) {},
-          //   listlocalhosts: [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          // ),
+        // home: InputRoad(
+        //   listUsers: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
 
-          // home: InputRoad(
-          //   listUsers: [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          // ),
+        // home: AutoList()
+        //home: HistoryVPointPage(),
+        // home: MapScreen(),
+        //home: TestPage(),
+        //home: UserListPage(id: '61'),
+        // home: ZoneMap(listLocalHost: [
+        //   {
+        //     "id": 52,
+        //     "user_role_id": 59,
+        //     "agency": 70,
+        //     "username": "Test",
+        //     "password": "333802e987dfce42e28b749a20dc257f",
+        //     "user_status": 0
+        //   }
+        // ]),
 
-          // home: AutoList()
-          //home: HistoryVPointPage(),
-          // home: MapScreen(),
-          //home: TestPage(),
-          //home: UserListPage(id: '61'),
-          // home: ZoneMap(listLocalHost: [
-          //   {
-          //     "id": 52,
-          //     "user_role_id": 59,
-          //     "agency": 70,
-          //     "username": "Test",
-          //     "password": "333802e987dfce42e28b749a20dc257f",
-          //     "user_status": 0
-          //   }
-          // ]),
+        //home: AboutUsImageEditPage(),
+        // home: MyFormTTTT(),
+        // home: SaveImageVerbalAgent(
+        //   check: false,
+        //   listUser: const [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        //   type: (value) {
+        //     setState(() {
+        //       // widget.type(value);
+        //     });
+        //   },
+        //   list: const [
+        //     {
+        //       "verbal_id": "20328575",
+        //       "verbal_code": "708291",
+        //       "title_deedN": "1801030101-1460",
+        //       "under_property_right": null,
+        //       "referrenceN": "ARF24 - 123123",
+        //       "land_size": "1123132",
+        //       "building_size": "100",
+        //       "issued_date": "2024-1-1",
+        //       "verbal_property_id": "15",
+        //       "verbal_owner": null,
+        //       "verbal_contact": null,
+        //       "verbal_date": null,
+        //       "receivedate": null,
+        //       "verbal_address":
+        //           "Phnom Penh, Khan Chamkar Mon, Sangkat Tonle Basak",
+        //       "verbal_comment": null,
+        //       "latlong_log": "104.9348164",
+        //       "latlong_la": "11.5433880",
+        //       "verbal_user": "70",
+        //       "verbal_created_date": "2024-11-07 00:38:45"
+        //     },
+        //   ],
+        //   i: 0,
+        //   verbalId: "1111",
+        // ),
+        // home: VerbalList(
+        //   listUser: [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        // ),
+        // home: VerbalAgent(
+        //   type: (value) {},
+        //   listUser: const [
+        //     {
+        //       "id": 52,
+        //       "user_role_id": 59,
+        //       "agency": 70,
+        //       "username": "Test",
+        //       "password": "333802e987dfce42e28b749a20dc257f",
+        //       "user_status": 0
+        //     }
+        //   ],
+        //   addNew: (value) {},
+        // ),
+        // home: BannerUpdateExample(bannerId: '31'),
+        //home: GetOneDataPage(id: '31'),
+        // home: UploadImagePage(),
+        // home: AddComparable(
+        //     type: (value) {},
+        //     addNew: (value) {},
+        //     listlocalhosts: const [
+        //       {
+        //         "id": 52,
+        //         "user_role_id": 59,
+        //         "agency": 70,
+        //         "username": "Test",
+        //         "password": "333802e987dfce42e28b749a20dc257f",
+        //         "user_status": 0
+        //       }
 
-          //home: AboutUsImageEditPage(),
-          // home: MyFormTTTT(),
-          // home: SaveImageVerbalAgent(
-          //   check: false,
-          //   listUser: const [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          //   type: (value) {
-          //     setState(() {
-          //       // widget.type(value);
-          //     });
-          //   },
-          //   list: const [
-          //     {
-          //       "verbal_id": "20328575",
-          //       "verbal_code": "708291",
-          //       "title_deedN": "1801030101-1460",
-          //       "under_property_right": null,
-          //       "referrenceN": "ARF24 - 123123",
-          //       "land_size": "1123132",
-          //       "building_size": "100",
-          //       "issued_date": "2024-1-1",
-          //       "verbal_property_id": "15",
-          //       "verbal_owner": null,
-          //       "verbal_contact": null,
-          //       "verbal_date": null,
-          //       "receivedate": null,
-          //       "verbal_address":
-          //           "Phnom Penh, Khan Chamkar Mon, Sangkat Tonle Basak",
-          //       "verbal_comment": null,
-          //       "latlong_log": "104.9348164",
-          //       "latlong_la": "11.5433880",
-          //       "verbal_user": "70",
-          //       "verbal_created_date": "2024-11-07 00:38:45"
-          //     },
-          //   ],
-          //   i: 0,
-          //   verbalId: "1111",
-          // ),
-          // home: VerbalList(
-          //   listUser: [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          // ),
-          // home: VerbalAgent(
-          //   type: (value) {},
-          //   listUser: const [
-          //     {
-          //       "id": 52,
-          //       "user_role_id": 59,
-          //       "agency": 70,
-          //       "username": "Test",
-          //       "password": "333802e987dfce42e28b749a20dc257f",
-          //       "user_status": 0
-          //     }
-          //   ],
-          //   addNew: (value) {},
-          // ),
-          // home: BannerUpdateExample(bannerId: '31'),
-          //home: GetOneDataPage(id: '31'),
-          // home: UploadImagePage(),
-          // home: AddComparable(
-          //     type: (value) {},
-          //     addNew: (value) {},
-          //     listlocalhosts: const [
-          //       {
-          //         "id": 52,
-          //         "user_role_id": 59,
-          //         "agency": 70,
-          //         "username": "Test",
-          //         "password": "333802e987dfce42e28b749a20dc257f",
-          //         "user_status": 0
-          //       }
+        //     ]),
 
-          //     ]),
-
-          // ),
-          ),
+        // ),
+      ),
     );
   }
 }

@@ -37,6 +37,8 @@ import '../../Widgets/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
 
+import '../navigate_home/admin/att_staff.dart';
+
 class homescreen extends StatefulWidget {
   const homescreen({
     super.key,
@@ -1145,6 +1147,7 @@ class _homescreenState extends State<homescreen> {
     );
   }
 
+//109
   Widget detailOption() {
     switch (type) {
       case 0:
@@ -1158,6 +1161,10 @@ class _homescreenState extends State<homescreen> {
             device: widget.device, listUser: authentication.listlocalhost);
       case 108:
         return const SetAdminClass();
+      case 109:
+        return AttTable(
+          listUsers: authentication.listlocalhost,
+        );
       //Setting Admin
       case 220:
         return VpointListPage();
