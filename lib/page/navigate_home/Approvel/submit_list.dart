@@ -108,16 +108,11 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                   width: 300,
                   child: TextFormField(
                     controller: searchController,
-                    onChanged: (value) {
-                      setState(() {
-                        // searchController.text = value;
-                      });
-                    },
                     onFieldSubmitted: (value) async {
                       setState(() {
                         if (startDateController.text == "" &&
                             endDateController.text == "") {
-                          checkType = 3;
+                          checkType = 4;
                         }
                         startDateController.clear();
                         endDateController.clear();
@@ -137,7 +132,7 @@ class _ListSubmitAdminState extends State<ListSubmitAdmin> {
                               setState(() {
                                 if (startDateController.text == "" &&
                                     endDateController.text == "") {
-                                  checkType = 3;
+                                  checkType = 4;
                                 }
                                 startDateController.clear();
                                 endDateController.clear();
