@@ -27,6 +27,7 @@ import '../../../../components/raod_type.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../screen/Property/Map/streetview_map.dart';
+import '../../../components/colors/colors.dart';
 import '../Customer/component/date_customer.dart';
 import 'edit_comparable_new_page.dart';
 
@@ -1276,6 +1277,7 @@ class _HomePageState extends State<AddComparable> {
       "district": districts,
       "commune": communes,
       "comparable_floor": (floorcontroller == null) ? null : floorcontroller,
+      "Ministry": ministry,
     });
     var dio = Dio();
     var response = await dio.request(
@@ -1311,6 +1313,7 @@ class _HomePageState extends State<AddComparable> {
     }
   }
 
+  int ministry = 0;
   List listOwner = [];
   Future<void> getOwner(id) async {
     var dio = Dio();
@@ -1468,6 +1471,7 @@ class _HomePageState extends State<AddComparable> {
     setState(fn);
   }
 
+  bool switchbt = false;
   bool _isSwitched = false;
   int on_row = 20;
   bool checkMarket = false;
@@ -1600,6 +1604,46 @@ class _HomePageState extends State<AddComparable> {
                                                 ))
                                       ],
                                     ),
+                                  const SizedBox(height: 10),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        top: 5, bottom: 5, left: 10),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 25, 103, 5),
+                                        borderRadius: BorderRadius.circular(5),
+                                        border: Border.all(
+                                            width: 1, color: whileColors)),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Ministry's Data\t\t\t",
+                                          style: TextStyle(
+                                              color: (ministry == 0)
+                                                  ? const Color.fromARGB(
+                                                      255, 147, 146, 146)
+                                                  : whileColors),
+                                        ),
+                                        Switch(
+                                          value: switchbt,
+                                          onChanged: (value) async {
+                                            setState(() {
+                                              switchbt = !switchbt;
+                                              if (switchbt == true) {
+                                                ministry = 1;
+                                              } else {
+                                                ministry = 0;
+                                              }
+                                            });
+                                          },
+                                          activeColor: whileColors,
+                                          inactiveThumbColor: whileColors,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
                                   Row(
                                     children: [
                                       Text(

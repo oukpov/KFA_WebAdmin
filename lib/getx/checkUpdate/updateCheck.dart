@@ -1,12 +1,16 @@
 import 'dart:convert';
-import 'dart:html';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../component/getx._snack.dart';
 
 class ControllerUpdate extends GetxController {
+  @override
+  void onInit() {
+    systemMethod();
+    super.onInit();
+  }
+
   var checkUpdateNew = 0.obs;
   var checkS = false.obs;
   Future<void> checkUpdateDone(String id) async {
@@ -24,7 +28,7 @@ class ControllerUpdate extends GetxController {
 
       // print(list.toString());
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
@@ -62,9 +66,9 @@ class ControllerUpdate extends GetxController {
 
     if (response.statusCode == 200) {
       component.handleTap("Done!", "Notification to Agent Update New", 3);
-      Navigator.pop(context);
+      Get.back();
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
@@ -79,9 +83,9 @@ class ControllerUpdate extends GetxController {
 
     if (response.statusCode == 200) {
       component.handleTap("Done!", "Notification to Client Update New", 3);
-      Navigator.pop(context);
+      Get.back();
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
@@ -101,9 +105,34 @@ class ControllerUpdate extends GetxController {
 
     if (response.statusCode == 200) {
       component.handleTap("Done!", "Update Successfuly", 3);
-      Navigator.pop(context);
+      Get.back();
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
+    }
+  }
+
+  var listSystem = [].obs;
+  var isSystem = false.obs;
+  Future<void> systemMethod() async {
+    try {
+      isSystem.value = true;
+      var dio = Dio();
+      var response = await dio.request(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/list/systemKFA',
+        options: Options(
+          method: 'POST',
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        listSystem.value = response.data;
+      } else {
+        // print(response.statusMessage);
+      }
+    } catch (e) {
+      // print(e);
+    } finally {
+      isSystem.value = false;
     }
   }
 }
