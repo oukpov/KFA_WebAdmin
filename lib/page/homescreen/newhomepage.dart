@@ -40,17 +40,16 @@ import 'dart:html' as html;
 import '../navigate_home/admin/att_staff.dart';
 
 class homescreen extends StatefulWidget {
-  const homescreen({
-    super.key,
-    required this.device,
-    required this.id,
-    required this.url,
-    // required this.listUser
-  });
+  const homescreen(
+      {super.key,
+      required this.device,
+      required this.id,
+      required this.url,
+      required this.listUser});
   final String id;
   final String device;
   final String url;
-  // final List listUser;
+  final List listUser;
   @override
   State<homescreen> createState() => _homescreenState();
 }
@@ -79,6 +78,7 @@ class _homescreenState extends State<homescreen> {
   void initState() {
     super.initState();
     // updateUserStatus();
+
     getWingData();
     getAbabankData();
     getUpayData();
@@ -89,6 +89,7 @@ class _homescreenState extends State<homescreen> {
     String formattedDatenow = DateFormat('yyyy-MM-dd').format(onewday);
     String formattedDateago = DateFormat('yyyy-MM-dd').format(twowday);
     countnotifcations(formattedDatenow, formattedDateago);
+    // controllerUpdate.checkUpdate(widget.listUser[0]['agency'].toString());
   }
 
   Authentication authentication = Authentication();
@@ -1093,10 +1094,24 @@ class _homescreenState extends State<homescreen> {
               //       color: whileColors,
               //       size: 35,
               //     )),
+              ///PPPPPPPPP
               const SizedBox(width: 20),
+              TextButton(
+                  onPressed: () {
+                    controllerUpdate
+                        .checkUpdate(widget.listUser[0]['agency'].toString());
+                  },
+                  child: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: whileColors,
+                      child: Icon(Icons.refresh))),
               Obx(() {
                 if (controllerUpdate.checkS.value) {
                   return const Center(child: CircularProgressIndicator());
+                } else if (controllerUpdate.listSystem.isEmpty) {
+                  return const Center(
+                    child: Text('No Data'),
+                  );
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -1113,7 +1128,7 @@ class _homescreenState extends State<homescreen> {
                             )
                           else
                             const Text(
-                              "Update Done! ",
+                              "Update Done!",
                               style: TextStyle(color: Colors.red, fontSize: 14),
                             ),
                           if (controllerUpdate.checkUpdateNew.value == 1)

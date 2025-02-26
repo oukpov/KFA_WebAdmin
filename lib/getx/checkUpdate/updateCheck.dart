@@ -8,9 +8,11 @@ class ControllerUpdate extends GetxController {
   @override
   void onInit() {
     systemMethod();
+    // checkUpdate(81.toString());
     super.onInit();
   }
 
+  var listupdates = [].obs;
   var checkUpdateNew = 0.obs;
   var checkS = false.obs;
   Future<void> checkUpdateDone(String id) async {
@@ -23,8 +25,8 @@ class ControllerUpdate extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      var list = response.data;
-      checkUpdateNew.value = int.parse("${list[0]['update_new'] ?? 0}");
+      listupdates.value = response.data;
+      checkUpdateNew.value = int.parse("${listupdates[0]['update_new'] ?? 0}");
 
       // print(list.toString());
     } else {
@@ -33,6 +35,7 @@ class ControllerUpdate extends GetxController {
   }
 
   Future<void> checkUpdate(String id) async {
+    print('=======> id : $id');
     try {
       checkS.value = true;
       var dio = Dio();
@@ -44,8 +47,9 @@ class ControllerUpdate extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        var list = response.data;
-        checkUpdateNew.value = int.parse("${list[0]['update_new'] ?? 0}");
+        listupdates.value = response.data;
+        checkUpdateNew.value =
+            int.parse("${listupdates[0]['update_new'] ?? 0}");
       }
     } catch (e) {
       // print(e);

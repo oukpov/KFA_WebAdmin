@@ -5,10 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:web_admin/page/homescreen/newhomepage.dart';
-import '../../Auth/login.dart';
 import '../../models/Auth/auth.dart';
-import '../../page/homescreen/component/list.dart';
 import '../../page/homescreen/responsive_layout.dart';
 
 class Authentication extends GetxController {
@@ -80,8 +77,8 @@ class Authentication extends GetxController {
           );
 
           Get.to(
-            const ResponsiveHomePage(
-              // listUser: listlocalhost,
+            ResponsiveHomePage(
+              listUser: listlocalhost,
               url: "",
               id: "",
             ),
@@ -110,8 +107,8 @@ class Authentication extends GetxController {
       isLocalhost.value = false;
       if (listlocalhost.isNotEmpty) {
         Get.to(
-          const ResponsiveHomePage(
-            // listUser: listlocalhost,
+          ResponsiveHomePage(
+            listUser: listlocalhost,
             url: "",
             id: "",
           ),
