@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => FirebaseProvider(),
-      child: GetMaterialApp(
+      child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         // home: SwitchButton(),
 

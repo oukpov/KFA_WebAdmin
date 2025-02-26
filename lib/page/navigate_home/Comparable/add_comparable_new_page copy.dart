@@ -701,41 +701,77 @@ class _HomePageState extends State<AddComparable> {
   // String? end;
   int? agenttypeid;
   int? comparableroad;
+  int? comparablepropertyid;
   bool search = false;
+  Future<void> searchDate() async {
+    var headers = {'Content-Type': 'application/json'};
+    var dio = Dio();
+    var queryParams = {
+      if (startDate.text != "") "start": startDate.text,
+      if (endDate.text != "") "end": endDate.text,
+      if (propertyID != null) "comparable_property_id": propertyID,
+      if (agentID != null) "agenttype_id": agentID,
+      if (roadID != null) "comparable_road": roadID,
+    };
 
-  // Future<void> searchWaiting() async {
-  //   // if (startDate.text != "" && endDate.text != "") {
-  //   //   await Future.wait([searchDate()]);
-  //   // } else {
-  //   //   await Future.wait([searchLike()]);
-  //   // }
-  // }
+    try {
+      var response = await dio.get(
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/comparable/date/search',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+        queryParameters: queryParams,
+      );
 
-  Future<void> searchLike() async {
+      if (response.statusCode == 200) {
+        setState(() {
+          listcom = response.data;
+        });
+      } else {
+        // print('Error: ${response.statusMessage}');
+      }
+    } catch (e) {
+      // print('Error: $e');
+    } finally {
+      setState(() {
+        endDate.clear();
+        startDate.clear();
+      });
+    }
+  }
+
+  Future<void> searchWaiting() async {
     setState(() {
       search = true;
     });
-    // print('propertyID : $propertyID');
-    var headers = {'Content-Type': 'application/json'};
-
-    var dio = Dio();
-    var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/comparable_searchUse?search=${controllSearch.text}${(startDate.text != "" && endDate.text != "") ? "&start=${startDate.text}&end=${endDate.text}" : ""}${(agenttypeid != null) ? "&agenttype_id=$agenttypeid" : ""}${(roadID != null) ? "&comparable_road=$roadID" : ""}${(propertyID != null) ? "&comparable_property_id=$propertyID" : ""}',
-      options: Options(
-        method: 'GET',
-        headers: headers,
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      listcom = response.data;
+    if (startDate.text != "" && endDate.text != "") {
+      await Future.wait([searchDate()]);
     } else {
-      // print(response.statusMessage);
+      await Future.wait([searchLike()]);
     }
 
     setState(() {
       search = false;
     });
+  }
+
+  Future<void> searchLike() async {
+    var dio = Dio();
+    var response = await dio.request(
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/comparable_searchUse?search=${controllSearch.text}',
+      options: Options(
+        method: 'GET',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        listcom = jsonDecode(json.encode(response.data));
+      });
+    } else {
+      print(response.statusMessage);
+    }
   }
 
   TextEditingController startDate = TextEditingController();
@@ -893,7 +929,7 @@ class _HomePageState extends State<AddComparable> {
                   lable: "PropertyType",
                   value: (value) {
                     setState(() {
-                      propertyID = int.parse(value.toString());
+                      propertyID = int.parse(value);
                     });
                   },
                   valuenameback: (value) {},
@@ -910,7 +946,6 @@ class _HomePageState extends State<AddComparable> {
                   value: (value) {
                     setState(() {
                       comparableUser = int.parse(value);
-                      agenttypeid = int.parse(value);
                     });
                   },
                   valuenameback: (value) {},
@@ -970,7 +1005,7 @@ class _HomePageState extends State<AddComparable> {
                 padding: const EdgeInsets.all(8.0),
                 child: ElevatedButton(
                     onPressed: () {
-                      searchLike();
+                      searchWaiting();
                     },
                     child: Icon(Icons.search, color: whiteColor, size: 30)),
               ),
@@ -2377,8 +2412,7 @@ class _HomePageState extends State<AddComparable> {
                                                 lable: "Agent",
                                                 value: (value) {
                                                   setState(() {
-                                                    agentID = int.parse(
-                                                        value.toString());
+                                                    agentID = int.parse(value);
                                                   });
                                                 },
                                                 valuenameback: (value) {},
