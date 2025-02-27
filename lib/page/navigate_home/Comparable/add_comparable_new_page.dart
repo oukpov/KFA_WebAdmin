@@ -229,6 +229,7 @@ class _HomePageState extends State<AddComparable> {
         listpropertytData =
             responseData.map((item) => json.encode(item)).toList();
         propertyListlocal(listpropertytData);
+        print('======> responseData :$responseData');
       });
     }
   }
