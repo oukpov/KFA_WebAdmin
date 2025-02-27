@@ -69,6 +69,31 @@ class _MyAppState extends State<MyApp> {
         // home: SwitchButton(),
 
         home: LoginPage(),
+        // home: AddComparable(
+        //     type: (value) {},
+        //     addNew: (value) {},
+        //     listlocalhosts: const [
+        //       {
+        //         "id": "52",
+        //         "user_role_id": "52",
+        //         "agency": "81",
+        //         "username": "pov.ouk",
+        //         "password": "333802e987dfce42e28b749a20dc257f",
+        //         "user_status": "0",
+        //         "update_new": "1",
+        //         "zone_Allow": "1",
+        //         "is_super_admin": "0",
+        //         "public_data": "0",
+        //         "add_zone": "0",
+        //         "approver": "1",
+        //         "comparable": "1",
+        //         "market_price_road": "1",
+        //         "add_vpoint": "0",
+        //         "set_admin": "0",
+        //         "property": "0",
+        //         "check_dashbord": "0"
+        //       }
+        //     ]),
       ),
     );
   }

@@ -605,7 +605,7 @@ class _HomePageState extends State<AddComparable> {
       await removeSangkat();
       var headers = {'Content-Type': 'application/json'};
       var data = json.encode({
-        "songkat_name": district.text,
+        "songkat_name": districtMore.text,
         // "songkat_id": "1",
         "agency_id": widget.listlocalhosts[0]['agency'].toString()
       });
@@ -636,7 +636,7 @@ class _HomePageState extends State<AddComparable> {
     } finally {
       setState(() {
         isApiCallProcess = false;
-        // district.clear();
+        districtMore.clear();
         Get.back();
       });
     }
@@ -650,7 +650,7 @@ class _HomePageState extends State<AddComparable> {
       await removeCommune();
       var headers = {'Content-Type': 'application/json'};
       var data = json.encode({
-        "commune_name": commune.text,
+        "commune_name": communeMore.text,
         // "songkat_id": "1",
         "agency_id": widget.listlocalhosts[0]['agency'].toString()
       });
@@ -681,7 +681,7 @@ class _HomePageState extends State<AddComparable> {
     } finally {
       setState(() {
         isApiCallProcess = false;
-        // commune.clear();
+        communeMore.clear();
         Get.back();
       });
     }
@@ -722,8 +722,8 @@ class _HomePageState extends State<AddComparable> {
   double h = 0;
   List listMap = [];
   TextEditingController searchMap = TextEditingController();
-  // TextEditingController districtMore = TextEditingController();
-  // TextEditingController communeMore = TextEditingController();
+  TextEditingController districtMore = TextEditingController();
+  TextEditingController communeMore = TextEditingController();
   bool searchGoogle = false;
   Future<void> waitingSearch() async {
     searchGoogle = true;
@@ -810,7 +810,6 @@ class _HomePageState extends State<AddComparable> {
   }
 
   bool checkPerson = false;
-  bool checkPersons = false;
   Future aloadMenu() {
     return showDialog(
         builder: (context) => const AlertDialog(
@@ -1496,9 +1495,9 @@ class _HomePageState extends State<AddComparable> {
       "comparabl_user":
           comparableUser ?? widget.listlocalhosts[0]['agency'].toString(),
       "comparable_remark": remark,
-      "province": province.text,
-      "district": district.text,
-      "commune": commune.text,
+      "province": provinces,
+      "district": districts,
+      "commune": communes,
       "comparable_floor": (floorcontroller == null) ? null : floorcontroller,
       "Ministry": ministry,
     });
@@ -2694,7 +2693,6 @@ class _HomePageState extends State<AddComparable> {
                                                                 false;
                                                           });
                                                         }
-                                                        return null;
                                                       },
                                                       // readOnly: true,
                                                       controller: pricepersqm,
@@ -3594,6 +3592,11 @@ class _HomePageState extends State<AddComparable> {
                                               height: 40,
                                               child: TextFormField(
                                                 controller: province,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    provinces = value;
+                                                  });
+                                                },
                                                 decoration: InputDecoration(
                                                   fillColor: kwhite,
                                                   filled: true,
@@ -3634,7 +3637,7 @@ class _HomePageState extends State<AddComparable> {
                                             ),
                                             const SizedBox(height: 10),
                                             //OOOOOOOOOOOOOO
-                                            if (districts == "")
+                                            if (district.text == "")
                                               SizedBox(
                                                 width: double.infinity,
                                                 child: Row(
@@ -3649,13 +3652,11 @@ class _HomePageState extends State<AddComparable> {
                                                         listData:
                                                             listsangkatModel,
                                                         lable: "Districts",
-                                                        value: (value) {},
-                                                        valuenameback: (value) {
-                                                          setState(() {
-                                                            district.text =
-                                                                value;
-                                                          });
+                                                        value: (value) {
+                                                          setState(() {});
                                                         },
+                                                        valuenameback:
+                                                            (value) {},
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -3666,7 +3667,7 @@ class _HomePageState extends State<AddComparable> {
                                                               setState(() {
                                                                 isApiCallProcess =
                                                                     true;
-                                                                district
+                                                                districtMore
                                                                     .clear();
                                                                 checkPerson =
                                                                     !checkPerson;
@@ -3779,7 +3780,7 @@ class _HomePageState extends State<AddComparable> {
                                                                             SizedBox(
                                                                               height: 40,
                                                                               child: TextFormField(
-                                                                                controller: district,
+                                                                                controller: districtMore,
                                                                                 // onChanged:
                                                                                 //     (value) {
                                                                                 //   setState(
@@ -3853,11 +3854,11 @@ class _HomePageState extends State<AddComparable> {
                                                 height: 40,
                                                 child: TextFormField(
                                                   controller: district,
-                                                  // onChanged: (value) {
-                                                  //   setState(() {
-                                                  //     districts = value;
-                                                  //   });
-                                                  // },
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      districts = value;
+                                                    });
+                                                  },
                                                   decoration: InputDecoration(
                                                     fillColor: kwhite,
                                                     filled: true,
@@ -3899,7 +3900,7 @@ class _HomePageState extends State<AddComparable> {
                                               ),
 
                                             const SizedBox(height: 10),
-                                            if (communes == "")
+                                            if (commune.text == "")
                                               SizedBox(
                                                 width: double.infinity,
                                                 child: Row(
@@ -3915,12 +3916,8 @@ class _HomePageState extends State<AddComparable> {
                                                             listCommuneModel,
                                                         lable: "Commune",
                                                         value: (value) {},
-                                                        valuenameback: (value) {
-                                                          setState(() {
-                                                            commune.text =
-                                                                value;
-                                                          });
-                                                        },
+                                                        valuenameback:
+                                                            (value) {},
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -3931,10 +3928,11 @@ class _HomePageState extends State<AddComparable> {
                                                               setState(() {
                                                                 isApiCallProcess =
                                                                     true;
-                                                                commune.clear();
-                                                                checkPersons =
-                                                                    !checkPersons;
-                                                                if (!checkPersons) {
+                                                                communeMore
+                                                                    .clear();
+                                                                checkPerson =
+                                                                    !checkPerson;
+                                                                if (!checkPerson) {
                                                                   agency = widget
                                                                       .listlocalhosts[
                                                                           0][
@@ -3963,7 +3961,7 @@ class _HomePageState extends State<AddComparable> {
                                                                 backgroundColor:
                                                                     whileColors,
                                                                 child: Icon(
-                                                                  !checkPersons
+                                                                  !checkPerson
                                                                       ? Icons
                                                                           .person
                                                                       : Icons
@@ -4043,7 +4041,7 @@ class _HomePageState extends State<AddComparable> {
                                                                             SizedBox(
                                                                               height: 40,
                                                                               child: TextFormField(
-                                                                                controller: commune,
+                                                                                controller: communeMore,
                                                                                 // onChanged:
                                                                                 //     (value) {
                                                                                 //   setState(
@@ -4117,11 +4115,11 @@ class _HomePageState extends State<AddComparable> {
                                                 height: 40,
                                                 child: TextFormField(
                                                   controller: commune,
-                                                  // onChanged: (value) {
-                                                  //   setState(() {
-                                                  //     communes = value;
-                                                  //   });
-                                                  // },
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      communes = value;
+                                                    });
+                                                  },
                                                   decoration: InputDecoration(
                                                     fillColor: kwhite,
                                                     filled: true,
@@ -4226,7 +4224,6 @@ class _HomePageState extends State<AddComparable> {
                                                             checklat = false;
                                                           });
                                                         }
-                                                        return null;
                                                       },
                                                       controller: latcontroller,
                                                       onChanged: (value) {
@@ -4792,6 +4789,8 @@ class _HomePageState extends State<AddComparable> {
                         province.clear();
                         district.clear();
                         commune.clear();
+                        // districtMore.clear();
+                        // communeMore.clear();
                       });
                       if (viewMap) {
                         latLng = argument;
