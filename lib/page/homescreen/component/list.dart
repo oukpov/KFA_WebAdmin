@@ -111,7 +111,7 @@ List valuationoption = [
 ];
 List comparableotion = [
   // {"title": "Old Comparable"},
-  {"title": "Add Comparable"},
+  {"title": "Add Comparable", "click": 0},
 //   {"title": "Comparable List"},
 //   {"title": "Comparable Search"},
 //   {"title": "Comparable Map List"},

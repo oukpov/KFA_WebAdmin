@@ -55,6 +55,7 @@ class _valueDropdownState extends State<DropdownOption> {
                       checkproperty = false;
                     }
                   });
+                  return null;
                 },
                 popupProps: PopupProps.menu(
                   isFilterOnline: true,

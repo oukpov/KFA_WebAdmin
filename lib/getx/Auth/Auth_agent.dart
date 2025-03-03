@@ -40,6 +40,7 @@ class Authentication extends GetxController {
         .toList();
 
     if (listlocalhost.isEmpty) {
+      print('No.2 $listlocalhost');
       try {
         var headers = {'Content-Type': 'application/json'};
         var data = json.encode({
@@ -59,7 +60,6 @@ class Authentication extends GetxController {
         if (response.statusCode == 200) {
           listlocalhost = response.data['user'];
           List<dynamic> responseData = response.data['user'];
-          // print("====> $listlocalhost");
           listLocalhostData =
               responseData.map((item) => json.encode(item)).toList();
           localhostList(listLocalhostData);
@@ -104,6 +104,7 @@ class Authentication extends GetxController {
         }
       }
     } else {
+      print('No.2 $listlocalhost');
       isLocalhost.value = false;
       if (listlocalhost.isNotEmpty) {
         Get.to(

@@ -17,6 +17,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_admin/components/waiting.dart';
 import 'package:web_admin/page/homescreen/ToalData.dart';
+import 'package:web_admin/page/navigate_home/percentage/Percentage_compare.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
 import '../../Profile/components/singleBox.dart';
@@ -94,7 +95,7 @@ class _homescreenState extends State<homescreen> {
 
   Authentication authentication = Authentication();
   bool hasUnsavedData = true;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   // Future<void> updateUserStatus() async {
   //   await authentication
   //       .checkAdminUser(int.parse(authentication.listlocalhost[0]['agency'].toString()));
@@ -1185,6 +1186,10 @@ class _homescreenState extends State<homescreen> {
         return VpointListPage();
       case 221:
         return const SizedBox();
+      case 301:
+        return PercentageClass(
+          listUsers: widget.listUser,
+        );
       // VpointDetailPage(
       //   vpoint: '',
       // );

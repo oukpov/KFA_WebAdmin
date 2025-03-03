@@ -170,9 +170,15 @@ class _DrawerOptionState extends State<DrawerOption> {
       // optionIconList = optionIconList;
       // listTitlesetting = listTitlesetting;
       // optionIconListsetting = optionIconListsetting;
+      // print('widget.listUser : ${widget.listUser}');
       if (widget.listUser[0]['add_zone'].toString() == "1") {
         autoOption.add(
           {"title": "Add Zone Specail", "click": 3},
+        );
+      }
+      if (widget.listUser[0]['up_percentage'].toString() == "1") {
+        comparableotion.add(
+          {"title": "Up Percentage", "click": 1},
         );
       }
       if (widget.listUser[0]['comparable'].toString() == "1") {
@@ -253,6 +259,7 @@ class _DrawerOptionState extends State<DrawerOption> {
   int selectindex = -1;
   int selectindexs = -1;
   int menuType5 = 0;
+  int menuType3 = 0;
   AuthenModel authenModel = AuthenModel();
   @override
   Widget build(BuildContext context) {
@@ -372,19 +379,27 @@ class _DrawerOptionState extends State<DrawerOption> {
                           for (int i = 0; i < comparableotion.length; i++)
                             PopupMenuItem(
                                 child: InkWell(
-                                    onTap: () {
-                                      switch (i) {
-                                        case 0:
-                                          Get.to(AddComparable(
-                                            listlocalhosts: widget.listUser,
-                                            addNew: (value) {},
-                                            // listUser: widget.listUser,
-                                            type: (value) {},
-                                          ));
-                                      }
-                                    },
-                                    child: textfield(comparableotion[i]['title']
-                                        .toString())))
+                              onTap: () {
+                                setState(() {
+                                  menuType3 = comparableotion[i]['click'];
+                                });
+                                switch (menuType3) {
+                                  case 0:
+                                    Get.to(AddComparable(
+                                      listlocalhosts: widget.listUser,
+                                      addNew: (value) {},
+                                      // listUser: widget.listUser,
+                                      type: (value) {},
+                                    ));
+                                    break;
+                                  case 1:
+                                    widget.onBack(301);
+                                    break;
+                                }
+                              },
+                              child: textfield(
+                                  comparableotion[i]['title'].toString()),
+                            ))
                         ];
                       case 4:
                         return [
@@ -1168,9 +1183,8 @@ class _DrawerOptionState extends State<DrawerOption> {
         .map((item) => json.decode(item) as Map<String, dynamic>)
         .toList();
     // Find the index of the current user using both email and password
-    int userIndex = listlocalhost.indexWhere((item) =>
-        item['email'] == widget.listUser[0]['email'] &&
-        item['password'] == widget.listUser[0]['password']);
+    int userIndex = listlocalhost
+        .indexWhere((item) => item['agency'] == widget.listUser[0]['agency']);
 
     if (userIndex != -1) {
       // Remove the entire user data

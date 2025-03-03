@@ -6049,8 +6049,6 @@ class _DataSource extends DataTableSource {
                                   item['comparable_id'],
                                   index,
                                   item['type_value']);
-
-                              // print(data[index].toString());
                             },
                             btnCancelOnPress: () {},
                             btnCancelColor: greyColorNolot,
