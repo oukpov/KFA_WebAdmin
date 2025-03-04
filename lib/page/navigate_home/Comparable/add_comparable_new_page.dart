@@ -242,7 +242,7 @@ class _HomePageState extends State<AddComparable> {
     // var data = json.encode({"agency_id": 1});
     var dio = Dio();
     var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/fetch_agency/commune${(agencyID != '') ? "?agency_id=$agencyID" : ""}',
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/fetch_agency/drcommune${(agencyID != '') ? "?agency_id=$agencyID" : ""}',
       options: Options(
         method: 'POST',
         headers: headers,
@@ -656,7 +656,7 @@ class _HomePageState extends State<AddComparable> {
       });
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/insert_agency/commune',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/insert_agency/drcommune',
         options: Options(
           method: 'POST',
           headers: headers,
