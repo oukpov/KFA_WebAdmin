@@ -1105,7 +1105,7 @@ class _homescreenState extends State<homescreen> {
                   child: CircleAvatar(
                       radius: 20,
                       backgroundColor: whileColors,
-                      child: Icon(Icons.refresh))),
+                      child: const Icon(Icons.refresh))),
               Obx(() {
                 if (controllerUpdate.checkS.value) {
                   return const Center(child: CircularProgressIndicator());

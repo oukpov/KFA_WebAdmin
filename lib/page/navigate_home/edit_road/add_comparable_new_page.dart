@@ -18,14 +18,12 @@ import '../../../../../../models/search_model.dart';
 import '../../../../../components/ApprovebyAndVerifyby.dart';
 import '../../../../Customs/ProgressHUD.dart';
 import '../../../../Widgets/printer_com.dart';
-import '../../../../components/DropdownOption.dart';
 import '../../../../components/colors.dart';
 import '../../../../components/property35.dart';
 import 'package:pdf/widgets.dart' as pw;
 import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../screen/Property/Map/streetview_map.dart';
 import '../Comparable/edit_comparable_new_page.dart';
-import '../Customer/component/date_customer.dart';
 
 class ChangeRaod extends StatefulWidget {
   const ChangeRaod(
@@ -55,7 +53,6 @@ class _HomePageState extends State<ChangeRaod> {
   List list = [];
   String sendAddrress = '';
   List data = [];
-  var pty;
   var formatter = NumberFormat("##,###,###,###", "en_US");
   var date = DateFormat('yyyy-MM-dd').format(DateTime(2020, 01, 01));
   var date1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -422,11 +419,7 @@ class _HomePageState extends State<ChangeRaod> {
         ? MediaQuery.of(context).size.height * 0.35
         : MediaQuery.of(context).size.height * 0.15;
     return Scaffold(
-      body: fullScreen
-          ? fullTable()
-          : (refrech
-              ? const Center(child: CircularProgressIndicator())
-              : mapShow()),
+      body: mapShow(),
     );
   }
 
@@ -435,8 +428,6 @@ class _HomePageState extends State<ChangeRaod> {
   String comparedropdown2 = '';
   int groupValue = 0;
   bool isChecked = false;
-  bool isChecked_all = false;
-  var id_route;
   String? remark;
   double h = 0;
   List listMap = [];
@@ -465,7 +456,7 @@ class _HomePageState extends State<ChangeRaod> {
         }
       });
     } else {
-      print(response.reasonPhrase);
+      // print(response.reasonPhrase);
     }
   }
 
@@ -672,7 +663,7 @@ class _HomePageState extends State<ChangeRaod> {
     var headers = {'Content-Type': 'application/json'};
     var dio = Dio();
 
-    print("start : $start && end : $end");
+    // print("start : $start && end : $end");
     var queryParams = {
       if (start != null) "start": start,
       if (end != null) "end": end,
@@ -696,10 +687,10 @@ class _HomePageState extends State<ChangeRaod> {
           listcom = jsonDecode(json.encode(response.data));
         });
       } else {
-        print('Error: ${response.statusMessage}');
+        // print('Error: ${response.statusMessage}');
       }
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
     }
   }
 
@@ -732,7 +723,7 @@ class _HomePageState extends State<ChangeRaod> {
         listcom = jsonDecode(json.encode(response.data));
       });
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
@@ -758,319 +749,6 @@ class _HomePageState extends State<ChangeRaod> {
   ];
   bool viewMap = false;
   TextEditingController controllSearch = TextEditingController();
-  int indexland = 0;
-  Widget fullTable() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Wrap(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        fullScreen = false;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      color: greyColor,
-                      size: 25,
-                    )),
-              ),
-              const SizedBox(width: 10),
-              SizedBox(
-                height: 35,
-                width: 90,
-                child: Row(
-                  children: [
-                    Text(
-                      "Borey",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: !checkVerbal ? colorsRed : greyColor,
-                          fontSize: 15),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          setState(() {
-                            doneORudone = !doneORudone;
-                            waitingCheckFull = true;
-                            // checkboreyTP = !checkboreyTP;
-                            if (!doneORudone) {
-                              checkborey = 0;
-                              roadList = listRaodNBorey;
-                            } else {
-                              checkborey = 1;
-                              roadList = listRaodBorey;
-                            }
-                            _timer = Timer.periodic(const Duration(seconds: 1),
-                                (Timer timer) async {
-                              setState(() {
-                                countwaitingfull++;
-                              });
-
-                              if (countwaitingfull >= 1) {
-                                _timer.cancel();
-                                waitingCheckFull = false;
-                              }
-                            });
-                          });
-                        },
-                        icon: Icon(doneORudone
-                            ? Icons.check_box_outlined
-                            : Icons.check_box_outline_blank)),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              waitingCheckFull
-                  ? const Center(child: CircularProgressIndicator())
-                  : Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: 40,
-                        width: 150,
-                        child: DropdownButtonFormField<String>(
-                          isExpanded: true,
-                          onChanged: (newValue) {
-                            setState(() {
-                              roadID = int.parse(newValue!);
-                            });
-                          },
-                          items: roadList
-                              .map<DropdownMenuItem<String>>(
-                                (value) => DropdownMenuItem<String>(
-                                  value: value["road_id"].toString(),
-                                  child: Text(value["road_name"]),
-                                ),
-                              )
-                              .toList(),
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: kImageColor,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 10),
-                            fillColor: kwhite,
-                            filled: true,
-                            labelText: "Raod",
-                            hintText: 'Select one',
-                            prefixIcon: const Icon(
-                              Icons.edit_road_outlined,
-                              color: kImageColor,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: kPrimaryColor, width: 2.0),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                width: 1,
-                                color: kPrimaryColor,
-                              ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownOption(
-                  icon: Icons.real_estate_agent_outlined,
-                  dataid: "property_type_id",
-                  dataname: "property_type_name",
-                  listData: listPropertyModel,
-                  lable: "PropertyType",
-                  value: (value) {
-                    setState(() {
-                      propertyID = int.parse(value);
-                    });
-                  },
-                  valuenameback: (value) {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DropdownOption(
-                  icon: Icons.support_agent_outlined,
-                  dataid: "agenttype_id",
-                  dataname: "agenttype_name",
-                  listData: listvalueModel,
-                  lable: "Agent",
-                  value: (value) {
-                    setState(() {
-                      comparableUser = int.parse(value);
-                    });
-                  },
-                  valuenameback: (value) {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DateExpaned(
-                    value: (value) {
-                      setState(() {
-                        start = value;
-                      });
-                    },
-                    filedname: "Start"),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DateExpaned(
-                    value: (value) {
-                      setState(() {
-                        end = value;
-                      });
-                    },
-                    filedname: "End"),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 40,
-                  width: 250,
-                  child: TextFormField(
-                    controller: controllSearch,
-                    decoration: InputDecoration(
-                      fillColor: kwhite,
-                      filled: true,
-                      labelText: "Search",
-                      labelStyle: const TextStyle(color: kTextLightColor),
-                      prefixIcon: const Icon(Icons.search, color: kImageColor),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(color: kPrimaryColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 1, color: kPrimaryColor),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () {
-                      searchWaiting();
-                    },
-                    child: Icon(Icons.search, color: whiteColor, size: 30)),
-              ),
-              const SizedBox(width: 20)
-            ],
-          ),
-          search
-              ? const Center(child: CircularProgressIndicator())
-              : Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    border: Border.all(width: 2, color: whiteColor),
-                  ),
-                  child: PaginatedDataTable(
-                    horizontalMargin: 5.0,
-                    arrowHeadColor: Colors.blueAccent[300],
-                    columns: [
-                      for (int i = 0; i < listTitle.length; i++)
-                        DataColumn(
-                          label: Text(
-                            listTitle[i]['title'].toString(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Color.fromARGB(255, 5, 11, 67)),
-                          ),
-                        ),
-                    ],
-                    dataRowHeight: 40,
-                    rowsPerPage: on_row,
-                    onRowsPerPageChanged: (value) {
-                      setState(() {
-                        on_row = value!;
-                      });
-                    },
-                    source: _DataSource(
-                        listBlock: authentication.listblock,
-                        listlocalhosts: widget.listlocalhosts,
-                        checklocation: (value) {
-                          setState(() {
-                            fullScreen = false;
-                            var indexs = value;
-                            if (indexs != null) {
-                              listMarkerIds.clear();
-                              data_adding_correct = [listcom[indexs]];
-                              Future.delayed(const Duration(seconds: 2), () {
-                                if (data_adding_correct.isNotEmpty) {
-                                  if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '15') {
-                                    markerType(0, 'l.png');
-                                  } else if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '10') {
-                                    markerType(0, 'f.png');
-                                  } else if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '33') {
-                                    markerType(0, 'v.png');
-                                  } else if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '14') {
-                                    markerType(0, 'h.png');
-                                  } else if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '4') {
-                                    markerType(0, 'b.png');
-                                  } else if (data_adding_correct[0]
-                                              ['comparable_property_id']
-                                          .toString() ==
-                                      '29') {
-                                    markerType(0, 'v.png');
-                                  } else {
-                                    markerType(0, 'a.png');
-                                  }
-                                  mapController?.animateCamera(
-                                      CameraUpdate.newCameraPosition(
-                                          CameraPosition(
-                                              target: LatLng(
-                                                  data_adding_correct[0]
-                                                      ['latlong_log'],
-                                                  data_adding_correct[0]
-                                                      ['latlong_la']),
-                                              zoom: 20)));
-                                }
-                              });
-                            }
-                          });
-                        },
-                        context: context,
-                        count_row: listcom.length,
-                        data: listcom,
-                        listback: (value) {},
-                        setStateCallback: _setState,
-                        userID: widget.listlocalhosts[0]['agency'].toString()),
-                  ),
-                ),
-        ],
-      ),
-    );
-  }
 
   List listOptin = [];
   List listMarkers = [
@@ -1270,10 +948,10 @@ class _HomePageState extends State<ChangeRaod> {
       refrechValue();
       setState(() {
         comparableUser = null;
-        print("protectID : $protectID");
+        // print("protectID : $protectID");
       });
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
@@ -1390,11 +1068,6 @@ class _HomePageState extends State<ChangeRaod> {
     {"title": "Code"},
     {"title": "Survey Date"},
   ];
-  void _setState(VoidCallback fn) {
-    setState(fn);
-  }
-
-  bool _isSwitched = false;
   int on_row = 20;
   bool checkMarket = false;
   bool condobool = false;
@@ -2053,6 +1726,7 @@ class _HomePageState extends State<ChangeRaod> {
           }
         }
       });
+      Get.back();
       Get.snackbar(
         'Done',
         "Update Successfuly",
@@ -2112,10 +1786,10 @@ class _HomePageState extends State<ChangeRaod> {
         setState(() {
           doneORudone = false;
           list = jsonDecode(json.encode(response.data))['autoverbal'];
-          print("list : ${list.length}");
+          // print("list : ${list.length}");
         });
       }
-      if (list.length >= 1) {
+      if (list.isNotEmpty) {
         List<dynamic> filteredList = filterDuplicates(
             list, "comparable_adding_price", "latlong_la", "latlong_log");
 
@@ -2130,34 +1804,55 @@ class _HomePageState extends State<ChangeRaod> {
         });
         if (data_adding_correct.isNotEmpty) {
           for (int i = 0; i < data_adding_correct.length; i++) {
-            // print(
-            //     "No.${data_adding_correct[i]['comparable_id']} : ${data_adding_correct[i]['comparable_property_id']}\n");
-            if (data_adding_correct[i]['comparable_property_id'].toString() ==
-                '15') {
-              markerType(i, 'l.png');
-            } else if (data_adding_correct[i]['comparable_property_id']
-                    .toString() ==
-                '10') {
-              markerType(i, 'f.png');
-            } else if (data_adding_correct[i]['comparable_property_id']
-                    .toString() ==
-                '33') {
-              markerType(i, 'v.png');
-            } else if (data_adding_correct[i]['comparable_property_id']
-                    .toString() ==
-                '14') {
-              markerType(i, 'h.png');
-            } else if (data_adding_correct[i]['comparable_property_id']
-                    .toString() ==
-                '4') {
-              markerType(i, 'b.png');
-            } else if (data_adding_correct[i]['comparable_property_id']
-                    .toString() ==
-                '29') {
-              markerType(i, 'v.png');
-            } else {
-              markerType(i, 'a.png');
+            switch (
+                data_adding_correct[i]['comparable_property_id'].toString()) {
+              case '15':
+                markerType(i, 'l.png');
+                break;
+              case '10':
+                markerType(i, 'f.png');
+                break;
+              case '33':
+                markerType(i, 'f.png');
+                break;
+              case '14':
+                markerType(i, 'h.png');
+                break;
+              case '4':
+                markerType(i, 'b.png');
+                break;
+              case '29':
+                markerType(i, 'v.png');
+                break;
+              default:
+                markerType(i, 'a.png');
+                break;
             }
+            // if (data_adding_correct[i]['comparable_property_id'].toString() ==
+            //     '15') {
+            // } else if (data_adding_correct[i]['comparable_property_id']
+            //         .toString() ==
+            //     '10') {
+            //   markerType(i, 'f.png');
+            // } else if (data_adding_correct[i]['comparable_property_id']
+            //         .toString() ==
+            //     '33') {
+            //    markerType(i, 'f.png');
+            // } else if (data_adding_correct[i]['comparable_property_id']
+            //         .toString() ==
+            //     '14') {
+            //   markerType(i, 'h.png');
+            // } else if (data_adding_correct[i]['comparable_property_id']
+            //         .toString() ==
+            //     '4') {
+            //   markerType(i, 'b.png');
+            // } else if (data_adding_correct[i]['comparable_property_id']
+            //         .toString() ==
+            //     '29') {
+            //   markerType(i, 'v.png');
+            // } else {
+            //   markerType(i, 'a.png');
+            // }
           }
         }
       } else {
@@ -3122,28 +2817,8 @@ class _DataSource extends DataTableSource {
   }
 
   List iconIcon = const [Icons.edit, Icons.delete];
-
   List listIcon = const [Icons.print, Icons.edit, Icons.delete];
-  // Future<void> delete(protectID, int index) async {
-  //   var dio = Dio();
-  //   var response = await dio.request(
-  //     'https://kfacrm.com/blog/public/api/delete/$protectID',
-  //     options: Options(
-  //       method: 'DELETE',
-  //     ),
-  //   );
 
-  //   if (response.statusCode == 200) {
-  //     setStateCallback(() {
-  //       data.removeAt(index);
-
-  //       listback(list);
-  //       print("protectID => $protectID");
-  //     });
-  //   } else {
-  //     print(response.statusMessage);
-  //   }
-  // }
   bool check = false;
   Future<void> delete(
       protectID, int comparableID, int index, String typeValue) async {
@@ -3185,7 +2860,7 @@ class _DataSource extends DataTableSource {
         );
       });
     } else {
-      print(response.statusMessage);
+      // print(response.statusMessage);
     }
   }
 
