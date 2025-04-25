@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pdf/pdf.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_admin/components/waiting.dart';
 import 'package:web_admin/getx/Auth/Auth_agent.dart';
 import 'package:web_admin/page/navigate_home/Customer/component/date_customer_cotroller.dart';
 import '../../../../../../models/search_model.dart';
@@ -29,7 +30,6 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../../screen/Property/Map/streetview_map.dart';
 import '../../../components/colors/colors.dart';
-import '../Customer/component/date_customer.dart';
 import 'edit_comparable_new_page.dart';
 
 class AddComparable extends StatefulWidget {
@@ -197,6 +197,7 @@ class _HomePageState extends State<AddComparable> {
     }
     topAgent();
     getAPI();
+    listDropdownBorey = listRaodNBorey;
   }
 
   List listRaodNBorey = [
@@ -1569,7 +1570,7 @@ class _HomePageState extends State<AddComparable> {
   bool checkboreyTP = false;
   int checkborey = 0;
   int ls = 0;
-  int boreyvalue = 0;
+  // int boreyvalue = 0;
   bool refrech = false;
   Future<void> refrechValue() async {
     setState(() {
@@ -5164,6 +5165,7 @@ class _HomePageState extends State<AddComparable> {
     }
   }
 
+  bool checkBorey = false;
   Future<void> getxsnackbar(title, subtitle) async {
     Get.snackbar(
       title,
@@ -5201,6 +5203,7 @@ class _HomePageState extends State<AddComparable> {
     return uniqueList;
   }
 
+  List listDropdownBorey = [];
   void nodata(title) {
     setState(() {
       markers.clear();
@@ -5540,7 +5543,21 @@ class _HomePageState extends State<AddComparable> {
 
                               onChanged: (newValue) {
                                 setState(() {
-                                  market = int.parse(newValue!);
+                                  checkBorey = true;
+                                  checkborey = int.parse(newValue!);
+
+                                  if (checkborey == 1) {
+                                    listDropdownBorey = listRaodBorey;
+                                  } else {
+                                    listDropdownBorey = listRaodNBorey;
+                                  }
+                                  // Future.delayed(const Duration(seconds: 1),
+                                  //     () {
+                                  //   checkBorey = false;
+                                  // Get.back();
+                                  // dailogMarkers(i);
+                                  // });
+
                                   // String roadDrop = newValue as String;
                                 });
                               },
@@ -5615,7 +5632,7 @@ class _HomePageState extends State<AddComparable> {
                                 });
                               },
 
-                              items: listRaodNBorey
+                              items: listDropdownBorey
                                   .map<DropdownMenuItem<String>>(
                                     (value) => DropdownMenuItem<String>(
                                       value:
