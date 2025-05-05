@@ -17,6 +17,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_admin/components/waiting.dart';
 import 'package:web_admin/page/homescreen/ToalData.dart';
+import 'package:web_admin/page/navigate_home/admin/check_users.dart';
 import 'package:web_admin/page/navigate_home/percentage/Percentage_compare.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
@@ -287,7 +288,7 @@ class _homescreenState extends State<homescreen> {
   ];
 
   int type = 0;
-  // int type = 7;
+  // int type = 302;
   @override
   Widget build(BuildContext context) {
     // imageLogoAdmin = Get.put(ImageLogoAdmin());
@@ -365,15 +366,25 @@ class _homescreenState extends State<homescreen> {
                                                       .countAllUsers.value,
                                                   Icons.person,
                                                   true,
-                                                  "images/User.png"),
+                                                  "images/User.png",
+                                                  [
+                                                    {
+                                                      "count": 302,
+                                                      "time": "Check All"
+                                                    }
+                                                  ],
+                                                  true),
                                               const SizedBox(width: 10),
                                               optionTxt(
                                                   "All Verbals",
-                                                  optionHome.countVerbals.value
+                                                  optionHome
+                                                      .countVerbalsAll.value
                                                       .toString(),
                                                   Icons.verified,
                                                   true,
-                                                  "icons/Verbal1.png"),
+                                                  "icons/Verbal1.png",
+                                                  optionHome.listCountAll,
+                                                  false),
                                               const SizedBox(width: 10),
                                               optionTxt(
                                                   "All Auto Verbals",
@@ -381,10 +392,18 @@ class _homescreenState extends State<homescreen> {
                                                       .toString(),
                                                   Icons.verified,
                                                   false,
-                                                  ""),
+                                                  "",
+                                                  [],
+                                                  false),
                                               const SizedBox(width: 10),
-                                              optionTxt("All Agents", "N/A",
-                                                  Icons.verified, false, ""),
+                                              optionTxt(
+                                                  "All Agents",
+                                                  "N/A",
+                                                  Icons.verified,
+                                                  false,
+                                                  "",
+                                                  [],
+                                                  false),
                                             ],
                                           ),
                                           const SizedBox(height: 10),
@@ -396,24 +415,36 @@ class _homescreenState extends State<homescreen> {
                                                     "N/A",
                                                     Icons.person,
                                                     true,
-                                                    "images/v.png"),
+                                                    "images/v.png",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
                                                 optionTxt(
                                                     "Client Top Up",
                                                     "N/A",
                                                     Icons.verified,
                                                     false,
-                                                    ""),
+                                                    "",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
                                                 optionTxt(
                                                     "VPoint Client Used",
                                                     "N/A",
                                                     Icons.verified,
                                                     false,
-                                                    ""),
+                                                    "",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
-                                                optionTxt("All Partner", "N/A",
-                                                    Icons.verified, false, ""),
+                                                optionTxt(
+                                                    "All Partner",
+                                                    "N/A",
+                                                    Icons.verified,
+                                                    false,
+                                                    "",
+                                                    [],
+                                                    false),
                                               ],
                                             ),
                                           ),
@@ -426,28 +457,36 @@ class _homescreenState extends State<homescreen> {
                                                     "${ababankData ?? '0'} USD",
                                                     Icons.person,
                                                     true,
-                                                    "images/aba.jpeg"),
+                                                    "images/aba.jpeg",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
                                                 optionTxt(
                                                     "Wing Bank",
                                                     "${wingData ?? '0'} USD",
                                                     Icons.verified,
                                                     true,
-                                                    "images/wing.png"),
+                                                    "images/wing.png",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
                                                 optionTxt(
                                                     "U Pay",
                                                     "${upayData ?? '0'} USD",
                                                     Icons.verified,
                                                     true,
-                                                    "images/UPAY-logo.png"),
+                                                    "images/UPAY-logo.png",
+                                                    [],
+                                                    false),
                                                 const SizedBox(width: 10),
                                                 optionTxt(
                                                     "Other",
                                                     "${otherData ?? '0'} USD",
                                                     Icons.verified,
                                                     false,
-                                                    ""),
+                                                    "",
+                                                    [],
+                                                    false),
                                               ],
                                             ),
                                           ),
@@ -622,63 +661,104 @@ class _homescreenState extends State<homescreen> {
     );
   }
 
-  Widget optionTxt(
-      String txt, String value, IconData icon, bool bool, String imageAssets) {
+  Widget optionTxt(String txt, String value, IconData icon, bool bool,
+      String imageAssets, List list, bool navi) {
     return Expanded(
-      flex: 1,
-      child: Container(
-        height: 60,
-        // width: 150,
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: greyColor),
-          color: whileColors,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(width: 5),
-            if (bool == false)
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: blueColor,
-                child: Icon(
-                  icon,
-                  color: whileColors,
-                ),
-              )
-            else
-              CircleAvatar(
-                backgroundColor: blueColor,
-                backgroundImage: AssetImage("assets/$imageAssets"),
-                radius: 20,
-              ),
-            const SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+        flex: 1,
+        child: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              for (int i = 0; i < list.length; i++)
+                PopupMenuItem(
+                    onTap: () {
+                      if (navi == true) {
+                        setState(() {
+                          type = list[0]['count'];
+                        });
+                      }
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${list[i]['time']}",
+                              style: TextStyle(color: greyColorNolots),
+                            ),
+                          ],
+                        ),
+                        if (navi == false)
+                          // const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                " : ${list[i]['count'].toString()} V",
+                                style: TextStyle(
+                                    color: colorsRed,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                      ],
+                    )),
+            ];
+          },
+          child: Container(
+            height: 60,
+            // width: 150,
+            decoration: BoxDecoration(
+              border: Border.all(width: 1, color: greyColor),
+              color: whileColors,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  txt,
-                  style: TextStyle(
-                      color: greyColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  value,
-                  style: TextStyle(
-                      color: colorsRed,
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold),
-                ),
+                const SizedBox(width: 5),
+                if (bool == false)
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: blueColor,
+                    child: Icon(
+                      icon,
+                      color: whileColors,
+                    ),
+                  )
+                else
+                  CircleAvatar(
+                    backgroundColor: blueColor,
+                    backgroundImage: AssetImage("assets/$imageAssets"),
+                    radius: 20,
+                  ),
+                const SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      txt,
+                      style: TextStyle(
+                          color: greyColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      value,
+                      style: TextStyle(
+                          color: colorsRed,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      ),
-    );
+            ),
+          ),
+        ));
   }
 
   List listControllerTitle = [];
@@ -1190,6 +1270,8 @@ class _homescreenState extends State<homescreen> {
         return PercentageClass(
           listUsers: widget.listUser,
         );
+      case 302:
+        return const CheckUsers();
       // VpointDetailPage(
       //   vpoint: '',
       // );

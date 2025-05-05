@@ -10,10 +10,15 @@ class OptionHome extends GetxController {
   }
 
   var isVerbal = false.obs;
-  var countVerbals = "".obs;
+  var countdayVerbals = "".obs;
+  var countWeekVerbals = "".obs;
+  var countMonthVerbals = "".obs;
+  var countyearVerbals = "".obs;
+  var countVerbalsAll = "".obs;
   var countAutoVs = "".obs;
   var countAllUsers = "".obs;
   var listAll = [].obs;
+  var listCountAll = [].obs;
   RxMap<String, double> dataMap = <String, double>{}.obs;
 
   Future<void> allFunction() async {
@@ -40,8 +45,8 @@ class OptionHome extends GetxController {
         'value': countAllUsers.value
       },
       {
-        'name': 'All Verbals (${countVerbals.value})',
-        'value': countVerbals.value
+        'name': 'All Verbals (${countdayVerbals.value})',
+        'value': countdayVerbals.value
       },
       {
         'name': 'All Auto Verbals (${countAutoVs.value})',
@@ -78,14 +83,25 @@ class OptionHome extends GetxController {
   Future<void> countVerbal() async {
     var dio = Dio();
     var response = await dio.request(
-      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/verbal/counts',
+      'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/check/verbal/date',
       options: Options(
         method: 'POST',
       ),
     );
 
     if (response.statusCode == 200) {
-      countVerbals.value = response.data.toString();
+      countdayVerbals.value = response.data['day'].toString();
+      countWeekVerbals.value = response.data['week'].toString();
+      countMonthVerbals.value = response.data['month'].toString();
+      countyearVerbals.value = response.data['year'].toString();
+      countVerbalsAll.value = response.data['count_All'].toString();
+      listCountAll.value = [
+        {'count': countdayVerbals.value, "time": "Day"},
+        {'count': countWeekVerbals.value, "time": "Week"},
+        {'count': countMonthVerbals.value, "time": "Month"},
+        {'count': countyearVerbals.value, "time": "Year"},
+      ];
+
       // print(countV);
     }
   }

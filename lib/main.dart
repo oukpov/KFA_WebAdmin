@@ -10,6 +10,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 import 'Auth/login.dart';
+import 'page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'page/navigate_home/edit_road/add_comparable_new_page.dart';
 import 'page/navigate_home/percentage/Percentage_compare.dart';
 
@@ -115,6 +116,28 @@ class _MyAppState extends State<MyApp> {
         //         "check_dashbord": "0"
         //       }
         //     ]),
+        // home: ZoneMap(listLocalHost: [
+        //   {
+        //     "id": "52",
+        //     "user_role_id": "52",
+        //     "agency": "81",
+        //     "username": "pov.ouk",
+        //     "password": "333802e987dfce42e28b749a20dc257f",
+        //     "user_status": "0",
+        //     "update_new": "1",
+        //     "zone_Allow": "1",
+        //     "is_super_admin": "0",
+        //     "public_data": "0",
+        //     "add_zone": "0",
+        //     "approver": "1",
+        //     "comparable": "1",
+        //     "market_price_road": "1",
+        //     "add_vpoint": "0",
+        //     "set_admin": "0",
+        //     "property": "0",
+        //     "check_dashbord": "0"
+        //   }
+        // ]),
         // home: AddComparable(
         //     type: (value) {},
         //     addNew: (value) {},
