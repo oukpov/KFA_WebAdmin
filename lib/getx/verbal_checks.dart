@@ -3,36 +3,36 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-class ActiveController extends GetxController {
+class VerbalControllerAdmin extends GetxController {
   @override
   void onInit() {
-    // listActiveMetod(0, "");
-    dropdownBank();
+    // methodVerbalList(0, "");
+    // dropdownBank();
     super.onInit();
   }
 
   var isdrop = false.obs;
   var listBank = [].obs;
   var isActive = false.obs;
-  var listUsers = [].obs;
+  var listVerbals = [].obs;
   var listUnActive = [].obs;
-  Future<void> methodListUsers(String startDate, String endDate,
-      String bankName, int selectIndex, String search) async {
+  Future<void> methodVerbalList(
+      String startDate, String endDate, String bankName, String search) async {
     try {
       isActive.value = true;
-      print(
-          'startDate : $startDate\nendDate : $endDate\nbankName : $bankName\nselectIndex : $selectIndex\nusername : $search');
+      // print(
+      //     'startDate : $startDate\nendDate : $endDate\nbankName : $bankName\nselectIndex : $selectIndex\nusername : $search');
       var headers = {'Content-Type': 'application/json'};
       var data = json.encode({
         "start": startDate,
         "end": endDate,
         "bank_name": bankName,
-        "active": selectIndex,
+        // "active": selectIndex,
         "search": search,
       });
       var dio = Dio();
       var response = await dio.request(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/list/accounts/users',
+        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/list/count/verbals',
         options: Options(
           method: 'POST',
           headers: headers,
@@ -41,7 +41,7 @@ class ActiveController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        listUsers.value = response.data;
+        listVerbals.value = response.data;
         // print(json.encode(response.data));
       } else {
         // print(response.statusMessage);
@@ -83,35 +83,35 @@ class ActiveController extends GetxController {
   //   }
   // }
 
-  List<Map<dynamic, dynamic>> listBankDrop = <Map<dynamic, dynamic>>[].obs;
+  // List<Map<dynamic, dynamic>> listBankDrop = <Map<dynamic, dynamic>>[].obs;
 
   // API Call to fetch bank dropdown
-  Future<void> dropdownBank() async {
-    try {
-      isdrop.value = true;
+  // Future<void> dropdownBank() async {
+  //   try {
+  //     isdrop.value = true;
 
-      var dio = Dio();
-      var response = await dio.post(
-        'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/dropdown/bank/checks',
-      );
+  //     var dio = Dio();
+  //     var response = await dio.post(
+  //       'https://www.oneclickonedollar.com/laravel_kfa_2023/public/api/dropdown/bank/checks',
+  //     );
 
-      if (response.statusCode == 200) {
-        listBank.value = response.data;
+  //     if (response.statusCode == 200) {
+  //       listBank.value = response.data;
 
-        // Clear previous entries before adding
-        listBankDrop.clear();
+  //       // Clear previous entries before adding
+  //       listBankDrop.clear();
 
-        for (var item in listBank) {
-          listBankDrop.add(Map<dynamic, dynamic>.from(item));
-        }
-        // print(listBankDrop.toString());
-      } else {
-        // print("Failed: ${response.statusMessage}");
-      }
-    } catch (e) {
-      // print("Error fetching bank dropdown: $e");
-    } finally {
-      isdrop.value = false;
-    }
-  }
+  //       for (var item in listBank) {
+  //         listBankDrop.add(Map<dynamic, dynamic>.from(item));
+  //       }
+  //       // print(listBankDrop.toString());
+  //     } else {
+  //       // print("Failed: ${response.statusMessage}");
+  //     }
+  //   } catch (e) {
+  //     // print("Error fetching bank dropdown: $e");
+  //   } finally {
+  //     isdrop.value = false;
+  //   }
+  // }
 }

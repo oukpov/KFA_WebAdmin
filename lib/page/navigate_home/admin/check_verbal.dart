@@ -8,25 +8,30 @@ import 'package:web_admin/components/waiting.dart';
 import 'package:web_admin/screen/Property/FirstProperty/component/Colors/appbar.dart';
 import '../../../Profile/components/Drop_down.dart';
 import '../../../components/Excel.dart';
+import '../../../components/Excel_verbal.dart';
 import '../../../getx/active_users.dart';
+import '../../../getx/verbal_checks.dart';
 import '../Customer/component/date_customer.dart';
 import 'account.dart';
 
-class CheckUsers extends StatefulWidget {
-  const CheckUsers({super.key});
+class CheckVerbals extends StatefulWidget {
+  const CheckVerbals({super.key});
 
   @override
-  State<CheckUsers> createState() => _CheckUsersState();
+  State<CheckVerbals> createState() => _CheckVerbalsState();
 }
 
-class _CheckUsersState extends State<CheckUsers> {
+class _CheckVerbalsState extends State<CheckVerbals> {
   List listTitle = [
     {'title': "No"},
     {'title': "Code"},
     {'title': "UserName"},
     {'title': "Tel Number"},
-    {'title': "Gender"},
     {'title': "Bank Name"},
+    {'title': "Address"},
+    {'title': "Lat"},
+    {'title': "Log"},
+    {'title': "Verbal Date"},
   ];
   int onRow = 10;
   String bankName = '';
@@ -46,7 +51,7 @@ class _CheckUsersState extends State<CheckUsers> {
     final now = DateTime.now();
     final formatter = DateFormat('yyyy-dd-MM');
     String dateNow = formatter.format(now);
-    final controller = Get.put(ActiveController());
+    final controller = Get.put(VerbalControllerAdmin());
     return SizedBox(
         width: double.infinity,
         child: Column(
@@ -55,30 +60,6 @@ class _CheckUsersState extends State<CheckUsers> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 100,
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                checkActive = !checkActive;
-                                if (!checkActive) {
-                                  selectIndex = 0;
-                                } else {
-                                  selectIndex = 1;
-                                }
-                              });
-
-                              // controller.listActiveMetod(indexs, bankName);
-                            },
-                            icon: Icon((checkActive == false)
-                                ? Icons.check_box_outlined
-                                : Icons.check_box_outline_blank)),
-                        Text((checkActive == false) ? "Active" : "Inactive"),
-                      ],
-                    ),
-                  ),
                   DateExpaned(
                       value: (value) {
                         setState(() {
@@ -95,108 +76,108 @@ class _CheckUsersState extends State<CheckUsers> {
                       },
                       filedname: "End"),
                   const SizedBox(width: 10),
-                  Obx(
-                    () {
-                      if (controller.isdrop.value) {
-                        return const WaitingFunction();
-                      } else if (controller.listBankDrop.isEmpty) {
-                        return const SizedBox();
-                      } else {
-                        // return Text(controller.listBankDrop.toString());
-                        return Container(
-                          height: 40,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 1, color: kPrimaryColor),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: DropdownSearch<Map<dynamic, dynamic>>(
-                              items: controller.listBankDrop,
-                              compareFn: (item1, item2) {
-                                return item1['bank_name'] == item2['bank_name'];
-                              },
-                              popupProps: PopupProps.menu(
-                                isFilterOnline: true,
-                                showSearchBox: true,
-                                showSelectedItems: true,
-                                itemBuilder: (context, item, isSelected) {
-                                  return ListTile(
-                                    title: Text(item['bank_name'] ?? ''),
-                                    selected: isSelected,
-                                  );
-                                },
-                                searchFieldProps: const TextFieldProps(
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Search a Property',
-                                  ),
-                                ),
-                              ),
-                              onChanged: (value) {
-                                setState(() {
-                                  bankName = value!['bank_name'].toString();
-                                });
-                                controller.methodListUsers(
-                                    "",
-                                    "",
-                                    value!['bank_name'].toString(),
-                                    selectIndex,
-                                    "");
-                                // });
-                                // }
-                              },
-                              selectedItem: const {"bank_name": "Bank"},
-                              dropdownDecoratorProps: DropDownDecoratorProps(
-                                dropdownSearchDecoration: InputDecoration(
-                                  hintText: 'Select one',
-                                  labelText: 'Bank',
-                                  labelStyle: TextStyle(
-                                    color: blueColor,
-                                    fontSize: 17,
-                                  ),
-                                  prefixIcon: const Icon(
-                                      Icons.business_outlined,
-                                      color: kImageColor),
-                                  filled: true,
-                                  contentPadding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  fillColor: Colors.white,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: kPrimaryColor, width: 2.0),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        width: 1, color: kPrimaryColor),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        width: 1, color: kerror),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      width: 5,
-                                      color: kerror,
-                                    ),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                              filterFn: (item, filter) {
-                                return item['bank_name']
-                                        ?.toLowerCase()
-                                        .contains(filter.toLowerCase()) ??
-                                    false;
-                              },
-                              itemAsString: (item) => item['bank_name']),
-                        );
-                      }
-                    },
-                  ),
+                  // Obx(
+                  //   () {
+                  //     if (controller.isdrop.value) {
+                  //       return const WaitingFunction();
+                  //     } else if (controller.listBankDrop.isEmpty) {
+                  //       return const SizedBox();
+                  //     } else {
+                  //       // return Text(controller.listBankDrop.toString());
+                  //       return Container(
+                  //         height: 40,
+                  //         width: 200,
+                  //         decoration: BoxDecoration(
+                  //             border:
+                  //                 Border.all(width: 1, color: kPrimaryColor),
+                  //             borderRadius: BorderRadius.circular(10)),
+                  //         child: DropdownSearch<Map<dynamic, dynamic>>(
+                  //             items: controller.listBankDrop,
+                  //             compareFn: (item1, item2) {
+                  //               return item1['bank_name'] == item2['bank_name'];
+                  //             },
+                  //             popupProps: PopupProps.menu(
+                  //               isFilterOnline: true,
+                  //               showSearchBox: true,
+                  //               showSelectedItems: true,
+                  //               itemBuilder: (context, item, isSelected) {
+                  //                 return ListTile(
+                  //                   title: Text(item['bank_name'] ?? ''),
+                  //                   selected: isSelected,
+                  //                 );
+                  //               },
+                  //               searchFieldProps: const TextFieldProps(
+                  //                 decoration: InputDecoration(
+                  //                   border: OutlineInputBorder(),
+                  //                   hintText: 'Search a Property',
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             onChanged: (value) {
+                  //               setState(() {
+                  //                 bankName = value!['bank_name'].toString();
+                  //               });
+                  //               controller.methodListUsers(
+                  //                   "",
+                  //                   "",
+                  //                   value!['bank_name'].toString(),
+                  //                   selectIndex,
+                  //                   "");
+                  //               // });
+                  //               // }
+                  //             },
+                  //             selectedItem: const {"bank_name": "Bank"},
+                  //             dropdownDecoratorProps: DropDownDecoratorProps(
+                  //               dropdownSearchDecoration: InputDecoration(
+                  //                 hintText: 'Select one',
+                  //                 labelText: 'Bank',
+                  //                 labelStyle: TextStyle(
+                  //                   color: blueColor,
+                  //                   fontSize: 17,
+                  //                 ),
+                  //                 prefixIcon: const Icon(
+                  //                     Icons.business_outlined,
+                  //                     color: kImageColor),
+                  //                 filled: true,
+                  //                 contentPadding:
+                  //                     const EdgeInsets.symmetric(vertical: 8),
+                  //                 fillColor: Colors.white,
+                  //                 focusedBorder: OutlineInputBorder(
+                  //                   borderSide: const BorderSide(
+                  //                       color: kPrimaryColor, width: 2.0),
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                 ),
+                  //                 enabledBorder: OutlineInputBorder(
+                  //                   borderSide: const BorderSide(
+                  //                       width: 1, color: kPrimaryColor),
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                 ),
+                  //                 errorBorder: OutlineInputBorder(
+                  //                   borderSide: const BorderSide(
+                  //                       width: 1, color: kerror),
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                 ),
+                  //                 focusedErrorBorder: OutlineInputBorder(
+                  //                   borderSide: const BorderSide(
+                  //                     width: 5,
+                  //                     color: kerror,
+                  //                   ),
+                  //                   borderRadius: BorderRadius.circular(5),
+                  //                 ),
+                  //                 border: InputBorder.none,
+                  //               ),
+                  //             ),
+                  //             filterFn: (item, filter) {
+                  //               return item['bank_name']
+                  //                       ?.toLowerCase()
+                  //                       .contains(filter.toLowerCase()) ??
+                  //                   false;
+                  //             },
+                  //             itemAsString: (item) => item['bank_name']),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
                   const SizedBox(width: 10),
                   Container(
                     decoration: BoxDecoration(
@@ -257,18 +238,18 @@ class _CheckUsersState extends State<CheckUsers> {
                   Obx(() {
                     if (controller.isActive.value) {
                       return const WaitingFunction();
-                    } else if (controller.listUsers.isEmpty) {
+                    } else if (controller.listVerbals.isEmpty) {
                       return const SizedBox();
                     } else {
-                      return ClassExcel(
-                          username: dateNow, list: controller.listUsers);
+                      return ClassExcelVerbal(
+                          username: dateNow, list: controller.listVerbals);
                     }
                   }),
                   const SizedBox(width: 10),
                   InkWell(
                     onTap: () async {
-                      await controller.methodListUsers(startDate, endDate,
-                          bankName, selectIndex, searchController.text);
+                      await controller.methodVerbalList(
+                          startDate, endDate, bankName, searchController.text);
                       // setState(() {
                       //   searchController.clear();
                       // });
@@ -295,7 +276,7 @@ class _CheckUsersState extends State<CheckUsers> {
               () {
                 if (controller.isActive.value) {
                   return const WaitingFunction();
-                } else if (controller.listUsers.isEmpty) {
+                } else if (controller.listVerbals.isEmpty) {
                   return const SizedBox();
                 } else {
                   return Container(
@@ -328,8 +309,8 @@ class _CheckUsersState extends State<CheckUsers> {
                           });
                         },
                         source: _DataSource(
-                            controller.listUsers,
-                            controller.listUsers.length,
+                            controller.listVerbals,
+                            controller.listVerbals.length,
                             context,
                             1,
                             _setState, (value) {
@@ -420,11 +401,14 @@ class _DataSource extends DataTableSource {
       ),
       cells: [
         buildDataCell("${index + 1}", true, item),
-        buildDataCell("${item['control_user'] ?? "N/A"}", true, item),
+        buildDataCell("${item['verbal_id'] ?? "N/A"}", true, item),
         buildDataCell("${item['username'] ?? "N/A"}", true, item),
         buildDataCell("${item['tel_num'] ?? "N/A"}", true, item),
-        buildDataCell('${item['gender'] ?? "N/A"}', true, item),
         buildDataCell("${item['bank_name'] ?? "N/A"}", true, item),
+        buildDataCell('${item['verbal_address'] ?? "N/A"}', true, item),
+        buildDataCell('${item['latlong_la'] ?? "N/A"}', true, item),
+        buildDataCell('${item['latlong_log'] ?? "N/A"}', true, item),
+        buildDataCell('${item['verbal_date'] ?? "N/A"}', true, item),
       ],
     );
   }

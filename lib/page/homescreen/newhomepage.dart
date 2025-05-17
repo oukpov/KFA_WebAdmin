@@ -18,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_admin/components/waiting.dart';
 import 'package:web_admin/page/homescreen/ToalData.dart';
 import 'package:web_admin/page/navigate_home/admin/check_users.dart';
+import 'package:web_admin/page/navigate_home/admin/check_verbal.dart';
 import 'package:web_admin/page/navigate_home/percentage/Percentage_compare.dart';
 import '../../Profile/components/FieldBox.dart';
 import '../../Profile/components/TwinBox.dart';
@@ -383,8 +384,23 @@ class _homescreenState extends State<homescreen> {
                                                   Icons.verified,
                                                   true,
                                                   "icons/Verbal1.png",
-                                                  optionHome.listCountAll,
-                                                  false),
+                                                  [
+                                                    {
+                                                      "count": 303,
+                                                      "time": "Check All"
+                                                    }
+                                                  ],
+                                                  true),
+                                              // optionTxt(
+                                              //     "All Verbals",
+                                              //     optionHome
+                                              //         .countVerbalsAll.value
+                                              //         .toString(),
+                                              //     Icons.verified,
+                                              //     true,
+                                              //     "icons/Verbal1.png",
+                                              //     optionHome.listCountAll,
+                                              //     false),
                                               const SizedBox(width: 10),
                                               optionTxt(
                                                   "All Auto Verbals",
@@ -674,6 +690,7 @@ class _homescreenState extends State<homescreen> {
                       if (navi == true) {
                         setState(() {
                           type = list[0]['count'];
+                          print('type : $type');
                         });
                       }
                     },
@@ -1275,7 +1292,8 @@ class _homescreenState extends State<homescreen> {
       // VpointDetailPage(
       //   vpoint: '',
       // );
-
+      case 303:
+        return const CheckVerbals();
       default:
         return const SizedBox();
     }

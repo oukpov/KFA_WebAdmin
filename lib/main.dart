@@ -13,6 +13,7 @@ import 'Auth/login.dart';
 import 'page/navigate_home/AutoVerbal/Zone/add_zone.dart';
 import 'page/navigate_home/edit_road/add_comparable_new_page.dart';
 import 'page/navigate_home/percentage/Percentage_compare.dart';
+import 'test/test_class.dart';
 
 List list = [];
 // String? district_id;
@@ -90,6 +91,7 @@ class _MyAppState extends State<MyApp> {
         //     "check_dashbord": "0"
         //   }
         // ]),
+        // home: ClassTest0(),
         home: LoginPage(),
         // home: ChangeRaod(
         //     type: (value) {},
