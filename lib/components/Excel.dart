@@ -60,6 +60,8 @@ class _ClassExcelState extends State<ClassExcel> {
           "${list[i]['gender'] ?? "N/A"}";
       sheetObject.cell(CellIndex.indexByString("F${i + 2}")).value =
           "${list[i]['bank_name'] ?? "N/A"}";
+      sheetObject.cell(CellIndex.indexByString("G${i + 2}")).value =
+          "${list[i]['count_autoverbal'] ?? "N/A"}";
     }
 
     // Save the file to a Uint8List
@@ -81,5 +83,6 @@ class _ClassExcelState extends State<ClassExcel> {
     {"title": "Tel Num", "type": "D1"},
     {"title": "Gender", "type": "E1"},
     {"title": "Bank Name", "type": "F1"},
+    {"title": "VPoint", "type": "G1"},
   ];
 }

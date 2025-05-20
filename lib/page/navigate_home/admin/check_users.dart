@@ -27,6 +27,7 @@ class _CheckUsersState extends State<CheckUsers> {
     {'title': "Tel Number"},
     {'title': "Gender"},
     {'title': "Bank Name"},
+    {'title': "VPoint"},
   ];
   int onRow = 10;
   String bankName = '';
@@ -425,6 +426,7 @@ class _DataSource extends DataTableSource {
         buildDataCell("${item['tel_num'] ?? "N/A"}", true, item),
         buildDataCell('${item['gender'] ?? "N/A"}', true, item),
         buildDataCell("${item['bank_name'] ?? "N/A"}", true, item),
+        buildDataCell("${item['count_autoverbal'] ?? "N/A"}", true, item),
       ],
     );
   }
